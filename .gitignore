@@ -1,0 +1,8 @@
+raw/
+data/items_raw.json
+data/items_classified.json
+data/review.tsv
+data/cls.log
+data/dec_*.txt
+__pycache__/
+.DS_Store

@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A navigable atlas of AI alignment and safety research: drill from area to subfield to topic.">
+<title>Alignment Commons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: library atlas. Sticky header with search; left index tree (desktop); main pane drills Area > Subfield > Topic with child tiles above a filterable reading list. */
+:root{
+  --bg:#f3f5f6; --surface:#ffffff; --sunk:#e8ecee; --fg:#17222b; --muted:#5a6873; --faint:#8a96a0;
+  --line:#d5dce1; --accent:#1d5a7e; --accent-soft:#dbe8f0; --pick:#8a5a12; --pick-soft:#f6ead2;
+  --display:"Newsreader", Georgia, "Times New Roman", serif;
+  --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1519; --surface:#162027; --sunk:#1c2830; --fg:#e3e9ed; --muted:#9aa8b2; --faint:#6c7b86;
+  --line:#2a3842; --accent:#7fb7d9; --accent-soft:#1d3444; --pick:#e2b66a; --pick-soft:#3a2e18; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1519; --surface:#162027; --sunk:#1c2830; --fg:#e3e9ed; --muted:#9aa8b2; --faint:#6c7b86;
+  --line:#2a3842; --accent:#7fb7d9; --accent-soft:#1d3444; --pick:#e2b66a; --pick-soft:#3a2e18; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--body);margin:0}
+a{color:var(--accent)}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1280px;margin:0 auto;padding-inline:20px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
+.topbar{display:flex;gap:16px;align-items:center;padding-block:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--fg);cursor:pointer;background:none;border:0;padding:0}
+.brand b{font:600 22px/1 var(--display);letter-spacing:-.01em}
+.brand span{font:500 11px var(--mono);color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.search{flex:1;min-width:220px;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:0 10px}
+.search input{border:0;background:transparent;padding:9px 0;flex:1;min-width:0;outline:none}
+.search:focus-within{border-color:var(--accent)}
+.search .scope{font:500 12px var(--mono);color:var(--muted);white-space:nowrap;display:flex;gap:4px;align-items:center}
+.navbtn{background:none;border:1px solid var(--line);border-radius:var(--r);padding:7px 12px;cursor:pointer;color:var(--muted);font-size:13px}
+.navbtn:hover{color:var(--fg);border-color:var(--faint)}
+.layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:32px;padding-block:24px 64px}
+@media (max-width:900px){.layout{grid-template-columns:minmax(0,1fr)}.tree{display:none}}
+/* tree */
+.tree{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;font-size:13.5px;padding-right:6px}
+.tree h4{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin:0 0 8px}
+.tree ul{list-style:none;margin:0;padding:0}
+.tree li ul{padding-left:14px;border-left:1px solid var(--line);margin:2px 0 6px 6px}
+.tree button{all:unset;cursor:pointer;display:flex;justify-content:space-between;gap:8px;width:100%;padding:3px 6px;border-radius:4px;color:var(--muted)}
+.tree button:hover{background:var(--sunk);color:var(--fg)}
+.tree button.on{background:var(--accent-soft);color:var(--fg);font-weight:500}
+.tree .n{font:12px var(--mono);color:var(--faint);font-variant-numeric:tabular-nums}
+.tree .dot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:7px;vertical-align:1px}
+/* crumbs + heading */
+.crumbs{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font:500 12.5px var(--mono);color:var(--faint);margin-bottom:10px}
+.crumbs button{all:unset;cursor:pointer;color:var(--muted)}
+.crumbs button:hover{color:var(--accent);text-decoration:underline}
+h1{font:500 clamp(28px,4vw,40px)/1.1 var(--display);letter-spacing:-.015em;margin:0 0 8px;text-wrap:balance}
+.lede{color:var(--muted);max-width:68ch;margin:0 0 6px;font-size:16px}
+.levelmeta{font:12.5px var(--mono);color:var(--faint);margin-bottom:22px;font-variant-numeric:tabular-nums}
+/* tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-bottom:30px}
+.tile{all:unset;box-sizing:border-box;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px 13px;display:flex;flex-direction:column;gap:6px;min-width:0;position:relative}
+.tile:hover{border-color:var(--accent)}
+.tile:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tile .h{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.tile .h b{font:600 17px/1.25 var(--display);letter-spacing:-.005em}
+.tile .h .n{font:500 13px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tile p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.45}
+.tile .bar{height:3px;border-radius:2px;background:var(--sunk);overflow:hidden;margin-top:auto}
+.tile .bar i{display:block;height:100%}
+.tile .kids{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.tile .kids span{font-size:11.5px;color:var(--muted);background:var(--sunk);border-radius:3px;padding:1px 6px}
+.tile.empty{opacity:.55}
+.tile.empty .h .n::after{content:" · gap"}
+.home-tiles{grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+.swatch{position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:0 2px 2px 0}
+/* agenda card */
+.agenda{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;margin-bottom:26px;display:grid;gap:10px}
+.agenda .lab{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.agenda h3{font:600 18px var(--display);margin:0}
+.agenda dl{display:grid;grid-template-columns:140px minmax(0,1fr);gap:6px 16px;margin:0;font-size:14px}
+.agenda dt{color:var(--faint);font:500 12px var(--mono);padding-top:2px}
+.agenda dd{margin:0;min-width:0;overflow-wrap:anywhere}
+@media (max-width:560px){.agenda dl{grid-template-columns:minmax(0,1fr)}.agenda dd{margin-bottom:6px}}
+/* list controls */
+.listhead{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:4px}
+.listhead h2{font:500 21px var(--display);margin:0}
+.listhead .count{font:13px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-block:10px}
+.filters select{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:5px 8px;font-size:13px}
+.chip{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12.5px;cursor:pointer;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--fg)}
+/* items */
+.items{list-style:none;margin:0;padding:0}
+.item{padding:14px 0;border-bottom:1px solid var(--line);display:grid;gap:5px}
+.item .t{font:500 16.5px/1.35 var(--display);text-decoration:none;color:var(--fg);overflow-wrap:anywhere}
+.item .t:hover{color:var(--accent);text-decoration:underline}
+.meta{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12.5px;color:var(--faint);align-items:center}
+.meta .d{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.pill{font:500 10.5px var(--mono);text-transform:uppercase;letter-spacing:.06em;border:1px solid var(--line);border-radius:3px;padding:0 5px;color:var(--muted)}
+.pill.pick{background:var(--pick-soft);border-color:transparent;color:var(--pick)}
+.item p{margin:0;color:var(--muted);font-size:14px;max-width:80ch;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;cursor:pointer}
+.item p.open{-webkit-line-clamp:unset;display:block}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tags button{all:unset;cursor:pointer;font-size:12px;color:var(--accent);background:var(--accent-soft);border-radius:3px;padding:1px 7px}
+.tags button:hover{text-decoration:underline}
+.more{display:block;margin:18px auto 0;padding:9px 18px}
+.empty-note{padding:28px 0;color:var(--muted)}
+mark{background:var(--pick-soft);color:inherit;border-radius:2px}
+/* about */
+.about{max-width:72ch}
+.about h2{font:500 24px var(--display);margin:28px 0 8px}
+.about p,.about li{color:var(--fg)}
+.about ul{padding-left:20px}
+.srcgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:10px}
+.src{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;font-size:14px;display:grid;gap:6px}
+.src b{font:600 16px var(--display)}
+.src .role{font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.07em;color:var(--faint)}
+footer{border-top:1px solid var(--line);padding-block:18px 40px;font-size:13px;color:var(--faint)}
+@media (max-width:600px){header.top{position:static}.brand span{display:none}.brand{flex:1}.topbar{gap:10px}}
+@media (prefers-reduced-motion:no-preference){.tile{transition:border-color .12s}}
+</style>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap topbar">
+    <button class="brand" id="home" type="button" aria-label="Alignment Commons home"><b>Alignment Commons</b><span>atlas of AI safety research</span></button>
+    <label class="search" for="q">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      <input id="q" type="search" placeholder="Search titles, authors, summaries" autocomplete="off">
+      <span class="scope"><input type="checkbox" id="scopeAll"><label for="scopeAll">everywhere</label></span>
+    </label>
+    <button class="navbtn" id="aboutBtn" type="button">Sources &amp; method</button>
+  </div>
+</header>
+
+<div class="wrap layout">
+  <nav class="tree" id="tree" aria-label="Research areas"></nav>
+  <main id="main"></main>
+</div>
+<div class="wrap"><footer id="foot"></footer></div>
+
+<script>
+fetch("data.json").then(r => r.json()).then(boot).catch(() => { document.getElementById("main").innerHTML = '<p class="empty-note">Could not load the index. Refresh to try again.</p>'; });
+function boot(D){
+const T = D.taxonomy, ITEMS = D.items;
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+// index
+const node = {}; // id -> {kind, area, sub, obj}
+T.forEach(a => { node[a.id] = {kind:"area", a, obj:a};
+  a.subs.forEach(s => { node[s.id] = {kind:"sub", a, s, obj:s};
+    s.topics.forEach(t => { node[t.id] = {kind:"topic", a, s, t, obj:t}; }); }); });
+const cnt = {}; ITEMS.forEach(it => { new Set([...it.ar, ...it.sb, ...it.tp]).forEach(k => cnt[k] = (cnt[k]||0)+1); });
+const agendaByLeaf = {}; D.agendas.forEach(g => (agendaByLeaf[g.leaf] ||= []).push(g));
+const hay = ITEMS.map(it => (it.t + " " + it.a + " " + it.s).toLowerCase());
+const TYPES = {paper:"Paper", post:"Post", agenda:"Agenda", dataset:"Dataset", code:"Code", course:"Course", media:"Audio/video", other:"Other"};
+const SRCN = {sr:"Shallow Review 2025", asg:"AI Safety Graph", af:"Alignment Forum"};
+
+let state = {node:null, q:"", all:false, type:"", from:"", src:"", picks:false, sort:"new", shown:50};
+
+function inScope(it, id){ if(!id) return true; const n=node[id]; if(!n) return true;
+  return n.kind==="area" ? it.ar.includes(id) : n.kind==="sub" ? it.sb.includes(id) : it.tp.includes(id); }
+
+function filtered(){
+  const terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
+  const scope = (terms.length && state.all) ? null : state.node;
+  let r = [];
+  for(let i=0;i<ITEMS.length;i++){ const it=ITEMS[i];
+    if(!inScope(it, scope)) continue;
+    if(state.type && it.y!==state.type) continue;
+    if(state.from && (it.d||"0") < state.from) continue;
+    if(state.src && !it.src.includes(state.src)) continue;
+    if(state.picks && !it.p) continue;
+    if(terms.length && !terms.every(w => hay[i].includes(w))) continue;
+    r.push(it); }
+  if(state.sort==="old") r = r.slice().sort((a,b)=>(a.d||"9999").localeCompare(b.d||"9999"));
+  else if(state.sort==="az") r = r.slice().sort((a,b)=>a.t.localeCompare(b.t));
+  return r;
+}
+
+function hl(s){ const terms=state.q.trim().split(/\s+/).filter(w=>w.length>1); let h=esc(s);
+  if(!terms.length) return h;
+  const re = new RegExp("(" + terms.map(w=>w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).map(esc).join("|") + ")","gi");
+  return h.replace(re,"<mark>$1</mark>"); }
+
+function go(id, push=true){ state.node = id || null; state.shown = 50;
+  if(push){ try{ history.pushState(null,"", id ? "#"+id : location.pathname); }catch(e){} }
+  render(); window.scrollTo({top:0}); }
+
+function crumbs(){
+  const n = node[state.node]; let h = `<nav class="crumbs" aria-label="Breadcrumb"><button data-go="">All areas</button>`;
+  if(n){ h += ` / <button data-go="${n.a.id}">${esc(n.a.name)}</button>`;
+    if(n.s) h += ` / <button data-go="${n.s.id}">${esc(n.s.name)}</button>`;
+    if(n.t) h += ` / <span>${esc(n.t.name)}</span>`; }
+  return h + `</nav>`;
+}
+
+function tile(o, color, kids){
+  const c = cnt[o.id]||0;
+  return `<button class="tile${c?"":" empty"}" data-go="${o.id}">
+    ${color?`<span class="swatch" style="background:${color}"></span>`:""}
+    <span class="h"><b>${esc(o.name)}</b><span class="n">${c.toLocaleString()}</span></span>
+    <p>${esc(o.desc)}</p>
+    ${kids?`<span class="kids">${kids.map(k=>`<span>${esc(k.name)}</span>`).join("")}</span>`:""}
+  </button>`;
+}
+
+function agendaCard(g){
+  const links = (g.critiques||"").replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g,(m,t,u)=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a>`);
+  return `<section class="agenda">
+    <div class="lab">Agenda profile · from Shallow Review 2025</div>
+    <h3>${esc(g.name)}</h3>
+    <dl>
+      ${g.summary?`<dt>Summary</dt><dd>${esc(g.summary)}</dd>`:""}
+      ${g.toc?`<dt>Theory of change</dt><dd>${esc(g.toc)}</dd>`:""}
+      ${g.approach||g.target?`<dt>Approach</dt><dd>${esc([g.approach,g.target&&("target case: "+g.target)].filter(Boolean).join(" · "))}</dd>`:""}
+      ${g.names?`<dt>Some people</dt><dd>${esc(g.names)}</dd>`:""}
+      ${g.ftes?`<dt>Est. FTEs</dt><dd>${esc(g.ftes)}</dd>`:""}
+      ${g.critiques?`<dt>Critiques</dt><dd>${links}</dd>`:""}
+    </dl></section>`;
+}
+
+function itemHTML(it){
+  const tags = it.tp.map(id => node[id] && node[id].t ? `<button data-go="${id}" title="${esc(node[id].a.name+' / '+node[id].s.name)}">${esc(node[id].t.name)}</button>` : "")
+    .concat(it.tp.length?[]:it.sb.map(id=>node[id]?`<button data-go="${id}">${esc(node[id].s.name)}</button>`:"")).join("");
+  return `<li class="item">
+    <a class="t" href="${esc(it.u)}" target="_blank" rel="noopener">${hl(it.t)}</a>
+    <div class="meta">${it.d?`<span class="d">${esc(it.d.slice(0,7))}</span>`:""}<span class="pill">${TYPES[it.y]||"Other"}</span>${it.p?`<span class="pill pick" title="Included in the Shallow Review of Technical AI Safety 2025">SR pick</span>`:""}${it.a?`<span>${hl(it.a)}</span>`:""}</div>
+    ${it.s?`<p data-x>${hl(it.s)}</p>`:""}
+    <div class="tags">${tags}</div></li>`;
+}
+
+function listHTML(){
+  const r = filtered(), n = node[state.node];
+  const searching = state.q.trim().length>0;
+  const where = searching && state.all ? "everywhere" : n ? n.obj.name : "all areas";
+  const years = ["2025","2024","2023","2022","2020","2018"];
+  let h = `<section aria-live="polite"><div class="listhead"><h2>${searching?`Results in ${esc(where)}`:"Reading list"}</h2><span class="count">${r.length.toLocaleString()} item${r.length===1?"":"s"}</span></div>
+  <div class="filters">
+    <select id="fType" aria-label="Type"><option value="">All types</option>${Object.entries(TYPES).map(([k,v])=>`<option value="${k}"${state.type===k?" selected":""}>${v}</option>`).join("")}</select>
+    <select id="fFrom" aria-label="Published since"><option value="">Any year</option>${years.map(y=>`<option value="${y}"${state.from===y?" selected":""}>Since ${y}</option>`).join("")}</select>
+    <select id="fSrc" aria-label="Source"><option value="">All sources</option>${Object.entries(SRCN).map(([k,v])=>`<option value="${k}"${state.src===k?" selected":""}>${v}</option>`).join("")}</select>
+    <select id="fSort" aria-label="Sort"><option value="new"${state.sort==="new"?" selected":""}>Newest first</option><option value="old"${state.sort==="old"?" selected":""}>Oldest first</option><option value="az"${state.sort==="az"?" selected":""}>Title A–Z</option></select>
+    <button class="chip" id="fPick" aria-pressed="${state.picks}" type="button">Shallow Review picks</button>
+  </div>`;
+  if(!r.length) h += `<p class="empty-note">Nothing here matches. ${searching&&!state.all?`Try searching <button class="chip" id="widen" type="button">everywhere</button>.`:"Loosen a filter to see more."}</p>`;
+  else h += `<ul class="items">${r.slice(0,state.shown).map(itemHTML).join("")}</ul>` + (r.length>state.shown?`<button class="navbtn more" id="more" type="button">Show ${Math.min(50,r.length-state.shown)} more of ${(r.length-state.shown).toLocaleString()}</button>`:"");
+  return h + `</section>`;
+}
+
+function renderTree(){
+  const cur = state.node, n = node[cur];
+  let h = `<h4>Index</h4><ul>`;
+  T.forEach(a => {
+    const open = n && n.a.id===a.id;
+    h += `<li><button data-go="${a.id}" class="${cur===a.id?"on":""}"><span><span class="dot" style="background:${a.color}"></span>${esc(a.name)}</span><span class="n">${cnt[a.id]||0}</span></button>`;
+    if(open){ h += `<ul>`; a.subs.forEach(s => { const so = n.s && n.s.id===s.id;
+      h += `<li><button data-go="${s.id}" class="${cur===s.id?"on":""}"><span>${esc(s.name)}</span><span class="n">${cnt[s.id]||0}</span></button>`;
+      if(so){ h += `<ul>`+ s.topics.map(t=>`<li><button data-go="${t.id}" class="${cur===t.id?"on":""}"><span>${esc(t.name)}</span><span class="n">${cnt[t.id]||0}</span></button></li>`).join("") + `</ul>`; }
+      h += `</li>`; }); h += `</ul>`; }
+    h += `</li>`; });
+  $("#tree").innerHTML = h + `</ul>`;
+}
+
+function render(){
+  if(state.node==="about"){ renderAbout(); renderTree(); return; }
+  const n = node[state.node]; let h = "";
+  if(!n){
+    h += `<h1>Alignment research, mapped</h1><p class="lede">${ITEMS.length.toLocaleString()} papers and posts on AI safety, sorted into ${T.length} areas, ${T.reduce((s,a)=>s+a.subs.length,0)} subfields and ${Object.values(node).filter(x=>x.kind==="topic").length} topics. Pick an area to drill down, or search everything.</p><div class="levelmeta">Built ${esc(D.built)} from open datasets. <button class="chip" data-go="about" type="button">See sources</button></div>`;
+    h += `<div class="tiles home-tiles">${T.map(a=>tile(a,a.color,a.subs)).join("")}</div>`;
+  } else if(n.kind==="area"){
+    h += crumbs() + `<h1>${esc(n.a.name)}</h1><p class="lede">${esc(n.a.desc)}</p><div class="levelmeta">${n.a.subs.length} subfields · ${(cnt[n.a.id]||0).toLocaleString()} items</div>`;
+    h += `<div class="tiles">${n.a.subs.map(s=>tile(s,n.a.color,s.topics)).join("")}</div>`;
+  } else if(n.kind==="sub"){
+    h += crumbs() + `<h1>${esc(n.s.name)}</h1><p class="lede">${esc(n.s.desc)}</p><div class="levelmeta">${n.s.topics.length} topics · ${(cnt[n.s.id]||0).toLocaleString()} items</div>`;
+    h += `<div class="tiles">${n.s.topics.map(t=>tile(t,n.a.color)).join("")}</div>`;
+  } else {
+    const sib = n.s.topics.filter(t=>t.id!==n.t.id);
+    h += crumbs() + `<h1>${esc(n.t.name)}</h1><p class="lede">${esc(n.t.desc)}</p><div class="levelmeta">${(cnt[n.t.id]||0).toLocaleString()} items · also in ${esc(n.s.name)}: ${sib.map(t=>`<button class="chip" data-go="${t.id}" type="button">${esc(t.name)} ${cnt[t.id]||0}</button>`).join(" ")}</div>`;
+    (agendaByLeaf[n.t.id]||[]).forEach(g => h += agendaCard(g));
+  }
+  h += listHTML();
+  $("#main").innerHTML = h; renderTree();
+  $("#foot").innerHTML = `Data: <a href="https://shallowreview.ai/" target="_blank" rel="noopener">Shallow Review of Technical AI Safety 2025</a> (Arb Research and contributors) and <a href="https://ai-safety-graph.github.io/AISafetyGraph/" target="_blank" rel="noopener">AI Safety Graph</a> (Apart Research, MIT), and the Alignment Forum. Topics reviewed by Claude; misfiles happen. <button class="chip" data-go="about" type="button">Sources &amp; method</button>`;
+}
+
+function renderAbout(){
+  const srCount = ITEMS.filter(i=>i.src.includes("sr")).length, asgCount = ITEMS.filter(i=>i.src.includes("asg")).length, afCount = ITEMS.filter(i=>i.src.includes("af")).length;
+  $("#main").innerHTML = crumbs() + `<div class="about"><h1>Sources &amp; method</h1>
+  <p class="lede">Alignment Commons stitches together open datasets built by other people, then sorts everything into one browsable tree. Credit for the underlying collection work belongs to them.</p>
+  <div class="srcgrid">
+   <div class="src"><span class="role">Data · ${srCount.toLocaleString()} items</span><b>Shallow Review of Technical AI Safety 2025</b><span>By Arb Research (Gavin Leech, Stephen McAleese, Jan Gavento and contributors). We use their classified link database, the 800+ outputs picked for the review (marked "SR pick"), and the agenda profiles shown on topic pages.</span><a href="https://github.com/arb-consulting/shallow-review-2025" target="_blank" rel="noopener">github.com/arb-consulting/shallow-review-2025</a></div>
+   <div class="src"><span class="role">Data · ${asgCount.toLocaleString()} items</span><b>AI Safety Graph</b><span>By Apart Research. MIT-licensed corpus of about 7,000 arXiv papers with abstracts, itself drawn from StampyAI's Alignment Research Dataset. We keep the papers that match a safety topic.</span><a href="https://github.com/ai-safety-graph/AISafetyGraph" target="_blank" rel="noopener">github.com/ai-safety-graph/AISafetyGraph</a></div>
+   <div class="src"><span class="role">Data · ${afCount.toLocaleString()} items</span><b>Alignment Forum</b><span>Recent posts (mid-2025 to now) plus the forum's top-rated posts of all time, pulled from its public API. Titles and dates only; follow the link for the full post.</span><a href="https://www.alignmentforum.org" target="_blank" rel="noopener">alignmentforum.org</a></div>
+   <div class="src"><span class="role">Upstream</span><b>StampyAI Alignment Research Dataset</b><span>The source of the AI Safety Graph's arXiv list, maintained by the AISafety.info team.</span><a href="https://huggingface.co/datasets/StampyAI/alignment-research-dataset" target="_blank" rel="noopener">huggingface.co/datasets/StampyAI</a></div>
+   <div class="src"><span class="role">Inspiration</span><b>AI Safety Literature Database</b><span>Slade Byrd's Claude-read database of 3,700+ papers was the model for this project. No data is copied from it; go there for its tags, datasets and citation graph.</span><a href="https://sladebyrd.com/ai-safety-db" target="_blank" rel="noopener">sladebyrd.com/ai-safety-db</a></div>
+  </div>
+  <h2>How items are placed</h2>
+  <p>The tree has three levels: area, subfield, topic. It borrows heavily from the Shallow Review taxonomy, regrouped so a newcomer can start from familiar headings like Interpretability and drill down to specifics like sparse autoencoders.</p>
+  <ul>
+   <li>A first pass scores every item against title and abstract patterns for each topic, plus Shallow Review's own category labels.</li>
+   <li>Claude then reviewed every candidate by title, moving misfiled items and dropping about 1,000 general ML papers that were not about safety.</li>
+   <li>An item can sit in up to three topics.</li>
+  </ul>
+  <p>Expect some misfiles anyway. Topics shown faded with "gap" have nothing indexed yet, which is useful to know in itself.</p>
+  <h2>Coverage</h2>
+  <p>Strongest for 2025 (Shallow Review), mid-2025 to now (Alignment Forum) and pre-2023 arXiv (AI Safety Graph). Thinnest for 2023 to 2024 and for 2026 arXiv papers.</p></div>`;
+}
+
+// events
+document.addEventListener("click", e => {
+  const g = e.target.closest("[data-go]"); if(g){ e.preventDefault(); go(g.dataset.go); return; }
+  if(e.target.matches("[data-x]") || e.target.closest("[data-x]")){ e.target.closest("[data-x]").classList.toggle("open"); return; }
+  if(e.target.id==="more"){ state.shown += 50; render(); return; }
+  if(e.target.id==="fPick"){ state.picks = !state.picks; state.shown=50; render(); return; }
+  if(e.target.id==="widen"){ state.all = true; $("#scopeAll").checked = true; render(); return; }
+});
+document.addEventListener("change", e => {
+  const m = {fType:"type", fFrom:"from", fSrc:"src", fSort:"sort"}[e.target.id];
+  if(m){ state[m] = e.target.value; state.shown = 50; render(); }
+  if(e.target.id==="scopeAll"){ state.all = e.target.checked; state.shown=50; if(state.node==="about") state.node=null; render(); }
+});
+let tmr; $("#q").addEventListener("input", e => { clearTimeout(tmr); tmr = setTimeout(()=>{ state.q = e.target.value; state.shown=50; if(state.node==="about") state.node=null; render(); }, 140); });
+$("#home").addEventListener("click", ()=>go(null));
+$("#aboutBtn").addEventListener("click", ()=>go("about"));
+const fromHash = () => { const h0 = (location.hash||"").slice(1); return (node[h0] || h0==="about") ? h0 : null; };
+window.addEventListener("popstate", () => { state.node = fromHash(); state.shown = 50; render(); });
+state.node = fromHash();
+render();
+}
+</script>
+
+</body>
+</html>
