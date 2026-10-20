@@ -17,16 +17,30 @@ About 2,900 papers and posts, each placed in 1 to 3 of 139 topics across 11 area
 
 Slade Byrd's [AI Safety Literature Database](https://sladebyrd.com/ai-safety-db) inspired the project. No data is copied from it.
 
+## Tested ideas
+
+Topic pages also show research ideas that were run on a planted testbed by [Alignment SynthCore](https://github.com/jaebooker/alignment-synthcore): what the testbed plants, each idea's verdict against a tuned baseline, and a direction signal for the topic. The "Tested ideas" page lists them all with the method.
+
+The site reads `site/tests.json`, written by `pipeline/fetch_tests.py` from SynthCore's `results/commons.json`. It is optional: without it the atlas works as before. To refresh after new SynthCore results are pushed:
+
+```
+python pipeline/fetch_tests.py                        # from GitHub
+python pipeline/fetch_tests.py ../alignment-synthcore  # or a local checkout
+```
+
+The script stops if SynthCore files an idea under a topic id that does not exist here.
+
 ## Layout
 
 ```
-site/            static site (index.html + data.json), what Vercel serves
+site/            static site (index.html + data.json + tests.json), what Vercel serves
 pipeline/        build scripts
   taxonomy.py    the 3-level tree: areas > subfields > topics, with match patterns
   ingest.py      merge sources into data/items_raw.json
   classify.py    place items into topics (labels.json wins over patterns)
   export.py      write site/data.json
   fetch_af.py    refresh data/af_posts.tsv from the Alignment Forum API
+  fetch_tests.py pull tested-idea results from Alignment SynthCore into site/tests.json
   fetch_sources.sh  clone source repos into raw/
 data/
   af_posts.tsv   Alignment Forum posts (id, date, title)

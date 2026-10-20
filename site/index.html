@@ -13,6 +13,7 @@
 :root{
   --bg:#f3f5f6; --surface:#ffffff; --sunk:#e8ecee; --fg:#17222b; --muted:#5a6873; --faint:#8a96a0;
   --line:#d5dce1; --accent:#1d5a7e; --accent-soft:#dbe8f0; --pick:#8a5a12; --pick-soft:#f6ead2;
+  --win:#1f6b45; --win-soft:#d9eee2; --hurt:#a3332a; --hurt-soft:#f6dfdc;
   --display:"Newsreader", Georgia, "Times New Roman", serif;
   --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
@@ -20,10 +21,12 @@
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#0f1519; --surface:#162027; --sunk:#1c2830; --fg:#e3e9ed; --muted:#9aa8b2; --faint:#6c7b86;
-  --line:#2a3842; --accent:#7fb7d9; --accent-soft:#1d3444; --pick:#e2b66a; --pick-soft:#3a2e18; color-scheme:dark}}
+  --line:#2a3842; --accent:#7fb7d9; --accent-soft:#1d3444; --pick:#e2b66a; --pick-soft:#3a2e18;
+  --win:#7fd1a2; --win-soft:#17352a; --hurt:#f09a8f; --hurt-soft:#3d1f1c; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0f1519; --surface:#162027; --sunk:#1c2830; --fg:#e3e9ed; --muted:#9aa8b2; --faint:#6c7b86;
-  --line:#2a3842; --accent:#7fb7d9; --accent-soft:#1d3444; --pick:#e2b66a; --pick-soft:#3a2e18; color-scheme:dark}
+  --line:#2a3842; --accent:#7fb7d9; --accent-soft:#1d3444; --pick:#e2b66a; --pick-soft:#3a2e18;
+  --win:#7fd1a2; --win-soft:#17352a; --hurt:#f09a8f; --hurt-soft:#3d1f1c; color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--body);margin:0}
@@ -120,6 +123,52 @@ mark{background:var(--pick-soft);color:inherit;border-radius:2px}
 .src{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;font-size:14px;display:grid;gap:6px}
 .src b{font:600 16px var(--display)}
 .src .role{font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.07em;color:var(--faint)}
+/* tested ideas (from Alignment SynthCore) */
+.tile .tested{font:500 11.5px var(--mono);color:var(--win);letter-spacing:.02em}
+.tree .tk{font:600 10px var(--mono);color:var(--win);margin-left:6px}
+.tests{margin-bottom:30px;display:grid;gap:12px}
+.tests > .lab,.tbcard .lab{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.tbcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;display:grid;gap:10px}
+.tbcard h3{font:600 18px var(--display);margin:0}
+.tbcard h3 button{all:unset;cursor:pointer}
+.tbcard h3 button:hover{color:var(--accent);text-decoration:underline}
+.tbcard .q{margin:0;color:var(--fg);font-size:15px}
+.tbcard dl{display:grid;grid-template-columns:120px minmax(0,1fr);gap:6px 16px;margin:0;font-size:14px}
+.tbcard dt{color:var(--faint);font:500 12px var(--mono);padding-top:2px}
+.tbcard dd{margin:0;min-width:0}
+@media (max-width:560px){.tbcard dl{grid-template-columns:minmax(0,1fr)}.tbcard dd{margin-bottom:6px}}
+.signal{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;font-size:13.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+.signal b{font:600 14px var(--body);color:var(--fg)}
+.signal .num{font:13px var(--mono);font-variant-numeric:tabular-nums}
+.ideas{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.idea{padding:12px 0;border-bottom:1px solid var(--line);display:grid;gap:5px}
+.idea:last-child{border-bottom:0}
+.idea .top{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+.idea .top b{font:500 16px/1.35 var(--display)}
+.idea .res{font:13px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.idea .res strong{color:var(--fg);font-weight:500}
+.idea p{margin:0;color:var(--muted);font-size:14px;max-width:80ch}
+.idea p.clamp{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;cursor:pointer}
+.idea p.clamp.open{display:block;-webkit-line-clamp:unset}
+.idea .cite{font-size:12.5px;color:var(--faint)}
+.idea .cite a{color:var(--accent)}
+.v{font:600 10.5px var(--mono);text-transform:uppercase;letter-spacing:.06em;border-radius:3px;padding:1px 6px;white-space:nowrap;border:1px solid transparent}
+.v.win{background:var(--win-soft);color:var(--win)}
+.v.mech{background:var(--accent-soft);color:var(--accent)}
+.v.null{background:var(--sunk);color:var(--muted)}
+.v.hurt{background:var(--hurt-soft);color:var(--hurt)}
+.v.gate{background:var(--pick-soft);color:var(--pick)}
+.v.flag{border-color:var(--line);color:var(--muted);background:none;font-weight:500}
+.tbsec{margin-top:34px}
+.tbsec h2{font:500 24px var(--display);margin:0 0 4px}
+.legend .v{justify-self:start}
+.legend{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 14px;align-items:baseline;font-size:14px;margin:12px 0 4px}
+.steps{padding-left:20px;margin:8px 0}
+.steps li{margin-bottom:4px}
+.band{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--win);border-radius:var(--r);padding:12px 16px;margin:-8px 0 24px;font-size:14px}
+.band b{font:600 16px var(--display)}
+.sigcard{margin-top:8px}
+.sigcard .signal{border-top:0;padding-top:0}
 footer{border-top:1px solid var(--line);padding-block:18px 40px;font-size:13px;color:var(--faint)}
 @media (max-width:600px){header.top{position:static}.brand span{display:none}.brand{flex:1}.topbar{gap:10px}}
 @media (prefers-reduced-motion:no-preference){.tile{transition:border-color .12s}}
@@ -135,6 +184,7 @@ footer{border-top:1px solid var(--line);padding-block:18px 40px;font-size:13px;c
       <input id="q" type="search" placeholder="Search titles, authors, summaries" autocomplete="off">
       <span class="scope"><input type="checkbox" id="scopeAll"><label for="scopeAll">everywhere</label></span>
     </label>
+    <button class="navbtn" id="testedBtn" type="button">Tested ideas</button>
     <button class="navbtn" id="aboutBtn" type="button">Sources &amp; method</button>
   </div>
 </header>
@@ -146,8 +196,11 @@ footer{border-top:1px solid var(--line);padding-block:18px 40px;font-size:13px;c
 <div class="wrap"><footer id="foot"></footer></div>
 
 <script>
-fetch("data.json").then(r => r.json()).then(boot).catch(() => { document.getElementById("main").innerHTML = '<p class="empty-note">Could not load the index. Refresh to try again.</p>'; });
-function boot(D){
+// tests.json (tested ideas from Alignment SynthCore) is optional: the atlas works without it.
+Promise.all([fetch("data.json").then(r => r.json()), fetch("tests.json").then(r => r.ok ? r.json() : null).catch(() => null)])
+  .then(([D, X]) => boot(D, X))
+  .catch(() => { document.getElementById("main").innerHTML = '<p class="empty-note">Could not load the index. Refresh to try again.</p>'; });
+function boot(D, X){
 const T = D.taxonomy, ITEMS = D.items;
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -161,6 +214,88 @@ const agendaByLeaf = {}; D.agendas.forEach(g => (agendaByLeaf[g.leaf] ||= []).pu
 const hay = ITEMS.map(it => (it.t + " " + it.a + " " + it.s).toLowerCase());
 const TYPES = {paper:"Paper", post:"Post", agenda:"Agenda", dataset:"Dataset", code:"Code", course:"Course", media:"Audio/video", other:"Other"};
 const SRCN = {sr:"Shallow Review 2025", asg:"AI Safety Graph", af:"Alignment Forum"};
+
+// ---- tested ideas (Alignment SynthCore) ----
+const TB = {}, IDEAS = X ? X.ideas : [], byTopic = {}, tbTopic = {}, SIG = {}, tcount = {};
+if(X){
+  X.testbeds.forEach(tb => { TB[tb.id] = tb; tb.topics.forEach(t => (tbTopic[t] ||= new Set()).add(tb.id)); });
+  X.signals.forEach(s => SIG[s.topic+"|"+s.testbed] = s);
+  IDEAS.filter(x => !x.control).forEach(x => {
+    (byTopic[x.topic] ||= []).push(x); (tbTopic[x.topic] ||= new Set()).add(x.testbed);
+    const n = node[x.topic]; if(n) [n.a.id, n.s.id, n.t.id].forEach(k => tcount[k] = (tcount[k]||0)+1); });
+}
+const NTESTED = IDEAS.filter(x => !x.control).length;
+const VERD = {
+  beats_baseline:["Beats baseline","win","Significant win on the safety metric over the tuned baseline."],
+  mech_ok_no_win:["Mechanism works, no win","mech","The predicted mechanism showed up, but there was no significant safety win."],
+  no_effect:["No effect","null","Ran the full benchmark; the confidence interval includes zero."],
+  hurts:["Hurts","hurt","Significantly worse than the tuned baseline."],
+  mechanism_failed:["Mechanism failed","gate","Failed the toy gate: the predicted mechanism did not appear, so the benchmark was not run."],
+  implementation_failed:["Implementation failed","null","No working method after several attempts. Kept separate so bugs never count against an idea."],
+  untestable:["Untestable","null","No current testbed fits the idea."]};
+const FLAGS = {cause_unresolved:["Cause unresolved","Won, but the predicted mechanism did not show up."],
+  capability_confounded:["Capability confounded","Capability also rose significantly, so the win may just be better training."]};
+const READ = {"pursue":"the mechanism tends to reproduce and ideas tend to win",
+  "real, not yet useful":"the mechanism tends to reproduce but ideas rarely beat the baseline",
+  "wins, cause unclear":"ideas win, but not through the mechanism they predicted",
+  "deprioritize":"mechanisms rarely reproduce and ideas rarely win"};
+const sg = v => (v>=0?"+":"−") + Math.abs(v).toFixed(3);
+const f3 = v => v.toFixed(3);
+const pv = p => p < 0.001 ? "p < 0.001" : "p = " + p.toFixed(3);
+const vbadge = v => { const m = VERD[v] || [v,"null",""]; return `<span class="v ${m[1]}" title="${esc(m[2])}">${esc(m[0])}</span>`; };
+
+function cite(s){ if(!s || !s.title) return "";
+  const t = s.title ? `“${esc(s.title)}”` : ""; const by = [s.authors, s.year].filter(Boolean).join(", ");
+  const u = s.url || (s.arxiv ? "https://arxiv.org/abs/"+s.arxiv : "");
+  return `From ${u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${t}</a>` : t}${by ? ` (${esc(by)})` : ""}${s.venue ? `, ${esc(s.venue)}` : ""}. `; }
+
+function ideaHTML(x, showTopic){
+  const s = x.safety, g = x.gate;
+  let res = "";
+  if(s) res = `Safety ${f3(s.method_mean)} vs ${f3(s.baseline_mean)} for the tuned baseline · <strong>${sg(s.mean_diff)}</strong> (95% CI ${sg(s.ci95[0])} to ${sg(s.ci95[1])}) · ${pv(s.p_value)}`;
+  else if(g) res = `Toy gate on ${esc(g.quantity.replace(/^diagnostic:/,""))}: observed ${sg(g.observed)}, needed ${esc(g.rule)}`;
+  const tn = showTopic && node[x.topic] ? ` <button class="chip" data-go="${x.topic}" type="button">${esc(node[x.topic].t.name)}</button>` : "";
+  return `<li class="idea">
+    <div class="top"><b>${esc(x.title)}</b>${vbadge(x.verdict)}${x.flags.map(f => `<span class="v flag" title="${esc((FLAGS[f]||[f,""])[1])}">${esc((FLAGS[f]||[f])[0])}</span>`).join("")}${x.control?`<span class="v flag" title="A sanity check, not a research idea">Control</span>`:""}${tn}</div>
+    ${res ? `<div class="res">${res}</div>` : ""}
+    ${x.description ? `<p data-x class="clamp">${esc(x.description)}</p>` : ""}
+    <div class="cite">${cite(x.source)}<a href="${esc(x.record)}" target="_blank" rel="noopener">Full record and code</a>${x.updated?` · tested ${esc(x.updated)}`:""}</div>
+  </li>`;
+}
+
+function signalHTML(topic, tbid){
+  const s = SIG[topic+"|"+tbid]; if(!s) return "";
+  return `<div class="signal"><span>Direction signal: <b>${esc(s.reading)}</b>${s.tentative?` <span class="v flag" title="Fewer than ${X.min_ideas} tested ideas">tentative</span>`:""}</span>
+    <span class="num">mechanism reproduced ${s.mechanism_rate.k}/${s.mechanism_rate.n}</span>
+    <span class="num">beat the baseline ${s.win_rate.k}/${s.win_rate.n}</span>
+    <span>${esc(READ[s.reading]||"")}</span></div>`;
+}
+
+function tbCard(tb, ideas, topic, withLab){
+  const elsewhere = [...new Set(IDEAS.filter(x => !x.control && x.testbed===tb.id && x.topic!==topic).map(x => x.topic))];
+  return `<section class="tbcard">
+    ${withLab?`<div class="lab">Tested on a planted testbed · Alignment SynthCore</div>`:""}
+    ${withLab?`<h3><button data-go="tested" type="button">${esc(tb.name)}</button></h3>`:""}
+    <p class="q">${esc(tb.question)}</p>
+    <dl><dt>What is planted</dt><dd>${esc(tb.planted)}</dd><dt>Safety metric</dt><dd>${esc(tb.metric)}</dd><dt>Baseline</dt><dd>${esc(tb.baseline)}</dd>${tb.version?`<dt>Version</dt><dd>v${esc(tb.version)}</dd>`:""}</dl>
+    ${topic ? signalHTML(topic, tb.id) : ""}
+    ${ideas.length ? `<ul class="ideas">${ideas.map(x => ideaHTML(x, !topic)).join("")}</ul>` : ""}
+    ${topic && elsewhere.length ? `<div class="cite">${ideas.length?"Other ideas":"Ideas"} tested here are filed under ${elsewhere.map(t => node[t] ? `<button class="chip" data-go="${t}" type="button">${esc(node[t].t.name)}</button>` : "").join(" ")}</div>` : ""}
+  </section>`;
+}
+
+function testsForTopic(t){
+  const ids = [...(tbTopic[t] || [])]; if(!ids.length) return "";
+  return `<div class="tests">` + ids.map(id => TB[id] && tbCard(TB[id], (byTopic[t]||[]).filter(x => x.testbed===id), t, true)).join("") + `</div>`;
+}
+
+function testedBand(id){
+  const c = id ? tcount[id] : NTESTED; if(!c) return "";
+  const where = id ? ` in ${esc(node[id].obj.name)}` : ` on ${X.testbeds.length} planted testbeds`;
+  const tops = id ? [...new Set(IDEAS.filter(x => !x.control && node[x.topic] && (node[x.topic].a.id===id || node[x.topic].s.id===id)).map(x => x.topic))] : [];
+  return `<div class="band"><span><b>${c} research idea${c===1?"":"s"} tested</b>${where}. Each one was run against a tuned baseline on a testbed where the right answer is planted; verdicts come from code.</span>
+    <span>${tops.map(t => `<button class="chip" data-go="${t}" type="button">${esc(node[t].t.name)}</button>`).join(" ")} <button class="chip" data-go="tested" type="button">All results</button></span></div>`;
+}
 
 let state = {node:null, q:"", all:false, type:"", from:"", src:"", picks:false, sort:"new", shown:50};
 
@@ -207,6 +342,7 @@ function tile(o, color, kids){
     ${color?`<span class="swatch" style="background:${color}"></span>`:""}
     <span class="h"><b>${esc(o.name)}</b><span class="n">${c.toLocaleString()}</span></span>
     <p>${esc(o.desc)}</p>
+    ${tcount[o.id]?`<span class="tested">${tcount[o.id]} tested idea${tcount[o.id]===1?"":"s"}</span>`:""}
     ${kids?`<span class="kids">${kids.map(k=>`<span>${esc(k.name)}</span>`).join("")}</span>`:""}
   </button>`;
 }
@@ -257,12 +393,13 @@ function listHTML(){
 function renderTree(){
   const cur = state.node, n = node[cur];
   let h = `<h4>Index</h4><ul>`;
+  if(NTESTED) h += `<li><button data-go="tested" class="${cur==="tested"?"on":""}"><span>Tested ideas</span><span class="n">${NTESTED}</span></button></li>`;
   T.forEach(a => {
     const open = n && n.a.id===a.id;
     h += `<li><button data-go="${a.id}" class="${cur===a.id?"on":""}"><span><span class="dot" style="background:${a.color}"></span>${esc(a.name)}</span><span class="n">${cnt[a.id]||0}</span></button>`;
     if(open){ h += `<ul>`; a.subs.forEach(s => { const so = n.s && n.s.id===s.id;
       h += `<li><button data-go="${s.id}" class="${cur===s.id?"on":""}"><span>${esc(s.name)}</span><span class="n">${cnt[s.id]||0}</span></button>`;
-      if(so){ h += `<ul>`+ s.topics.map(t=>`<li><button data-go="${t.id}" class="${cur===t.id?"on":""}"><span>${esc(t.name)}</span><span class="n">${cnt[t.id]||0}</span></button></li>`).join("") + `</ul>`; }
+      if(so){ h += `<ul>`+ s.topics.map(t=>`<li><button data-go="${t.id}" class="${cur===t.id?"on":""}"><span>${esc(t.name)}${tcount[t.id]?`<span class="tk" title="${tcount[t.id]} tested">✓${tcount[t.id]}</span>`:""}</span><span class="n">${cnt[t.id]||0}</span></button></li>`).join("") + `</ul>`; }
       h += `</li>`; }); h += `</ul>`; }
     h += `</li>`; });
   $("#tree").innerHTML = h + `</ul>`;
@@ -270,24 +407,26 @@ function renderTree(){
 
 function render(){
   if(state.node==="about"){ renderAbout(); renderTree(); return; }
+  if(state.node==="tested"){ renderTested(); renderTree(); return; }
   const n = node[state.node]; let h = "";
   if(!n){
-    h += `<h1>Alignment research, mapped</h1><p class="lede">${ITEMS.length.toLocaleString()} papers and posts on AI safety, sorted into ${T.length} areas, ${T.reduce((s,a)=>s+a.subs.length,0)} subfields and ${Object.values(node).filter(x=>x.kind==="topic").length} topics. Pick an area to drill down, or search everything.</p><div class="levelmeta">Built ${esc(D.built)} from open datasets. <button class="chip" data-go="about" type="button">See sources</button></div>`;
+    h += `<h1>Alignment research, mapped</h1><p class="lede">${ITEMS.length.toLocaleString()} papers and posts on AI safety, sorted into ${T.length} areas, ${T.reduce((s,a)=>s+a.subs.length,0)} subfields and ${Object.values(node).filter(x=>x.kind==="topic").length} topics. Pick an area to drill down, or search everything.</p><div class="levelmeta">Built ${esc(D.built)} from open datasets. <button class="chip" data-go="about" type="button">See sources</button></div>` + testedBand(null);
     h += `<div class="tiles home-tiles">${T.map(a=>tile(a,a.color,a.subs)).join("")}</div>`;
   } else if(n.kind==="area"){
-    h += crumbs() + `<h1>${esc(n.a.name)}</h1><p class="lede">${esc(n.a.desc)}</p><div class="levelmeta">${n.a.subs.length} subfields · ${(cnt[n.a.id]||0).toLocaleString()} items</div>`;
+    h += crumbs() + `<h1>${esc(n.a.name)}</h1><p class="lede">${esc(n.a.desc)}</p><div class="levelmeta">${n.a.subs.length} subfields · ${(cnt[n.a.id]||0).toLocaleString()} items</div>` + testedBand(n.a.id);
     h += `<div class="tiles">${n.a.subs.map(s=>tile(s,n.a.color,s.topics)).join("")}</div>`;
   } else if(n.kind==="sub"){
-    h += crumbs() + `<h1>${esc(n.s.name)}</h1><p class="lede">${esc(n.s.desc)}</p><div class="levelmeta">${n.s.topics.length} topics · ${(cnt[n.s.id]||0).toLocaleString()} items</div>`;
+    h += crumbs() + `<h1>${esc(n.s.name)}</h1><p class="lede">${esc(n.s.desc)}</p><div class="levelmeta">${n.s.topics.length} topics · ${(cnt[n.s.id]||0).toLocaleString()} items</div>` + testedBand(n.s.id);
     h += `<div class="tiles">${n.s.topics.map(t=>tile(t,n.a.color)).join("")}</div>`;
   } else {
     const sib = n.s.topics.filter(t=>t.id!==n.t.id);
     h += crumbs() + `<h1>${esc(n.t.name)}</h1><p class="lede">${esc(n.t.desc)}</p><div class="levelmeta">${(cnt[n.t.id]||0).toLocaleString()} items · also in ${esc(n.s.name)}: ${sib.map(t=>`<button class="chip" data-go="${t.id}" type="button">${esc(t.name)} ${cnt[t.id]||0}</button>`).join(" ")}</div>`;
     (agendaByLeaf[n.t.id]||[]).forEach(g => h += agendaCard(g));
+    h += testsForTopic(n.t.id);
   }
   h += listHTML();
   $("#main").innerHTML = h; renderTree();
-  $("#foot").innerHTML = `Data: <a href="https://shallowreview.ai/" target="_blank" rel="noopener">Shallow Review of Technical AI Safety 2025</a> (Arb Research and contributors) and <a href="https://ai-safety-graph.github.io/AISafetyGraph/" target="_blank" rel="noopener">AI Safety Graph</a> (Apart Research, MIT), and the Alignment Forum. Topics reviewed by Claude; misfiles happen. <button class="chip" data-go="about" type="button">Sources &amp; method</button>`;
+  $("#foot").innerHTML = `Data: <a href="https://shallowreview.ai/" target="_blank" rel="noopener">Shallow Review of Technical AI Safety 2025</a> (Arb Research and contributors) and <a href="https://ai-safety-graph.github.io/AISafetyGraph/" target="_blank" rel="noopener">AI Safety Graph</a> (Apart Research, MIT), and the Alignment Forum. Topics reviewed by Claude; misfiles happen.${NTESTED?` Tested ideas from <a href="${esc(X.repo)}" target="_blank" rel="noopener">Alignment SynthCore</a>.`:""} <button class="chip" data-go="about" type="button">Sources &amp; method</button>`;
 }
 
 function renderAbout(){
@@ -313,6 +452,29 @@ function renderAbout(){
   <p>Strongest for 2025 (Shallow Review), mid-2025 to now (Alignment Forum) and pre-2023 arXiv (AI Safety Graph). Thinnest for 2023 to 2024 and for 2026 arXiv papers.</p></div>`;
 }
 
+function renderTested(){
+  const order = X.testbeds.filter(tb => IDEAS.some(x => x.testbed===tb.id));
+  $("#main").innerHTML = crumbs() + `<h1>Tested ideas</h1>
+  <p class="lede">Concrete alignment research ideas, each run on a testbed where the right answer is planted and known, and compared with a tuned baseline. The point is direction-finding: which research directions deserve more effort. Failures are published too.</p>
+  <div class="levelmeta">${NTESTED} ideas · ${order.length} testbeds · results from <a href="${esc(X.repo)}" target="_blank" rel="noopener">Alignment SynthCore</a>, updated ${esc(X.generated)}</div>
+  <div class="about"><h2>How an idea is tested</h2>
+  <ol class="steps">
+   <li><b>Prediction first.</b> Each idea states what it should improve and the mechanism that should cause it, with a minimum effect, before any run.</li>
+   <li><b>Toy gate.</b> On a small version of the testbed, the predicted mechanism must show up. If it doesn't, the idea stops here.</li>
+   <li><b>Equal tuning.</b> The method and the baseline get the same tuning budget, on development data only.</li>
+   <li><b>Benchmark.</b> 8 paired seeds on held-out test data, an exact permutation test, a 95% confidence interval and the minimum detectable effect.</li>
+   <li><b>Verdict by code.</b> No model or person decides the verdict.</li>
+  </ol>
+  <div class="legend">${Object.entries(VERD).map(([k,m]) => `${vbadge(k)}<span>${esc(m[2])}</span>`).join("")}${Object.entries(FLAGS).map(([k,m]) => `<span class="v flag">${esc(m[0])}</span><span>${esc(m[1])}</span>`).join("")}</div>
+  <p>A topic's direction signal combines two rates: how often ideas' mechanisms reproduce, and how often ideas beat the baseline. With fewer than ${X.min_ideas} tested ideas it is marked tentative, and so far every topic is.</p></div>
+  ${order.map(tb => `<section class="tbsec" id="tb-${tb.id}"><h2>${esc(tb.name)}</h2><div class="levelmeta">Commons topics: ${tb.topics.map(t => node[t] ? `<button class="chip" data-go="${t}" type="button">${esc(node[t].t.name)}</button>` : "").join(" ")}</div>${tbCard(tb, IDEAS.filter(x => x.testbed===tb.id), null, false)}${[...new Set(IDEAS.filter(x => x.testbed===tb.id && !x.control).map(x => x.topic))].map(t => SIG[t+"|"+tb.id] ? `<div class="tbcard sigcard"><div class="lab">${esc(node[t] ? node[t].t.name : t)}</div>${signalHTML(t, tb.id)}</div>` : "").join("")}</section>`).join("")}
+  <div class="about"><h2>Read with care</h2><ul>
+   <li>The methods here were written by hand as first examples. A coding agent that implements ideas extracted from papers is the next step.</li>
+   <li>Each testbed is a small, CPU-sized stand-in for the real problem. A verdict says how an idea did on this planted version, not whether it works at scale.</li>
+   <li>On the AI control testbed, model outputs are cached and fixed, so its seeds resample problems rather than rerun models. Treat its p-values as screening statistics.</li>
+  </ul></div>`;
+}
+
 // events
 document.addEventListener("click", e => {
   const g = e.target.closest("[data-go]"); if(g){ e.preventDefault(); go(g.dataset.go); return; }
@@ -324,12 +486,14 @@ document.addEventListener("click", e => {
 document.addEventListener("change", e => {
   const m = {fType:"type", fFrom:"from", fSrc:"src", fSort:"sort"}[e.target.id];
   if(m){ state[m] = e.target.value; state.shown = 50; render(); }
-  if(e.target.id==="scopeAll"){ state.all = e.target.checked; state.shown=50; if(state.node==="about") state.node=null; render(); }
+  if(e.target.id==="scopeAll"){ state.all = e.target.checked; state.shown=50; if(state.node==="about"||state.node==="tested") state.node=null; render(); }
 });
-let tmr; $("#q").addEventListener("input", e => { clearTimeout(tmr); tmr = setTimeout(()=>{ state.q = e.target.value; state.shown=50; if(state.node==="about") state.node=null; render(); }, 140); });
+let tmr; $("#q").addEventListener("input", e => { clearTimeout(tmr); tmr = setTimeout(()=>{ state.q = e.target.value; state.shown=50; if(state.node==="about"||state.node==="tested") state.node=null; render(); }, 140); });
 $("#home").addEventListener("click", ()=>go(null));
 $("#aboutBtn").addEventListener("click", ()=>go("about"));
-const fromHash = () => { const h0 = (location.hash||"").slice(1); return (node[h0] || h0==="about") ? h0 : null; };
+$("#testedBtn").hidden = !NTESTED;
+$("#testedBtn").addEventListener("click", ()=>go("tested"));
+const fromHash = () => { const h0 = (location.hash||"").slice(1); return (node[h0] || h0==="about" || (h0==="tested" && NTESTED)) ? h0 : null; };
 window.addEventListener("popstate", () => { state.node = fromHash(); state.shown = 50; render(); });
 state.node = fromHash();
 render();
