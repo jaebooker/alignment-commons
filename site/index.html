@@ -220,11 +220,13 @@ const TB = {}, IDEAS = X ? X.ideas : [], byTopic = {}, tbTopic = {}, SIG = {}, t
 if(X){
   X.testbeds.forEach(tb => { TB[tb.id] = tb; tb.topics.forEach(t => (tbTopic[t] ||= new Set()).add(tb.id)); });
   X.signals.forEach(s => SIG[s.topic+"|"+s.testbed] = s);
-  IDEAS.filter(x => !x.control).forEach(x => {
+  IDEAS.filter(x => !x.control && x.testbed).forEach(x => {
     (byTopic[x.topic] ||= []).push(x); (tbTopic[x.topic] ||= new Set()).add(x.testbed);
     const n = node[x.topic]; if(n) [n.a.id, n.s.id, n.t.id].forEach(k => tcount[k] = (tcount[k]||0)+1); });
 }
-const NTESTED = IDEAS.filter(x => !x.control).length;
+const NTESTED = IDEAS.filter(x => !x.control && x.testbed).length;
+const UNTEST = IDEAS.filter(x => x.verdict==="untestable"), untestByTopic = {};
+UNTEST.forEach(x => (untestByTopic[x.topic] ||= []).push(x));
 const VERD = {
   beats_baseline:["Beats baseline","win","Significant win on the safety metric over the tuned baseline."],
   mech_ok_no_win:["Mechanism works, no win","mech","The predicted mechanism showed up, but there was no significant safety win."],
@@ -284,15 +286,24 @@ function tbCard(tb, ideas, topic, withLab){
   </section>`;
 }
 
+function untestHTML(xs, showTopic){
+  return `<ul class="ideas">${xs.map(x => `<li class="idea"><div class="top"><b>${esc(x.title)}</b>${vbadge("untestable")}${showTopic && node[x.topic] ? ` <button class="chip" data-go="${x.topic}" type="button">${esc(node[x.topic].t.name)}</button>` : ""}</div>
+    <p>${esc(x.description)}</p>
+    <div class="res">Why not: ${esc(x.untestable_reason || "no current testbed fits")}</div>
+    <div class="cite">${cite(x.source)}${x.nearest_testbed && TB[x.nearest_testbed] ? `Nearest testbed: ${esc(TB[x.nearest_testbed].name)}` : ""}</div></li>`).join("")}</ul>`;
+}
+
 function testsForTopic(t){
-  const ids = [...(tbTopic[t] || [])]; if(!ids.length) return "";
-  return `<div class="tests">` + ids.map(id => TB[id] && tbCard(TB[id], (byTopic[t]||[]).filter(x => x.testbed===id), t, true)).join("") + `</div>`;
+  const ids = [...(tbTopic[t] || [])], un = untestByTopic[t] || [];
+  if(!ids.length && !un.length) return "";
+  return `<div class="tests">` + ids.map(id => TB[id] && tbCard(TB[id], (byTopic[t]||[]).filter(x => x.testbed===id), t, true)).join("")
+    + (un.length ? `<section class="tbcard"><div class="lab">Not testable on current testbeds</div><p class="q">These papers in this topic need something no testbed offers yet. Each one marks a gap to build next.</p>${untestHTML(un, false)}</section>` : "") + `</div>`;
 }
 
 function testedBand(id){
   const c = id ? tcount[id] : NTESTED; if(!c) return "";
   const where = id ? ` in ${esc(node[id].obj.name)}` : ` on ${X.testbeds.length} planted testbeds`;
-  const tops = id ? [...new Set(IDEAS.filter(x => !x.control && node[x.topic] && (node[x.topic].a.id===id || node[x.topic].s.id===id)).map(x => x.topic))] : [];
+  const tops = id ? [...new Set(IDEAS.filter(x => !x.control && x.testbed && node[x.topic] && (node[x.topic].a.id===id || node[x.topic].s.id===id)).map(x => x.topic))] : [];
   return `<div class="band"><span><b>${c} research idea${c===1?"":"s"} tested</b>${where}. Each one was run against a tuned baseline on a testbed where the right answer is planted; verdicts come from code.</span>
     <span>${tops.map(t => `<button class="chip" data-go="${t}" type="button">${esc(node[t].t.name)}</button>`).join(" ")} <button class="chip" data-go="tested" type="button">All results</button></span></div>`;
 }
@@ -456,7 +467,7 @@ function renderTested(){
   const order = X.testbeds.filter(tb => IDEAS.some(x => x.testbed===tb.id));
   $("#main").innerHTML = crumbs() + `<h1>Tested ideas</h1>
   <p class="lede">Concrete alignment research ideas, each run on a testbed where the right answer is planted and known, and compared with a tuned baseline. The point is direction-finding: which research directions deserve more effort. Failures are published too.</p>
-  <div class="levelmeta">${NTESTED} ideas · ${order.length} testbeds · results from <a href="${esc(X.repo)}" target="_blank" rel="noopener">Alignment SynthCore</a>, updated ${esc(X.generated)}</div>
+  <div class="levelmeta">${NTESTED} ideas · ${order.length} testbeds${UNTEST.length?` · ${UNTEST.length} not yet testable`:""} · results from <a href="${esc(X.repo)}" target="_blank" rel="noopener">Alignment SynthCore</a>, updated ${esc(X.generated)}</div>
   <div class="about"><h2>How an idea is tested</h2>
   <ol class="steps">
    <li><b>Prediction first.</b> Each idea states what it should improve and the mechanism that should cause it, with a minimum effect, before any run.</li>
@@ -468,6 +479,7 @@ function renderTested(){
   <div class="legend">${Object.entries(VERD).map(([k,m]) => `${vbadge(k)}<span>${esc(m[2])}</span>`).join("")}${Object.entries(FLAGS).map(([k,m]) => `<span class="v flag">${esc(m[0])}</span><span>${esc(m[1])}</span>`).join("")}</div>
   <p>A topic's direction signal combines two rates: how often ideas' mechanisms reproduce, and how often ideas beat the baseline. With fewer than ${X.min_ideas} tested ideas it is marked tentative, and so far every topic is.</p></div>
   ${order.map(tb => `<section class="tbsec" id="tb-${tb.id}"><h2>${esc(tb.name)}</h2><div class="levelmeta">Commons topics: ${tb.topics.map(t => node[t] ? `<button class="chip" data-go="${t}" type="button">${esc(node[t].t.name)}</button>` : "").join(" ")}</div>${tbCard(tb, IDEAS.filter(x => x.testbed===tb.id), null, false)}${[...new Set(IDEAS.filter(x => x.testbed===tb.id && !x.control).map(x => x.topic))].map(t => SIG[t+"|"+tb.id] ? `<div class="tbcard sigcard"><div class="lab">${esc(node[t] ? node[t].t.name : t)}</div>${signalHTML(t, tb.id)}</div>` : "").join("")}</section>`).join("")}
+  ${UNTEST.length ? `<section class="tbsec" id="untestable"><h2>Not testable yet</h2><div class="levelmeta">${UNTEST.length} papers from the Commons that no current testbed can test, and what each one would need</div><div class="tbcard">${untestHTML(UNTEST, true)}</div></section>` : ""}
   <div class="about"><h2>Read with care</h2><ul>
    <li>The methods here were written by hand as first examples. A coding agent that implements ideas extracted from papers is the next step.</li>
    <li>Each testbed is a small, CPU-sized stand-in for the real problem. A verdict says how an idea did on this planted version, not whether it works at scale.</li>

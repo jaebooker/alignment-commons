@@ -28,13 +28,14 @@ def main():
     data = load(sys.argv[1] if len(sys.argv) > 1 else None)
     site = json.loads((ROOT / "site" / "data.json").read_text())
     topics = {t["id"] for a in site["taxonomy"] for s in a["subs"] for t in s["topics"]}
-    bad = sorted({x["topic"] for x in data["ideas"] if x["topic"] not in topics} |
+    bad = sorted({str(x["topic"]) for x in data["ideas"] if x["topic"] not in topics} |
                  {t for tb in data["testbeds"] for t in tb["topics"] if t not in topics})
     if bad:
         raise SystemExit(f"unknown Commons topic ids in SynthCore results: {bad}")
     (ROOT / "site" / "tests.json").write_text(json.dumps(data, separators=(",", ":"), ensure_ascii=False))
-    real = [x for x in data["ideas"] if not x["control"]]
-    print(f"{len(real)} tested ideas on {len(data['testbeds'])} testbeds -> site/tests.json")
+    real = [x for x in data["ideas"] if not x["control"] and x["testbed"]]
+    gaps = [x for x in data["ideas"] if x["verdict"] == "untestable"]
+    print(f"{len(real)} tested ideas on {len(data['testbeds'])} testbeds, {len(gaps)} untestable -> site/tests.json")
 
 
 if __name__ == "__main__":
