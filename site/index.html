@@ -159,6 +159,10 @@ mark{background:var(--pick-soft);color:inherit;border-radius:2px}
 .v.hurt{background:var(--hurt-soft);color:var(--hurt)}
 .v.gate{background:var(--pick-soft);color:var(--pick)}
 .v.flag{border-color:var(--line);color:var(--muted);background:none;font-weight:500}
+.v.tri{background:none;font-weight:500;border-color:currentColor;cursor:help}
+.v.tri.bug{color:var(--hurt)}
+.v.tri.weak,.v.tri.pend{color:var(--pick)}
+.v.tri.clean,.v.tri.none{color:var(--muted)}
 .tbsec{margin-top:34px}
 .tbsec h2{font:500 24px var(--display);margin:0 0 4px}
 .legend .v{justify-self:start}
@@ -235,6 +239,22 @@ const VERD = {
   mechanism_failed:["Mechanism failed","gate","Failed the toy gate: the predicted mechanism did not appear, so the benchmark was not run."],
   implementation_failed:["Implementation failed","null","No working method after several attempts. Kept separate so bugs never count against an idea."],
   untestable:["Untestable","null","No current testbed fits the idea."]};
+// Triage of failed gates (SynthCore triage.py): how far to trust a "Mechanism failed".
+const TRIAGE = {
+  genuine_negative:["Clean negative","clean","Failed the gate again with method and baseline both tuned, and the outputs show no sign of a bug."],
+  weak_negative:["Weak negative","weak","Failed the gate when tuned, with a caveat: a near miss, or the best setting sat at the edge of the range tried."],
+  suspected_bug:["Suspected bug","bug","The method's outputs look broken. Not counted against the direction until fixed."],
+  fixed_pending_rerun:["Fix pending rerun","pend","The method was fixed after this verdict and must be rerun. Not counted against the direction meanwhile."],
+  gate_artifact:["Passes when tuned","weak","Passes the gate once both arms are tuned: the failure came from default settings."],
+  needs_tuned_gate:["Not yet triaged","none","The tuned re-check has not been run yet."],
+  untriaged:["Not yet triaged","none","The tuned re-check has not been run yet."]};
+function triBadge(t){ if(!t) return "";
+  const m = TRIAGE[t.label] || [t.label,"none",""];
+  const bits = [m[2]];
+  if(t.tuned_gate) bits.push(`Tuned gate: observed ${sg(t.tuned_gate.observed)}, needed ${t.tuned_gate.rule}.`);
+  if(t.review) bits.push(`Reviewed: ${t.review}`);
+  t.flags.forEach(f => bits.push(f.detail));
+  return `<span class="v tri ${m[1]}" title="${esc(bits.join("\n"))}">${esc(m[0])}</span>`; }
 const FLAGS = {cause_unresolved:["Cause unresolved","Won, but the predicted mechanism did not show up."],
   capability_confounded:["Capability confounded","Capability also rose significantly, so the win may just be better training."]};
 const READ = {"pursue":"the mechanism tends to reproduce and ideas tend to win",
@@ -258,7 +278,7 @@ function ideaHTML(x, showTopic){
   else if(g) res = `Toy gate on ${esc(g.quantity.replace(/^diagnostic:/,""))}: observed ${sg(g.observed)}, needed ${esc(g.rule)}`;
   const tn = showTopic && node[x.topic] ? ` <button class="chip" data-go="${x.topic}" type="button">${esc(node[x.topic].t.name)}</button>` : "";
   return `<li class="idea">
-    <div class="top"><b>${esc(x.title)}</b>${vbadge(x.verdict)}${x.flags.map(f => `<span class="v flag" title="${esc((FLAGS[f]||[f,""])[1])}">${esc((FLAGS[f]||[f])[0])}</span>`).join("")}${x.control?`<span class="v flag" title="A sanity check, not a research idea">Control</span>`:""}${tn}</div>
+    <div class="top"><b>${esc(x.title)}</b>${vbadge(x.verdict)}${triBadge(x.triage)}${x.flags.map(f => `<span class="v flag" title="${esc((FLAGS[f]||[f,""])[1])}">${esc((FLAGS[f]||[f])[0])}</span>`).join("")}${x.control?`<span class="v flag" title="A sanity check, not a research idea">Control</span>`:""}${tn}</div>
     ${res ? `<div class="res">${res}</div>` : ""}
     ${x.description ? `<p data-x class="clamp">${esc(x.description)}</p>` : ""}
     <div class="cite">${cite(x.source)}<a href="${esc(x.record)}" target="_blank" rel="noopener">Full record and code</a>${x.updated?` · tested ${esc(x.updated)}`:""}</div>
@@ -475,8 +495,9 @@ function renderTested(){
    <li><b>Equal tuning.</b> The method and the baseline get the same tuning budget, on development data only.</li>
    <li><b>Benchmark.</b> 8 paired seeds on held-out test data, an exact permutation test, a 95% confidence interval and the minimum detectable effect.</li>
    <li><b>Verdict by code.</b> No model or person decides the verdict.</li>
+   <li><b>Triage of failures.</b> A failed gate is re-checked with both arms tuned and scanned for signs of a bug. The verdict never changes; a second badge says how far to trust it. Suspected bugs and pending fixes are left out of direction signals.</li>
   </ol>
-  <div class="legend">${Object.entries(VERD).map(([k,m]) => `${vbadge(k)}<span>${esc(m[2])}</span>`).join("")}${Object.entries(FLAGS).map(([k,m]) => `<span class="v flag">${esc(m[0])}</span><span>${esc(m[1])}</span>`).join("")}</div>
+  <div class="legend">${Object.entries(VERD).map(([k,m]) => `${vbadge(k)}<span>${esc(m[2])}</span>`).join("")}${Object.entries(FLAGS).map(([k,m]) => `<span class="v flag">${esc(m[0])}</span><span>${esc(m[1])}</span>`).join("")}${Object.entries(TRIAGE).filter(([k]) => k!=="untriaged").map(([k,m]) => `<span class="v tri ${m[1]}">${esc(m[0])}</span><span>${esc(m[2])}</span>`).join("")}</div>
   <p>A topic's direction signal combines two rates: how often ideas' mechanisms reproduce, and how often ideas beat the baseline. With fewer than ${X.min_ideas} tested ideas it is marked tentative, and so far every topic is.</p></div>
   ${order.map(tb => `<section class="tbsec" id="tb-${tb.id}"><h2>${esc(tb.name)}</h2><div class="levelmeta">Commons topics: ${tb.topics.map(t => node[t] ? `<button class="chip" data-go="${t}" type="button">${esc(node[t].t.name)}</button>` : "").join(" ")}</div>${tbCard(tb, IDEAS.filter(x => x.testbed===tb.id), null, false)}${[...new Set(IDEAS.filter(x => x.testbed===tb.id && !x.control).map(x => x.topic))].map(t => SIG[t+"|"+tb.id] ? `<div class="tbcard sigcard"><div class="lab">${esc(node[t] ? node[t].t.name : t)}</div>${signalHTML(t, tb.id)}</div>` : "").join("")}</section>`).join("")}
   ${UNTEST.length ? `<section class="tbsec" id="untestable"><h2>Not testable yet</h2><div class="levelmeta">${UNTEST.length} papers from the Commons that no current testbed can test, and what each one would need</div><div class="tbcard">${untestHTML(UNTEST, true)}</div></section>` : ""}
