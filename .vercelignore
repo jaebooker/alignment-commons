@@ -1,3 +1,11 @@
 pipeline/
 data/
 raw/
+.env*
+work/
+tests/
+docs/
+scripts/
+node_modules/
+.git/
+__pycache__/
