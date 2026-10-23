@@ -1,5 +1,5 @@
 import pg from "pg";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 const client = new pg.Client({
   connectionString:
     process.env.DATABASE_URL_UNPOOLED || process.env.DATABASE_URL,
@@ -7,12 +7,12 @@ const client = new pg.Client({
 await client.connect();
 try {
   await client.query("BEGIN");
-  await client.query(
-    await readFile(
-      new URL("../migrations/001_commons.sql", import.meta.url),
-      "utf8",
-    ),
-  );
+  const dir = new URL("../migrations/", import.meta.url);
+  for (const name of (await readdir(dir))
+    .filter((n) => n.endsWith(".sql"))
+    .sort()) {
+    await client.query(await readFile(new URL(name, dir), "utf8"));
+  }
   await client.query("COMMIT");
   console.log("Commons schema ready.");
 } finally {

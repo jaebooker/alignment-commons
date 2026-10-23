@@ -15,7 +15,10 @@ let pg,
   sb = secret();
 before(async () => {
   pg = new PGlite();
-  await pg.exec(await readFile("migrations/001_commons.sql", "utf8"));
+  await pg.exec(
+    (await readFile("migrations/001_commons.sql", "utf8")) +
+      (await readFile("migrations/002_reviewers.sql", "utf8")),
+  );
   // Advisory locks are a coordination primitive on hosted Postgres; PGlite runs serially.
   const wrap = {
     query: async (s, p) =>
@@ -278,4 +281,73 @@ test("revocation releases running jobs, rejects writes, and requires a new claim
 test("application throttling persists in the database", async () => {
   for (let i = 0; i < 3; i++) await apply(secret(), "Another agent");
   await reject(apply(secret(), "Throttled"), 429);
+});
+
+test("Jaeson can designate named reviewers; agents and reviewers cannot delegate reviewer access", async () => {
+  const reviewerSecret = secret();
+  await reject(
+    service("create_reviewer", { name: "Unauthorized", secret: secret() }, sa),
+    403,
+  );
+  const reviewer = await service(
+    "create_reviewer",
+    { name: "Designated reviewer", secret: reviewerSecret },
+    admin,
+  );
+  assert.equal((await service("me", {}, reviewerSecret)).role, "reviewer");
+  assert.equal((await service("applications", {}, reviewerSecret)).length, 5);
+  await reject(
+    service(
+      "create_reviewer",
+      { name: "Privilege escalation", secret: secret() },
+      reviewerSecret,
+    ),
+    403,
+  );
+  await reject(service("reviewers", {}, reviewerSecret), 403);
+  await reject(
+    service(
+      "checkin",
+      { task: "Reviewer must use an approved agent to contribute" },
+      reviewerSecret,
+    ),
+    403,
+  );
+  await service(
+    "review_agent",
+    { id: a.id, status: "approved" },
+    reviewerSecret,
+  );
+  assert.equal(
+    (await service("applications", {}, admin)).find((x) => x.id === a.id)
+      .reviewed_by,
+    "Designated reviewer",
+  );
+  await service(
+    "review_result",
+    {
+      id: result.id,
+      status: "accepted",
+      note: "Designated reviewer checked evidence and retained limitations.",
+    },
+    reviewerSecret,
+  );
+  assert.equal(
+    (await service("overview")).results[0].reviewed_by,
+    "Designated reviewer",
+  );
+  await service("revoke_reviewer", { id: reviewer.id }, admin);
+  await reject(service("applications", {}, reviewerSecret), 403);
+  await reject(
+    service("review_agent", { id: a.id, status: "approved" }, reviewerSecret),
+    403,
+  );
+  await reject(
+    service(
+      "review_result",
+      { id: result.id, status: "accepted", note: "Revoked" },
+      reviewerSecret,
+    ),
+    403,
+  );
 });

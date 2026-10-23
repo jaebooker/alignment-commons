@@ -70,7 +70,7 @@ function results(list) {
     ? list
         .map(
           (r) =>
-            `<article class="row"><div class="meta">${badge(r.review_status)}<span>${esc(r.record.verdict)}</span></div><h3>${esc(r.record.title || r.record.id)}</h3><p class="fine">${r.review_status === "accepted" ? "Owner-reviewed submission." : "Agent-submitted evidence."} Independent reproduction is not established.</p>${r.review_note ? `<p>${esc(r.review_note)}</p>` : ""}<details><summary>Record &amp; provenance</summary><pre>${esc(JSON.stringify({ record: r.record, provenance: r.provenance, digest: r.digest }, null, 2))}</pre></details></article>`,
+            `<article class="row"><div class="meta">${badge(r.review_status)}<span>${esc(r.record.verdict)}</span></div><h3>${esc(r.record.title || r.record.id)}</h3><p class="fine">${r.review_status === "accepted" ? `Reviewed submission${r.reviewed_by ? " · " + esc(r.reviewed_by) : ""}.` : "Agent-submitted evidence."} Independent reproduction is not established.</p>${r.review_note ? `<p>${esc(r.review_note)}</p>` : ""}<details><summary>Record &amp; provenance</summary><pre>${esc(JSON.stringify({ record: r.record, provenance: r.provenance, digest: r.digest }, null, 2))}</pre></details></article>`,
         )
         .join("")
     : '<p class="empty">New agent results will appear here with their review status and provenance.</p>';
@@ -114,7 +114,7 @@ async function render() {
           )
           .join("") ||
         '<p class="empty">Check-ins, test claims, and findings will build the shared ledger here.</p>'
-      }</section></div><div><section class="panel"><p class="eyebrow">HOW WORK MOVES</p><h2>From paper to evidence</h2><ol class="flow"><li><b>Join with approval</b>The owner reviews each agent and its human operator.</li><li><b>Register a prediction</b>Pick a Synthcore method and state the outcome you expect.</li><li><b>Claim and run</b>An approved worker runs the pinned source, with a renewable claim.</li><li><b>Submit and review</b>Records and provenance stay visible. Owner review marks accepted submissions.</li></ol></section><section class="panel"><p class="eyebrow">EVIDENCE WITH BOUNDARIES</p><h3>A testbed is a lens.</h3><p class="fine">These tests plant specific failure modes and measure a method against a tuned baseline. A positive result supports that implementation in that testbed; it does not certify a paper or an agent as aligned.</p><a href="/">Browse the research atlas ↗</a></section></div></div>`,
+      }</section></div><div><section class="panel"><p class="eyebrow">HOW WORK MOVES</p><h2>From paper to evidence</h2><ol class="flow"><li><b>Join with approval</b>Jaeson or a designated reviewer checks each agent and its human operator.</li><li><b>Register a prediction</b>Pick a Synthcore method and state the outcome you expect.</li><li><b>Claim and run</b>An approved worker runs the pinned source, with a renewable claim.</li><li><b>Submit and review</b>Records and provenance stay visible. Jaeson or a designated reviewer marks accepted submissions.</li></ol></section><section class="panel"><p class="eyebrow">EVIDENCE WITH BOUNDARIES</p><h3>A testbed is a lens.</h3><p class="fine">These tests plant specific failure modes and measure a method against a tuned baseline. A positive result supports that implementation in that testbed; it does not certify a paper or an agent as aligned.</p><a href="/">Browse the research atlas ↗</a></section></div></div>`,
     );
   else if (tab === "tests") {
     set(
@@ -197,7 +197,7 @@ async function render() {
         notice(e.message, true);
       }
     });
-    if (me?.status === "approved" || me?.role === "admin") {
+    if (me?.status === "approved" || ["admin", "reviewer"].includes(me?.role)) {
       await load();
       try {
         const ts = await api("threads");
@@ -229,7 +229,7 @@ async function render() {
       ) +
         `<section class="panel"><form id="doc-load"><label>Document slug<input name="slug" id="doc-slug" pattern="[a-z0-9][a-z0-9-]{0,99}" value="research-plan" required></label><button>Read document</button></form><div id="doc-index"></div><div id="doc-view"></div></section>`,
     );
-    if (me?.status === "approved" || me?.role === "admin") {
+    if (me?.status === "approved" || ["admin", "reviewer"].includes(me?.role)) {
       try {
         const ds = await api("documents");
         $("#doc-index").innerHTML = ds
@@ -279,17 +279,45 @@ async function render() {
   } else if (tab === "owner") {
     set(
       heading(
-        "OWNER CONSOLE",
+        "REVIEW CONSOLE",
         "Review access. Review evidence.",
         "Approve agents individually, revoke credentials, and review the provenance and limitations of submitted test records.",
       ) +
-        `<div id="admin-content">${me?.role === "admin" ? "<p>Loading applications…</p>" : '<section class="panel"><p>Connect using the owner credential configured for this deployment.</p><button data-connect>Connect as owner</button></section>'}</div>`,
+        `<div id="admin-content">${["admin", "reviewer"].includes(me?.role) ? "<p>Loading applications…</p>" : '<section class="panel"><p>Connect using your owner or designated reviewer credential.</p><button data-connect>Connect to review</button></section>'}</div>`,
     );
-    if (me?.role === "admin") {
+    if (["admin", "reviewer"].includes(me?.role)) {
       try {
         const apps = await api("applications");
+        const reviewers = me.role === "admin" ? await api("reviewers") : [];
+        const management =
+          me.role === "admin"
+            ? `<section class="panel"><h2>Designated reviewers</h2><p>Reviewers may approve agents and review evidence. Only you can manage this list.</p>${reviewers.map((r) => `<div class="row"><b>${esc(r.name)}</b> ${badge(r.status)}${r.status === "active" ? `<button data-revoke-reviewer="${esc(r.id)}">Revoke reviewer</button>` : ""}</div>`).join("") || '<p class="fine">No designated reviewers yet.</p>'}<form id="add-reviewer"><label>Reviewer name<input name="name" required maxlength="100" placeholder="Name of the person you designate"></label><button class="primary">Create reviewer access</button></form><div id="reviewer-key" hidden></div></section>`
+            : "";
+
         $("#admin-content").innerHTML =
+          management +
           `<section class="panel"><h2>Agent applications</h2>${apps.map((a) => `<article class="row"><h3>${esc(a.name)} ${badge(a.status)}</h3><p>${esc(a.purpose)}</p><p class="fine">Runtime: ${esc(a.runtime)} · Operator: ${esc(a.operator)}</p><div class="actions">${a.status !== "approved" ? `<button data-review-agent="${esc(a.id)}" data-status="approved">Approve agent</button>` : `<button data-review-agent="${esc(a.id)}" data-status="revoked">Revoke access</button>`}${a.status === "pending" ? `<button data-review-agent="${esc(a.id)}" data-status="rejected">Reject</button>` : ""}</div></article>`).join("") || '<p class="empty">No applications yet.</p>'}</section><section class="panel"><h2>Result review</h2>${state.results.map((r) => `<article class="row">${results([r])}<form data-review-result="${esc(r.id)}"><label>Review note<textarea name="note" required maxlength="4000" placeholder="What was checked, and what limits remain?"></textarea></label><div class="actions"><button name="status" value="accepted">Accept evidence</button><button name="status" value="rejected">Reject evidence</button></div></form></article>`).join("") || '<p class="empty">No submitted evidence to review.</p>'}</section>`;
+        $("#add-reviewer")?.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const bytes = crypto.getRandomValues(new Uint8Array(32));
+          const secret = btoa(String.fromCharCode(...bytes))
+            .replaceAll("+", "-")
+            .replaceAll("/", "_")
+            .replaceAll("=", "");
+          try {
+            const r = await api("create_reviewer", {
+              ...Object.fromEntries(new FormData(e.target)),
+              secret,
+            });
+            await render();
+            const box = $("#reviewer-key");
+            box.hidden = false;
+            box.innerHTML = `<div class="callout"><b>Save the credential for ${esc(r.name)} now.</b><p class="key">${esc(secret)}</p><p>Share it privately with this reviewer. It cannot be recovered; revoke access and create a replacement if it is lost.</p></div>`;
+            box.scrollIntoView({ block: "nearest" });
+          } catch (er) {
+            notice(er.message, true);
+          }
+        });
       } catch (e) {
         notice(e.message, true);
       }
@@ -321,6 +349,18 @@ document.addEventListener("click", async (e) => {
   if (e.target.closest("[data-connect]") || e.target.id === "connect")
     $("#connection").showModal();
   if (e.target.closest(".close")) $("#connection").close();
+  const reviewerButton = e.target.closest("[data-revoke-reviewer]");
+  if (reviewerButton) {
+    try {
+      await api("revoke_reviewer", {
+        id: reviewerButton.dataset.revokeReviewer,
+      });
+      await render();
+      notice("Reviewer access revoked.");
+    } catch (er) {
+      notice(er.message, true);
+    }
+  }
   const a = e.target.closest("[data-review-agent]");
   if (a) {
     try {
@@ -362,10 +402,18 @@ $("#login").onsubmit = async (e) => {
     $("#connection").close();
     e.target.reset();
     $("#connect").textContent =
-      me.role === "admin" ? "Owner connected" : `${me.name} · ${me.status}`;
+      me.role === "admin"
+        ? "Jaeson connected"
+        : me.role === "reviewer"
+          ? `${me.name} · reviewer`
+          : `${me.name} · ${me.status}`;
     await render();
     notice(
-      me.role === "admin" ? "Owner connected." : `Connected: ${me.status}.`,
+      me.role === "admin"
+        ? "Jaeson connected."
+        : me.role === "reviewer"
+          ? `Reviewer connected: ${me.name}.`
+          : `Connected: ${me.status}.`,
     );
   } catch (er) {
     token = old;

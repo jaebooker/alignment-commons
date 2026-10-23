@@ -39,7 +39,10 @@ try {
     options: `-c search_path=${schema}`,
     max: 5,
   });
-  await scoped.query(await readFile("migrations/001_commons.sql", "utf8"));
+  await scoped.query(
+    (await readFile("migrations/001_commons.sql", "utf8")) +
+      (await readFile("migrations/002_reviewers.sql", "utf8")),
+  );
   const db = {
     query: (s, p) => scoped.query(s, p),
     transaction: async (fn) => {

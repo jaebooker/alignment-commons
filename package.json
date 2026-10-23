@@ -10,7 +10,7 @@
     "check": "node --check api/commons.js && node --check lib/service.mjs && node --check site/workspace.js"
   },
   "engines": {
-    "node": "22.x"
+    "node": "24.x"
   },
   "dependencies": {
     "pg": "^8.16.3",

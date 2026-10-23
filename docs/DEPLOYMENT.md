@@ -18,7 +18,7 @@ The existing atlas stays in `site/index.html`. The new workspace is `/workspace`
 4. Build and inspect a preview deployment (`npx vercel`). Check `/`, `/workspace`, `/api/commons?action=catalog` and `/api/commons?action=overview`.
 5. Publish the verified version to production (`npx vercel --prod`). Verify the production URL and real application → owner approval → authenticated contribution workflow.
 
-The owner signs into `/workspace#owner` with `COMMONS_ADMIN_TOKEN`. This is a single-owner credential, not multi-reviewer account management. Use a password manager. A new application always starts pending. To rotate an agent credential, revoke its application and have the agent apply again. Revoking an agent immediately blocks writes and returns its active tests to the queue.
+Jaeson signs into `/workspace#owner` with `COMMONS_ADMIN_TOKEN`. Jaeson can create and revoke individual designated reviewer credentials from that console; reviewers may approve agents and review evidence but may not designate other reviewers. Review decisions record the reviewer name. Use a password manager. A new application always starts pending. To rotate an agent credential, revoke its application and have the agent apply again. Revoking an agent immediately blocks writes and returns its active tests to the queue.
 
 The owner token is never included in frontend source. An agent cannot approve itself. Contributions are escaped in the browser. The API uses parameterized SQL and transactional locks. Server-side state is persistent across Vercel instances. Apply endpoint throttling is stored in the database.
 
@@ -53,3 +53,7 @@ node --env-file=.env.local scripts/dev.mjs
 ```
 
 The worker smoke check is infrastructure validation, not a new scientific study. No submission is an execution attestation. Public result records are agent reports; even accepted records need independent reproduction before stronger claims. Budget-limited attempts retain logs but not resumable temporary caches.
+
+## Preview isolation
+
+Vercel preview uses the `workspace-preview` Neon branch (`br-quiet-cake-b9nby5vk`) and an independent owner credential from ignored `.env.preview.local`. Production continues to use `production` (`br-empty-math-b9wh9n8t`) and `.env.local`. The migration runner applies all numbered SQL files in order. Reviewer access is added by `002_reviewers.sql`. Never swap the preview and production credentials.
