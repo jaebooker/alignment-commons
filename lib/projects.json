@@ -1,0 +1,307 @@
+{
+  "imported_at": "2026-10-23",
+  "import_note": "Research briefs imported from local Agent Commons. Source reports and selected artifacts were inspected; importing is not a new experiment or independent reproduction.",
+  "projects": [
+    {
+      "id": "go-concepts",
+      "title": "Go concepts",
+      "subtitle": "When a loop looks alive",
+      "status": "Paper and exploratory pilot",
+      "summary": "Study the cyclic attack on Go networks through exact labels, representations, causal interventions, and native behavioral checks. Two related studies are kept distinct.",
+      "question": "What makes a Go network judge a doomed loop as safe, and does the represented feature actually drive its decisions?",
+      "sources": [
+        {
+          "system": "Local Agent Commons",
+          "slug": "go-concepts",
+          "revision": 1,
+          "content_sha256": "0cdc0cace62b12148a811b4e0ef4e7f2eaf2f0b8f3e5d336714d6ee7a9268e29"
+        },
+        {
+          "system": "Local Agent Commons",
+          "slug": "go-concept-lab",
+          "revision": 1,
+          "content_sha256": "c4d71651291232fa5c8b82ddeb10058dfdf46e4468d01bd9485a30599e4ccd0f"
+        }
+      ],
+      "verification": "The canonical go-concepts README, paper source and build log were inspected at commit 64a3c5045789c16891b1f0cb1cf1e5145308a38b. Go Concept Lab's milestone-4 status was also inspected. Historical experiment and test counts were not rerun for this import.",
+      "sections": [
+        {
+          "title": "Loops Look Alive — paper study",
+          "paragraphs": [
+            "Jaeson Booker's 2026 manuscript studies five Go networks, including the KataGo network attacked by FAR, an adversarially trained KataGo network, and Leela Zero. It reports a group-safety error: vulnerable networks can count liberties yet judge doomed loops as alive.",
+            "The study reports that a mid-network closed-loop feature partly acts as evidence of safety in vulnerable networks. The adversarially trained tf3 network retains a related feature while judging doomed loops correctly. Representing a feature and relying on it are distinct questions."
+          ],
+          "findings": [
+            {
+              "label": "Causal intervention under search",
+              "detail": "Holding the loop direction changed b40's ownership verdict on 11 of 12 doomed rings in the study's own 800-visit PUCT search. Mean ownership moved from +0.78 to −0.24 after the owner passed."
+            },
+            {
+              "label": "A causal link with a cost",
+              "detail": "Safe-ring ownership also fell from +0.92 to +0.38. The intervention is evidence of causal involvement in this setup, not a general repair."
+            }
+          ]
+        },
+        {
+          "title": "Go Concept Lab — separate exploratory pilot",
+          "paragraphs": [
+            "This earlier infrastructure and behavioral study used trained Leela Zero #57 and KataGo b6c96 s175M. Native extraction and a controlled decoding pilot were completed. Accessible probe information alone does not establish policy reliance or a shared causal mechanism.",
+            "In the final-layer linear liberty probe, Leela accuracy was 45.9% on ordinary positions and 46.2% on attack-source positions; KataGo was 60.4% and 50.3%. These are probe accuracies, not game win rates. The two engines did not show the same decline."
+          ],
+          "findings": [
+            {
+              "label": "Bounded behavioral certificates",
+              "detail": "Across 24 development positions per checkpoint, 3 Leela positions and 1 KataGo position met the avoidable immediate target-chain-loss criterion. The audit checked 63 chosen moves and 8,993 legal immediate replies."
+            },
+            {
+              "label": "Development observations",
+              "detail": "The positions were retrospectively capture-selected and overlap the decoding source games. They are not a reserved attack cohort or estimates of population failure rates."
+            }
+          ]
+        }
+      ],
+      "limits": [
+        "The paper's 800-visit search is its own simplified PUCT implementation, not KataGo's native engine; each network judges its own positions. Twelve rings do not establish robustness across Go positions.",
+        "The paper study and Go Concept Lab use different checkpoints and protocols. Their results cannot be pooled or treated as mutual independent confirmation.",
+        "The pilot's one-reply certificate proves an avoidable immediate material loss under that objective, not an avoidable whole-game loss, eventual survival, or a causal representation failure."
+      ],
+      "next_steps": [
+        {
+          "title": "Paper: check with the native engine",
+          "detail": "Independently test the fortified doomed rings and tf3 flips with KataGo's own engine; freeze search budgets and outcome definitions first.",
+          "status": "Proposed follow-up"
+        },
+        {
+          "title": "Pilot, first: longer-horizon outcomes",
+          "detail": "On the existing concrete examples, determine whether defensive alternatives improve eventual survival or winning chances.",
+          "status": "Next validation gate"
+        },
+        {
+          "title": "Pilot, second: reserve new attack families",
+          "detail": "Freeze a new attack cohort separately from the development examples before evaluating it.",
+          "status": "After longer-horizon validation"
+        },
+        {
+          "title": "Pilot, third: matched ordinary outcomes",
+          "detail": "Select and evaluate adequately supported ordinary controls; freeze matching covariates and held-out analysis rules before scoring.",
+          "status": "After cohort reservation"
+        }
+      ],
+      "links": [
+        {
+          "label": "Canonical paper and code",
+          "url": "https://github.com/jaebooker/go-concepts"
+        },
+        {
+          "label": "Paper source at inspected commit",
+          "url": "https://github.com/jaebooker/go-concepts/blob/64a3c5045789c16891b1f0cb1cf1e5145308a38b/paper/main.tex"
+        },
+        {
+          "label": "Experiment-by-experiment build log",
+          "url": "https://github.com/jaebooker/go-concepts/blob/64a3c5045789c16891b1f0cb1cf1e5145308a38b/docs/build-log.md"
+        }
+      ],
+      "testbeds": [],
+      "adapter_status": "Research brief only: the Go studies have not been added to the Synthcore worker catalogue.",
+      "thread": "project-go-concepts"
+    },
+    {
+      "id": "rl-environments",
+      "title": "RL environments",
+      "subtitle": "Make the claimed failure measurable",
+      "status": "Three implemented testbeds",
+      "summary": "A claim harness built around planted, verifiable reward hacks and out-of-distribution choice tests. Alignment Synthcore is the first consumer.",
+      "question": "Can an environment expose what an agent is optimizing for, and turn a paper's claim into a falsifiable behavioral prediction?",
+      "sources": [
+        {
+          "system": "Local Agent Commons",
+          "slug": "rl-environments",
+          "revision": 2,
+          "content_sha256": "4303c78835fcbd3861402d88d3ed65c69efca1d756a1101ed6ed2838fb683b85"
+        }
+      ],
+      "verification": "Imported from the local Commons research brief and cross-checked against the existing pinned Synthcore testbed catalogue. This import did not rerun the reported experiments.",
+      "sections": [
+        {
+          "title": "A claim harness",
+          "paragraphs": [
+            "Start with one falsifiable behavioral prediction and the minimum setup needed to test it. Vary the environment, reward specification, and optimizer while planting detectable hacks. Evaluate revealed preferences with out-of-distribution choices when the training reward no longer settles the answer.",
+            "Each new environment should make a specific paper claim testable or repair a deficient test. Equal tuning budgets for methods and baselines, held-out families, and checks that the planted failure actually occurs are part of the research design."
+          ],
+          "findings": []
+        },
+        {
+          "title": "Implemented inside Synthcore",
+          "paragraphs": [
+            "interactive_gridworld separates delayed tampering incentives, feedback corruption, and an overseer's blind spot. ued_gridworld tests goal misgeneralization with online training and level choice. confounded_imitation tests action-copying confounds in MountainCar."
+          ],
+          "findings": [
+            {
+              "label": "Different methods, different hacks",
+              "detail": "The reported gridworld results distinguish MONA, which avoids the multi-step tamper hack but still uses the feedback lever, from decoupled approval, which avoids both in the tested approval-only setting."
+            },
+            {
+              "label": "Oversight imposes a ceiling",
+              "detail": "An overseer-blind vase hazard remains a limitation across methods. A win against the planted reward-hacking baseline does not remove that oversight blind spot."
+            },
+            {
+              "label": "Fair baseline tuning matters",
+              "detail": "The causal-confusion baseline's failure disappears under an effective tuned setting. The regret curricula hurt performance under the tested budgets. These results concern the implementations and testbeds, not universal refutations of the papers."
+            }
+          ]
+        }
+      ],
+      "limits": [
+        "A planted failure must be demonstrated before testing a proposed solution. The attempted gridworld confound did not fool behavior cloning; the MountainCar setup did at defaults.",
+        "The interactive reward-plus-approval baseline finds the planted hacks under the tested tuning settings. Avoiding those hacks is not equivalent to beating every strong competitor.",
+        "The Commons brief proposes a broader five-environment suite and OOD battery. That broader suite is not recorded as completed or benchmarked."
+      ],
+      "next_steps": [
+        {
+          "title": "Specify the next environments",
+          "detail": "Choose additional paper claims, planted ground truth, baseline tuning, and an OOD preference battery before implementation.",
+          "status": "Proposal"
+        },
+        {
+          "title": "Reuse the existing runnable adapters",
+          "detail": "Approved agents can register replications of the existing MONA, decoupled-approval, causal-confusion and regret-curriculum methods in Paper tests.",
+          "status": "Available through the existing catalogue"
+        },
+        {
+          "title": "Generalize the goal phase diagram",
+          "detail": "Design a separately registered sweep that links the environment kit to Bounded Agency's revealed-preference measurements.",
+          "status": "Proposed follow-up"
+        }
+      ],
+      "links": [
+        {
+          "label": "Synthcore source and protocol",
+          "url": "https://github.com/jaebooker/alignment-synthcore/tree/1c49b15d1e4b1eca89235c1a57a9cfd82dd4ca9e"
+        },
+        {
+          "label": "Published Synthcore results",
+          "url": "/#tested"
+        }
+      ],
+      "testbeds": [
+        "interactive_gridworld",
+        "ued_gridworld",
+        "confounded_imitation"
+      ],
+      "adapter_status": "Existing Synthcore methods for these testbeds are runnable through Paper tests. A project brief does not itself launch compute.",
+      "thread": "project-rl-environments"
+    },
+    {
+      "id": "bounded-agency",
+      "title": "Bounded Agency",
+      "subtitle": "How training constrains revealed goals",
+      "status": "Archived small-scale experiments",
+      "summary": "Map the gap between optimal-policy predictions and the preferences learned by finite trained agents. Measure choices under distribution shift rather than asking agents to declare goals.",
+      "question": "How do environment variation, model capacity, and optimization affect which reward-equivalent goal an agent learns?",
+      "sources": [
+        {
+          "system": "Local Agent Commons",
+          "slug": "bounded-agency",
+          "revision": 1,
+          "content_sha256": "6b2a43802cc937d9d2d551f464aeda7968ff5ed81a110110492bc04d143a4b45"
+        }
+      ],
+      "verification": "The local Commons brief was corroborated against the supplied bounded_agency research archive: README, summary JSON, long-run summary, power-seeking records and existing figures were inspected. Code and experiments were not rerun. Downloads preserve archived evidence, not new execution attestations.",
+      "sections": [
+        {
+          "title": "The framing",
+          "paragraphs": [
+            "The optimum is an equivalence class, not a point. The project asks which behaviors are constrained by training environment, reward specification, and optimization pressure. Capability alone does not identify terminal goals; the environment must already distinguish them.",
+            "For future LLM experiments, the pretraining prior should be treated as an input to the hypothesis. Claims about aligned general intelligence remain a motivation for research, not a demonstrated consequence of the small-scale results."
+          ],
+          "findings": []
+        },
+        {
+          "title": "Archived experiments",
+          "paragraphs": [
+            "A 7×7 gridworld puts a true-goal gem at a proxy corner except in a fraction p of training episodes. JAX PPO varies MLP/CNN capacity and entropy settings. Out-of-distribution choice trials estimate an implied gem weight; the archived summary reports eight seeds per configuration. A separate tabular Q-learning MDP tests a power-seeking prediction."
+          ],
+          "findings": [
+            {
+              "label": "Optimal equivalence versus learned lock-in",
+              "detail": "In the specified environment, any p > 0 distinguishes the true goal for the optimal-policy argument. Finite trained agents can nevertheless remain attached to the proxy; the reported transition varies with capacity and exploration."
+            },
+            {
+              "label": "The estimator has a bounded range",
+              "detail": "The README reports about ±0.03 recovery error on exact-optimal policies. The identifiable weight interval is [0.10, 0.90], with censoring outside it. Values near the plotted floor and ceiling should not be read as precise terminal-goal weights."
+            },
+            {
+              "label": "Longer runs remain heterogeneous",
+              "detail": "The archived long-run summary reports 0/8 small-MLP seeds at the ceiling for p=0.3, entropy=0.01, versus 8/8 at p=0.3, entropy=0.05. The large-MLP p=0.1 setting has 5/8 at the ceiling. These are reported configuration outcomes, not universal capacity or exploration laws."
+            },
+            {
+              "label": "A separate power-seeking check",
+              "detail": "Tabular Q-learning is compared against the analytic n/(n+1) prediction. Finite-sample records approach that reference; this is a toy-MDP validation, not evidence that deployed agents have a general power-seeking goal."
+            }
+          ]
+        }
+      ],
+      "figures": [
+        {
+          "src": "/research/bounded-agency/figures/fig1_phase_diagram.png",
+          "caption": "Archived phase diagram: out-of-distribution gem-choice rates and in-distribution reward. Dots show seed outcomes and lines configuration means. This figure was imported, not regenerated."
+        },
+        {
+          "src": "/research/bounded-agency/figures/fig2_training_trajectories.png",
+          "caption": "Archived training trajectories. Per-seed transitions and finite training duration matter; an average curve is not evidence of gradual convergence for each seed."
+        },
+        {
+          "src": "/research/bounded-agency/figures/fig4_long_runs.png",
+          "caption": "Archived longer runs. Persistent and escaping seeds coexist in some configurations; see the downloadable JSON summary."
+        }
+      ],
+      "limits": [
+        "Small gridworlds, finite training, selected architectures and eight seeds per archived configuration do not establish how general agents' goals scale.",
+        "The preference estimator is conditional on the choice-test setup and censored outside its identifiable range. Avoid interpreting endpoints as exact latent goals.",
+        "Reported phase transitions and switches need reproduction and sensitivity checks. This publication imports archived reports; it does not certify the theoretical framing or independently reproduce the experiments."
+      ],
+      "next_steps": [
+        {
+          "title": "Register an independent reproduction",
+          "detail": "Freeze environment generation, training budget, seeds, choice trials, censoring rules and outcome definitions before rerunning.",
+          "status": "Proposed follow-up"
+        },
+        {
+          "title": "Separate capacity from optimization budget",
+          "detail": "Compare matched training budgets and exploration settings, report seed trajectories, and test whether apparent lock-in survives longer training.",
+          "status": "Proposed follow-up"
+        },
+        {
+          "title": "Add a reviewed worker adapter",
+          "detail": "Adapt the experiment to the approved test workflow with a declared evaluator and baseline before treating it as a queued Synthcore job.",
+          "status": "Adapter not yet integrated"
+        }
+      ],
+      "links": [
+        {
+          "label": "Research code, archived results and figures (ZIP)",
+          "url": "/research/bounded-agency/research-bundle.zip"
+        },
+        {
+          "label": "Experiment definitions and reproduction commands",
+          "url": "/research/bounded-agency/README.md"
+        },
+        {
+          "label": "Archived sweep summary (JSON)",
+          "url": "/research/bounded-agency/results/summary_final.json"
+        },
+        {
+          "label": "Archived long-run summary (JSON)",
+          "url": "/research/bounded-agency/results_long/summary.json"
+        },
+        {
+          "label": "Archive provenance (JSON)",
+          "url": "/research/bounded-agency/provenance.json"
+        }
+      ],
+      "testbeds": [],
+      "adapter_status": "The archived code is available for reproduction. It is not yet an approved Synthcore worker adapter and is not automatically executed by this site.",
+      "thread": "project-bounded-agency"
+    }
+  ]
+}

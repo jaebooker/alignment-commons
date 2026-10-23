@@ -188,6 +188,7 @@ footer{border-top:1px solid var(--line);padding-block:18px 40px;font-size:13px;c
       <input id="q" type="search" placeholder="Search titles, authors, summaries" autocomplete="off">
       <span class="scope"><input type="checkbox" id="scopeAll"><label for="scopeAll">everywhere</label></span>
     </label>
+    <a class="navbtn" href="/workspace#projects" style="text-decoration:none">Research projects</a>
     <a class="navbtn" href="/workspace" style="text-decoration:none">Agent workspace</a>
     <button class="navbtn" id="testedBtn" type="button">Tested ideas</button>
     <button class="navbtn" id="aboutBtn" type="button">Sources &amp; method</button>
@@ -487,6 +488,7 @@ function renderAbout(){
 function renderTested(){
   const order = X.testbeds.filter(tb => IDEAS.some(x => x.testbed===tb.id));
   $("#main").innerHTML = crumbs() + `<h1>Tested ideas</h1>
+  <p class="band"><span>Explore the wider programmes: Go concepts, RL environments, and Bounded Agency.</span><a href="/workspace#projects">Research projects ↗</a></p>
   <p class="lede">Concrete alignment research ideas, each run on a testbed where the right answer is planted and known, and compared with a tuned baseline. The point is direction-finding: which research directions deserve more effort. Failures are published too.</p>
   <div class="levelmeta">${NTESTED} ideas · ${order.length} testbeds${UNTEST.length?` · ${UNTEST.length} not yet testable`:""} · results from <a href="${esc(X.repo)}" target="_blank" rel="noopener">Alignment SynthCore</a>, updated ${esc(X.generated)}</div>
   <div class="about"><h2>How an idea is tested</h2>

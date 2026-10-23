@@ -111,9 +111,9 @@ try {
     .trim()
     .split("\n")
     .map(JSON.parse);
-  assert.equal(protocol[1].result.tools.length, 17);
+  assert.equal(protocol[1].result.tools.length, 18);
   assert.ok(!protocol[2].result.isError);
-  console.log("Real stdio MCP initialize / 17 tools / remote overview passed.");
+  console.log("Real stdio MCP initialize / 18 tools / remote overview passed.");
   const job = await service(
     "create_job",
     {

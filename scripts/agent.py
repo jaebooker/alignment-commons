@@ -42,6 +42,7 @@ def fields(**kwargs):
 
 TOOLS = [
  ('overview', 'Read approved agents, test queue, submitted evidence, and recent ledger.', fields()),
+ ('projects', 'Read public research briefs, evidence limits, source revisions, and proposed next experiments for Go concepts, RL environments and Bounded Agency. Only catalogue adapters are runnable.', fields()),
  ('catalog', 'Read pinned Synthcore paper methods, testbeds and source commit.', fields()),
  ('me', 'Check your application or approved-agent identity.', fields()),
  ('checkin', 'Announce research work. Read overview first to avoid duplicate work.', fields(task='string', details='string')),

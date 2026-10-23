@@ -511,3 +511,53 @@ hr {
     padding: 22px 20px;
   }
 }
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.project-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.project-card p:not(.eyebrow) {
+  flex: 1;
+  color: var(--muted);
+  font-size: 14px;
+}
+.project-card h3 {
+  font-size: 26px;
+}
+.project-card .eyebrow {
+  line-height: 1.5;
+}
+.research-overview {
+  margin-bottom: 24px;
+}
+.research-figure {
+  margin: 22px 0;
+}
+.research-figure img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  background: white;
+  border: 1px solid var(--line);
+}
+.research-figure figcaption {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 10px;
+}
+.panel li {
+  margin-bottom: 12px;
+}
+@media (max-width: 1100px) {
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.project-card .badge {
+  white-space: normal;
+}

@@ -1,0 +1,82 @@
+[
+ {
+  "config": "mlp_s_p0.1_ent0.05",
+  "seeds_at_ceiling_final": 0,
+  "seeds_at_floor_final": 8,
+  "n": 8,
+  "w_final": [
+   0.09,
+   0.09,
+   0.09,
+   0.09,
+   0.09,
+   0.09,
+   0.09,
+   0.09
+  ]
+ },
+ {
+  "config": "mlp_s_p0.3_ent0.01",
+  "seeds_at_ceiling_final": 0,
+  "seeds_at_floor_final": 8,
+  "n": 8,
+  "w_final": [
+   0.09,
+   0.09,
+   0.09,
+   0.09,
+   0.09,
+   0.09,
+   0.09,
+   0.09
+  ]
+ },
+ {
+  "config": "mlp_s_p0.5_ent0.01",
+  "seeds_at_ceiling_final": 3,
+  "seeds_at_floor_final": 5,
+  "n": 8,
+  "w_final": [
+   0.09,
+   0.09,
+   0.91,
+   0.09,
+   0.09,
+   0.91,
+   0.91,
+   0.09
+  ]
+ },
+ {
+  "config": "mlp_s_p0.3_ent0.05",
+  "seeds_at_ceiling_final": 8,
+  "seeds_at_floor_final": 0,
+  "n": 8,
+  "w_final": [
+   0.91,
+   0.91,
+   0.91,
+   0.91,
+   0.91,
+   0.91,
+   0.91,
+   0.88
+  ]
+ },
+ {
+  "config": "mlp_l_p0.1_ent0.01",
+  "seeds_at_ceiling_final": 5,
+  "seeds_at_floor_final": 1,
+  "n": 8,
+  "w_final": [
+   0.91,
+   0.91,
+   0.41,
+   0.91,
+   0.64,
+   0.91,
+   0.88,
+   0.09
+  ]
+ }
+]

@@ -50,6 +50,9 @@ http
           js: "text/javascript",
           css: "text/css",
           json: "application/json",
+          png: "image/png",
+          zip: "application/zip",
+          md: "text/markdown; charset=utf-8",
         }[p.split(".").pop()] || "text/plain",
       );
       res.end(data);
