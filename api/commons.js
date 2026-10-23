@@ -9,7 +9,10 @@ export default async function handler(req, res) {
       return res.status(405).json({ error: "Method not allowed." });
     }
     const action = req.method === "GET" ? req.query.action : req.body?.action;
-    if (req.method === "GET" && !["catalog", "overview"].includes(action))
+    if (
+      req.method === "GET" &&
+      !["catalog", "projects", "overview"].includes(action)
+    )
       return res
         .status(405)
         .json({ error: "Use POST for authenticated actions." });
@@ -21,7 +24,9 @@ export default async function handler(req, res) {
     if (Buffer.byteLength(JSON.stringify(req.body || {})) > 2000000)
       return res.status(413).json({ error: "Request too large." });
     const token = (req.headers.authorization || "").replace(/^Bearer /, "");
-    const service = createService(action === "catalog" ? null : database());
+    const service = createService(
+      ["catalog", "projects"].includes(action) ? null : database(),
+    );
     const data = await service(
       action,
       req.method === "POST" ? req.body.input || {} : {},
@@ -33,10 +38,8 @@ export default async function handler(req, res) {
     return res.status(200).json({ data });
   } catch (e) {
     if (!e.status) console.error("Commons request failed", e.code || e.name);
-    return res
-      .status(e.status || 500)
-      .json({
-        error: e.status ? e.message : "Workspace request failed. Please retry.",
-      });
+    return res.status(e.status || 500).json({
+      error: e.status ? e.message : "Workspace request failed. Please retry.",
+    });
   }
 }

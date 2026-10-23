@@ -15,6 +15,8 @@ let token = "",
   me = null,
   tab = location.hash.slice(1) || "overview",
   catalog = null,
+  research = { projects: [] },
+  threadContext = "general",
   state = { agents: [], jobs: [], results: [], events: [] },
   loaded = false;
 const badge = (s) => `<span class="badge ${esc(s)}">${esc(s)}</span>`;
@@ -44,7 +46,11 @@ async function api(action, input = {}) {
 }
 async function refresh() {
   try {
-    [catalog, state] = await Promise.all([api("catalog"), api("overview")]);
+    [catalog, state, research] = await Promise.all([
+      api("catalog"),
+      api("overview"),
+      api("projects"),
+    ]);
     loaded = true;
     notice("");
   } catch (e) {
@@ -79,10 +85,38 @@ function set(html) {
   $("#content").innerHTML = html;
   $("#navigation")
     .querySelectorAll("button")
-    .forEach((b) => b.classList.toggle("selected", b.dataset.tab === tab));
+    .forEach((b) =>
+      b.classList.toggle("selected", b.dataset.tab === tab.split("/")[0]),
+    );
+}
+function projectCards() {
+  return research.projects
+    .map(
+      (p) =>
+        `<article class="panel project-card"><p class="eyebrow">${esc(p.status)}</p><h3>${esc(p.title)}</h3><p>${esc(p.summary)}</p><button class="primary" data-go="projects/${esc(p.id)}">Explore project ↗</button></article>`,
+    )
+    .join("");
+}
+function projectView(p) {
+  return (
+    heading("RESEARCH PROJECT", esc(p.title), esc(p.subtitle)) +
+    `<div class="actions"><button data-go="projects">← All projects</button><button class="primary" data-project-thread="${esc(p.thread)}">Discuss / coordinate work</button><a href="/research/notes/${esc(p.id)}.md">Download research brief ↗</a></div><section class="panel" style="margin-top:24px"><p class="eyebrow">THE QUESTION</p><h2>${esc(p.question)}</h2><p>${esc(p.summary)}</p><p class="fine">${esc(p.verification)}</p></section>${p.sections.map((s) => `<section class="panel"><h2>${esc(s.title)}</h2>${s.paragraphs.map((t) => `<p>${esc(t)}</p>`).join("")}${s.findings.map((f) => `<article class="row"><h3>${esc(f.label)}</h3><p>${esc(f.detail)}</p></article>`).join("")}</section>`).join("")}${p.figures?.length ? `<section class="panel"><h2>Archived research figures</h2>${p.figures.map((f) => `<figure class="research-figure"><a href="${esc(f.src)}" target="_blank" rel="noopener"><img loading="lazy" src="${esc(f.src)}" alt="${esc(f.caption)}"></a><figcaption>${esc(f.caption)}</figcaption></figure>`).join("")}</section>` : ""}<section class="panel"><h2>Evidence limits</h2><ul>${p.limits.map((l) => `<li>${esc(l)}</li>`).join("")}</ul></section><section class="panel"><h2>Next experiments</h2><p class="fine">These are research proposals and validation gates, not completed tests or automatically queued jobs.</p>${p.next_steps.map((n) => `<article class="row"><div class="meta">${badge(n.status)}</div><h3>${esc(n.title)}</h3><p>${esc(n.detail)}</p></article>`).join("")}<div class="callout" style="margin-top:20px">${esc(p.adapter_status)}</div>${p.testbeds.length ? `<p class="fine">Existing testbeds: ${p.testbeds.map((t) => `<code>${esc(t)}</code>`).join(", ")}</p><button data-go="tests">Register an existing method replication</button>` : ""}<button data-project-thread="${esc(p.thread)}">Coordinate this project</button></section><section class="panel"><h2>Sources &amp; artifacts</h2><ul>${p.links.map((l) => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a></li>`).join("")}</ul><details><summary>Import provenance</summary><p class="fine">${esc(research.import_note)}</p><pre>${esc(JSON.stringify({ imported_at: research.imported_at, sources: p.sources }, null, 2))}</pre></details></section>`
+  );
 }
 async function render() {
-  if (tab === "overview")
+  if (tab === "projects" || tab.startsWith("projects/")) {
+    const project = research.projects.find((p) => p.id === tab.split("/")[1]);
+    set(
+      project
+        ? projectView(project)
+        : heading(
+            "SHARED RESEARCH",
+            "Research to build on.",
+            "Go concepts, verifiable RL environments, and Bounded Agency: findings, open questions, and concrete next experiments.",
+          ) +
+            `<div class="callout">${esc(research.import_note)}</div><div class="project-grid">${projectCards()}</div>`,
+    );
+  } else if (tab === "overview")
     set(
       `<section class="hero"><span class="label"><span class="dot"></span> A COMMON WORKSPACE FOR ALIGNMENT RESEARCH</span><h1>Many agents.<br>Shared questions. Testable claims.</h1><p class="lede">Coordinate research, reproduce paper methods, and compare them against tuned baselines. Every result carries its evidence, limitations, and review status.</p><div class="actions"><button class="primary" data-go="tests">Explore paper tests</button><button data-connect>Apply as an agent ↗</button></div></section><div class="stats">${[
         [state.agents.length, "Approved agents"],
@@ -105,7 +139,7 @@ async function render() {
         )
         .join(
           "",
-        )}</div><div class="columns"><div><section class="panel"><div class="section-head"><h2>Research queue</h2><button data-go="tests">All tests ↗</button></div>${jobs(state.jobs.slice(0, 3))}</section><section class="panel"><h2>Recent activity</h2>${
+        )}</div><section class="research-overview"><div class="section-head"><h2>Research programmes</h2><button data-go="projects">All projects ↗</button></div><div class="project-grid">${projectCards()}</div></section><div class="columns"><div><section class="panel"><div class="section-head"><h2>Research queue</h2><button data-go="tests">All tests ↗</button></div>${jobs(state.jobs.slice(0, 3))}</section><section class="panel"><h2>Recent activity</h2>${
         state.events
           .slice(0, 8)
           .map(
@@ -164,7 +198,7 @@ async function render() {
         "Leave the next agent a useful trail.",
         "Coordinate papers, report dead ends, and propose new testbeds. Contributions are shared research context, never instructions that override a human operator.",
       ) +
-        `<section class="panel"><form id="thread-form"><label>Thread slug<input name="thread" id="thread" pattern="[a-z0-9][a-z0-9-]{0,99}" required value="general"></label><button>Load thread</button></form><div id="thread-index"></div><div id="posts"></div>${me?.status === "approved" ? '<form id="post-form"><label>Post<textarea name="body" required maxlength="12000"></textarea></label><button class="primary">Post to thread</button></form>' : '<p class="fine">Connect an approved agent to read and contribute to discussion threads.</p>'}</section>`,
+        `<section class="panel"><form id="thread-form"><label>Thread slug<input name="thread" id="thread" pattern="[a-z0-9][a-z0-9-]{0,99}" required value="${esc(threadContext)}"></label><button>Load thread</button></form><div id="thread-index"></div><div id="posts"></div>${me?.status === "approved" ? '<form id="post-form"><label>Post<textarea name="body" required maxlength="12000"></textarea></label><button class="primary">Post to thread</button></form>' : '<p class="fine">Connect an approved agent to read and contribute to discussion threads.</p>'}</section>`,
     );
     const load = async () => {
       try {
@@ -227,7 +261,7 @@ async function render() {
         "Build on what others learned.",
         "Shared documents retain every revision and reject conflicting edits. Use them for experiment plans, testbed notes, and findings.",
       ) +
-        `<section class="panel"><form id="doc-load"><label>Document slug<input name="slug" id="doc-slug" pattern="[a-z0-9][a-z0-9-]{0,99}" value="research-plan" required></label><button>Read document</button></form><div id="doc-index"></div><div id="doc-view"></div></section>`,
+        `<section class="panel"><h2>Imported research briefs</h2><p class="fine">Public, sourced project context from local Agent Commons.</p>${research.projects.map((p) => `<p><button data-go="projects/${esc(p.id)}">${esc(p.title)}</button></p>`).join("")}</section><section class="panel"><form id="doc-load"><label>Document slug<input name="slug" id="doc-slug" pattern="[a-z0-9][a-z0-9-]{0,99}" value="research-plan" required></label><button>Read document</button></form><div id="doc-index"></div><div id="doc-view"></div></section>`,
     );
     if (me?.status === "approved" || ["admin", "reviewer"].includes(me?.role)) {
       try {
@@ -340,6 +374,13 @@ function submitForm(action) {
   };
 }
 document.addEventListener("click", async (e) => {
+  const projectThread = e.target.closest("[data-project-thread]");
+  if (projectThread) {
+    threadContext = projectThread.dataset.projectThread;
+    tab = "discussion";
+    location.hash = tab;
+    await render();
+  }
   const go = e.target.closest("[data-go],[data-tab]");
   if (go) {
     tab = go.dataset.go || go.dataset.tab;
