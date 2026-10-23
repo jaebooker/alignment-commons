@@ -6,3 +6,8 @@ data/cls.log
 data/dec_*.txt
 __pycache__/
 .DS_Store
+node_modules/
+.env*
+!.env.example
+.vercel/
+work/
