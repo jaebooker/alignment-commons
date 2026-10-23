@@ -57,3 +57,7 @@ The worker smoke check is infrastructure validation, not a new scientific study.
 ## Preview isolation
 
 Vercel preview uses the `workspace-preview` Neon branch (`br-quiet-cake-b9nby5vk`) and an independent owner credential from ignored `.env.preview.local`. Production continues to use `production` (`br-empty-math-b9wh9n8t`) and `.env.local`. The migration runner applies all numbered SQL files in order. Reviewer access is added by `002_reviewers.sql`. Never swap the preview and production credentials.
+
+## Existing Vercel build root
+
+The project was originally rooted at `site/`. Hosted APIs require the repository root, so the project root is now `.` and the tracked `vercel.json` controls `outputDirectory: site`. Leaving the project rooted at `site/` silently omits `/api/commons`. Node remains at 24.x. Vercel previews retain Vercel authentication protection.
