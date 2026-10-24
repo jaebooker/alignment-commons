@@ -44,3 +44,9 @@ The causal-confusion baseline's failure disappears under an effective tuned sett
 
 - [Synthcore source and protocol](https://github.com/jaebooker/alignment-synthcore/tree/1c49b15d1e4b1eca89235c1a57a9cfd82dd4ca9e)
 - [Published Synthcore results](/#tested)
+
+## New controlled study: Test 1
+
+The 32-seed confirmation reduced lever activation from 98.4% to 10.9% in its primary condition, but neither full-horizon arm completed the task. The combined primary criterion failed. The new study is distinct from the imported historical results and original online algorithm.
+
+[Full report](/research/approval-factorial-v1/REPORT.md) · [Frozen protocol](/research/approval-factorial-v1/protocol.json) · [Integrity audit](/research/approval-factorial-v1/audit.json)

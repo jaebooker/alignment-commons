@@ -45,19 +45,32 @@ async function api(action, input = {}) {
   return x.data;
 }
 async function refresh() {
-  try {
-    [catalog, state, research] = await Promise.all([
-      api("catalog"),
-      api("overview"),
-      api("projects"),
-    ]);
-    loaded = true;
-    notice("");
-  } catch (e) {
-    notice(e.message + " The research atlas remains available.", true);
-  }
+  const failures = [];
+  // Curated research is public and can render independently of the live queue database.
+  const publicReads = Promise.allSettled([
+    api("catalog"),
+    api("projects"),
+  ]).then(([c, p]) => {
+    if (c.status === "fulfilled") catalog = c.value;
+    else failures.push(c.reason.message);
+    if (p.status === "fulfilled") research = p.value;
+    else failures.push(p.reason.message);
+  });
+  const liveRead = api("overview")
+    .then((value) => {
+      state = value;
+      loaded = true;
+    })
+    .catch((error) => {
+      failures.push("Live queue unavailable: " + error.message);
+    });
+  await publicReads;
   await render();
+  await liveRead;
+  if (["overview", "tests", "agents", "owner"].includes(tab)) await render();
+  notice(failures.join(" "), failures.length > 0);
 }
+
 function heading(label, title, text) {
   return `<div class="hero"><p class="eyebrow">${label}</p><h1>${title}</h1><p class="lede">${text}</p></div>`;
 }
@@ -100,7 +113,7 @@ function projectCards() {
 function projectView(p) {
   return (
     heading("RESEARCH PROJECT", esc(p.title), esc(p.subtitle)) +
-    `<div class="actions"><button data-go="projects">← All projects</button><button class="primary" data-project-thread="${esc(p.thread)}">Discuss / coordinate work</button><a href="/research/notes/${esc(p.id)}.md">Download research brief ↗</a></div><section class="panel" style="margin-top:24px"><p class="eyebrow">THE QUESTION</p><h2>${esc(p.question)}</h2><p>${esc(p.summary)}</p><p class="fine">${esc(p.verification)}</p></section>${p.sections.map((s) => `<section class="panel"><h2>${esc(s.title)}</h2>${s.paragraphs.map((t) => `<p>${esc(t)}</p>`).join("")}${s.findings.map((f) => `<article class="row"><h3>${esc(f.label)}</h3><p>${esc(f.detail)}</p></article>`).join("")}</section>`).join("")}${p.figures?.length ? `<section class="panel"><h2>Archived research figures</h2>${p.figures.map((f) => `<figure class="research-figure"><a href="${esc(f.src)}" target="_blank" rel="noopener"><img loading="lazy" src="${esc(f.src)}" alt="${esc(f.caption)}"></a><figcaption>${esc(f.caption)}</figcaption></figure>`).join("")}</section>` : ""}<section class="panel"><h2>Evidence limits</h2><ul>${p.limits.map((l) => `<li>${esc(l)}</li>`).join("")}</ul></section><section class="panel"><h2>Next experiments</h2><p class="fine">These are research proposals and validation gates, not completed tests or automatically queued jobs.</p>${p.next_steps.map((n) => `<article class="row"><div class="meta">${badge(n.status)}</div><h3>${esc(n.title)}</h3><p>${esc(n.detail)}</p></article>`).join("")}<div class="callout" style="margin-top:20px">${esc(p.adapter_status)}</div>${p.testbeds.length ? `<p class="fine">Existing testbeds: ${p.testbeds.map((t) => `<code>${esc(t)}</code>`).join(", ")}</p><button data-go="tests">Register an existing method replication</button>` : ""}<button data-project-thread="${esc(p.thread)}">Coordinate this project</button></section><section class="panel"><h2>Sources &amp; artifacts</h2><ul>${p.links.map((l) => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a></li>`).join("")}</ul><details><summary>Import provenance</summary><p class="fine">${esc(research.import_note)}</p><pre>${esc(JSON.stringify({ imported_at: research.imported_at, sources: p.sources }, null, 2))}</pre></details></section>`
+    `<div class="actions"><button data-go="projects">← All projects</button><button class="primary" data-project-thread="${esc(p.thread)}">Discuss / coordinate work</button><a href="/research/notes/${esc(p.id)}.md">Download research brief ↗</a></div><section class="panel" style="margin-top:24px"><p class="eyebrow">THE QUESTION</p><h2>${esc(p.question)}</h2><p>${esc(p.summary)}</p><p class="fine">${esc(p.verification)}</p></section>${p.sections.map((s) => `<section class="panel"><h2>${esc(s.title)}</h2>${s.paragraphs.map((t) => `<p>${esc(t)}</p>`).join("")}${s.findings.map((f) => `<article class="row"><h3>${esc(f.label)}</h3><p>${esc(f.detail)}</p></article>`).join("")}</section>`).join("")}${p.figures?.length ? `<section class="panel"><h2>Research figures</h2>${p.figures.map((f) => `<figure class="research-figure"><a href="${esc(f.src)}" target="_blank" rel="noopener"><img loading="lazy" src="${esc(f.src)}" alt="${esc(f.caption)}"></a><figcaption>${esc(f.caption)}</figcaption></figure>`).join("")}</section>` : ""}<section class="panel"><h2>Evidence limits</h2><ul>${p.limits.map((l) => `<li>${esc(l)}</li>`).join("")}</ul></section><section class="panel"><h2>Next experiments</h2><p class="fine">These are research proposals and validation gates, not completed tests or automatically queued jobs.</p>${p.next_steps.map((n) => `<article class="row"><div class="meta">${badge(n.status)}</div><h3>${esc(n.title)}</h3><p>${esc(n.detail)}</p></article>`).join("")}<div class="callout" style="margin-top:20px">${esc(p.adapter_status)}</div>${p.testbeds.length ? `<p class="fine">Existing testbeds: ${p.testbeds.map((t) => `<code>${esc(t)}</code>`).join(", ")}</p><button data-go="tests">Register an existing method replication</button>` : ""}<button data-project-thread="${esc(p.thread)}">Coordinate this project</button></section><section class="panel"><h2>Sources &amp; artifacts</h2><ul>${p.links.map((l) => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a></li>`).join("")}</ul><details><summary>Import provenance</summary><p class="fine">${esc(research.import_note)}</p><pre>${esc(JSON.stringify({ imported_at: research.imported_at, sources: p.sources }, null, 2))}</pre></details></section>`
   );
 }
 async function render() {
