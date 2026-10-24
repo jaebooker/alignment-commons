@@ -326,7 +326,7 @@
       "id": "bounded-agency",
       "title": "Bounded Agency",
       "subtitle": "How training constrains revealed goals",
-      "status": "Archived small-scale experiments",
+      "status": "Archived studies + completed measurement audit",
       "summary": "Map the gap between optimal-policy predictions and the preferences learned by finite trained agents. Measure choices under distribution shift rather than asking agents to declare goals.",
       "question": "How do environment variation, model capacity, and optimization affect which reward-equivalent goal an agent learns?",
       "sources": [
@@ -335,9 +335,17 @@
           "slug": "bounded-agency",
           "revision": 1,
           "content_sha256": "6b2a43802cc937d9d2d551f464aeda7968ff5ed81a110110492bc04d143a4b45"
+        },
+        {
+          "system": "New local calibrated preference-battery audit",
+          "slug": "preference-battery-audit-v1",
+          "revision": 1,
+          "source_commit": "929d85bd3531b5a7386aec261052944974cf1dd7",
+          "independent_review": "Not yet independently reproduced",
+          "content_sha256": "1ae38ce7787ae111f64104a8801e13bcda988aa3f550be20e195b2cec24da6fc"
         }
       ],
-      "verification": "The local Commons brief was corroborated against the supplied bounded_agency research archive: README, summary JSON, long-run summary, power-seeking records and existing figures were inspected. Code and experiments were not rerun. Downloads preserve archived evidence, not new execution attestations.",
+      "verification": "The historical archive and summaries were inspected without rerunning them at import. Test 3 is a new locally frozen measurement audit: sixteen fresh small-MLP policies, calibration controls, three same-task choice batteries and a separately labelled proxy-relocation stress test. All eighty saved-policy/battery combinations were verified using an independent NumPy forward pass and endpoint simulator. These engineering checks are not independent scientific replication.",
       "sections": [
         {
           "title": "The framing",
@@ -370,9 +378,53 @@
               "detail": "Tabular Q-learning is compared against the analytic n/(n+1) prediction. Finite-sample records approach that reference; this is a toy-MDP validation, not evidence that deployed agents have a general power-seeking goal."
             }
           ]
+        },
+        {
+          "title": "Test 3 completed: does preference survive the choice battery?",
+          "paragraphs": [
+            "Archived checkpoints were not retained, so this audit trained sixteen new small-MLP policies at p=0.3, entropy 0.01 or 0.05, with 614,400 environment steps per policy. Source and settings were frozen before training; fitted models were frozen before reserved evaluation. Neither outcomes remain in every primary denominator. Exact-optimal calibration controls met the 0.03 weight-error bound."
+          ],
+          "findings": [
+            {
+              "label": "Every goal-interpretation gate failed",
+              "detail": "All four adjusted choice-rate comparisons meet the planned \u00b110-point equivalence rule, but cohort-mean equal-distance non-reach rates are 14.7\u201321.3%, above the 10% limit. Similar rates therefore do not validate a stable-goal interpretation. The low-entropy zero-width t intervals reflect eight identical zero differences, not population certainty."
+            },
+            {
+              "label": "Entropy 0.01, reflected geometry: Rate equivalence supported within 10 points",
+              "detail": "Unconditional gem-choice difference on equal-distance trials was 0.0 percentage points relative to the original battery (adjusted 98.75% paired t interval 0.0 to 0.0; eight training seeds). Goal interpretation is withheld because the non-reach gate failed."
+            },
+            {
+              "label": "Entropy 0.01, distance reweighted: Rate equivalence supported within 10 points",
+              "detail": "Unconditional gem-choice difference on equal-distance trials was 0.0 percentage points relative to the original battery (adjusted 98.75% paired t interval 0.0 to 0.0; eight training seeds). Goal interpretation is withheld because the non-reach gate failed."
+            },
+            {
+              "label": "Entropy 0.05, reflected geometry: Rate equivalence supported within 10 points",
+              "detail": "Unconditional gem-choice difference on equal-distance trials was -0.3 percentage points relative to the original battery (adjusted 98.75% paired t interval -6.3 to 5.7; eight training seeds). Goal interpretation is withheld because the non-reach gate failed."
+            },
+            {
+              "label": "Entropy 0.05, distance reweighted: Rate equivalence supported within 10 points",
+              "detail": "Unconditional gem-choice difference on equal-distance trials was 0.0 percentage points relative to the original battery (adjusted 98.75% paired t interval -8.3 to 8.3; eight training seeds). Goal interpretation is withheld because the non-reach gate failed."
+            }
+          ]
+        },
+        {
+          "title": "A proxy cannot be relocated silently",
+          "paragraphs": [
+            "The archived policy observes walls, agent and gem, but no proxy marker. Three primary batteries preserve the fixed proxy corner. A fourth moves the unmarked proxy and is reported as a separate task-change stress test; it cannot establish latent-goal instability. Some shortest gem routes can also pass through the proxy, so route selection remains part of the behavioral readout. Random-policy fits are negative controls, not recovered latent goals."
+          ],
+          "findings": [
+            {
+              "label": "A plausible fitted weight is insufficient",
+              "detail": "Random controls receive legacy fitted weights around 0.50\u20130.53 while leaving roughly 63\u201368% of trials unresolved. These numbers are not recovery of a known latent goal."
+            }
+          ]
         }
       ],
       "figures": [
+        {
+          "src": "/research/preference-battery-audit-v1/preference-audit.png",
+          "caption": "Test 3: equal-distance gem choice with failures retained, and adjusted paired-seed intervals for transformed versus original batteries. The shaded band is the prespecified \u00b110-point rate-equivalence margin. Goal interpretation has a separate non-reach gate. This is a fresh local audit, not an independently reproduced goal-scaling result."
+        },
         {
           "src": "/research/bounded-agency/figures/fig1_phase_diagram.png",
           "caption": "Archived phase diagram: out-of-distribution gem-choice rates and in-distribution reward. Dots show seed outcomes and lines configuration means. This figure was imported, not regenerated."
@@ -389,9 +441,15 @@
       "limits": [
         "Small gridworlds, finite training, selected architectures and eight seeds per archived configuration do not establish how general agents' goals scale.",
         "The preference estimator is conditional on the choice-test setup and censored outside its identifiable range. Avoid interpreting endpoints as exact latent goals.",
-        "Reported phase transitions and switches need reproduction and sensitivity checks. This publication imports archived reports; it does not certify the theoretical framing or independently reproduce the experiments."
+        "Reported phase transitions and switches need reproduction and sensitivity checks. This publication imports archived reports; it does not certify the theoretical framing or independently reproduce the experiments.",
+        "Test 3 concerns two selected small-MLP configurations and eight fresh seeds each. Mean-rate equivalence does not establish identical individual behavior or a unique latent reward. Non-reach limits goal interpretation; the legacy estimator conditions on reached endpoints and retains censoring. No capacity or acquisition-mechanism claim is made."
       ],
       "next_steps": [
+        {
+          "title": "Diagnose unresolved choice episodes before goal scaling",
+          "detail": "Register separate checks for greedy-policy cycles, rollout horizon and task competence before extending the capacity sweep. Keep Test 3 frozen; do not reinterpret unresolved episodes as a preferred goal.",
+          "status": "Proposed measurement follow-up"
+        },
         {
           "title": "Register an independent reproduction",
           "detail": "Freeze environment generation, training budget, seeds, choice trials, censoring rules and outcome definitions before rerunning.",
@@ -428,6 +486,38 @@
         {
           "label": "Archive provenance (JSON)",
           "url": "/research/bounded-agency/provenance.json"
+        },
+        {
+          "label": "Test 3 full report",
+          "url": "/research/preference-battery-audit-v1/REPORT.md"
+        },
+        {
+          "label": "Frozen Test 3 protocol",
+          "url": "/research/preference-battery-audit-v1/protocol.json"
+        },
+        {
+          "label": "Test 3 primary summary",
+          "url": "/research/preference-battery-audit-v1/summary.json"
+        },
+        {
+          "label": "Test 3 policy freeze",
+          "url": "/research/preference-battery-audit-v1/policy-freeze.json"
+        },
+        {
+          "label": "Test 3 calibration controls",
+          "url": "/research/preference-battery-audit-v1/calibration.json"
+        },
+        {
+          "label": "Test 3 per-policy outcomes",
+          "url": "/research/preference-battery-audit-v1/evaluation.json"
+        },
+        {
+          "label": "Test 3 integrity audit",
+          "url": "/research/preference-battery-audit-v1/integrity-audit.json"
+        },
+        {
+          "label": "Test 3 complete evidence, source and fitted weights (ZIP)",
+          "url": "/research/preference-battery-audit-v1/complete-evidence.zip"
         }
       ],
       "testbeds": [],
