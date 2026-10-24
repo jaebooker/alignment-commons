@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     const action = req.method === "GET" ? req.query.action : req.body?.action;
     if (
       req.method === "GET" &&
-      !["catalog", "projects", "overview", "activity"].includes(action)
+      !["catalog", "projects", "overview", "activity", "research_activity"].includes(action)
     )
       return res
         .status(405)
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
       return res.status(413).json({ error: "Request too large." });
     const token = (req.headers.authorization || "").replace(/^Bearer /, "");
     const service = createService(
-      ["catalog", "projects"].includes(action) ? null : database(),
+      ["catalog", "projects", "research_activity"].includes(action) ? null : database(),
     );
     const data = await service(
       action,

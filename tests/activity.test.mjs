@@ -33,3 +33,14 @@ test('agent findings escape untrusted text and link only HTTPS evidence',()=>{
  assert.ok(!html.includes('href="javascript:'));
  assert.ok(html.includes('Details and evidence')&&html.includes('Outcome / findings'));
 });
+
+test('published research is independent of agent authorization and clearly labelled',async()=>{
+ const service=createService({query(){throw Error('Published records must not access live identity tables');}});
+ const published=await service('research_activity');
+ assert.ok(published.provenance.includes('separate from authenticated'));
+ assert.ok(published.records.length>=6);
+ assert.ok(published.records.every(r=>r.source_kind==='publisher_curated'));
+ assert.ok(!JSON.stringify(published).includes('/Users/'));
+ assert.ok(activityCards(published.records).includes('Published record'));
+ assert.ok(published.records.some(r=>r.subject.includes('Historical Test 1')));
+});
