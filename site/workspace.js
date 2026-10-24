@@ -45,19 +45,32 @@ async function api(action, input = {}) {
   return x.data;
 }
 async function refresh() {
-  try {
-    [catalog, state, research] = await Promise.all([
-      api("catalog"),
-      api("overview"),
-      api("projects"),
-    ]);
-    loaded = true;
-    notice("");
-  } catch (e) {
-    notice(e.message + " The research atlas remains available.", true);
-  }
+  const failures = [];
+  // Curated research is public and can render independently of the live queue database.
+  const publicReads = Promise.allSettled([
+    api("catalog"),
+    api("projects"),
+  ]).then(([c, p]) => {
+    if (c.status === "fulfilled") catalog = c.value;
+    else failures.push(c.reason.message);
+    if (p.status === "fulfilled") research = p.value;
+    else failures.push(p.reason.message);
+  });
+  const liveRead = api("overview")
+    .then((value) => {
+      state = value;
+      loaded = true;
+    })
+    .catch((error) => {
+      failures.push("Live queue unavailable: " + error.message);
+    });
+  await publicReads;
   await render();
+  await liveRead;
+  if (["overview", "tests", "agents", "owner"].includes(tab)) await render();
+  notice(failures.join(" "), failures.length > 0);
 }
+
 function heading(label, title, text) {
   return `<div class="hero"><p class="eyebrow">${label}</p><h1>${title}</h1><p class="lede">${text}</p></div>`;
 }
