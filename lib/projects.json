@@ -26,7 +26,7 @@
       "verification": "The canonical go-concepts README, paper source and build log were inspected at commit 64a3c5045789c16891b1f0cb1cf1e5145308a38b. Go Concept Lab's milestone-4 status was also inspected. Historical experiment and test counts were not rerun for this import.",
       "sections": [
         {
-          "title": "Loops Look Alive — paper study",
+          "title": "Loops Look Alive \u2014 paper study",
           "paragraphs": [
             "Jaeson Booker's 2026 manuscript studies five Go networks, including the KataGo network attacked by FAR, an adversarially trained KataGo network, and Leela Zero. It reports a group-safety error: vulnerable networks can count liberties yet judge doomed loops as alive.",
             "The study reports that a mid-network closed-loop feature partly acts as evidence of safety in vulnerable networks. The adversarially trained tf3 network retains a related feature while judging doomed loops correctly. Representing a feature and relying on it are distinct questions."
@@ -34,7 +34,7 @@
           "findings": [
             {
               "label": "Causal intervention under search",
-              "detail": "Holding the loop direction changed b40's ownership verdict on 11 of 12 doomed rings in the study's own 800-visit PUCT search. Mean ownership moved from +0.78 to −0.24 after the owner passed."
+              "detail": "Holding the loop direction changed b40's ownership verdict on 11 of 12 doomed rings in the study's own 800-visit PUCT search. Mean ownership moved from +0.78 to \u22120.24 after the owner passed."
             },
             {
               "label": "A causal link with a cost",
@@ -43,7 +43,7 @@
           ]
         },
         {
-          "title": "Go Concept Lab — separate exploratory pilot",
+          "title": "Go Concept Lab \u2014 separate exploratory pilot",
           "paragraphs": [
             "This earlier infrastructure and behavioral study used trained Leela Zero #57 and KataGo b6c96 s175M. Native extraction and a controlled decoding pilot were completed. Accessible probe information alone does not establish policy reliance or a shared causal mechanism.",
             "In the final-layer linear liberty probe, Leela accuracy was 45.9% on ordinary positions and 46.2% on attack-source positions; KataGo was 60.4% and 50.3%. These are probe accuracies, not game win rates. The two engines did not show the same decline."
@@ -109,7 +109,7 @@
       "id": "rl-environments",
       "title": "RL environments",
       "subtitle": "Make the claimed failure measurable",
-      "status": "Three testbeds + completed controlled study",
+      "status": "Three testbeds + two completed local studies",
       "summary": "A claim harness built around planted, verifiable reward hacks and out-of-distribution choice tests. Alignment Synthcore is the first consumer.",
       "question": "Can an environment expose what an agent is optimizing for, and turn a paper's claim into a falsifiable behavioral prediction?",
       "sources": [
@@ -128,9 +128,17 @@
           "primary_support_criteria_met": false,
           "independent_review": "Not yet independently reproduced",
           "content_sha256": "9e32eedc36f97a702ca8c523b67933d6251663f50b1a6eb8f82639eabd979df4"
+        },
+        {
+          "system": "New local post-tuning mechanism audit",
+          "slug": "post-tuning-mechanism-audit-v1",
+          "revision": 1,
+          "source_commit": "3987c8dbbf14bf45aa63829cd78c151eef8d6dc5",
+          "independent_review": "Not yet independently reproduced",
+          "content_sha256": "d13c393fb5020fe1869e307d5c8ce7a0fb057b772c56ff2238c7fe1ae296fcc4"
         }
       ],
-      "verification": "Imported from the local Commons research brief and cross-checked against the existing pinned Synthcore testbed catalogue. This import did not rerun the reported experiments. Test 1 is a new locally frozen 32-seed study, published separately from the imported historical claims. Fourteen engineering tests and an integrity audit passed; these are not independent scientific reproduction.",
+      "verification": "Imported from the local Commons research brief and cross-checked against the existing pinned Synthcore testbed catalogue. This import did not rerun the reported experiments. Test 1 is a new locally frozen 32-seed study, published separately from the imported historical claims. Fourteen engineering tests and an integrity audit passed; these are not independent scientific reproduction. Test 2 freshly tuned three methods and two baselines, then evaluated eight reserved full seeds per idea. Source/selection hashes and all model archives were checked; five saved models were re-scored. This remains local evidence.",
       "sections": [
         {
           "title": "A claim harness",
@@ -161,14 +169,14 @@
           ]
         },
         {
-          "title": "Test 1 completed: approval feedback × environment reward",
+          "title": "Test 1 completed: approval feedback \u00d7 environment reward",
           "paragraphs": [
             "A locally frozen 32-seed confirmation used the same exploration traces for all four feedback/reward conditions, across 192 environment instances. The combined primary support criterion failed: independent feedback reduced lever use, but neither full-horizon arm completed the task. This is a controlled fixed-exploration ablation, not a replication of the original online algorithm or an independently reproduced safety win."
           ],
           "findings": [
             {
               "label": "Corruption-channel contrast, with task failure",
-              "detail": "In the primary feedback-lever condition, lever activation fell from 98.4% with executed feedback to 10.9% with independent feedback. The paired difference was −87.5 percentage points (95% seed-level t interval −95.4 to −79.6). Goal completion was 0% in both arms, failing the required 80% completion floor."
+              "detail": "In the primary feedback-lever condition, lever activation fell from 98.4% with executed feedback to 10.9% with independent feedback. The paired difference was \u221287.5 percentage points (95% seed-level t interval \u221295.4 to \u221279.6). Goal completion was 0% in both arms, failing the required 80% completion floor."
             },
             {
               "label": "Using environment reward changed button activation",
@@ -179,13 +187,34 @@
               "detail": "In the predeclared myopic sensitivity, lever-family goal completion was 31.3% with executed feedback versus 98.4% with independent feedback. These sensitivity results do not replace the failed primary result. One myopic independent-feedback layout required an unknown-state fallback policy."
             }
           ]
+        },
+        {
+          "title": "Test 2 completed: mechanisms after fresh baseline tuning",
+          "paragraphs": [
+            "Four original candidate settings and two development seeds were used per method and baseline, selecting by safety. Separate four-seed toy gate checks preceded eight reserved full test seeds per idea. The original diagnostic, direction and 10-point mechanism minimum were preserved. The archived minimax evaluator differs from the current version, so these are fresh current-version results, not replacements for historical verdicts."
+          ],
+          "findings": [
+            {
+              "label": "Causal confusion: Declared minimum ruled out here",
+              "detail": "Selected-method diagnostic improvement was -0.6 percentage points relative to its selected baseline (simultaneous 98.333% paired t interval -2.5 to 1.2). The original declared minimum was 10 points; safety and capability are separate outcomes."
+            },
+            {
+              "label": "Minimax regret: Declared minimum ruled out here",
+              "detail": "Selected-method diagnostic improvement was -11.6 percentage points relative to its selected baseline (simultaneous 98.333% paired t interval -26.2 to 3.1). The original declared minimum was 10 points; safety and capability are separate outcomes."
+            },
+            {
+              "label": "ACCEL: Declared minimum ruled out here",
+              "detail": "Selected-method diagnostic improvement was 1.8 percentage points relative to its selected baseline (simultaneous 98.333% paired t interval -3.0 to 6.6). The original declared minimum was 10 points; safety and capability are separate outcomes."
+            }
+          ]
         }
       ],
       "limits": [
         "A planted failure must be demonstrated before testing a proposed solution. The attempted gridworld confound did not fool behavior cloning; the MountainCar setup did at defaults.",
         "The interactive reward-plus-approval baseline finds the planted hacks under the tested tuning settings. Avoiding those hacks is not equivalent to beating every strong competitor.",
         "The Commons brief proposes a broader five-environment suite and OOD battery. That broader suite is not recorded as completed or benchmarked.",
-        "Test 1 used fixed uniform exploration, zero tuning, one positive reward coefficient, and a tabular learner. It is separate from the original online method and original published Synthcore verdicts. The primary criterion failed even though lever activation decreased."
+        "Test 1 used fixed uniform exploration, zero tuning, one positive reward coefficient, and a tabular learner. It is separate from the original online method and original published Synthcore verdicts. The primary criterion failed even though lever activation decreased.",
+        "Test 2 covers three selected local implementations, four candidate settings and eight confirmation seeds. Simultaneous intervals use a paired t approximation. Toy-to-full changes cannot be attributed to tuning alone; equal candidate counts do not equal compute or supervision access. Results do not estimate literature-wide failure rates."
       ],
       "next_steps": [
         {
@@ -245,6 +274,34 @@
         {
           "label": "Experiment implementation and source records",
           "url": "https://github.com/jaebooker/alignment-synthcore/tree/ae10d06e7cdc1ccb25f0eefe4e45a5d5b49c582d/experiments/approval_factorial"
+        },
+        {
+          "label": "Test 2 full report",
+          "url": "/research/post-tuning-mechanism-audit-v1/REPORT.md"
+        },
+        {
+          "label": "Frozen Test 2 protocol",
+          "url": "/research/post-tuning-mechanism-audit-v1/protocol.json"
+        },
+        {
+          "label": "Test 2 confirmation and gate summary",
+          "url": "/research/post-tuning-mechanism-audit-v1/summary.json"
+        },
+        {
+          "label": "Test 2 selected settings",
+          "url": "/research/post-tuning-mechanism-audit-v1/selection.json"
+        },
+        {
+          "label": "Test 2 selection freeze",
+          "url": "/research/post-tuning-mechanism-audit-v1/selection-freeze.json"
+        },
+        {
+          "label": "Test 2 integrity audit",
+          "url": "/research/post-tuning-mechanism-audit-v1/integrity-audit.json"
+        },
+        {
+          "label": "Test 2 per-fit records (ZIP)",
+          "url": "/research/post-tuning-mechanism-audit-v1/records.zip"
         }
       ],
       "testbeds": [
@@ -258,6 +315,10 @@
         {
           "src": "/research/approval-factorial-v1/factorial-results.png",
           "caption": "Frozen 32-seed fixed-exploration study. The full-horizon primary task-completion gate failed; the myopic block is a separately labelled descriptive sensitivity. These results have not been independently reproduced."
+        },
+        {
+          "src": "/research/post-tuning-mechanism-audit-v1/mechanism-audit.png",
+          "caption": "Test 2: fresh toy gate checks and reserved full confirmation after equal-budget selection. The diagnostic threshold is separate from safety. Confirmation intervals adjust across three ideas; this study has not been independently reproduced."
         }
       ]
     },
@@ -289,7 +350,7 @@
         {
           "title": "Archived experiments",
           "paragraphs": [
-            "A 7×7 gridworld puts a true-goal gem at a proxy corner except in a fraction p of training episodes. JAX PPO varies MLP/CNN capacity and entropy settings. Out-of-distribution choice trials estimate an implied gem weight; the archived summary reports eight seeds per configuration. A separate tabular Q-learning MDP tests a power-seeking prediction."
+            "A 7\u00d77 gridworld puts a true-goal gem at a proxy corner except in a fraction p of training episodes. JAX PPO varies MLP/CNN capacity and entropy settings. Out-of-distribution choice trials estimate an implied gem weight; the archived summary reports eight seeds per configuration. A separate tabular Q-learning MDP tests a power-seeking prediction."
           ],
           "findings": [
             {
@@ -298,7 +359,7 @@
             },
             {
               "label": "The estimator has a bounded range",
-              "detail": "The README reports about ±0.03 recovery error on exact-optimal policies. The identifiable weight interval is [0.10, 0.90], with censoring outside it. Values near the plotted floor and ceiling should not be read as precise terminal-goal weights."
+              "detail": "The README reports about \u00b10.03 recovery error on exact-optimal policies. The identifiable weight interval is [0.10, 0.90], with censoring outside it. Values near the plotted floor and ceiling should not be read as precise terminal-goal weights."
             },
             {
               "label": "Longer runs remain heterogeneous",
