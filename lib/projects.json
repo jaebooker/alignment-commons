@@ -6,7 +6,7 @@
       "id": "go-concepts",
       "title": "Go concepts",
       "subtitle": "When a loop looks alive",
-      "status": "Paper and exploratory pilot",
+      "status": "Paper, pilot and native continuation audit",
       "summary": "Study the cyclic attack on Go networks through exact labels, representations, causal interventions, and native behavioral checks. Two related studies are kept distinct.",
       "question": "What makes a Go network judge a doomed loop as safe, and does the represented feature actually drive its decisions?",
       "sources": [
@@ -21,9 +21,17 @@
           "slug": "go-concept-lab",
           "revision": 1,
           "content_sha256": "c4d71651291232fa5c8b82ddeb10058dfdf46e4468d01bd9485a30599e4ccd0f"
+        },
+        {
+          "system": "New local Go Concept Lab native continuation audit",
+          "slug": "go-continuation-audit-v1",
+          "revision": 1,
+          "source_commit": "7a071f0dd49c8293a398936f36518326d023b422",
+          "content_sha256": "3fab6ed149183605c22e9a5e4c09428333e6af981c0ec36981cb79f4c13f343b",
+          "independent_review": "Not independently reproduced"
         }
       ],
-      "verification": "The canonical go-concepts README, paper source and build log were inspected at commit 64a3c5045789c16891b1f0cb1cf1e5145308a38b. Go Concept Lab's milestone-4 status was also inspected. Historical experiment and test counts were not rerun for this import.",
+      "verification": "The canonical go-concepts README, paper source and build log were inspected at commit 64a3c5045789c16891b1f0cb1cf1e5145308a38b. Go Concept Lab's milestone-4 status was also inspected. Historical experiment and test counts were not rerun for this import. Test 6 freshly executed 64 native branches and independently re-scored 6,912 continuation plies. This verifies implementation and saved local outcomes, not independent scientific reproduction.",
       "sections": [
         {
           "title": "Loops Look Alive \u2014 paper study",
@@ -58,12 +66,37 @@
               "detail": "The positions were retrospectively capture-selected and overlap the decoding source games. They are not a reserved attack cohort or estimates of population failure rates."
             }
           ]
+        },
+        {
+          "title": "Test 6 completed: do immediate defenses help later?",
+          "paragraphs": [
+            "A frozen continuation audit branches from four annotated Go Concept Lab case/engine pairs: three Leela Zero #57 and one KataGo b6c96. These comparisons overlap within two development source games. Each recorded engine move is compared with its first archived legal defensive alternative. The same associated native engine plays both colors for eight paired seeds, at 128 root visits per generated move."
+          ],
+          "findings": [
+            {
+              "label": "One selected comparison improves original-stone retention",
+              "detail": "At game 1/move 249, Leela retains all 49 original target stones through 64 and 128 plies in 4/8 recorded-move branches versus 8/8 R9-defense branches. This is a bounded material-retention observation; none of these branches completes a game."
+            },
+            {
+              "label": "Immediate preservation is not a general longer-horizon repair",
+              "detail": "At game 1/move 251, both N13 and Q12 retain the original target in 8/8 runs. At game 6/move 221, Leela retains its 34 stones in 7/8 K1 branches versus 6/8 A8-defense branches. These are selected-case seed counts, not population probabilities; other legal defenses are untested."
+            },
+            {
+              "label": "KataGo reaches the same loss from both branches",
+              "detail": "Both J11 and A8 lose all 34 original target stones at ply 4, end at ply 48, and have verified physical-area result White +41.5. Each arm repeats one identical trajectory across all eight seeds. The result does not establish perfect-play life/death or a forced game loss."
+            },
+            {
+              "label": "All native continuations independently audited",
+              "detail": "All 64 planned branches finished without engine errors. A separate NumPy simulator checked all 6,912 continuation plies, permanent stone identities, native boards, raw visit logs, prefixes, SGFs and terminal-area tallies. Native binary/model hashes matched the archived originals. Eight engineering tests passed. The manuscript/native-engine validation remains separate."
+            }
+          ]
         }
       ],
       "limits": [
         "The paper's 800-visit search is its own simplified PUCT implementation, not KataGo's native engine; each network judges its own positions. Twelve rings do not establish robustness across Go positions.",
         "The paper study and Go Concept Lab use different checkpoints and protocols. Their results cannot be pooled or treated as mutual independent confirmation.",
-        "The pilot's one-reply certificate proves an avoidable immediate material loss under that objective, not an avoidable whole-game loss, eventual survival, or a causal representation failure."
+        "The pilot's one-reply certificate proves an avoidable immediate material loss under that objective, not an avoidable whole-game loss, eventual survival, or a causal representation failure.",
+        "Test 6 uses outcome-selected development cases from two games, with overlapping chains and checkpoints. Seeds do not create independent positions. Native self-play may miss known legal captures, so uncaptured stones do not prove robustness to stronger opponents. Only one immediate defense is tested per case; truncated branches have no game winner."
       ],
       "next_steps": [
         {
@@ -72,14 +105,14 @@
           "status": "Proposed follow-up"
         },
         {
-          "title": "Pilot, first: longer-horizon outcomes",
-          "detail": "On the existing concrete examples, determine whether defensive alternatives improve eventual survival or winning chances.",
-          "status": "Next validation gate"
+          "title": "Pilot: bounded continuation gate completed",
+          "detail": "Test 6 finds one preservation improvement, mixed other outcomes, and no general game-winning repair. Register stronger fixed-opponent or terminal-outcome checks separately before broader claims.",
+          "status": "Completed local audit; wider validation open"
         },
         {
           "title": "Pilot, second: reserve new attack families",
           "detail": "Freeze a new attack cohort separately from the development examples before evaluating it.",
-          "status": "After longer-horizon validation"
+          "status": "Next ordered stage; new protocol required"
         },
         {
           "title": "Pilot, third: matched ordinary outcomes",
@@ -99,11 +132,53 @@
         {
           "label": "Experiment-by-experiment build log",
           "url": "https://github.com/jaebooker/go-concepts/blob/64a3c5045789c16891b1f0cb1cf1e5145308a38b/docs/build-log.md"
+        },
+        {
+          "label": "Test 6 full report",
+          "url": "/research/go-continuation-audit-v1/REPORT.md"
+        },
+        {
+          "label": "Frozen Test 6 protocol",
+          "url": "/research/go-continuation-audit-v1/protocol.json"
+        },
+        {
+          "label": "Test 6 case-level results",
+          "url": "/research/go-continuation-audit-v1/summary.json"
+        },
+        {
+          "label": "Test 6 source and native identity freeze",
+          "url": "/research/go-continuation-audit-v1/initial-freeze.json"
+        },
+        {
+          "label": "Test 6 independent audit",
+          "url": "/research/go-continuation-audit-v1/integrity-audit.json"
+        },
+        {
+          "label": "Test 6 input and engine provenance",
+          "url": "/research/go-continuation-audit-v1/input-provenance.json"
+        },
+        {
+          "label": "Test 6 moves, SGFs, board evidence and source (Archive)",
+          "url": "/research/go-continuation-audit-v1/records.tar.xz"
+        },
+        {
+          "label": "Test 6 public artifact checksums",
+          "url": "/research/go-continuation-audit-v1/SHA256SUMS.json"
+        },
+        {
+          "label": "Test 6 native continuation source",
+          "url": "https://github.com/jaebooker/alignment-synthcore/tree/7a071f0dd49c8293a398936f36518326d023b422/experiments/go_continuations"
         }
       ],
       "testbeds": [],
       "adapter_status": "Research brief only: the Go studies have not been added to the Synthcore worker catalogue.",
-      "thread": "project-go-concepts"
+      "thread": "project-go-concepts",
+      "figures": [
+        {
+          "src": "/research/go-continuation-audit-v1/go-continuations.png",
+          "caption": "Test 6: original-stone retention at 64 and 128 plies across four overlapping case/engine comparisons. Bars show counts over eight search seeds; these are not independent positions. Original identities are never restored by replacement stones."
+        }
+      ]
     },
     {
       "id": "rl-environments",
