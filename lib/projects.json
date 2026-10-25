@@ -109,7 +109,7 @@
       "id": "rl-environments",
       "title": "RL environments",
       "subtitle": "Make the claimed failure measurable",
-      "status": "Three catalogue testbeds + three local studies",
+      "status": "Three catalogue testbeds + four local studies",
       "summary": "A claim harness built around planted, verifiable reward hacks and out-of-distribution choice tests. Alignment Synthcore is the first consumer.",
       "question": "Can an environment expose what an agent is optimizing for, and turn a paper's claim into a falsifiable behavioral prediction?",
       "sources": [
@@ -145,6 +145,15 @@
           "combined_primary_support_count": 0,
           "independent_review": "Not yet independently reproduced",
           "content_sha256": "ff4c51ad800b0835768215b7a4b336e95a36f4a384d41e64b019a593238c21d8"
+        },
+        {
+          "system": "New local regret-estimator and training-budget audit",
+          "slug": "regret-budget-audit-v1",
+          "revision": 1,
+          "source_commit": "30af8704e4e80a7cfb6a0b4be1d3e18f4a24ce78",
+          "base_commit": "7e79a029b3a9a9057ec946642fe98e4402f886aa",
+          "content_sha256": "22871c73ad0fd276a159cf6b00ee64c81bfc603a0547a15c83bcafe598972064",
+          "independent_review": "Not independently reproduced"
         }
       ],
       "verification": "Imported from the local Commons research brief and cross-checked against the existing pinned Synthcore testbed catalogue. This import did not rerun the reported experiments. Test 1 is a new locally frozen 32-seed study, published separately from the imported historical claims. Fourteen engineering tests and an integrity audit passed; these are not independent scientific reproduction. Test 2 freshly tuned three methods and two baselines, then evaluated eight reserved full seeds per idea. Source/selection hashes and all model archives were checked; five saved models were re-scored. This remains local evidence. Test 4 adds a separately versioned oversight-coverage evaluator, sixteen reserved seed groups and two layouts each. All 1,296 saved environment-specific policies were independently re-scored from geometry; this is engineering verification of local evidence.",
@@ -240,6 +249,38 @@
               "detail": "At full coverage, all three implementations complete the goal with zero harm on the tested reserved layouts. At zero coverage, all complete the goal and break the vase. This is a controlled one-hazard testbed result, not a general sufficiency claim."
             }
           ]
+        },
+        {
+          "title": "Test 5 completed: regret estimator versus training budget",
+          "paragraphs": [
+            "A separate corner-family study compares DR, the existing max-latest ACCEL curriculum, random replay/editing, and a privileged exact-start oracle. The student CNN/PPO remains the same. Each arm is independently tuned on two development seeds at each budget; eight reserved seed groups test 300k and 1M requested environment steps and a separate 180 training CPU-second budget."
+          ],
+          "findings": [
+            {
+              "label": "Primary result: supported",
+              "detail": "Oracle minus max-latest goal success at 1M requested steps: 20.6 percentage points (95% paired-seed t interval 15.0 to 26.3). Oracle IID capability is 97.4%. The frozen support rule requires a lower bound above 10 points and capability at least 80%."
+            },
+            {
+              "label": "Random replay/editing also improves performance",
+              "detail": "At 1M requested steps, random replay/editing reaches 93.1% intended-goal success, versus 75.8% for max-latest, 96.4% for oracle and 92.8% for DR. At matched CPU, random reaches 82.0% and oracle 79.6%. These descriptive secondary comparisons implicate local ranking/eviction, without showing privileged information is necessary."
+            },
+            {
+              "label": "More training narrows but does not remove the local gap",
+              "detail": "Selected max-latest goal success rises from 44.5% to 75.8% between 300k and 1M steps, yet remains 17.0 points below independently tuned DR at 1M. Rates may differ by budget, and one CPU cap cannot establish a convergence curve."
+            },
+            {
+              "label": "Training cost is part of the comparison",
+              "detail": "The CPU ledger includes level generation, edits, ranking, score-only episodes, oracle certification and student updates. Checkpoints occur at complete PPO rollouts and include recorded overshoot. The random control matches this CPU budget; realized episode and edit counts can differ."
+            },
+            {
+              "label": "A certified oracle remains a privileged diagnostic",
+              "detail": "Integer finite-horizon Bellman values are checked against shortest paths for every permissible start on queried training levels. Labels only affect curriculum scoring. The intervention corrects max-ever underestimation and cross-start reference bias together; it cannot isolate one estimator defect."
+            },
+            {
+              "label": "Evidence and limits",
+              "detail": "All 144 saved policies from 56 fresh fits passed an independent greedy re-score. Only corner mazes are covered; lamp and 3M-step runs remain untested. One CPU cap does not establish recovery across a CPU-budget curve. This is a local ablation, not a paper replication."
+            }
+          ]
         }
       ],
       "limits": [
@@ -248,7 +289,8 @@
         "The Commons brief proposes a broader five-environment suite and OOD battery. That broader suite is not recorded as completed or benchmarked.",
         "Test 1 used fixed uniform exploration, zero tuning, one positive reward coefficient, and a tabular learner. It is separate from the original online method and original published Synthcore verdicts. The primary criterion failed even though lever activation decreased.",
         "Test 2 covers three selected local implementations, four candidate settings and eight confirmation seeds. Simultaneous intervals use a paired t approximation. Toy-to-full changes cannot be attributed to tuning alone; equal candidate counts do not equal compute or supervision access. Results do not estimate literature-wide failure rates.",
-        "Test 4 uses a new advantage-based approval signal, one-hazard tabular worlds and a small tuning grid. Fixed/resampled masks match instantaneous coverage, not cumulative information about hazards. The comparison does not establish strategic awareness, intent or deception. Goal completion is required before calling a low-harm policy successful."
+        "Test 4 uses a new advantage-based approval signal, one-hazard tabular worlds and a small tuning grid. Fixed/resampled masks match instantaneous coverage, not cumulative information about hazards. The comparison does not establish strategic awareness, intent or deception. Goal completion is required before calling a low-harm policy successful.",
+        "Test 5 covers one task family, two learning rates, two development seeds and eight confirmation seed groups. Its oracle has privileged training geometry; CPU seconds are local resource accounting, not FLOPs or energy. Secondary comparisons are descriptive; prior benchmark verdicts remain historical results."
       ],
       "next_steps": [
         {
@@ -373,6 +415,42 @@
         {
           "label": "Test 4 complete source, policies and evidence (ZIP)",
           "url": "/research/oversight-coverage-audit-v1/complete-evidence.zip"
+        },
+        {
+          "label": "Test 5 full report",
+          "url": "/research/regret-budget-audit-v1/REPORT.md"
+        },
+        {
+          "label": "Frozen Test 5 protocol",
+          "url": "/research/regret-budget-audit-v1/protocol.json"
+        },
+        {
+          "label": "Test 5 confirmation summary",
+          "url": "/research/regret-budget-audit-v1/summary.json"
+        },
+        {
+          "label": "Test 5 selected rates",
+          "url": "/research/regret-budget-audit-v1/selection.json"
+        },
+        {
+          "label": "Test 5 selection freeze",
+          "url": "/research/regret-budget-audit-v1/selection-freeze.json"
+        },
+        {
+          "label": "Test 5 integrity audit",
+          "url": "/research/regret-budget-audit-v1/integrity-audit.json"
+        },
+        {
+          "label": "Test 5 records and source (large artifacts omitted)",
+          "url": "/research/regret-budget-audit-v1/records.zip"
+        },
+        {
+          "label": "Test 5 public artifact checksums",
+          "url": "/research/regret-budget-audit-v1/SHA256SUMS.json"
+        },
+        {
+          "label": "Test 5 implementation and reproduction source",
+          "url": "https://github.com/jaebooker/alignment-synthcore/tree/30af8704e4e80a7cfb6a0b4be1d3e18f4a24ce78/experiments/regret_budget"
         }
       ],
       "testbeds": [
@@ -380,9 +458,13 @@
         "ued_gridworld",
         "confounded_imitation"
       ],
-      "adapter_status": "Existing Synthcore methods for these testbeds are runnable through Paper tests. A project brief does not itself launch compute. Test 4 is a separate experiment module; it has not been added to the pinned worker catalogue.",
+      "adapter_status": "Existing Synthcore methods for these testbeds are runnable through Paper tests. A project brief does not itself launch compute. Tests 4 and 5 are separate experiment modules; they have not been added to the pinned worker catalogue.",
       "thread": "project-rl-environments",
       "figures": [
+        {
+          "src": "/research/regret-budget-audit-v1/regret-budget.png",
+          "caption": "Test 5: held-out intended-goal success on the corner task. Dots are eight reserved seed groups, bars are means. Learning rates are selected separately at each budget. Oracle supervision is privileged."
+        },
         {
           "src": "/research/oversight-coverage-audit-v1/oversight-coverage.png",
           "caption": "Test 4: harm and goal completion across monitoring coverage at 8,000 steps. Low harm under resampled partial oversight coincides with task collapse for the two approval implementations. Error bars are descriptive 95% intervals; the six primary contrasts use adjusted intervals and a completion gate."
