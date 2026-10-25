@@ -1,0 +1,12 @@
+{
+  "summary.json": "3fab6ed149183605c22e9a5e4c09428333e6af981c0ec36981cb79f4c13f343b",
+  "records.tar.xz": "910d3fa86626b98173ee3018066f7dcf58afa24dd167995f9c5ad29f9cfcec09",
+  "integrity-audit.json": "2f35715bc1d86e9096ecdc21e667b779ebaf9dc1b55ab5f2e8c98c2b1c29e093",
+  "REPORT.md": "87665733a5e38988d9d5966c524205acf0b564bea6cd303710d28655750a5603",
+  "go-continuations.png": "fdd82f4292dc65974b221389dc0ccdb3a0fff317d69557b4b0e1c141c9b45d0f",
+  "README.md": "5c2e78c248ed150f15fa296887b26287a0aff0d6571f54e6edc22616d3144893",
+  "runtime-packages.json": "5504fa1a771dcf3a9b3a0635a046f0b6424b8a0d162e37e40b171a64dfefa146",
+  "protocol.json": "aa999fef70de62be883aff16bcbcaed7c0a6723469f3e66348310fdd029d0e86",
+  "input-provenance.json": "fe967468078f2f58f048a16cc6c82ab3dde57748facdb4eff319deb9ea1aeb63",
+  "initial-freeze.json": "b5e1357e078a10d7b9606ce6646cbd93872282e8b4663aa691fe3f6820afb683"
+}
