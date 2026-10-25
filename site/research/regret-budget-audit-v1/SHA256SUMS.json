@@ -1,0 +1,14 @@
+{
+  "summary.json": "22871c73ad0fd276a159cf6b00ee64c81bfc603a0547a15c83bcafe598972064",
+  "integrity-audit.json": "a5695548b64dfc000e4714c6e2e6cf67ca0993a39ea836ecd96ddd96c03bc601",
+  "REPORT.md": "35f83f86fdd3e610b09e70abdb5a7223da2b1e4f7a0cadfcb631768517e7d335",
+  "selection-freeze.json": "3268c3205f831e68a3cdbf07ce83887a0abb413ef34136bbf777e6b77d9afc74",
+  "README.md": "6a40ed0297ae44a221dbb7fbb917ac5d0a86652192e53aac93c5b5a317e36ef7",
+  "instrumentation-correction.json": "78642af573d82851b10e8b6ba9ecde41121a7deb96354c4f452a060b58fb98fd",
+  "selection.json": "6b3dbb07b07cff928719c636ce992de025afa36464683e2e15927e53ddef9b19",
+  "protocol.json": "0b19da48c24bd7c7d03454dcf504d436c9b852bd113cd44e6fb0801bc744ffc4",
+  "records.zip": "88da8b0ab048d9f4bc03b2ac2841afbd203663c100bafb685cb1668e30f1f213",
+  "confirmation-jobs.json": "e6d73341fff84d1fd13bbb610745483cc3061ebdb611917712f4cbec8a5f8a48",
+  "initial-freeze.json": "2c71c009081c171309d8bc72709e3058efd8853644fd2540a94dadbd712ac25d",
+  "regret-budget.png": "b3208e4de335189ebc175ce0d03c3796f6969360c8b42c30c7632314f8a2fe2e"
+}
