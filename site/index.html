@@ -173,6 +173,12 @@ mark{background:var(--pick-soft);color:inherit;border-radius:2px}
 .band b{font:600 16px var(--display)}
 .sigcard{margin-top:8px}
 .sigcard .signal{border-top:0;padding-top:0}
+.donation{margin-block:24px 32px;padding:24px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.donation h2{margin:0 0 8px;font-size:21px}
+.donation p{color:var(--muted);max-width:66ch;margin:0 0 18px}
+.donation-links{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.donate-button{display:inline-block;padding:10px 16px;border-radius:8px;background:var(--fg);color:var(--bg);font-weight:600;text-decoration:none}
+.donate-button:hover{opacity:.85}
 footer{border-top:1px solid var(--line);padding-block:18px 40px;font-size:13px;color:var(--faint)}
 @media (max-width:600px){header.top{position:static}.brand span{display:none}.brand{flex:1}.topbar{gap:10px}}
 @media (prefers-reduced-motion:no-preference){.tile{transition:border-color .12s}}
@@ -199,7 +205,17 @@ footer{border-top:1px solid var(--line);padding-block:18px 40px;font-size:13px;c
   <nav class="tree" id="tree" aria-label="Research areas"></nav>
   <main id="main"></main>
 </div>
-<div class="wrap"><footer id="foot"></footer></div>
+<div class="wrap">
+  <section class="donation" aria-labelledby="donation-heading">
+    <h2 id="donation-heading">Support AI safety research</h2>
+    <p>Help fund research into making advanced AI safe and aligned through the AI Safety Research Fund.</p>
+    <div class="donation-links">
+      <a class="donate-button" href="https://www.paypal.com/donate/?hosted_button_id=HBL3KAAMDNGTW" target="_blank" rel="noopener noreferrer">Donate via PayPal ↗</a>
+      <a href="https://www.aisafetyfund.org/research" target="_blank" rel="noopener noreferrer">Research we support ↗</a>
+    </div>
+  </section>
+  <footer id="foot"></footer>
+</div>
 
 <script>
 // tests.json (tested ideas from Alignment SynthCore) is optional: the atlas works without it.
