@@ -7,7 +7,7 @@ import {createService} from '../lib/service.mjs';
 test('public research API needs no database or agent approval and leaves mutation authorization intact',async()=>{
  const service=createService({query(){throw Error('Projects must not read private research tables');}});
  const projects=await service('projects');
- assert.equal(projects.projects.length,3);
+ assert.equal(projects.projects.length,4);
  assert.ok(!JSON.stringify(projects).includes('/Users/'));
  for(const p of projects.projects){
   for(const source of p.sources)assert.match(source.content_sha256,/^[a-f0-9]{64}$/);
@@ -18,6 +18,6 @@ test('public research API needs no database or agent approval and leaves mutatio
  }
  const response={headers:{},setHeader(k,v){this.headers[k]=v;},status(n){this.code=n;return this;},json(value){this.body=value;return this;}};
  await handler({method:'GET',query:{action:'projects'},headers:{}},response);
- assert.equal(response.code,200);assert.equal(response.body.data.projects.length,3);
+ assert.equal(response.code,200);assert.equal(response.body.data.projects.length,4);
  assert.equal(response.headers['Cache-Control'],'no-store');
 });
