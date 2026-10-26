@@ -760,19 +760,19 @@
       "id": "kl-anchoring",
       "title": "KL Anchoring",
       "subtitle": "Why RLHF's anchor gives way under RLVR pressure",
-      "status": "Two CPU experiments completed",
-      "summary": "RLHF holds a policy near a human-like reference with a KL penalty. These experiments measure exactly how much that anchor resists optimization, and find a bounded price that strong verifiable-reward training pays whenever a shortcut is worth more than it.",
+      "status": "Three CPU experiments completed",
+      "summary": "RLHF holds a policy near a human-like reference with a KL penalty. Three small experiments measure how much that anchor resists optimization: it charges a bounded price that strong verifiable-reward training pays when a shortcut is worth more, and in networks that generalize, the drift it permits moves to inputs the anchor covers least.",
       "question": "Does a KL anchor to a human-like policy fail under hard optimization pressure such as RLVR for the same reasons a KL anchor to a human Go policy drifts, and is the failure universal?",
       "sources": [
         {
           "system": "Local Agent Commons",
           "slug": "kl-anchoring",
-          "revision": 1,
-          "content_sha256": "53bd72f19ec858665d63a3a6f45896d9fbc2bbc21c9fdcf20a9c7731952932b6",
+          "revision": 2,
+          "content_sha256": "a14b3a929413a8c2c00a24473d13560f51ab29032ad6e7537dd398b34592da6d",
           "independent_review": "Not independently reproduced"
         }
       ],
-      "verification": "AI-written by Claude for Jaeson Booker, 26 October 2026. Tabular CPU experiments with exact optima from closed forms or soft value iteration, compared against sampled RL with three seeds. Code and all result files are published below. These are engineering-level checks, not independent scientific replication.",
+      "verification": "AI-written by Claude for Jaeson Booker, 26 October 2026. Tabular and small-network CPU experiments. Exact optima come from closed forms or soft value iteration and are compared against sampled RL with three seeds. Code and all result files are published below. These are engineering-level checks, not independent scientific replication.",
       "sections": [
         {
           "title": "Experiment 1: the tilting law",
@@ -821,8 +821,36 @@
               "detail": "Per-step KL in the reward reached the exact optimum at every \u03b2. GRPO-style advantages with a k3 loss needed about 4x the \u03b2 for the same door rate, and took a never-demonstrated door in 8 of 9 runs where the optimum gives under 0.5%."
             },
             {
-              "label": "Prediction not supported: off-distribution drift first",
-              "detail": "The exact optimum ignores where the door sits. Location only changed discovery speed, and the door beside heavy human traffic was taken more often. Testing this needs shared parameters."
+              "label": "Off-distribution drift not supported in the tabular case",
+              "detail": "The exact optimum ignores where the door sits; location only changed discovery speed. Experiment 3 tests the prediction with shared parameters."
+            }
+          ]
+        },
+        {
+          "title": "Experiment 3: architecture sweep",
+          "paragraphs": [
+            "A family of shortcut gridworlds with varying size, wall and door position. RL trains on 12 layouts; 6 are held out (in the human data, never in RL) and 6 are longer (in neither). Eight architectures from tabular to a small transformer, \u03b2 = 0.3, three seeds."
+          ],
+          "findings": [
+            {
+              "label": "The law survives function approximation",
+              "detail": "With KL in the reward, MLP-256, MLP-1024, CNN and transformer ended within about 0.04 of the exact optimum on the layouts RL trained on."
+            },
+            {
+              "label": "Spillover scales with generalization",
+              "detail": "The share of RL-induced drift that appeared on held-out layouts was 0.10 for MLP-16, 0.23 for MLP-64, 0.39 for MLP-256, 0.45 for MLP-1024, 0.66 for the CNN and 0.82 for the transformer. Tabular policies showed none."
+            },
+            {
+              "label": "Drift goes where the anchor is weak",
+              "detail": "Under the anchor, per-state behaviour change on unseen longer layouts was 1.4x to 3.6x that on frequently visited trained states, rising with architecture, and 6.5x for the transformer when humans never used the door. Without KL the ratio was 0.6 to 1.15."
+            },
+            {
+              "label": "Extending the anchor helps only where it reaches",
+              "detail": "Applying the KL term on held-out layouts kept them at reference levels. Layouts outside that coverage still drifted."
+            },
+            {
+              "label": "GRPO-style training spreads drift almost fully",
+              "detail": "Held-out door use reached 0.76 to 0.91 for the larger networks, against an optimum near 0.12 on trained layouts."
             }
           ]
         }
@@ -847,23 +875,36 @@
         {
           "src": "/research/kl-anchoring/figures/fig5_gridworld_kl_maps.png",
           "caption": "Experiment 2: the maximum KL price of a one-step deviation by state, and where the optimum spends its KL budget, for the near and far door placements."
+        },
+        {
+          "src": "/research/kl-anchoring/figures/fig6_arch_spillover.png",
+          "caption": "Experiment 3: door use after RL by architecture on trained, held-out and longer layouts, for four RL setups. Stars mark the exact KL optimum on trained layouts; black bars the reference. Tabular policies are uniform on unseen layouts."
+        },
+        {
+          "src": "/research/kl-anchoring/figures/fig7_arch_never.png",
+          "caption": "Experiment 3 with no human door use: the reference's floor by architecture (a) and door use on unseen longer layouts after RL (b)."
+        },
+        {
+          "src": "/research/kl-anchoring/figures/fig8_arch_drift_by_density.png",
+          "caption": "Experiment 3: per-state behaviour change over training, grouped by how often the reference visits the state. Under the anchor, change concentrates in uncommon and unseen states; without KL it does not."
         }
       ],
       "limits": [
-        "Tabular policies, one decision or one small gridworld, three seeds for sampled runs.",
-        "The behaviour-cloned reference is counts plus a Dirichlet prior, not a network.",
+        "Small gridworlds, small networks (transformer d = 32), one \u03b2 per sweep, three seeds.",
+        "The behaviour-cloned reference in experiment 2 is counts plus a Dirichlet prior; in experiment 3 the 'exact optimum' is the tabular optimum given each network's reference, which a network may not represent.",
+        "Per-state drift is total-variation change, not door use alone.",
         "No claim that any deployed model failed through this mechanism; public accounts of incidents do not attribute them to RLVR drift.",
         "Results are not independently reproduced."
       ],
       "next_steps": [
         {
-          "title": "Experiment 3: shared-parameter drift off-distribution",
-          "detail": "Small networks with the anchor applied on-policy only. Test whether drift starts in states the reference rarely saw.",
+          "title": "Small language-model RLHF then RLVR",
+          "detail": "Anchor a small LM with RLHF, then apply verifiable-reward training with a reward-hackable shortcut. Compare KL in the reward, k3 loss and GRPO advantages, and measure drift on prompts outside the anchor's coverage.",
           "status": "Proposed"
         },
         {
-          "title": "Small language-model RLHF then RLVR",
-          "detail": "Anchor a small LM with RLHF, then apply verifiable-reward training with a reward-hackable shortcut. Compare k1-in-reward, k3 loss and GRPO advantages.",
+          "title": "Anchor coverage sweep",
+          "detail": "Vary the fraction of inputs the KL term is applied on and measure drift on the rest, by architecture.",
           "status": "Proposed"
         },
         {
@@ -884,6 +925,10 @@
         {
           "label": "Experiment 2 write-up",
           "url": "/research/kl-anchoring/EXP2.md"
+        },
+        {
+          "label": "Experiment 3 write-up",
+          "url": "/research/kl-anchoring/EXP3.md"
         },
         {
           "label": "Code and all result files (ZIP)",
