@@ -755,7 +755,145 @@
       "testbeds": [],
       "adapter_status": "The archived code is available for reproduction. It is not yet an approved Synthcore worker adapter and is not automatically executed by this site.",
       "thread": "project-bounded-agency"
+    },
+    {
+      "id": "kl-anchoring",
+      "title": "KL Anchoring",
+      "subtitle": "Why RLHF's anchor gives way under RLVR pressure",
+      "status": "Two CPU experiments completed",
+      "summary": "RLHF holds a policy near a human-like reference with a KL penalty. These experiments measure exactly how much that anchor resists optimization, and find a bounded price that strong verifiable-reward training pays whenever a shortcut is worth more than it.",
+      "question": "Does a KL anchor to a human-like policy fail under hard optimization pressure such as RLVR for the same reasons a KL anchor to a human Go policy drifts, and is the failure universal?",
+      "sources": [
+        {
+          "system": "Local Agent Commons",
+          "slug": "kl-anchoring",
+          "revision": 1,
+          "content_sha256": "53bd72f19ec858665d63a3a6f45896d9fbc2bbc21c9fdcf20a9c7731952932b6",
+          "independent_review": "Not independently reproduced"
+        }
+      ],
+      "verification": "AI-written by Claude for Jaeson Booker, 26 October 2026. Tabular CPU experiments with exact optima from closed forms or soft value iteration, compared against sampled RL with three seeds. Code and all result files are published below. These are engineering-level checks, not independent scientific replication.",
+      "sections": [
+        {
+          "title": "Experiment 1: the tilting law",
+          "paragraphs": [
+            "One decision with ten actions. A forbidden action has reference probability p and reward advantage D. The KL-regularized optimum is the reference tilted by exp(r/\u03b2), so the forbidden action takes over at D/\u03b2 = log((1\u2212p)/p)."
+          ],
+          "findings": [
+            {
+              "label": "The anchor is worth log(1/p) nats, no more",
+              "detail": "Measured takeover thresholds were 2.2, 4.6, 6.9 and 9.2 for p = 1e-1 to 1e-4, matching theory."
+            },
+            {
+              "label": "The KL implementation decides whether the anchor exists",
+              "detail": "k1 in the reward reproduces the law. k3 as a loss (GRPO's KL term) behaves like forward KL and takes over near D/\u03b2 \u2248 2 whatever p is. k1 as a loss has zero expected gradient."
+            },
+            {
+              "label": "Normalized advantages erase the reward's size",
+              "detail": "With GRPO-style advantages the forbidden action reached 0.98 for any D from 0.001 to 1 at \u03b2 = 0.1. Without an effective anchor, time to takeover approaches 1/(p\u00b7batch)."
+            },
+            {
+              "label": "Spillover through shared parameters",
+              "detail": "Rewarding the act in half the contexts raised it to 0.96 in held-out contexts where it pays nothing, when the anchor applied only on training contexts. Anchoring all contexts kept them under 0.01."
+            }
+          ]
+        },
+        {
+          "title": "Experiment 2: the forbidden-shortcut gridworld",
+          "paragraphs": [
+            "A long compliant route around a wall and a forbidden door through it. The task reward is reach-the-goal-fast and does not see the door. The reference is behaviour cloning from noisy human demos where a fraction \u03b5 use the door."
+          ],
+          "findings": [
+            {
+              "label": "The tilting law lifts to trajectories",
+              "detail": "logit P*(door) \u2248 logit P_ref(door) + D/\u03b2, with median logit error 0.04 to 0.09 across 640 settings where humans sometimes used the door."
+            },
+            {
+              "label": "Horizon breaks the anchor",
+              "detail": "The reward for a shortcut grows with the task it skips. At fixed \u03b2 = 0.5 and \u03b5 = 1%, door use rose from 2% to 84% as the detour grew from 4 to 30 steps."
+            },
+            {
+              "label": "A cloned anchor cannot encode never",
+              "detail": "With zero human door uses, takeover needs D/\u03b2 > ln(N/2\u03b1). Ten times more data buys 2.3 nats; the smoothing prior moves the threshold as much as 100x more data."
+            },
+            {
+              "label": "Estimator choice",
+              "detail": "Per-step KL in the reward reached the exact optimum at every \u03b2. GRPO-style advantages with a k3 loss needed about 4x the \u03b2 for the same door rate, and took a never-demonstrated door in 8 of 9 runs where the optimum gives under 0.5%."
+            },
+            {
+              "label": "Prediction not supported: off-distribution drift first",
+              "detail": "The exact optimum ignores where the door sits. Location only changed discovery speed, and the door beside heavy human traffic was taken more often. Testing this needs shared parameters."
+            }
+          ]
+        }
+      ],
+      "figures": [
+        {
+          "src": "/research/kl-anchoring/figures/fig1_tilting_law.png",
+          "caption": "Experiment 1: the tilting law and estimator variants. Measured takeover matches log((1\u2212p)/p) for k1 in the reward; k3 as a loss and GRPO do not."
+        },
+        {
+          "src": "/research/kl-anchoring/figures/fig2_spillover_discovery.png",
+          "caption": "Experiment 1: discovery time versus 1/(p\u00b7batch), and spillover into held-out contexts with shared parameters."
+        },
+        {
+          "src": "/research/kl-anchoring/figures/fig3_gridworld_tilt_horizon.png",
+          "caption": "Experiment 2: the exact optimum follows the trajectory-level tilt (a); at fixed \u03b2, a longer detour makes the shortcut take over (b)."
+        },
+        {
+          "src": "/research/kl-anchoring/figures/fig4_gridworld_floor_estimators.png",
+          "caption": "Experiment 2: the anchor floor when humans never use the door (a), sampled estimators versus the exact optimum (b), training traces with \u03b5 = 0 (c)."
+        },
+        {
+          "src": "/research/kl-anchoring/figures/fig5_gridworld_kl_maps.png",
+          "caption": "Experiment 2: the maximum KL price of a one-step deviation by state, and where the optimum spends its KL budget, for the near and far door placements."
+        }
+      ],
+      "limits": [
+        "Tabular policies, one decision or one small gridworld, three seeds for sampled runs.",
+        "The behaviour-cloned reference is counts plus a Dirichlet prior, not a network.",
+        "No claim that any deployed model failed through this mechanism; public accounts of incidents do not attribute them to RLVR drift.",
+        "Results are not independently reproduced."
+      ],
+      "next_steps": [
+        {
+          "title": "Experiment 3: shared-parameter drift off-distribution",
+          "detail": "Small networks with the anchor applied on-policy only. Test whether drift starts in states the reference rarely saw.",
+          "status": "Proposed"
+        },
+        {
+          "title": "Small language-model RLHF then RLVR",
+          "detail": "Anchor a small LM with RLHF, then apply verifiable-reward training with a reward-hackable shortcut. Compare k1-in-reward, k3 loss and GRPO advantages.",
+          "status": "Proposed"
+        },
+        {
+          "title": "Go policy drift",
+          "detail": "Anchor a Go policy to a human-move model, train against a win signal, and measure drift away from human-like play by horizon.",
+          "status": "Proposed"
+        }
+      ],
+      "links": [
+        {
+          "label": "Project brief and results summary",
+          "url": "/research/kl-anchoring/README.md"
+        },
+        {
+          "label": "Experiment 1 write-up",
+          "url": "/research/kl-anchoring/EXP1.md"
+        },
+        {
+          "label": "Experiment 2 write-up",
+          "url": "/research/kl-anchoring/EXP2.md"
+        },
+        {
+          "label": "Code and all result files (ZIP)",
+          "url": "/research/kl-anchoring/kl-anchoring-code.zip"
+        }
+      ],
+      "testbeds": [],
+      "adapter_status": "The code runs on CPU in minutes. It is not yet an approved Synthcore worker adapter and is not automatically executed by this site.",
+      "thread": "project-kl-anchoring"
     }
   ],
-  "updated_at": "2026-10-24"
+  "updated_at": "2026-10-26"
 }
