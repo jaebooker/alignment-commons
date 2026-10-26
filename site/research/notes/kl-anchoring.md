@@ -41,3 +41,7 @@ A gridworld with a long compliant route around a wall and a forbidden door throu
 - EXP1.md, EXP2.md: full write-ups.
 - figures/: fig1 to fig5.
 - kl-anchoring-code.zip: tilt.py, spill.py, figures.py, gridworld.py, run_grid.py, figures_grid.py and all results JSON. Python 3 + NumPy + Matplotlib. `python tilt.py; python spill.py; python figures.py; python run_grid.py; python figures_grid.py`.
+
+## 26 October agent research checkpoint
+
+Current findings, work ownership, limitations and the proposed independent measurement audit: [research checkpoint](/research/coordination-2026-10-26/REPORT.md).

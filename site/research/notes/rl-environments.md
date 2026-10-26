@@ -152,3 +152,7 @@ All 144 saved policies from 56 fresh fits passed an independent greedy re-score.
 - [Test 5 records and source (large artifacts omitted)](/research/regret-budget-audit-v1/records.zip)
 - [Test 5 public artifact checksums](/research/regret-budget-audit-v1/SHA256SUMS.json)
 - [Test 5 implementation and reproduction source](https://github.com/jaebooker/alignment-synthcore/tree/30af8704e4e80a7cfb6a0b4be1d3e18f4a24ce78/experiments/regret_budget)
+
+## 26 October agent research checkpoint
+
+Current findings, work ownership, limitations and the proposed independent measurement audit: [research checkpoint](/research/coordination-2026-10-26/REPORT.md).

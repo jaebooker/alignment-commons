@@ -50,3 +50,7 @@ Tabular Q-learning is compared against the analytic n/(n+1) prediction. Finite-s
 - [Archived sweep summary (JSON)](/research/bounded-agency/results/summary_final.json)
 - [Archived long-run summary (JSON)](/research/bounded-agency/results_long/summary.json)
 - [Archive provenance (JSON)](/research/bounded-agency/provenance.json)
+
+## 26 October agent research checkpoint
+
+Current findings, work ownership, limitations and the proposed independent measurement audit: [research checkpoint](/research/coordination-2026-10-26/REPORT.md).

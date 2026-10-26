@@ -234,7 +234,8 @@ const NTESTED = IDEAS.filter(x => !x.control && x.testbed).length;
 const UNTEST = IDEAS.filter(x => x.verdict==="untestable"), untestByTopic = {};
 UNTEST.forEach(x => (untestByTopic[x.topic] ||= []).push(x));
 const VERD = {
-  beats_baseline:["Beats baseline","win","Significant win on the safety metric over the tuned baseline."],
+  beats_baseline:["Beats baseline","win","Significant safety win; task completion preserved under verdict rule v2 where measured."],
+  safe_but_incomplete:["Safety gain, task incomplete","gate","Safety improved, but task completion was not shown to be preserved under verdict rule v2."],
   mech_ok_no_win:["Mechanism works, no win","mech","The predicted mechanism showed up, but there was no significant safety win."],
   no_effect:["No effect","null","Ran the full benchmark; the confidence interval includes zero."],
   hurts:["Hurts","hurt","Significantly worse than the tuned baseline."],
@@ -282,6 +283,8 @@ function ideaHTML(x, showTopic){
   return `<li class="idea">
     <div class="top"><b>${esc(x.title)}</b>${vbadge(x.verdict)}${triBadge(x.triage)}${x.flags.map(f => `<span class="v flag" title="${esc((FLAGS[f]||[f,""])[1])}">${esc((FLAGS[f]||[f])[0])}</span>`).join("")}${x.control?`<span class="v flag" title="A sanity check, not a research idea">Control</span>`:""}${tn}</div>
     ${res ? `<div class="res">${res}</div>` : ""}
+    ${x.completion ? `<div class="res">Task completion: ${f3(x.completion.method_mean)} vs ${f3(x.completion.baseline_mean)} · difference ${sg(x.completion.mean_diff)} (95% CI ${sg(x.completion.ci95[0])} to ${sg(x.completion.ci95[1])})</div>` : ""}
+    ${x.verdict_v1 ? `<p class="fine">Versioned re-analysis: original verdict ${esc(x.verdict_v1)}; current verdict rule 2. <a href="/research/completion-verdict-v2/reverdict.json">Completion assessment</a></p>` : ""}
     ${x.description ? `<p data-x class="clamp">${esc(x.description)}</p>` : ""}
     <div class="cite">${cite(x.source)}<a href="${esc(x.record)}" target="_blank" rel="noopener">Full record and code</a>${x.updated?` · tested ${esc(x.updated)}`:""}</div>
   </li>`;
@@ -497,7 +500,7 @@ function renderTested(){
    <li><b>Toy gate.</b> On a small version of the testbed, the predicted mechanism must show up. If it doesn't, the idea stops here.</li>
    <li><b>Equal tuning.</b> The method and the baseline get the same tuning budget, on development data only.</li>
    <li><b>Benchmark.</b> 8 paired seeds on held-out test data, an exact permutation test, a 95% confidence interval and the minimum detectable effect.</li>
-   <li><b>Verdict by code.</b> No model or person decides the verdict.</li>
+   <li><b>Verdict by code.</b> Rule v2 requires preserved task completion before a safety gain counts as a win. This is a versioned re-analysis of stored records, not a new experiment. <a href="/research/completion-verdict-v2/reverdict.json">Assessment</a> · <a href="/research/completion-verdict-v2/original-v1-catalog.json">Original verdicts</a></li>
    <li><b>Triage of failures.</b> A failed gate is re-checked with both arms tuned and scanned for signs of a bug. The verdict never changes; a second badge says how far to trust it. Suspected bugs and pending fixes are left out of direction signals.</li>
   </ol>
   <div class="legend">${Object.entries(VERD).map(([k,m]) => `${vbadge(k)}<span>${esc(m[2])}</span>`).join("")}${Object.entries(FLAGS).map(([k,m]) => `<span class="v flag">${esc(m[0])}</span><span>${esc(m[1])}</span>`).join("")}${Object.entries(TRIAGE).filter(([k]) => k!=="untriaged").map(([k,m]) => `<span class="v tri ${m[1]}">${esc(m[0])}</span><span>${esc(m[2])}</span>`).join("")}</div>

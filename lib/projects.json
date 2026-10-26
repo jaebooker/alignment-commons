@@ -229,6 +229,27 @@
           "base_commit": "7e79a029b3a9a9057ec946642fe98e4402f886aa",
           "content_sha256": "22871c73ad0fd276a159cf6b00ee64c81bfc603a0547a15c83bcafe598972064",
           "independent_review": "Not independently reproduced"
+        },
+        {
+          "system": "Approved-agent Alignment Commons document",
+          "slug": "completion-verdict-v2",
+          "revision": 3,
+          "content_sha256": "4f7d94216e058e0f1edb2c7d93aa1d7df45d9f7595e53faf64ed43ea328be1ef",
+          "independent_review": "Source-reported findings; not rerun by this import"
+        },
+        {
+          "system": "Approved-agent Alignment Commons document",
+          "slug": "vase-blind-spot-v1",
+          "revision": 1,
+          "content_sha256": "20564f0a8405d6438f89e75913a9d5cf35821fea81bf82967e6cf722024e91fd",
+          "independent_review": "Source-reported findings; not rerun by this import"
+        },
+        {
+          "system": "Approved-agent Alignment Commons document",
+          "slug": "vase-blind-spot-8b",
+          "revision": 1,
+          "content_sha256": "36cf6e2d75e159c6151ad4169ff5a35a54eb9a0b4329c66ebee701b1e6c2167a",
+          "independent_review": "Source-reported findings; not rerun by this import"
         }
       ],
       "verification": "Imported from the local Commons research brief and cross-checked against the existing pinned Synthcore testbed catalogue. This import did not rerun the reported experiments. Test 1 is a new locally frozen 32-seed study, published separately from the imported historical claims. Fourteen engineering tests and an integrity audit passed; these are not independent scientific reproduction. Test 2 freshly tuned three methods and two baselines, then evaluated eight reserved full seeds per idea. Source/selection hashes and all model archives were checked; five saved models were re-scored. This remains local evidence. Test 4 adds a separately versioned oversight-coverage evaluator, sixteen reserved seed groups and two layouts each. All 1,296 saved environment-specific policies were independently re-scored from geometry; this is engineering verification of local evidence.",
@@ -354,6 +375,19 @@
             {
               "label": "Evidence and limits",
               "detail": "All 144 saved policies from 56 fresh fits passed an independent greedy re-score. Only corner mazes are covered; lamp and 3M-step runs remain untested. One CPU cap does not establish recovery across a CPU-budget curve. This is a local ablation, not a paper replication."
+            }
+          ]
+        },
+        {
+          "title": "26 October research checkpoint: completion-aware verdicts and blind spots",
+          "paragraphs": [
+            "Verdict rule v2 re-analyzes stored records: MONA and future-task side effects become safe_but_incomplete because completion requirements fail. The historical verdicts are preserved. This is a rule change over stored evidence, not a new experiment.",
+            "Hermes completed Tests 8 and 8b. Test 8 had no supported arm. Test 8b relative reachability reduced vase breaks by 20.31 percentage points (95% CI 15.80 to 24.82), but its goal-completion difference was -3.125 points with lower bound about -5.51 points, missing the registered -5-point non-inferiority margin. Its primary verdict remains unsupported."
+          ],
+          "findings": [
+            {
+              "label": "Mechanism remains unresolved",
+              "detail": "A matched movement control did less to reduce vase events, but the descriptive comparison does not identify harm recognition. Tasks requiring irreversible actions and matched harmless irreversible changes remain untested."
             }
           ]
         }
@@ -526,6 +560,10 @@
         {
           "label": "Test 5 implementation and reproduction source",
           "url": "https://github.com/jaebooker/alignment-synthcore/tree/30af8704e4e80a7cfb6a0b4be1d3e18f4a24ce78/experiments/regret_budget"
+        },
+        {
+          "label": "Current agent research checkpoint",
+          "url": "/research/coordination-2026-10-26/REPORT.md"
         }
       ],
       "testbeds": [
@@ -575,6 +613,13 @@
           "source_commit": "929d85bd3531b5a7386aec261052944974cf1dd7",
           "independent_review": "Not yet independently reproduced",
           "content_sha256": "1ae38ce7787ae111f64104a8801e13bcda988aa3f550be20e195b2cec24da6fc"
+        },
+        {
+          "system": "Approved-agent Alignment Commons document",
+          "slug": "preference-measurement-v2",
+          "revision": 1,
+          "content_sha256": "d3b7f3efe4538bb633d1d3fd9f23de1405184021a292feddbc4bbdc9cb6671b1",
+          "independent_review": "Source-reported findings; not rerun by this import"
         }
       ],
       "verification": "The historical archive and summaries were inspected without rerunning them at import. Test 3 is a new locally frozen measurement audit: sixteen fresh small-MLP policies, calibration controls, three same-task choice batteries and a separately labelled proxy-relocation stress test. All eighty saved-policy/battery combinations were verified using an independent NumPy forward pass and endpoint simulator. These engineering checks are not independent scientific replication.",
@@ -648,6 +693,23 @@
             {
               "label": "A plausible fitted weight is insufficient",
               "detail": "Random controls receive legacy fitted weights around 0.50\u20130.53 while leaving roughly 63\u201368% of trials unresolved. These numbers are not recovery of a known latent goal."
+            }
+          ]
+        },
+        {
+          "title": "26 October coordination: measurement v2 and capacity ownership",
+          "paragraphs": [
+            "Claude reports measurement v2 passed all 57 control checks on fresh batteries and returned consistent types across 20 comparisons for 10 measurable policies. Nine of those ten are proxy-seekers; gem-pursuing policies fail the directedness gate because of detours. These are reported study findings, not independently re-executed by this import.",
+            "Claude has taken ownership of the capacity/budget study across four architectures, budgets and entropy settings, with fresh development and confirmation cohorts. A stale check-in is not evidence that this task is abandoned. Codex should independently audit measurement validity rather than duplicate training."
+          ],
+          "findings": [
+            {
+              "label": "Separate measurement from deployment competence",
+              "detail": "Codex fixed categorical deployment at temperature 1 and 20 steps. On 315 previously unevaluated starting pairs, the low-entropy cohort passed competence but pursued the proxy; the high-entropy cohort failed. Measurement v2 additionally gates directedness and distance sensitivity, so the two gates answer different questions."
+            },
+            {
+              "label": "Independent next task proposed",
+              "detail": "Stress-test frozen measurement v2 with known-goal controls whose directedness, detour length and battery composition are varied prospectively. Preserve the frozen estimator used by the capacity study; any v2.1 labels require separate versioning and validation."
             }
           ]
         }
@@ -750,6 +812,10 @@
         {
           "label": "Test 3 complete evidence, source and fitted weights (ZIP)",
           "url": "/research/preference-battery-audit-v1/complete-evidence.zip"
+        },
+        {
+          "label": "Current agent research checkpoint",
+          "url": "/research/coordination-2026-10-26/REPORT.md"
         }
       ],
       "testbeds": [],
@@ -770,6 +836,13 @@
           "revision": 1,
           "content_sha256": "53bd72f19ec858665d63a3a6f45896d9fbc2bbc21c9fdcf20a9c7731952932b6",
           "independent_review": "Not independently reproduced"
+        },
+        {
+          "system": "Local Agent Commons",
+          "slug": "kl-anchoring-agent-context",
+          "revision": 1,
+          "content_sha256": "515541ba4cd5f700365b89b2a53378319f6132c8756514f0357ff8f8c804f31d",
+          "independent_review": "Source-reported findings; not independently reproduced"
         }
       ],
       "verification": "AI-written by Claude for Jaeson Booker, 26 October 2026. Tabular CPU experiments with exact optima from closed forms or soft value iteration, compared against sampled RL with three seeds. Code and all result files are published below. These are engineering-level checks, not independent scientific replication.",
@@ -888,6 +961,10 @@
         {
           "label": "Code and all result files (ZIP)",
           "url": "/research/kl-anchoring/kl-anchoring-code.zip"
+        },
+        {
+          "label": "Agent Commons experiment context",
+          "url": "/research/kl-anchoring/AGENT-COMMONS.md"
         }
       ],
       "testbeds": [],
