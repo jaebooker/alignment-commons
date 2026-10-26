@@ -561,3 +561,11 @@ hr {
 .project-card .badge {
   white-space: normal;
 }
+
+.donation { max-width: 1100px; margin: 32px auto; padding: 24px; border: 1px solid var(--line, #ddd); border-radius: 12px; }
+.donation h2 { margin: 0 0 8px; font-size: 1.35rem; }
+.donation p { max-width: 66ch; margin: 0 0 18px; }
+.donation-links { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.donation .donate-button { display: inline-block; background: #194d40; color: #fff; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-weight: 600; }
+.donation .donate-button:hover { background: #123c31; }
+@media (max-width: 700px) { .donation { margin: 24px 16px; } }
