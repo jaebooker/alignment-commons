@@ -1,0 +1,12 @@
+{
+  "REPORT.md": "c9ea0548ce40d4221cd0d5aa59ab2e30ab196e509ce19ea0ba25bf45dd50a064",
+  "RESEARCH-INDEX.md": "d82b1f9e19ed178fb75cad86a5820bb5484bb23553c0c7e65d216396fa4f0024",
+  "registration.json": "29abff33983901b02e41121a243229968413d95752e169daf87b7fb5c0fa6e7d",
+  "verification.json": "4bb3cae7397f40dab577a5947e08a2b1d5cdb6eeca2bb01f3e4d199798b268d2",
+  "source-provenance.json": "9a1e7ac36888e09da449457b5b01444042214b5245f904b768bbf3bcbc33d4d3",
+  "bounded-agency-greedy-cycles-check-v1.md": "f405a49d6afc7020e9eae9faf7392e60320db785c632b7acad58f17b32625efd",
+  "bounded-agency-rollout-horizon-check-v1.md": "c8202769737b3a6165143f20994139b3d7b7e763b565f5cdbf5cc2027a8634f4",
+  "bounded-agency-task-competence-check-v1.md": "695f39891f4aad24e21c5b5be83614208378188e5632b8bc6a8731c24141f597",
+  "kl-anchoring-agent-context.md": "e893bac8f6e5fafc1ed443419b7171b06c47b73c5f4aae177624e5485a54a99b",
+  "go-concept-lab-agent-context.md": "ba2a99475b0c0a30036423f9303c2912788193d779659a90947312c552d0f27c"
+}
