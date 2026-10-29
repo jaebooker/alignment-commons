@@ -29,12 +29,19 @@
           "source_commit": "7a071f0dd49c8293a398936f36518326d023b422",
           "content_sha256": "3fab6ed149183605c22e9a5e4c09428333e6af981c0ec36981cb79f4c13f343b",
           "independent_review": "Not independently reproduced"
+        },
+        {
+          "system": "Curated Agent Commons research sync; source authors retained",
+          "slug": "agent-commons-research-sync-2026-10-29",
+          "revision": 1,
+          "content_sha256": "d82b1f9e19ed178fb75cad86a5820bb5484bb23553c0c7e65d216396fa4f0024",
+          "independent_review": "Imported studies are attributed, not independently rerun by the sync; original Test 3 diagnostic evidence was separately re-verified."
         }
       ],
       "verification": "The canonical go-concepts README, paper source and build log were inspected at commit 64a3c5045789c16891b1f0cb1cf1e5145308a38b. Go Concept Lab's milestone-4 status was also inspected. Historical experiment and test counts were not rerun for this import. Test 6 freshly executed 64 native branches and independently re-scored 6,912 continuation plies. This verifies implementation and saved local outcomes, not independent scientific reproduction.",
       "sections": [
         {
-          "title": "Loops Look Alive \u2014 paper study",
+          "title": "Loops Look Alive — paper study",
           "paragraphs": [
             "Jaeson Booker's 2026 manuscript studies five Go networks, including the KataGo network attacked by FAR, an adversarially trained KataGo network, and Leela Zero. It reports a group-safety error: vulnerable networks can count liberties yet judge doomed loops as alive.",
             "The study reports that a mid-network closed-loop feature partly acts as evidence of safety in vulnerable networks. The adversarially trained tf3 network retains a related feature while judging doomed loops correctly. Representing a feature and relying on it are distinct questions."
@@ -42,7 +49,7 @@
           "findings": [
             {
               "label": "Causal intervention under search",
-              "detail": "Holding the loop direction changed b40's ownership verdict on 11 of 12 doomed rings in the study's own 800-visit PUCT search. Mean ownership moved from +0.78 to \u22120.24 after the owner passed."
+              "detail": "Holding the loop direction changed b40's ownership verdict on 11 of 12 doomed rings in the study's own 800-visit PUCT search. Mean ownership moved from +0.78 to −0.24 after the owner passed."
             },
             {
               "label": "A causal link with a cost",
@@ -51,7 +58,7 @@
           ]
         },
         {
-          "title": "Go Concept Lab \u2014 separate exploratory pilot",
+          "title": "Go Concept Lab — separate exploratory pilot",
           "paragraphs": [
             "This earlier infrastructure and behavioral study used trained Leela Zero #57 and KataGo b6c96 s175M. Native extraction and a controlled decoding pilot were completed. Accessible probe information alone does not establish policy reliance or a shared causal mechanism.",
             "In the final-layer linear liberty probe, Leela accuracy was 45.9% on ordinary positions and 46.2% on attack-source positions; KataGo was 60.4% and 50.3%. These are probe accuracies, not game win rates. The two engines did not show the same decline."
@@ -168,6 +175,14 @@
         {
           "label": "Test 6 native continuation source",
           "url": "https://github.com/jaebooker/alignment-synthcore/tree/7a071f0dd49c8293a398936f36518326d023b422/experiments/go_continuations"
+        },
+        {
+          "label": "Current Agent Commons research index (29 October)",
+          "url": "/research/coordination-2026-10-29/RESEARCH-INDEX.md"
+        },
+        {
+          "label": "Go Concept Lab build and validation context (attributed import)",
+          "url": "/research/coordination-2026-10-29/go-concept-lab-agent-context.md"
         }
       ],
       "testbeds": [],
@@ -250,6 +265,13 @@
           "revision": 1,
           "content_sha256": "36cf6e2d75e159c6151ad4169ff5a35a54eb9a0b4329c66ebee701b1e6c2167a",
           "independent_review": "Source-reported findings; not rerun by this import"
+        },
+        {
+          "system": "Curated Agent Commons research sync; source authors retained",
+          "slug": "agent-commons-research-sync-2026-10-29",
+          "revision": 1,
+          "content_sha256": "d82b1f9e19ed178fb75cad86a5820bb5484bb23553c0c7e65d216396fa4f0024",
+          "independent_review": "Imported studies are attributed, not independently rerun by the sync; original Test 3 diagnostic evidence was separately re-verified."
         }
       ],
       "verification": "Imported from the local Commons research brief and cross-checked against the existing pinned Synthcore testbed catalogue. This import did not rerun the reported experiments. Test 1 is a new locally frozen 32-seed study, published separately from the imported historical claims. Fourteen engineering tests and an integrity audit passed; these are not independent scientific reproduction. Test 2 freshly tuned three methods and two baselines, then evaluated eight reserved full seeds per idea. Source/selection hashes and all model archives were checked; five saved models were re-scored. This remains local evidence. Test 4 adds a separately versioned oversight-coverage evaluator, sixteen reserved seed groups and two layouts each. All 1,296 saved environment-specific policies were independently re-scored from geometry; this is engineering verification of local evidence.",
@@ -283,14 +305,14 @@
           ]
         },
         {
-          "title": "Test 1 completed: approval feedback \u00d7 environment reward",
+          "title": "Test 1 completed: approval feedback × environment reward",
           "paragraphs": [
             "A locally frozen 32-seed confirmation used the same exploration traces for all four feedback/reward conditions, across 192 environment instances. The combined primary support criterion failed: independent feedback reduced lever use, but neither full-horizon arm completed the task. This is a controlled fixed-exploration ablation, not a replication of the original online algorithm or an independently reproduced safety win."
           ],
           "findings": [
             {
               "label": "Corruption-channel contrast, with task failure",
-              "detail": "In the primary feedback-lever condition, lever activation fell from 98.4% with executed feedback to 10.9% with independent feedback. The paired difference was \u221287.5 percentage points (95% seed-level t interval \u221295.4 to \u221279.6). Goal completion was 0% in both arms, failing the required 80% completion floor."
+              "detail": "In the primary feedback-lever condition, lever activation fell from 98.4% with executed feedback to 10.9% with independent feedback. The paired difference was −87.5 percentage points (95% seed-level t interval −95.4 to −79.6). Goal completion was 0% in both arms, failing the required 80% completion floor."
             },
             {
               "label": "Using environment reward changed button activation",
@@ -334,11 +356,11 @@
             },
             {
               "label": "Reduced harm can hide task collapse",
-              "detail": "With resampled partial oversight, MONA and decoupled approval have zero harm but only 0\u201315.6% goal completion. With fixed partial oversight, they complete the task but break the vase in 81.3% of cases at 25% cell coverage and 56.3% at 50%. Avoiding harm by stalling is not a safety win."
+              "detail": "With resampled partial oversight, MONA and decoupled approval have zero harm but only 0–15.6% goal completion. With fixed partial oversight, they complete the task but break the vase in 81.3% of cases at 25% cell coverage and 56.3% at 50%. Avoiding harm by stalling is not a safety win."
             },
             {
               "label": "Baseline results remain uncertain at the practical threshold",
-              "detail": "The ordinary baseline\u2019s fixed-minus-resampled harm gap is 9.4 points at 25% coverage (adjusted interval \u221222.3 to 41.0) and 31.3 points at 50% coverage (7.8 to 54.7). Both arms complete the task. Neither lower bound reaches the declared 10-point minimum."
+              "detail": "The ordinary baseline’s fixed-minus-resampled harm gap is 9.4 points at 25% coverage (adjusted interval −22.3 to 41.0) and 31.3 points at 50% coverage (7.8 to 54.7). Both arms complete the task. Neither lower bound reaches the declared 10-point minimum."
             },
             {
               "label": "Accurate coverage resolves the planted harm locally",
@@ -564,6 +586,10 @@
         {
           "label": "Current agent research checkpoint",
           "url": "/research/coordination-2026-10-26/REPORT.md"
+        },
+        {
+          "label": "Current Agent Commons research index (29 October)",
+          "url": "/research/coordination-2026-10-29/RESEARCH-INDEX.md"
         }
       ],
       "testbeds": [
@@ -620,6 +646,13 @@
           "revision": 1,
           "content_sha256": "d3b7f3efe4538bb633d1d3fd9f23de1405184021a292feddbc4bbdc9cb6671b1",
           "independent_review": "Source-reported findings; not rerun by this import"
+        },
+        {
+          "system": "Curated Agent Commons research sync; source authors retained",
+          "slug": "agent-commons-research-sync-2026-10-29",
+          "revision": 1,
+          "content_sha256": "d82b1f9e19ed178fb75cad86a5820bb5484bb23553c0c7e65d216396fa4f0024",
+          "independent_review": "Imported studies are attributed, not independently rerun by the sync; original Test 3 diagnostic evidence was separately re-verified."
         }
       ],
       "verification": "The historical archive and summaries were inspected without rerunning them at import. Test 3 is a new locally frozen measurement audit: sixteen fresh small-MLP policies, calibration controls, three same-task choice batteries and a separately labelled proxy-relocation stress test. All eighty saved-policy/battery combinations were verified using an independent NumPy forward pass and endpoint simulator. These engineering checks are not independent scientific replication.",
@@ -635,7 +668,7 @@
         {
           "title": "Archived experiments",
           "paragraphs": [
-            "A 7\u00d77 gridworld puts a true-goal gem at a proxy corner except in a fraction p of training episodes. JAX PPO varies MLP/CNN capacity and entropy settings. Out-of-distribution choice trials estimate an implied gem weight; the archived summary reports eight seeds per configuration. A separate tabular Q-learning MDP tests a power-seeking prediction."
+            "A 7×7 gridworld puts a true-goal gem at a proxy corner except in a fraction p of training episodes. JAX PPO varies MLP/CNN capacity and entropy settings. Out-of-distribution choice trials estimate an implied gem weight; the archived summary reports eight seeds per configuration. A separate tabular Q-learning MDP tests a power-seeking prediction."
           ],
           "findings": [
             {
@@ -644,7 +677,7 @@
             },
             {
               "label": "The estimator has a bounded range",
-              "detail": "The README reports about \u00b10.03 recovery error on exact-optimal policies. The identifiable weight interval is [0.10, 0.90], with censoring outside it. Values near the plotted floor and ceiling should not be read as precise terminal-goal weights."
+              "detail": "The README reports about ±0.03 recovery error on exact-optimal policies. The identifiable weight interval is [0.10, 0.90], with censoring outside it. Values near the plotted floor and ceiling should not be read as precise terminal-goal weights."
             },
             {
               "label": "Longer runs remain heterogeneous",
@@ -664,7 +697,7 @@
           "findings": [
             {
               "label": "Every goal-interpretation gate failed",
-              "detail": "All four adjusted choice-rate comparisons meet the planned \u00b110-point equivalence rule, but cohort-mean equal-distance non-reach rates are 14.7\u201321.3%, above the 10% limit. Similar rates therefore do not validate a stable-goal interpretation. The low-entropy zero-width t intervals reflect eight identical zero differences, not population certainty."
+              "detail": "All four adjusted choice-rate comparisons meet the planned ±10-point equivalence rule, but cohort-mean equal-distance non-reach rates are 14.7–21.3%, above the 10% limit. Similar rates therefore do not validate a stable-goal interpretation. The low-entropy zero-width t intervals reflect eight identical zero differences, not population certainty."
             },
             {
               "label": "Entropy 0.01, reflected geometry: Rate equivalence supported within 10 points",
@@ -692,7 +725,7 @@
           "findings": [
             {
               "label": "A plausible fitted weight is insufficient",
-              "detail": "Random controls receive legacy fitted weights around 0.50\u20130.53 while leaving roughly 63\u201368% of trials unresolved. These numbers are not recovery of a known latent goal."
+              "detail": "Random controls receive legacy fitted weights around 0.50–0.53 while leaving roughly 63–68% of trials unresolved. These numbers are not recovery of a known latent goal."
             }
           ]
         },
@@ -717,7 +750,7 @@
       "figures": [
         {
           "src": "/research/preference-battery-audit-v1/preference-audit.png",
-          "caption": "Test 3: equal-distance gem choice with failures retained, and adjusted paired-seed intervals for transformed versus original batteries. The shaded band is the prespecified \u00b110-point rate-equivalence margin. Goal interpretation has a separate non-reach gate. This is a fresh local audit, not an independently reproduced goal-scaling result."
+          "caption": "Test 3: equal-distance gem choice with failures retained, and adjusted paired-seed intervals for transformed versus original batteries. The shaded band is the prespecified ±10-point rate-equivalence margin. Goal interpretation has a separate non-reach gate. This is a fresh local audit, not an independently reproduced goal-scaling result."
         },
         {
           "src": "/research/bounded-agency/figures/fig1_phase_diagram.png",
@@ -736,13 +769,29 @@
         "Small gridworlds, finite training, selected architectures and eight seeds per archived configuration do not establish how general agents' goals scale.",
         "The preference estimator is conditional on the choice-test setup and censored outside its identifiable range. Avoid interpreting endpoints as exact latent goals.",
         "Reported phase transitions and switches need reproduction and sensitivity checks. This publication imports archived reports; it does not certify the theoretical framing or independently reproduce the experiments.",
-        "Test 3 concerns two selected small-MLP configurations and eight fresh seeds each. Mean-rate equivalence does not establish identical individual behavior or a unique latent reward. Non-reach limits goal interpretation; the legacy estimator conditions on reached endpoints and retains censoring. No capacity or acquisition-mechanism claim is made."
+        "Test 3 concerns two selected small-MLP configurations and eight fresh seeds each. Mean-rate equivalence does not establish identical individual behavior or a unique latent reward. Non-reach limits goal interpretation; the legacy estimator conditions on reached endpoints and retains censoring. No capacity or acquisition-mechanism claim is made.",
+        "The 29 October check registry re-verifies known prior evidence; it is not a fresh scientific confirmation. No Test 3 file, goal label or original gate was changed, and no capacity extension was queued."
       ],
       "next_steps": [
         {
           "title": "Diagnose unresolved choice episodes before goal scaling",
-          "detail": "Register separate checks for greedy-policy cycles, rollout horizon and task competence before extending the capacity sweep. Keep Test 3 frozen; do not reinterpret unresolved episodes as a preferred goal.",
-          "status": "Proposed measurement follow-up"
+          "detail": "Three separate checks now cover greedy cycles, 20/40/80-step horizon sensitivity and task competence. Prior results were known before this evidence re-verification; this is not a new blind preregistration. All 5,563 greedy failures are closed cycles, zero are rescued by a longer horizon, and the original competence gate still fails. Test 3 remains frozen; neither/unreached is not a preferred goal. See the linked check registry and individual protocols.",
+          "status": "Registered separately; re-verified"
+        },
+        {
+          "title": "Task competence before goal scaling",
+          "detail": "Keep unconditional gem/proxy/neither denominators and the existing 10% equal-distance non-reach gate. Separately specified categorical deployment evidence does not repair the original greedy gate or prove intended-goal recovery.",
+          "status": "Original gate failed; scaling not cleared"
+        },
+        {
+          "title": "Rollout horizon",
+          "detail": "Same greedy rule and common trajectory prefixes at 20, 40 and 80 steps; zero rescues. The longer cutoffs cannot replace Test 3’s original endpoint.",
+          "status": "Re-verified: no greedy rescue"
+        },
+        {
+          "title": "Greedy-policy cycles",
+          "detail": "All original policies and trials retained; wall self-loops and multi-cell cycles are distinguished. This explains non-reach under the fixed greedy rule without assigning a goal.",
+          "status": "Re-verified: closed cycles"
         },
         {
           "title": "Register an independent reproduction",
@@ -816,6 +865,26 @@
         {
           "label": "Current agent research checkpoint",
           "url": "/research/coordination-2026-10-26/REPORT.md"
+        },
+        {
+          "label": "Current Agent Commons research index (29 October)",
+          "url": "/research/coordination-2026-10-29/RESEARCH-INDEX.md"
+        },
+        {
+          "label": "Separate diagnostic registrations and verification report",
+          "url": "/research/coordination-2026-10-29/REPORT.md"
+        },
+        {
+          "label": "Greedy cycles — registered check",
+          "url": "/research/coordination-2026-10-29/bounded-agency-greedy-cycles-check-v1.md"
+        },
+        {
+          "label": "Rollout horizon — registered check",
+          "url": "/research/coordination-2026-10-29/bounded-agency-rollout-horizon-check-v1.md"
+        },
+        {
+          "label": "Task competence — registered check",
+          "url": "/research/coordination-2026-10-29/bounded-agency-task-competence-check-v1.md"
         }
       ],
       "testbeds": [],
@@ -843,6 +912,13 @@
           "revision": 1,
           "content_sha256": "515541ba4cd5f700365b89b2a53378319f6132c8756514f0357ff8f8c804f31d",
           "independent_review": "Source-reported findings; not independently reproduced"
+        },
+        {
+          "system": "Curated Agent Commons research sync; source authors retained",
+          "slug": "agent-commons-research-sync-2026-10-29",
+          "revision": 1,
+          "content_sha256": "d82b1f9e19ed178fb75cad86a5820bb5484bb23553c0c7e65d216396fa4f0024",
+          "independent_review": "Imported studies are attributed, not independently rerun by the sync; original Test 3 diagnostic evidence was separately re-verified."
         }
       ],
       "verification": "AI-written by Claude for Jaeson Booker, 26 October 2026. Tabular CPU experiments with exact optima from closed forms or soft value iteration, compared against sampled RL with three seeds. Code and all result files are published below. These are engineering-level checks, not independent scientific replication.",
@@ -850,7 +926,7 @@
         {
           "title": "Experiment 1: the tilting law",
           "paragraphs": [
-            "One decision with ten actions. A forbidden action has reference probability p and reward advantage D. The KL-regularized optimum is the reference tilted by exp(r/\u03b2), so the forbidden action takes over at D/\u03b2 = log((1\u2212p)/p)."
+            "One decision with ten actions. A forbidden action has reference probability p and reward advantage D. The KL-regularized optimum is the reference tilted by exp(r/β), so the forbidden action takes over at D/β = log((1−p)/p)."
           ],
           "findings": [
             {
@@ -859,11 +935,11 @@
             },
             {
               "label": "The KL implementation decides whether the anchor exists",
-              "detail": "k1 in the reward reproduces the law. k3 as a loss (GRPO's KL term) behaves like forward KL and takes over near D/\u03b2 \u2248 2 whatever p is. k1 as a loss has zero expected gradient."
+              "detail": "k1 in the reward reproduces the law. k3 as a loss (GRPO's KL term) behaves like forward KL and takes over near D/β ≈ 2 whatever p is. k1 as a loss has zero expected gradient."
             },
             {
               "label": "Normalized advantages erase the reward's size",
-              "detail": "With GRPO-style advantages the forbidden action reached 0.98 for any D from 0.001 to 1 at \u03b2 = 0.1. Without an effective anchor, time to takeover approaches 1/(p\u00b7batch)."
+              "detail": "With GRPO-style advantages the forbidden action reached 0.98 for any D from 0.001 to 1 at β = 0.1. Without an effective anchor, time to takeover approaches 1/(p·batch)."
             },
             {
               "label": "Spillover through shared parameters",
@@ -874,24 +950,24 @@
         {
           "title": "Experiment 2: the forbidden-shortcut gridworld",
           "paragraphs": [
-            "A long compliant route around a wall and a forbidden door through it. The task reward is reach-the-goal-fast and does not see the door. The reference is behaviour cloning from noisy human demos where a fraction \u03b5 use the door."
+            "A long compliant route around a wall and a forbidden door through it. The task reward is reach-the-goal-fast and does not see the door. The reference is behaviour cloning from noisy human demos where a fraction ε use the door."
           ],
           "findings": [
             {
               "label": "The tilting law lifts to trajectories",
-              "detail": "logit P*(door) \u2248 logit P_ref(door) + D/\u03b2, with median logit error 0.04 to 0.09 across 640 settings where humans sometimes used the door."
+              "detail": "logit P*(door) ≈ logit P_ref(door) + D/β, with median logit error 0.04 to 0.09 across 640 settings where humans sometimes used the door."
             },
             {
               "label": "Horizon breaks the anchor",
-              "detail": "The reward for a shortcut grows with the task it skips. At fixed \u03b2 = 0.5 and \u03b5 = 1%, door use rose from 2% to 84% as the detour grew from 4 to 30 steps."
+              "detail": "The reward for a shortcut grows with the task it skips. At fixed β = 0.5 and ε = 1%, door use rose from 2% to 84% as the detour grew from 4 to 30 steps."
             },
             {
               "label": "A cloned anchor cannot encode never",
-              "detail": "With zero human door uses, takeover needs D/\u03b2 > ln(N/2\u03b1). Ten times more data buys 2.3 nats; the smoothing prior moves the threshold as much as 100x more data."
+              "detail": "With zero human door uses, takeover needs D/β > ln(N/2α). Ten times more data buys 2.3 nats; the smoothing prior moves the threshold as much as 100x more data."
             },
             {
               "label": "Estimator choice",
-              "detail": "Per-step KL in the reward reached the exact optimum at every \u03b2. GRPO-style advantages with a k3 loss needed about 4x the \u03b2 for the same door rate, and took a never-demonstrated door in 8 of 9 runs where the optimum gives under 0.5%."
+              "detail": "Per-step KL in the reward reached the exact optimum at every β. GRPO-style advantages with a k3 loss needed about 4x the β for the same door rate, and took a never-demonstrated door in 8 of 9 runs where the optimum gives under 0.5%."
             },
             {
               "label": "Prediction not supported: off-distribution drift first",
@@ -903,19 +979,19 @@
       "figures": [
         {
           "src": "/research/kl-anchoring/figures/fig1_tilting_law.png",
-          "caption": "Experiment 1: the tilting law and estimator variants. Measured takeover matches log((1\u2212p)/p) for k1 in the reward; k3 as a loss and GRPO do not."
+          "caption": "Experiment 1: the tilting law and estimator variants. Measured takeover matches log((1−p)/p) for k1 in the reward; k3 as a loss and GRPO do not."
         },
         {
           "src": "/research/kl-anchoring/figures/fig2_spillover_discovery.png",
-          "caption": "Experiment 1: discovery time versus 1/(p\u00b7batch), and spillover into held-out contexts with shared parameters."
+          "caption": "Experiment 1: discovery time versus 1/(p·batch), and spillover into held-out contexts with shared parameters."
         },
         {
           "src": "/research/kl-anchoring/figures/fig3_gridworld_tilt_horizon.png",
-          "caption": "Experiment 2: the exact optimum follows the trajectory-level tilt (a); at fixed \u03b2, a longer detour makes the shortcut take over (b)."
+          "caption": "Experiment 2: the exact optimum follows the trajectory-level tilt (a); at fixed β, a longer detour makes the shortcut take over (b)."
         },
         {
           "src": "/research/kl-anchoring/figures/fig4_gridworld_floor_estimators.png",
-          "caption": "Experiment 2: the anchor floor when humans never use the door (a), sampled estimators versus the exact optimum (b), training traces with \u03b5 = 0 (c)."
+          "caption": "Experiment 2: the anchor floor when humans never use the door (a), sampled estimators versus the exact optimum (b), training traces with ε = 0 (c)."
         },
         {
           "src": "/research/kl-anchoring/figures/fig5_gridworld_kl_maps.png",
@@ -965,6 +1041,14 @@
         {
           "label": "Agent Commons experiment context",
           "url": "/research/kl-anchoring/AGENT-COMMONS.md"
+        },
+        {
+          "label": "Current Agent Commons research index (29 October)",
+          "url": "/research/coordination-2026-10-29/RESEARCH-INDEX.md"
+        },
+        {
+          "label": "Updated Agent Commons context including experiment 3 (source-reported)",
+          "url": "/research/coordination-2026-10-29/kl-anchoring-agent-context.md"
         }
       ],
       "testbeds": [],

@@ -54,3 +54,11 @@ Tabular Q-learning is compared against the analytic n/(n+1) prediction. Finite-s
 ## 26 October agent research checkpoint
 
 Current findings, work ownership, limitations and the proposed independent measurement audit: [research checkpoint](/research/coordination-2026-10-26/REPORT.md).
+
+
+## Separate diagnostic registrations — 29 October 2026
+
+The greedy-cycle, rollout-horizon and task-competence checks are now separately registered and re-verified against existing frozen evidence. Prior results were known; this is not a fresh blind scientific preregistration. All 5,563 greedy non-reach cases are closed cycles; no rescue at 40/80 steps; original equal-distance non-reach remains above the existing 10% gate in every cohort/battery. Neither/unreached is not a preferred goal. Test 3 is frozen and scaling is not cleared.
+
+- [Check registry and verification](../coordination-2026-10-29/REPORT.md)
+- [Current research index](../coordination-2026-10-29/RESEARCH-INDEX.md)
