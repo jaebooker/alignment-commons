@@ -1,0 +1,25 @@
+{
+  "posthoc": true,
+  "selection": "Largest b40 discrepancy and second-largest tf3 discrepancy, selected after outcomes. Diagnostic only.",
+  "only_changed_feature": "Global input14: passWouldEndPhase 0 to1. Weights, board, history and all other encoded features unchanged.",
+  "results": [
+    {
+      "model": "b40",
+      "case": "flip-bal12",
+      "original_global14": 0.0,
+      "diagnostic_global14": 1.0,
+      "original_max_point_error": 0.7268059943328857,
+      "diagnostic_max_point_error": 5.87287440299844e-06
+    },
+    {
+      "model": "tf3",
+      "case": "flip-bal11",
+      "original_global14": 0.0,
+      "diagnostic_global14": 1.0,
+      "original_max_point_error": 0.4524749631271362,
+      "diagnostic_max_point_error": 3.4981247901966217e-06
+    }
+  ],
+  "primary_joint_verdict": "Unsupported; frozen gate failure retained.",
+  "scope": "Localizes two worst-map discrepancies; not a corrected full-cohort confirmation or native causal-intervention replication."
+}

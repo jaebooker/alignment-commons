@@ -1,0 +1,18 @@
+{
+  "audit_passed": true,
+  "meaning": "Saved-record integrity and recomputation passed; this does not pass the scientific pipeline gate or independently reproduce the study.",
+  "frozen_files_verified": 119,
+  "sgfs_replayed_with_official_board": 44,
+  "native_and_reference_board_actor_checks": 88,
+  "independent_target_masks": 44,
+  "ownership_maps_reparsed": 88,
+  "search_queries_checked": 19,
+  "maps_failing_parity": 88,
+  "max_raw_point_error": 0.7268059943328857,
+  "recomputed_gates": {
+    "pipeline": false,
+    "raw_pattern": true,
+    "search_pattern": true
+  },
+  "joint_support": false
+}
