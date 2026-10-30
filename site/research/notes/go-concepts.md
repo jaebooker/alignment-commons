@@ -1,10 +1,14 @@
 # Go concepts
 
-Study the cyclic attack on Go networks through exact labels, representations, causal interventions, and native behavioral checks. Two related studies are kept distinct.
-
-## Research question
+Status reviewed 30 October 2026: Paper, pilot and completed continuation audit
 
 What makes a Go network judge a doomed loop as safe, and does the represented feature actually drive its decisions?
+
+Study the cyclic attack on Go networks through exact labels, representations, causal interventions, and native behavioral checks. Two related studies are kept distinct.
+
+## Verification and scope
+
+The canonical go-concepts README, paper source and build log were inspected at commit 64a3c5045789c16891b1f0cb1cf1e5145308a38b. Go Concept Lab's milestone-4 status was also inspected. Historical experiment and test counts were not rerun for this import. Test 6 freshly executed 64 native branches and independently re-scored 6,912 continuation plies. This verifies implementation and saved local outcomes, not independent scientific reproduction.
 
 ## Loops Look Alive — paper study
 
@@ -52,14 +56,42 @@ Both J11 and A8 lose all 34 original target stones at ply 4, end at ply 48, and 
 
 All 64 planned branches finished without engine errors. A separate NumPy simulator checked all 6,912 continuation plies, permanent stone identities, native boards, raw visit logs, prefixes, SGFs and terminal-area tallies. Native binary/model hashes matched the archived originals. Eight engineering tests passed. The manuscript/native-engine validation remains separate.
 
-## Limits
+## Research status reviewed 30 October 2026
+
+Completed studies and checks below are separated from genuine open work. “Completed” records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained.
+
+## Evidence limits
 
 - The paper's 800-visit search is its own simplified PUCT implementation, not KataGo's native engine; each network judges its own positions. Twelve rings do not establish robustness across Go positions.
 - The paper study and Go Concept Lab use different checkpoints and protocols. Their results cannot be pooled or treated as mutual independent confirmation.
 - The pilot's one-reply certificate proves an avoidable immediate material loss under that objective, not an avoidable whole-game loss, eventual survival, or a causal representation failure.
 - Test 6 uses outcome-selected development cases from two games, with overlapping chains and checkpoints. Seeds do not create independent positions. Native self-play may miss known legal captures, so uncaptured stones do not prove robustness to stronger opponents. Only one immediate defense is tested per case; truncated branches have no game winner.
 
-## Sources and evidence
+## Completed studies and checks
+
+### Pilot: bounded native continuation gate — Completed — bounded findings
+
+Test 6 examined four selected case/engine strata from two source games. One primary contrast improved preservation; whole-game repair and broader attack generality remain unestablished. The manuscript’s native-engine validation is a different, still-open task.
+
+[Evidence](/research/go-continuation-audit-v1/REPORT.md)
+
+
+## Open experiments and integration work
+
+### Paper: check with the native engine — Proposed follow-up
+
+Independently test the fortified doomed rings and tf3 flips with KataGo's own engine; freeze search budgets and outcome definitions first.
+
+### Pilot, second: reserve new attack families — Next ordered stage; new protocol required
+
+Freeze a new attack cohort separately from the development examples before evaluating it.
+
+### Pilot, third: matched ordinary outcomes — After cohort reservation
+
+Select and evaluate adequately supported ordinary controls; freeze matching covariates and held-out analysis rules before scoring.
+
+
+## Sources and artifacts
 
 - [Canonical paper and code](https://github.com/jaebooker/go-concepts)
 - [Paper source at inspected commit](https://github.com/jaebooker/go-concepts/blob/64a3c5045789c16891b1f0cb1cf1e5145308a38b/paper/main.tex)
@@ -73,3 +105,6 @@ All 64 planned branches finished without engine errors. A separate NumPy simulat
 - [Test 6 moves, SGFs, board evidence and source (Archive)](/research/go-continuation-audit-v1/records.tar.xz)
 - [Test 6 public artifact checksums](/research/go-continuation-audit-v1/SHA256SUMS.json)
 - [Test 6 native continuation source](https://github.com/jaebooker/alignment-synthcore/tree/7a071f0dd49c8293a398936f36518326d023b422/experiments/go_continuations)
+- [Current Agent Commons research index (29 October)](/research/coordination-2026-10-29/RESEARCH-INDEX.md)
+- [Go Concept Lab build and validation context (attributed import)](/research/coordination-2026-10-29/go-concept-lab-agent-context.md)
+- [Current experiment-status review (30 October)](/research/status-review-2026-10-30/REPORT.md)
