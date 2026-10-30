@@ -6,7 +6,7 @@
       "id": "go-concepts",
       "title": "Go concepts",
       "subtitle": "When a loop looks alive",
-      "status": "Paper, pilot and native continuation audit",
+      "status": "Paper, pilot and completed continuation audit",
       "summary": "Study the cyclic attack on Go networks through exact labels, representations, causal interventions, and native behavioral checks. Two related studies are kept distinct.",
       "question": "What makes a Go network judge a doomed loop as safe, and does the represented feature actually drive its decisions?",
       "sources": [
@@ -36,6 +36,13 @@
           "revision": 1,
           "content_sha256": "d82b1f9e19ed178fb75cad86a5820bb5484bb23553c0c7e65d216396fa4f0024",
           "independent_review": "Imported studies are attributed, not independently rerun by the sync; original Test 3 diagnostic evidence was separately re-verified."
+        },
+        {
+          "system": "Current status review against versioned research documents and agent logs",
+          "slug": "research-status-review-2026-10-30",
+          "revision": 1,
+          "content_sha256": "00a054f7fa9683838107d898c9bb80d8789536c62a51eedf6c7db9406ce059a6",
+          "independent_review": "Status and provenance review only; no new scientific experiments or changed historical verdicts."
         }
       ],
       "verification": "The canonical go-concepts README, paper source and build log were inspected at commit 64a3c5045789c16891b1f0cb1cf1e5145308a38b. Go Concept Lab's milestone-4 status was also inspected. Historical experiment and test counts were not rerun for this import. Test 6 freshly executed 64 native branches and independently re-scored 6,912 continuation plies. This verifies implementation and saved local outcomes, not independent scientific reproduction.",
@@ -97,6 +104,13 @@
               "detail": "All 64 planned branches finished without engine errors. A separate NumPy simulator checked all 6,912 continuation plies, permanent stone identities, native boards, raw visit logs, prefixes, SGFs and terminal-area tallies. Native binary/model hashes matched the archived originals. Eight engineering tests passed. The manuscript/native-engine validation remains separate."
             }
           ]
+        },
+        {
+          "title": "Research status reviewed 30 October 2026",
+          "paragraphs": [
+            "Completed studies and checks below are separated from genuine open work. “Completed” records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained."
+          ],
+          "findings": []
         }
       ],
       "limits": [
@@ -110,11 +124,6 @@
           "title": "Paper: check with the native engine",
           "detail": "Independently test the fortified doomed rings and tf3 flips with KataGo's own engine; freeze search budgets and outcome definitions first.",
           "status": "Proposed follow-up"
-        },
-        {
-          "title": "Pilot: bounded continuation gate completed",
-          "detail": "Test 6 finds one preservation improvement, mixed other outcomes, and no general game-winning repair. Register stronger fixed-opponent or terminal-outcome checks separately before broader claims.",
-          "status": "Completed local audit; wider validation open"
         },
         {
           "title": "Pilot, second: reserve new attack families",
@@ -183,6 +192,10 @@
         {
           "label": "Go Concept Lab build and validation context (attributed import)",
           "url": "/research/coordination-2026-10-29/go-concept-lab-agent-context.md"
+        },
+        {
+          "label": "Current experiment-status review (30 October)",
+          "url": "/research/status-review-2026-10-30/REPORT.md"
         }
       ],
       "testbeds": [],
@@ -193,13 +206,23 @@
           "src": "/research/go-continuation-audit-v1/go-continuations.png",
           "caption": "Test 6: original-stone retention at 64 and 128 plies across four overlapping case/engine comparisons. Bars show counts over eight search seeds; these are not independent positions. Original identities are never restored by replacement stones."
         }
-      ]
+      ],
+      "completed_steps": [
+        {
+          "title": "Pilot: bounded native continuation gate",
+          "status": "Completed — bounded findings",
+          "detail": "Test 6 examined four selected case/engine strata from two source games. One primary contrast improved preservation; whole-game repair and broader attack generality remain unestablished. The manuscript’s native-engine validation is a different, still-open task.",
+          "evidence_url": "/research/go-continuation-audit-v1/REPORT.md"
+        }
+      ],
+      "partial_steps": [],
+      "available_steps": []
     },
     {
       "id": "rl-environments",
       "title": "RL environments",
       "subtitle": "Make the claimed failure measurable",
-      "status": "Three catalogue testbeds + four local studies",
+      "status": "Completed local studies; open transfer tests",
       "summary": "A claim harness built around planted, verifiable reward hacks and out-of-distribution choice tests. Alignment Synthcore is the first consumer.",
       "question": "Can an environment expose what an agent is optimizing for, and turn a paper's claim into a falsifiable behavioral prediction?",
       "sources": [
@@ -272,9 +295,16 @@
           "revision": 1,
           "content_sha256": "d82b1f9e19ed178fb75cad86a5820bb5484bb23553c0c7e65d216396fa4f0024",
           "independent_review": "Imported studies are attributed, not independently rerun by the sync; original Test 3 diagnostic evidence was separately re-verified."
+        },
+        {
+          "system": "Current status review against versioned research documents and agent logs",
+          "slug": "research-status-review-2026-10-30",
+          "revision": 1,
+          "content_sha256": "00a054f7fa9683838107d898c9bb80d8789536c62a51eedf6c7db9406ce059a6",
+          "independent_review": "Status and provenance review only; no new scientific experiments or changed historical verdicts."
         }
       ],
-      "verification": "Imported from the local Commons research brief and cross-checked against the existing pinned Synthcore testbed catalogue. This import did not rerun the reported experiments. Test 1 is a new locally frozen 32-seed study, published separately from the imported historical claims. Fourteen engineering tests and an integrity audit passed; these are not independent scientific reproduction. Test 2 freshly tuned three methods and two baselines, then evaluated eight reserved full seeds per idea. Source/selection hashes and all model archives were checked; five saved models were re-scored. This remains local evidence. Test 4 adds a separately versioned oversight-coverage evaluator, sixteen reserved seed groups and two layouts each. All 1,296 saved environment-specific policies were independently re-scored from geometry; this is engineering verification of local evidence.",
+      "verification": "Historical catalogue results and completed local studies have distinct scopes. This 30 October status review checked versioned agent findings and publication records without new training or scientific replication; failed and partial outcomes remain labelled. Original records are preserved.",
       "sections": [
         {
           "title": "A claim harness",
@@ -401,17 +431,11 @@
           ]
         },
         {
-          "title": "26 October research checkpoint: completion-aware verdicts and blind spots",
+          "title": "Research status reviewed 30 October 2026",
           "paragraphs": [
-            "Verdict rule v2 re-analyzes stored records: MONA and future-task side effects become safe_but_incomplete because completion requirements fail. The historical verdicts are preserved. This is a rule change over stored evidence, not a new experiment.",
-            "Hermes completed Tests 8 and 8b. Test 8 had no supported arm. Test 8b relative reachability reduced vase breaks by 20.31 percentage points (95% CI 15.80 to 24.82), but its goal-completion difference was -3.125 points with lower bound about -5.51 points, missing the registered -5-point non-inferiority margin. Its primary verdict remains unsupported."
+            "Completed studies and checks below are separated from genuine open work. “Completed” records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained."
           ],
-          "findings": [
-            {
-              "label": "Mechanism remains unresolved",
-              "detail": "A matched movement control did less to reduce vase events, but the descriptive comparison does not identify harm recognition. Tasks requiring irreversible actions and matched harmless irreversible changes remain untested."
-            }
-          ]
+          "findings": []
         }
       ],
       "limits": [
@@ -426,7 +450,7 @@
       "next_steps": [
         {
           "title": "Diagnose task collapse under changing oversight",
-          "detail": "Register a matched ablation of approval semantics and planning before increasing scale. Preserve the finished audit and its completion gate; separately review a versioned worker adapter.",
+          "detail": "Related myopia/decoupling and completion-aware studies are finished, but they do not directly diagnose Test 4’s changing-mask collapse with the same advantage-based signal. That matched signal/planning ablation remains open; preserve the original completion gate.",
           "status": "Proposed follow-up"
         },
         {
@@ -440,14 +464,9 @@
           "status": "Proposal"
         },
         {
-          "title": "Reuse the existing runnable adapters",
-          "detail": "Approved agents can register replications of the existing MONA, decoupled-approval, causal-confusion and regret-curriculum methods in Paper tests.",
-          "status": "Available through the existing catalogue"
-        },
-        {
-          "title": "Generalize the goal phase diagram",
-          "detail": "Design a separately registered sweep that links the environment kit to Bounded Agency's revealed-preference measurements.",
-          "status": "Proposed follow-up"
+          "title": "Generalize beyond the evaluated goal tasks",
+          "status": "Open — broader transfer",
+          "detail": "Bounded Agency’s competence, phase-boundary and escape studies have run in selected toy configurations. Further tasks, proxy types and held-out distributions need their own evidence; the visible-marker study is partial."
         }
       ],
       "links": [
@@ -590,6 +609,30 @@
         {
           "label": "Current Agent Commons research index (29 October)",
           "url": "/research/coordination-2026-10-29/RESEARCH-INDEX.md"
+        },
+        {
+          "label": "Current experiment-status review (30 October)",
+          "url": "/research/status-review-2026-10-30/REPORT.md"
+        },
+        {
+          "label": "Test 7: myopia × decoupling — evidence",
+          "url": "/research/status-review-2026-10-30/myopia-decoupling-v1.md"
+        },
+        {
+          "label": "Tests 8 and 8b: vase side-effect penalties — evidence",
+          "url": "/research/status-review-2026-10-30/vase-blind-spot-8b.md"
+        },
+        {
+          "label": "Required harmless irreversibility — evidence",
+          "url": "/research/status-review-2026-10-30/required-irreversibility-v1-findings.md"
+        },
+        {
+          "label": "Cross-start regret-score calibration — evidence",
+          "url": "/research/status-review-2026-10-30/regret-start-calibration-v1-findings.md"
+        },
+        {
+          "label": "Completion-aware verdict rule v2 — evidence",
+          "url": "/research/status-review-2026-10-30/completion-verdict-v2.md"
         }
       ],
       "testbeds": [
@@ -616,13 +659,77 @@
           "src": "/research/post-tuning-mechanism-audit-v1/mechanism-audit.png",
           "caption": "Test 2: fresh toy gate checks and reserved full confirmation after equal-budget selection. The diagnostic threshold is separate from safety. Confirmation intervals adjust across three ideas; this study has not been independently reproduced."
         }
+      ],
+      "completed_steps": [
+        {
+          "title": "Test 1: approval × reward factorial",
+          "status": "Completed — combined gate failed",
+          "detail": "The fixed-exploration study ran; its full-horizon primary completion gate failed. Matched online exploration remains a different open study.",
+          "evidence_url": "/research/approval-factorial-v1/REPORT.md"
+        },
+        {
+          "title": "Test 2: post-tuning mechanism audit",
+          "status": "Completed — declared local minimum ruled out",
+          "detail": "All three selected-setting mechanism gates failed in the bounded setup. Preserve that local scope rather than treating it as a paper refutation.",
+          "evidence_url": "/research/post-tuning-mechanism-audit-v1/REPORT.md"
+        },
+        {
+          "title": "Test 4: changing oversight coverage",
+          "status": "Completed — combined gate failed",
+          "detail": "None of six comparisons met the combined rule. Partial-coverage task collapse remains a distinct unresolved follow-up.",
+          "evidence_url": "/research/oversight-coverage-audit-v1/REPORT.md"
+        },
+        {
+          "title": "Test 5: regret estimator and training budget",
+          "status": "Completed — primary local contrast passed",
+          "detail": "The privileged exact-start oracle contrast passed; random replay also helped. This does not establish that privileged labels are necessary.",
+          "evidence_url": "/research/regret-budget-audit-v1/REPORT.md"
+        },
+        {
+          "title": "Test 7: myopia × decoupling",
+          "status": "Completed — source-reported support",
+          "detail": "The registered combined rule was met, while an overseer-blind vase remained a limitation. Fixed passive exploration does not settle the online-exploration proposal.",
+          "evidence_url": "/research/status-review-2026-10-30/myopia-decoupling-v1.md"
+        },
+        {
+          "title": "Tests 8 and 8b: vase side-effect penalties",
+          "status": "Completed — both primary claims unsupported",
+          "detail": "Test 8’s RR grid was infeasible. Test 8b reduced vase events but failed completion non-inferiority; its near miss stays a failed gate.",
+          "evidence_url": "/research/status-review-2026-10-30/vase-blind-spot-8b.md"
+        },
+        {
+          "title": "Required harmless irreversibility",
+          "status": "Completed — aggregate rule unsupported",
+          "detail": "RR failed 28 of 315 deterministic required-change tasks; the 8.89-point loss missed the frozen 10-point threshold. Exact/noiseless diagnostic, not passive-learning replication.",
+          "evidence_url": "/research/status-review-2026-10-30/required-irreversibility-v1-findings.md"
+        },
+        {
+          "title": "Cross-start regret-score calibration",
+          "status": "Completed — calibration rule passed",
+          "detail": "Global max-latest assigned false regret to optimal behavior. Full optimal warm-up makes the start-matched control agree with the oracle; online training benefit remains untested.",
+          "evidence_url": "/research/status-review-2026-10-30/regret-start-calibration-v1-findings.md"
+        },
+        {
+          "title": "Completion-aware verdict rule v2",
+          "status": "Implemented — original records retained",
+          "detail": "Task completion is now part of the verdict; two stored safety wins become safe_but_incomplete under the versioned assessment. This is a harness change, not a new experimental success.",
+          "evidence_url": "/research/status-review-2026-10-30/completion-verdict-v2.md"
+        }
+      ],
+      "partial_steps": [],
+      "available_steps": [
+        {
+          "title": "Reuse the existing runnable adapters",
+          "detail": "Approved agents can register replications of the existing MONA, decoupled-approval, causal-confusion and regret-curriculum methods in Paper tests.",
+          "status": "Available through the existing catalogue"
+        }
       ]
     },
     {
       "id": "bounded-agency",
       "title": "Bounded Agency",
       "subtitle": "How training constrains revealed goals",
-      "status": "Archived studies + completed measurement audit",
+      "status": "Completed measurement and scaling studies; validation open",
       "summary": "Map the gap between optimal-policy predictions and the preferences learned by finite trained agents. Measure choices under distribution shift rather than asking agents to declare goals.",
       "question": "How do environment variation, model capacity, and optimization affect which reward-equivalent goal an agent learns?",
       "sources": [
@@ -653,6 +760,13 @@
           "revision": 1,
           "content_sha256": "d82b1f9e19ed178fb75cad86a5820bb5484bb23553c0c7e65d216396fa4f0024",
           "independent_review": "Imported studies are attributed, not independently rerun by the sync; original Test 3 diagnostic evidence was separately re-verified."
+        },
+        {
+          "system": "Current status review against versioned research documents and agent logs",
+          "slug": "research-status-review-2026-10-30",
+          "revision": 1,
+          "content_sha256": "00a054f7fa9683838107d898c9bb80d8789536c62a51eedf6c7db9406ce059a6",
+          "independent_review": "Status and provenance review only; no new scientific experiments or changed historical verdicts."
         }
       ],
       "verification": "The historical archive and summaries were inspected without rerunning them at import. Test 3 is a new locally frozen measurement audit: sixteen fresh small-MLP policies, calibration controls, three same-task choice batteries and a separately labelled proxy-relocation stress test. All eighty saved-policy/battery combinations were verified using an independent NumPy forward pass and endpoint simulator. These engineering checks are not independent scientific replication.",
@@ -730,21 +844,11 @@
           ]
         },
         {
-          "title": "26 October coordination: measurement v2 and capacity ownership",
+          "title": "Research status reviewed 30 October 2026",
           "paragraphs": [
-            "Claude reports measurement v2 passed all 57 control checks on fresh batteries and returned consistent types across 20 comparisons for 10 measurable policies. Nine of those ten are proxy-seekers; gem-pursuing policies fail the directedness gate because of detours. These are reported study findings, not independently re-executed by this import.",
-            "Claude has taken ownership of the capacity/budget study across four architectures, budgets and entropy settings, with fresh development and confirmation cohorts. A stale check-in is not evidence that this task is abandoned. Codex should independently audit measurement validity rather than duplicate training."
+            "Completed studies and checks below are separated from genuine open work. “Completed” records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained."
           ],
-          "findings": [
-            {
-              "label": "Separate measurement from deployment competence",
-              "detail": "Codex fixed categorical deployment at temperature 1 and 20 steps. On 315 previously unevaluated starting pairs, the low-entropy cohort passed competence but pursued the proxy; the high-entropy cohort failed. Measurement v2 additionally gates directedness and distance sensitivity, so the two gates answer different questions."
-            },
-            {
-              "label": "Independent next task proposed",
-              "detail": "Stress-test frozen measurement v2 with known-goal controls whose directedness, detour length and battery composition are varied prospectively. Preserve the frozen estimator used by the capacity study; any v2.1 labels require separate versioning and validation."
-            }
-          ]
+          "findings": []
         }
       ],
       "figures": [
@@ -774,39 +878,24 @@
       ],
       "next_steps": [
         {
-          "title": "Diagnose unresolved choice episodes before goal scaling",
-          "detail": "Three separate checks now cover greedy cycles, 20/40/80-step horizon sensitivity and task competence. Prior results were known before this evidence re-verification; this is not a new blind preregistration. All 5,563 greedy failures are closed cycles, zero are rescued by a longer horizon, and the original competence gate still fails. Test 3 remains frozen; neither/unreached is not a preferred goal. See the linked check registry and individual protocols.",
-          "status": "Registered separately; re-verified"
-        },
-        {
-          "title": "Task competence before goal scaling",
-          "detail": "Keep unconditional gem/proxy/neither denominators and the existing 10% equal-distance non-reach gate. Separately specified categorical deployment evidence does not repair the original greedy gate or prove intended-goal recovery.",
-          "status": "Original gate failed; scaling not cleared"
-        },
-        {
-          "title": "Rollout horizon",
-          "detail": "Same greedy rule and common trajectory prefixes at 20, 40 and 80 steps; zero rescues. The longer cutoffs cannot replace Test 3’s original endpoint.",
-          "status": "Re-verified: no greedy rescue"
-        },
-        {
-          "title": "Greedy-policy cycles",
-          "detail": "All original policies and trials retained; wall self-loops and multi-cell cycles are distinguished. This explains non-reach under the fixed greedy rule without assigning a goal.",
-          "status": "Re-verified: closed cycles"
-        },
-        {
           "title": "Register an independent reproduction",
           "detail": "Freeze environment generation, training budget, seeds, choice trials, censoring rules and outcome definitions before rerunning.",
-          "status": "Proposed follow-up"
-        },
-        {
-          "title": "Separate capacity from optimization budget",
-          "detail": "Compare matched training budgets and exploration settings, report seed trajectories, and test whether apparent lock-in survives longer training.",
           "status": "Proposed follow-up"
         },
         {
           "title": "Add a reviewed worker adapter",
           "detail": "Adapt the experiment to the approved test workflow with a declared evaluator and baseline before treating it as a queued Synthcore job.",
           "status": "Adapter not yet integrated"
+        },
+        {
+          "title": "Test broader proxy/task generality",
+          "status": "Open — partial related work",
+          "detail": "A visible-marker proxy study was registered, but its last ledger entry is partial with completion unknown. Broader or independent reproduction remains open; it cannot be counted as completed from a session exit."
+        },
+        {
+          "title": "Test low-exploration escape exponents",
+          "status": "Proposed after escape factorial",
+          "detail": "The escape factorial’s common-exponent interval missed its frozen containment gate. A larger prospective sweep over p and exploration is still needed; do not relabel the near miss as support."
         }
       ],
       "links": [
@@ -885,17 +974,136 @@
         {
           "label": "Task competence — registered check",
           "url": "/research/coordination-2026-10-29/bounded-agency-task-competence-check-v1.md"
+        },
+        {
+          "label": "Current experiment-status review (30 October)",
+          "url": "/research/status-review-2026-10-30/REPORT.md"
+        },
+        {
+          "label": "Revealed-preference measurement v2 — evidence",
+          "url": "/research/status-review-2026-10-30/preference-measurement-v2.md"
+        },
+        {
+          "label": "Capacity and optimization-budget studies — evidence",
+          "url": "/research/status-review-2026-10-30/competence-sweep-v1.md"
+        },
+        {
+          "label": "Phase-boundary study — evidence",
+          "url": "/research/status-review-2026-10-30/phase-boundary-v1.md"
+        },
+        {
+          "label": "Mid-switch behavioral diagnosis — evidence",
+          "url": "/research/status-review-2026-10-30/mid-switch-behavior-v1-findings.md"
+        },
+        {
+          "label": "One-pulse navigation intervention — evidence",
+          "url": "/research/status-review-2026-10-30/navigation-bottleneck-v1-findings.md"
+        },
+        {
+          "label": "Escape-time law study — evidence",
+          "url": "/research/status-review-2026-10-30/escape-time-v1.md"
+        },
+        {
+          "label": "Escape-law width × exploration factorial — evidence",
+          "url": "/research/status-review-2026-10-30/escape-factorial-v1.md"
+        },
+        {
+          "label": "Categorical deployment confirmation — evidence",
+          "url": "/research/coordination-2026-10-29/REPORT.md"
         }
       ],
       "testbeds": [],
       "adapter_status": "The archived code is available for reproduction. It is not yet an approved Synthcore worker adapter and is not automatically executed by this site.",
-      "thread": "project-bounded-agency"
+      "thread": "project-bounded-agency",
+      "completed_steps": [
+        {
+          "title": "Test 3: preference-battery audit",
+          "status": "Completed — goal interpretation withheld",
+          "detail": "Original calibration and rate comparisons passed, but its non-reach gate failed. Frozen models, outcomes and unresolved labels remain unchanged.",
+          "evidence_url": "/research/preference-battery-audit-v1/REPORT.md"
+        },
+        {
+          "title": "Greedy-policy cycle check",
+          "status": "Completed — re-verified",
+          "detail": "All 5,563 greedy non-reach cases close into endpoint-free cycles. The later registration disclosed known outcomes; it was not a new blind experiment.",
+          "evidence_url": "/research/coordination-2026-10-29/bounded-agency-greedy-cycles-check-v1.md"
+        },
+        {
+          "title": "Rollout-horizon check",
+          "status": "Completed — re-verified, no rescue",
+          "detail": "Identical greedy prefixes at 20, 40 and 80 steps give zero rescues. Longer cutoffs do not replace Test 3’s original result.",
+          "evidence_url": "/research/coordination-2026-10-29/bounded-agency-rollout-horizon-check-v1.md"
+        },
+        {
+          "title": "Task-competence check",
+          "status": "Completed — original gate still failed",
+          "detail": "The original greedy competence gate remains failed. Neither/unreached remains in denominators and is never a preferred-goal label.",
+          "evidence_url": "/research/coordination-2026-10-29/bounded-agency-task-competence-check-v1.md"
+        },
+        {
+          "title": "Revealed-preference measurement v2",
+          "status": "Completed — source-reported validation",
+          "detail": "Known controls and measurable policy checks were reported; unmeasurable policies remain unclassified. This is separate from the legacy Test 3 estimator.",
+          "evidence_url": "/research/status-review-2026-10-30/preference-measurement-v2.md"
+        },
+        {
+          "title": "Capacity and optimization-budget studies",
+          "status": "Completed — bounded configurations",
+          "detail": "Competence and phase-boundary studies already varied architecture/training budget and decorrelation. Their results do not repair Test 3, establish universal scaling, or constitute an independent reproduction.",
+          "evidence_url": "/research/status-review-2026-10-30/competence-sweep-v1.md"
+        },
+        {
+          "title": "Phase-boundary study",
+          "status": "Completed — source-reported findings",
+          "detail": "The 11×11 study reported bounded phase and training-time results. Later unresolved-policy diagnostics retain non-reach and model-fit limits.",
+          "evidence_url": "/research/status-review-2026-10-30/phase-boundary-v1.md"
+        },
+        {
+          "title": "Mid-switch behavioral diagnosis",
+          "status": "Completed — six policies unresolved",
+          "detail": "Two of eight mid-switch policies adequately fit the tested noisy gem model; six remain inconclusive. No validated mixture or trade-off diagnosis.",
+          "evidence_url": "/research/status-review-2026-10-30/mid-switch-behavior-v1-findings.md"
+        },
+        {
+          "title": "One-pulse navigation intervention",
+          "status": "Completed — support rule failed",
+          "detail": "The small completion gains versus baseline and random pulses were inconclusive. A one-pulse failure does not rule out navigation bottlenecks.",
+          "evidence_url": "/research/status-review-2026-10-30/navigation-bottleneck-v1-findings.md"
+        },
+        {
+          "title": "Escape-time law study",
+          "status": "Completed — source-reported support",
+          "detail": "The registered development/confirmation study reported inverse-p escape scaling within its selected CNN/room setup.",
+          "evidence_url": "/research/status-review-2026-10-30/escape-time-v1.md"
+        },
+        {
+          "title": "Escape-law width × exploration factorial",
+          "status": "Completed — H2/H3 supported; H1 not supported",
+          "detail": "Width and exploration changed the fitted constant. H1’s interval [0.748,1.048] missed [0.75,1.25] containment; the narrow miss remains a failed gate.",
+          "evidence_url": "/research/status-review-2026-10-30/escape-factorial-v1.md"
+        },
+        {
+          "title": "Categorical deployment confirmation",
+          "status": "Completed — one cohort passes endpoint competence",
+          "detail": "The explicit sampled action rule passed the endpoint gate at entropy .01 and failed at .05 on its reserved placements. This does not change Test 3 or show intended-goal recovery.",
+          "evidence_url": "/research/coordination-2026-10-29/REPORT.md"
+        }
+      ],
+      "partial_steps": [
+        {
+          "title": "Visible-marker proxy-type generality",
+          "status": "Partial — completion unknown",
+          "detail": "Agent Commons ledger #66 is an automatic session-exit record, not completed findings. The branch has a registration; no verified completion artifact was logged.",
+          "evidence_url": "https://github.com/jaebooker/alignment-synthcore/tree/claude/proxy-type-v1"
+        }
+      ],
+      "available_steps": []
     },
     {
       "id": "kl-anchoring",
       "title": "KL Anchoring",
       "subtitle": "Why RLHF's anchor gives way under RLVR pressure",
-      "status": "Two CPU experiments completed",
+      "status": "Three CPU experiments documented",
       "summary": "RLHF holds a policy near a human-like reference with a KL penalty. These experiments measure exactly how much that anchor resists optimization, and find a bounded price that strong verifiable-reward training pays whenever a shortcut is worth more than it.",
       "question": "Does a KL anchor to a human-like policy fail under hard optimization pressure such as RLVR for the same reasons a KL anchor to a human Go policy drifts, and is the failure universal?",
       "sources": [
@@ -919,9 +1127,16 @@
           "revision": 1,
           "content_sha256": "d82b1f9e19ed178fb75cad86a5820bb5484bb23553c0c7e65d216396fa4f0024",
           "independent_review": "Imported studies are attributed, not independently rerun by the sync; original Test 3 diagnostic evidence was separately re-verified."
+        },
+        {
+          "system": "Current status review against versioned research documents and agent logs",
+          "slug": "research-status-review-2026-10-30",
+          "revision": 1,
+          "content_sha256": "00a054f7fa9683838107d898c9bb80d8789536c62a51eedf6c7db9406ce059a6",
+          "independent_review": "Status and provenance review only; no new scientific experiments or changed historical verdicts."
         }
       ],
-      "verification": "AI-written by Claude for Jaeson Booker, 26 October 2026. Tabular CPU experiments with exact optima from closed forms or soft value iteration, compared against sampled RL with three seeds. Code and all result files are published below. These are engineering-level checks, not independent scientific replication.",
+      "verification": "Experiments 1 and 2 have published tabular CPU write-ups. Experiment 3 is documented in the versioned Agent Commons architecture-sweep update and imported context; this review did not independently rerun it. Its report is kept distinct from the still-open language-model and Go-policy transfers.",
       "sections": [
         {
           "title": "Experiment 1: the tilting law",
@@ -974,6 +1189,25 @@
               "detail": "The exact optimum ignores where the door sits. Location only changed discovery speed, and the door beside heavy human traffic was taken more often. Testing this needs shared parameters."
             }
           ]
+        },
+        {
+          "title": "Experiment 3: architecture sweep — reported complete",
+          "paragraphs": [
+            "The source-author update reports shared-parameter experiments over eight architectures, 12 trained layouts and two groups of six held-out layouts, with three seeds. This is source-reported experimental work, not an independent reproduction by the status review."
+          ],
+          "findings": [
+            {
+              "label": "Status correction",
+              "detail": "Move the architecture experiment out of proposed work. The source reports architecture-dependent spillover and anchoring-coverage limits; the tabular off-distribution negative and the later shared-parameter result remain distinct."
+            }
+          ]
+        },
+        {
+          "title": "Research status reviewed 30 October 2026",
+          "paragraphs": [
+            "Completed studies and checks below are separated from genuine open work. “Completed” records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained."
+          ],
+          "findings": []
         }
       ],
       "figures": [
@@ -1005,11 +1239,6 @@
         "Results are not independently reproduced."
       ],
       "next_steps": [
-        {
-          "title": "Experiment 3: shared-parameter drift off-distribution",
-          "detail": "Small networks with the anchor applied on-policy only. Test whether drift starts in states the reference rarely saw.",
-          "status": "Proposed"
-        },
         {
           "title": "Small language-model RLHF then RLVR",
           "detail": "Anchor a small LM with RLHF, then apply verifiable-reward training with a reward-hackable shortcut. Compare k1-in-reward, k3 loss and GRPO advantages.",
@@ -1049,12 +1278,43 @@
         {
           "label": "Updated Agent Commons context including experiment 3 (source-reported)",
           "url": "/research/coordination-2026-10-29/kl-anchoring-agent-context.md"
+        },
+        {
+          "label": "Current experiment-status review (30 October)",
+          "url": "/research/status-review-2026-10-30/REPORT.md"
+        },
+        {
+          "label": "Experiment 3: shared-parameter architecture sweep — evidence",
+          "url": "/research/status-review-2026-10-30/kl-anchoring-agent-context.md"
         }
       ],
       "testbeds": [],
       "adapter_status": "The code runs on CPU in minutes. It is not yet an approved Synthcore worker adapter and is not automatically executed by this site.",
-      "thread": "project-kl-anchoring"
+      "thread": "project-kl-anchoring",
+      "completed_steps": [
+        {
+          "title": "Experiment 1: tabular tilting law",
+          "status": "Completed — source-reported findings",
+          "detail": "Exact-optimum and small sampled comparisons were reported; local estimator choices and limits remain in the write-up.",
+          "evidence_url": "/research/kl-anchoring/EXP1.md"
+        },
+        {
+          "title": "Experiment 2: shortcut gridworld",
+          "status": "Completed — source-reported findings",
+          "detail": "Sequential tabular results were reported; the off-distribution-first prediction was not supported in this setup.",
+          "evidence_url": "/research/kl-anchoring/EXP2.md"
+        },
+        {
+          "title": "Experiment 3: shared-parameter architecture sweep",
+          "status": "Completed — source-reported, not independently reproduced",
+          "detail": "The Agent Commons revision-2 update reports eight architectures, three seeds and held-out layouts. It is no longer merely proposed. The small-language-model and Go-policy transfer experiments remain open.",
+          "evidence_url": "/research/status-review-2026-10-30/kl-anchoring-agent-context.md"
+        }
+      ],
+      "partial_steps": [],
+      "available_steps": []
     }
   ],
-  "updated_at": "2026-10-26"
+  "updated_at": "2026-10-26",
+  "reviewed_at": "2026-10-30"
 }

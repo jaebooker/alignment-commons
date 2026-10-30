@@ -1,0 +1,77 @@
+[
+  {
+    "slug": "preference-measurement-v2",
+    "revision": 1,
+    "content_sha256": "d3b7f3efe4538bb633d1d3fd9f23de1405184021a292feddbc4bbdc9cb6671b1"
+  },
+  {
+    "slug": "competence-sweep-v1",
+    "revision": 1,
+    "content_sha256": "eb8a5fb2eb85d7409e55798ab09c554dd76712dd20450690bb821989e66e7235"
+  },
+  {
+    "slug": "phase-boundary-v1",
+    "revision": 1,
+    "content_sha256": "3e8c72cecd689454f06728b41c1bf8d4edb703c53d6c2e36bb2e1479b5df7c43"
+  },
+  {
+    "slug": "escape-time-v1",
+    "revision": 1,
+    "content_sha256": "0d57489c984040f419fcc37a6063772bb7e91ebfb5021db4e89a26c43a1d1772"
+  },
+  {
+    "slug": "escape-factorial-v1",
+    "revision": 1,
+    "content_sha256": "67bd9aa62014737ce161296b93e50dee75bd15b14d21a29817620503d9cdcfc1"
+  },
+  {
+    "slug": "mid-switch-behavior-v1-findings",
+    "revision": 1,
+    "content_sha256": "a1fcc49570efd5f2c2ddeb602b85a363beaf6136f6d007765b0ffe63a71ff79e"
+  },
+  {
+    "slug": "navigation-bottleneck-v1-findings",
+    "revision": 1,
+    "content_sha256": "ede64280f35fd14e21453369084a5086de78e10336f6aa7db8fd7294323bb5e6"
+  },
+  {
+    "slug": "required-irreversibility-v1-findings",
+    "revision": 1,
+    "content_sha256": "7ddb40b5d6b5ec29905f5294e89df9bf4df4f4e69b215daade792105fea52a00"
+  },
+  {
+    "slug": "regret-start-calibration-v1-findings",
+    "revision": 1,
+    "content_sha256": "a780713ce5dbbdb0bd08882b542a85c17c038c2d0986538793487318de69f621"
+  },
+  {
+    "slug": "bounded-agency-diagnostic-checks-v1",
+    "revision": 1,
+    "content_sha256": "a00693b5372f41b1025e9811a3d24ed5ac5df762aaa71ff46cbf59a1aa7e45b0"
+  },
+  {
+    "slug": "myopia-decoupling-v1",
+    "revision": 1,
+    "content_sha256": "6dff1f86bf9710db3d5d4dc407430424dc95c0e4a200f1cc2ba5fbc2edfd3fed"
+  },
+  {
+    "slug": "vase-blind-spot-v1",
+    "revision": 1,
+    "content_sha256": "20564f0a8405d6438f89e75913a9d5cf35821fea81bf82967e6cf722024e91fd"
+  },
+  {
+    "slug": "vase-blind-spot-8b",
+    "revision": 1,
+    "content_sha256": "36cf6e2d75e159c6151ad4169ff5a35a54eb9a0b4329c66ebee701b1e6c2167a"
+  },
+  {
+    "slug": "kl-anchoring-agent-context",
+    "revision": 2,
+    "content_sha256": "e893bac8f6e5fafc1ed443419b7171b06c47b73c5f4aae177624e5485a54a99b"
+  },
+  {
+    "slug": "completion-verdict-v2",
+    "revision": 3,
+    "content_sha256": "4f7d94216e058e0f1edb2c7d93aa1d7df45d9f7595e53faf64ed43ea328be1ef"
+  }
+]
