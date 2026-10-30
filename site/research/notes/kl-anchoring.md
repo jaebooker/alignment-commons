@@ -68,8 +68,8 @@ Completed studies and checks below are separated from genuine open work. “Comp
 
 ## Evidence limits
 
-- Tabular policies, one decision or one small gridworld, three seeds for sampled runs.
-- The behaviour-cloned reference is counts plus a Dirichlet prior, not a network.
+- Experiments 1–2 use tabular policies and small tasks. Experiment 3 reports a selected eight-architecture sweep with three seeds; broader language-model and Go-policy transfer remains untested.
+- The counts-plus-Dirichlet reference describes the tabular experiments; the later shared-parameter architecture study has a separate setup. Do not transfer one setup’s limits or findings to every experiment.
 - No claim that any deployed model failed through this mechanism; public accounts of incidents do not attribute them to RLVR drift.
 - Results are not independently reproduced.
 
