@@ -48,8 +48,9 @@
           "system": "New frozen manuscript native transfer check, with separate post-hoc diagnosis",
           "slug": "go-manuscript-native-check-v1-findings",
           "revision": 1,
-          "content_sha256": "e8a6e181a1c95c9e053cebf3badc75a325f498bcb1be077b6ff590a28516a288",
-          "independent_review": "Saved-record audit by a separate implementation, not independent researcher reproduction; primary pipeline gate failed."
+          "content_sha256": "3a6a1ff14433757f9ae5ff30ef3d0bd5c36454325b405b9ed778a3cd5de34c86",
+          "independent_review": "Saved-record audit by a separate implementation, not independent researcher reproduction; primary pipeline gate failed.",
+          "artifact_sha256": "e8a6e181a1c95c9e053cebf3badc75a325f498bcb1be077b6ff590a28516a288"
         }
       ],
       "verification": "The canonical go-concepts README, paper source and build log were inspected at commit 64a3c5045789c16891b1f0cb1cf1e5145308a38b. Go Concept Lab's milestone-4 status was also inspected. Historical experiment and test counts were not rerun for this import. Test 6 freshly executed 64 native branches and independently re-scored 6,912 continuation plies. This verifies implementation and saved local outcomes, not independent scientific reproduction. On 30 October, a frozen manuscript-native check executed 88 raw maps, 88 fresh reference maps and 19 native searches at 16 visits. All 88 full-map parity tests failed (max error 0.726806); joint support was not met despite qualitative component passes. A separate audit verified 119 frozen hashes, 44 SGFs and all saved queries. A post-hoc two-case diagnostic localized a pass-phase input mismatch; it does not retroactively pass the study.",
