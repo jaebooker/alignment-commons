@@ -1,6 +1,6 @@
 # Go concepts
 
-Status reviewed 30 October 2026: Paper, pilot and completed continuation audit
+Status reviewed 30 October 2026: Paper, pilot and completed native check with failed parity gate
 
 What makes a Go network judge a doomed loop as safe, and does the represented feature actually drive its decisions?
 
@@ -8,7 +8,7 @@ Study the cyclic attack on Go networks through exact labels, representations, ca
 
 ## Verification and scope
 
-The canonical go-concepts README, paper source and build log were inspected at commit 64a3c5045789c16891b1f0cb1cf1e5145308a38b. Go Concept Lab's milestone-4 status was also inspected. Historical experiment and test counts were not rerun for this import. Test 6 freshly executed 64 native branches and independently re-scored 6,912 continuation plies. This verifies implementation and saved local outcomes, not independent scientific reproduction.
+The canonical go-concepts README, paper source and build log were inspected at commit 64a3c5045789c16891b1f0cb1cf1e5145308a38b. Go Concept Lab's milestone-4 status was also inspected. Historical experiment and test counts were not rerun for this import. Test 6 freshly executed 64 native branches and independently re-scored 6,912 continuation plies. This verifies implementation and saved local outcomes, not independent scientific reproduction. On 30 October, a frozen manuscript-native check executed 88 raw maps, 88 fresh reference maps and 19 native searches at 16 visits. All 88 full-map parity tests failed (max error 0.726806); joint support was not met despite qualitative component passes. A separate audit verified 119 frozen hashes, 44 SGFs and all saved queries. A post-hoc two-case diagnostic localized a pass-phase input mismatch; it does not retroactively pass the study.
 
 ## Loops Look Alive — paper study
 
@@ -54,7 +54,23 @@ Both J11 and A8 lose all 34 original target stones at ply 4, end at ply 48, and 
 
 ### All native continuations independently audited
 
-All 64 planned branches finished without engine errors. A separate NumPy simulator checked all 6,912 continuation plies, permanent stone identities, native boards, raw visit logs, prefixes, SGFs and terminal-area tallies. Native binary/model hashes matched the archived originals. Eight engineering tests passed. The manuscript/native-engine validation remains separate.
+All 64 planned branches finished without engine errors. A separate NumPy simulator checked all 6,912 continuation plies, permanent stone identities, native boards, raw visit logs, prefixes, SGFs and terminal-area tallies. Native binary/model hashes matched the archived originals. Eight engineering tests passed. The manuscript/native-engine check is a separate study, now reported below with a failed parity gate.
+
+## Manuscript native check v1 completed: input parity failed
+
+A newly frozen transfer check used the exact manuscript b40 and tf3 models on 24 fortified positions and all 20 archived attack attempts. It executed 88 native raw maps, 88 fresh adapter maps and 19 native searches at 16 visits. The numerical pipeline gate failed on all 88 maps; the largest ownership difference was 0.726806 against a 0.005 tolerance. The primary joint result is unsupported.
+
+### Qualitative patterns are descriptive
+
+All declared cell-mean and balanced sentinel sign tests passed, but the frozen rule withholds interpretation when pipeline parity fails. None of the three known tf3 raw-positive flips stayed positive after 16 native visits; these selected cases do not estimate attack robustness.
+
+### A specific adapter discrepancy was localized
+
+A read-only capture found identical spatial inputs in b40 bal12, with a single global-feature mismatch: native passWouldEndPhase=1 versus adapter 0. Setting only that feature to 1 reduced map error below 0.000006 in two post-hoc cases. This is a diagnosis, not a corrected full-cohort confirmation.
+
+### Saved records audited separately
+
+A second audit implementation verified 119 frozen file hashes, 44 SGF replays and target masks, 88 native/reference boards and maps, and 19 fixed-budget search queries. Integrity passed; scientific pipeline parity remains failed.
 
 ## Research status reviewed 30 October 2026
 
@@ -66,21 +82,30 @@ Completed studies and checks below are separated from genuine open work. “Comp
 - The paper study and Go Concept Lab use different checkpoints and protocols. Their results cannot be pooled or treated as mutual independent confirmation.
 - The pilot's one-reply certificate proves an avoidable immediate material loss under that objective, not an avoidable whole-game loss, eventual survival, or a causal representation failure.
 - Test 6 uses outcome-selected development cases from two games, with overlapping chains and checkpoints. Seeds do not create independent positions. Native self-play may miss known legal captures, so uncaptured stones do not prove robustness to stronger opponents. Only one immediate defense is tested per case; truncated branches have no game winner.
+- Native check v1 uses selected development cases and 16 native visits; it does not reproduce the manuscript’s 800-visit simplified search or native causal interventions. Its pipeline gate failed. The two-case post-hoc flag correction is diagnostic and does not establish full-cohort parity.
 
 ## Completed studies and checks
 
 ### Pilot: bounded native continuation gate — Completed — bounded findings
 
-Test 6 examined four selected case/engine strata from two source games. One primary contrast improved preservation; whole-game repair and broader attack generality remain unestablished. The manuscript’s native-engine validation is a different, still-open task.
+Test 6 examined four selected case/engine strata from two source games. One primary contrast improved preservation; whole-game repair and broader attack generality remain unestablished. A separate manuscript-native v1 check has now been executed and failed its parity gate; its results are listed separately.
 
 [Evidence](/research/go-continuation-audit-v1/REPORT.md)
+
+### Paper: bounded native-engine check v1 — Completed — joint support not met
+
+Exact manuscript b40 and tf3 networks: 24 fortified cases plus all 20 archived attacks; 88 native and 88 reference maps, 19 native 16-visit searches. Every full-map parity check failed; max error 0.726806 exceeds 0.005. Favorable qualitative signatures do not override the failed gate. Post-hoc diagnostics identify pass-phase encoding as a concrete cause in two cases.
+
+[Evidence](/research/go-manuscript-native-check-v1/REPORT.md)
 
 
 ## Open experiments and integration work
 
-### Paper: check with the native engine — Proposed follow-up
+### Paper: repair pass-phase parity before native expansion — Next experiment — new freeze required
 
-Independently test the fortified doomed rings and tf3 flips with KataGo's own engine; freeze search budgets and outcome definitions first.
+Make the adapter’s passWouldEndPhase history-dependent, add owner-pass and phase-transition engineering fixtures, and register a new full-cohort parity check. Preserve v1’s failed gate. Higher-budget native search and activation-holding interventions remain untested.
+
+[Evidence](/research/go-manuscript-native-check-v1/REPORT.md)
 
 ### Pilot, second: reserve new attack families — Next ordered stage; new protocol required
 
@@ -108,3 +133,12 @@ Select and evaluate adequately supported ordinary controls; freeze matching cova
 - [Current Agent Commons research index (29 October)](/research/coordination-2026-10-29/RESEARCH-INDEX.md)
 - [Go Concept Lab build and validation context (attributed import)](/research/coordination-2026-10-29/go-concept-lab-agent-context.md)
 - [Current experiment-status review (30 October)](/research/status-review-2026-10-30/REPORT.md)
+- [Manuscript native check v1 report](/research/go-manuscript-native-check-v1/REPORT.md)
+- [Frozen manuscript native protocol](/research/go-manuscript-native-check-v1/protocol.json)
+- [Native check full case-level results](/research/go-manuscript-native-check-v1/records.json)
+- [Native check summary and failed gates](/research/go-manuscript-native-check-v1/summary.json)
+- [Native check source and model freeze](/research/go-manuscript-native-check-v1/freeze.json)
+- [Native check integrity audit](/research/go-manuscript-native-check-v1/integrity-audit.json)
+- [Post-hoc pass-phase diagnostic](/research/go-manuscript-native-check-v1/diagnostic/flag-diagnostic.json)
+- [Native check saved records and audit source](/research/go-manuscript-native-check-v1/records.tar.xz)
+- [Native check artifact checksums](/research/go-manuscript-native-check-v1/SHA256SUMS.json)

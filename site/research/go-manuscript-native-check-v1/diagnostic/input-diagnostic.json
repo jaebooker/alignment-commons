@@ -1,0 +1,22 @@
+{
+  "posthoc": true,
+  "case": "flip-bal12",
+  "network": "b40",
+  "capture_binary_sha256": "78f7e54be3db6637981c3f824930b5b7d0a05b45b8c2913c2ef6142bbb28e2ca",
+  "capture_vs_original_raw_max_error": 0.0,
+  "evaluations": [
+    {
+      "directory": "eval-00000000",
+      "spatial_max_error": 0.0,
+      "spatial_differing_planes": [],
+      "global_differences": [
+        {
+          "index": 14,
+          "native": 1.0,
+          "python": 0.0
+        }
+      ]
+    }
+  ],
+  "interpretation": "Input capture diagnostic only; frozen primary pipeline result unchanged."
+}
