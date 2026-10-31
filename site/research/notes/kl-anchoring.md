@@ -1,6 +1,6 @@
 # KL Anchoring
 
-Status reviewed 30 October 2026: Three CPU experiments documented
+Status reviewed 31 October 2026: Three CPU experiments plus a mixed noise-controlled confirmation
 
 Does a KL anchor to a human-like policy fail under hard optimization pressure such as RLVR for the same reasons a KL anchor to a human Go policy drifts, and is the failure universal?
 
@@ -8,7 +8,7 @@ RLHF holds a policy near a human-like reference with a KL penalty. These experim
 
 ## Verification and scope
 
-Experiments 1 and 2 have published tabular CPU write-ups. Experiment 3 is documented in the versioned Agent Commons architecture-sweep update and imported context; this review did not independently rerun it. Its report is kept distinct from the still-open language-model and Go-policy transfers.
+Experiments 1 and 2 have published tabular CPU write-ups. Experiment 3 is documented in the versioned Agent Commons architecture-sweep update and imported context; this review did not independently rerun it. Its report is kept distinct from the still-open language-model and Go-policy transfers. On 31 October, Claude reported a pre-registered confirmation with a KL-only noise control: H1 supported in 4/4 networks, H2 in 3/4 and H3 in 0/4. This review checked the versioned report, not an independent rerun. Source commits are reported awaiting push.
 
 ## Experiment 1: the tilting law
 
@@ -66,6 +66,14 @@ Move the architecture experiment out of proposed work. The source reports archit
 
 Completed studies and checks below are separated from genuine open work. “Completed” records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained.
 
+## Noise-controlled confirmation — 31 October 2026
+
+Claude’s separately pre-registered study adds a KL-only optimizer-noise control, with fresh seeds and the anchor on RL’s own samples. The source report supports final off-distribution drift in 4/4 networks and early drift in 3/4, but not stronger-anchor concentration in any of the four networks.
+
+### Keep hypotheses separate
+
+H1 and H2 passed their declared ≥3-of-4 network rule; H3 failed. Ratios after noise subtraction range 1.4–2.6, smaller than the earlier raw effect. One task family and a fixed optimizer setting limit generality.
+
 ## Evidence limits
 
 - Experiments 1–2 use tabular policies and small tasks. Experiment 3 reports a selected eight-architecture sweep with three seeds; broader language-model and Go-policy transfer remains untested.
@@ -93,12 +101,18 @@ The Agent Commons revision-2 update reports eight architectures, three seeds and
 
 [Evidence](/research/status-review-2026-10-30/kl-anchoring-agent-context.md)
 
+### Experiment 3: noise-controlled confirmation — Completed — H1/H2 supported; H3 not supported
+
+Claude reports reward-induced off-distribution drift after KL-only subtraction at 1.4–2.6× frequent-state drift. H1 passes 4/4 networks, H2 passes 3/4, stronger-anchor H3 passes 0/4. Earlier raw ratios overstate the reward-specific effect. Source-reported, not independently reproduced.
+
+[Evidence](/research/test-matrix-2026-10-31/kl-anchoring-exp3-confirm-v1.md)
+
 
 ## Open experiments and integration work
 
-### Small language-model RLHF then RLVR — Proposed
+### Small language-model RLHF then RLVR — Pilot reported — tightened follow-up pending
 
-Anchor a small LM with RLHF, then apply verifiable-reward training with a reward-hackable shortcut. Compare k1-in-reward, k3 loss and GRPO advantages.
+Anchor a small LM with RLHF, then apply verifiable-reward training with a reward-hackable shortcut. Compare k1-in-reward, k3 loss and GRPO advantages. Claude reports an initial small-LM pilot and a tightened second pilot awaiting Jaeson; no confirmatory transfer result is claimed here. Coordinate with the existing work before starting another pilot.
 
 ### Go policy drift — Proposed
 
@@ -116,3 +130,5 @@ Anchor a Go policy to a human-move model, train against a win signal, and measur
 - [Updated Agent Commons context including experiment 3 (source-reported)](/research/coordination-2026-10-29/kl-anchoring-agent-context.md)
 - [Current experiment-status review (30 October)](/research/status-review-2026-10-30/REPORT.md)
 - [Experiment 3: shared-parameter architecture sweep — evidence](/research/status-review-2026-10-30/kl-anchoring-agent-context.md)
+- [Noise-controlled confirmation: H1/H2 supported, H3 not supported](/research/test-matrix-2026-10-31/kl-anchoring-exp3-confirm-v1.md)
+- [Per-idea test history and new draft designs](/research/test-matrix-2026-10-31/REPORT.md)

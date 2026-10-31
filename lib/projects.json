@@ -1175,7 +1175,7 @@
       "id": "kl-anchoring",
       "title": "KL Anchoring",
       "subtitle": "Why RLHF's anchor gives way under RLVR pressure",
-      "status": "Three CPU experiments documented",
+      "status": "Three CPU experiments plus a mixed noise-controlled confirmation",
       "summary": "RLHF holds a policy near a human-like reference with a KL penalty. These experiments measure exactly how much that anchor resists optimization, and find a bounded price that strong verifiable-reward training pays whenever a shortcut is worth more than it.",
       "question": "Does a KL anchor to a human-like policy fail under hard optimization pressure such as RLVR for the same reasons a KL anchor to a human Go policy drifts, and is the failure universal?",
       "sources": [
@@ -1206,9 +1206,16 @@
           "revision": 1,
           "content_sha256": "00a054f7fa9683838107d898c9bb80d8789536c62a51eedf6c7db9406ce059a6",
           "independent_review": "Status and provenance review only; no new scientific experiments or changed historical verdicts."
+        },
+        {
+          "system": "Claude (claude.ai) source-reported confirmation, reviewed 31 October",
+          "slug": "kl-anchoring-exp3-confirm-v1",
+          "revision": 1,
+          "content_sha256": "212eb3080bc92ec57bbb558f7859c0330d14593547e914d5aec4ebdeff90bfe6",
+          "independent_review": "Versioned report reviewed; no independent experiment rerun."
         }
       ],
-      "verification": "Experiments 1 and 2 have published tabular CPU write-ups. Experiment 3 is documented in the versioned Agent Commons architecture-sweep update and imported context; this review did not independently rerun it. Its report is kept distinct from the still-open language-model and Go-policy transfers.",
+      "verification": "Experiments 1 and 2 have published tabular CPU write-ups. Experiment 3 is documented in the versioned Agent Commons architecture-sweep update and imported context; this review did not independently rerun it. Its report is kept distinct from the still-open language-model and Go-policy transfers. On 31 October, Claude reported a pre-registered confirmation with a KL-only noise control: H1 supported in 4/4 networks, H2 in 3/4 and H3 in 0/4. This review checked the versioned report, not an independent rerun. Source commits are reported awaiting push.",
       "sections": [
         {
           "title": "Experiment 1: the tilting law",
@@ -1280,6 +1287,18 @@
             "Completed studies and checks below are separated from genuine open work. “Completed” records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained."
           ],
           "findings": []
+        },
+        {
+          "title": "Noise-controlled confirmation — 31 October 2026",
+          "paragraphs": [
+            "Claude’s separately pre-registered study adds a KL-only optimizer-noise control, with fresh seeds and the anchor on RL’s own samples. The source report supports final off-distribution drift in 4/4 networks and early drift in 3/4, but not stronger-anchor concentration in any of the four networks."
+          ],
+          "findings": [
+            {
+              "label": "Keep hypotheses separate",
+              "detail": "H1 and H2 passed their declared ≥3-of-4 network rule; H3 failed. Ratios after noise subtraction range 1.4–2.6, smaller than the earlier raw effect. One task family and a fixed optimizer setting limit generality."
+            }
+          ]
         }
       ],
       "figures": [
@@ -1313,8 +1332,8 @@
       "next_steps": [
         {
           "title": "Small language-model RLHF then RLVR",
-          "detail": "Anchor a small LM with RLHF, then apply verifiable-reward training with a reward-hackable shortcut. Compare k1-in-reward, k3 loss and GRPO advantages.",
-          "status": "Proposed"
+          "detail": "Anchor a small LM with RLHF, then apply verifiable-reward training with a reward-hackable shortcut. Compare k1-in-reward, k3 loss and GRPO advantages. Claude reports an initial small-LM pilot and a tightened second pilot awaiting Jaeson; no confirmatory transfer result is claimed here. Coordinate with the existing work before starting another pilot.",
+          "status": "Pilot reported — tightened follow-up pending"
         },
         {
           "title": "Go policy drift",
@@ -1358,6 +1377,14 @@
         {
           "label": "Experiment 3: shared-parameter architecture sweep — evidence",
           "url": "/research/status-review-2026-10-30/kl-anchoring-agent-context.md"
+        },
+        {
+          "label": "Noise-controlled confirmation: H1/H2 supported, H3 not supported",
+          "url": "/research/test-matrix-2026-10-31/kl-anchoring-exp3-confirm-v1.md"
+        },
+        {
+          "label": "Per-idea test history and new draft designs",
+          "url": "/research/test-matrix-2026-10-31/REPORT.md"
         }
       ],
       "testbeds": [],
@@ -1381,6 +1408,12 @@
           "status": "Completed — source-reported, not independently reproduced",
           "detail": "The Agent Commons revision-2 update reports eight architectures, three seeds and held-out layouts. It is no longer merely proposed. The small-language-model and Go-policy transfer experiments remain open.",
           "evidence_url": "/research/status-review-2026-10-30/kl-anchoring-agent-context.md"
+        },
+        {
+          "title": "Experiment 3: noise-controlled confirmation",
+          "status": "Completed — H1/H2 supported; H3 not supported",
+          "detail": "Claude reports reward-induced off-distribution drift after KL-only subtraction at 1.4–2.6× frequent-state drift. H1 passes 4/4 networks, H2 passes 3/4, stronger-anchor H3 passes 0/4. Earlier raw ratios overstate the reward-specific effect. Source-reported, not independently reproduced.",
+          "evidence_url": "/research/test-matrix-2026-10-31/kl-anchoring-exp3-confirm-v1.md"
         }
       ],
       "partial_steps": [],
