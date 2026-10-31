@@ -1,14 +1,14 @@
 // Research history is separate from the frozen catalogue and its direction signals.
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const RESULTS = {met:['Succeeded under criterion','win'],not_met:['Criterion not met','gate'],inconclusive:['Interpretation withheld','null'],mixed:['Mixed — see hypotheses','mech'],not_assessed:['Not assessed','null']};
-const RUNS = {completed:'Run completed',proposed:'Proposed — not run',blocked:'Blocked — not run',registered:'Design registered — see study',running:'Confirmation running',calibrating:'Calibration running',awaiting_budget:'Awaiting API budget — no paid calls'};
+const RUNS = {completed:'Run completed',proposed:'Proposed — not run',blocked:'Blocked — not run',registered:'Design registered — see study',running:'Confirmation running',calibrating:'Calibration running',calibration_complete:'Calibration complete — confirmation not authorized',awaiting_budget:'Awaiting API budget — no paid calls'};
 function safeLink(value) {
   if (typeof value !== 'string') return '';
   if (/^\/research\/[a-zA-Z0-9_./-]+$/.test(value) && !value.includes('..')) return value;
   try { const u=new URL(value); return u.protocol==='https:'&&!u.username&&!u.password?u.href:''; } catch { return ''; }
 }
 function matches(row, view) {
-  return view==='completed'?row.run_status==='completed':view==='met'?row.run_status==='completed'&&row.result==='met':view==='mixed'?row.run_status==='completed'&&row.result==='mixed':view==='started'?row.kind!=='proposal'&&['running','calibrating','awaiting_budget','registered'].includes(row.run_status):view==='proposed'?row.run_status==='proposed'||row.run_status==='blocked':true;
+  return view==='completed'?row.run_status==='completed':view==='met'?row.run_status==='completed'&&row.result==='met':view==='mixed'?row.run_status==='completed'&&row.result==='mixed':view==='started'?row.kind!=='proposal'&&['running','calibrating','calibration_complete','awaiting_budget','registered'].includes(row.run_status):view==='proposed'?row.run_status==='proposed'||row.run_status==='blocked':true;
 }
 function rowHTML(row) {
   const result=RESULTS[row.result]||['Unknown','null'];
@@ -33,7 +33,7 @@ export function renderIdeaTests(id, matrix, view='all') {
   if (!all.length) return '';
   const completed=all.filter(t=>t.run_status==='completed').length;
   const met=all.filter(t=>t.run_status==='completed'&&t.result==='met').length;
-  const active=all.filter(t=>t.kind!=='proposal'&&['running','calibrating','awaiting_budget','registered'].includes(t.run_status)).length;
+  const active=all.filter(t=>t.kind!=='proposal'&&['running','calibrating','calibration_complete','awaiting_budget','registered'].includes(t.run_status)).length;
   const mixed=all.filter(t=>t.run_status==='completed'&&t.result==='mixed').length;
   const proposed=all.filter(t=>t.run_status==='proposed').length;
   const selected=all.filter(t=>matches(t,view));
@@ -49,7 +49,7 @@ export function renderMatrixOverview(matrix, ideas, view='all') {
   const research=matrix.tests.filter(t=>!t.idea_ids.every(id=>controls.has(id)));
   const completed=research.filter(t=>t.run_status==='completed').length;
   const met=research.filter(t=>t.run_status==='completed'&&t.result==='met').length;
-  const active=research.filter(t=>t.kind!=='proposal'&&['running','calibrating','awaiting_budget','registered'].includes(t.run_status)).length;
+  const active=research.filter(t=>t.kind!=='proposal'&&['running','calibrating','calibration_complete','awaiting_budget','registered'].includes(t.run_status)).length;
   const proposed=research.filter(t=>t.run_status==='proposed').length;
   return `<section class="about matrix-overview" id="test-registry"><h2>One idea, several tests</h2>
     <p>Review: ${esc(matrix.reviewed)}. <b>${completed} documented research checks</b> · <b>${met} met their stated criterion</b> · <b>${proposed} unregistered draft follow-ups</b>${active?` · <b>${active} started / awaiting inputs</b>`:""}. Includes separate programme studies; controls excluded. Gates, benchmarks and diagnostic checks are counted separately, not pooled as independent replications.</p>

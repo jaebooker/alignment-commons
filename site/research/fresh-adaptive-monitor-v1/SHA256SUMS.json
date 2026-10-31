@@ -1,10 +1,20 @@
 {
   "protocol.json": "a21581bfc1c860f10bde14be5559ab09a5eca2a3732abd5f7bd73112a977dec8",
-  "freeze.json": "755c134d3cf0b4673484d58bd14cc59ac167e47978136654d28064c090d6124f",
-  "registration-receipt.json": "e77a1624da986533b26e5dda5cdeb0115e52d759a16e9187198e71613f3c3e60",
+  "freeze.json": "d5b79eef4a7ec422d6389dca495fdd014223d618b4cd856ab2ee236212f73ed0",
+  "registration-receipt.json": "32d1cd56dcef2e1f9bce16755f7639f618683ef8a2955926b53c427ee2240c69",
   "engineering.json": "26e5a5c7027a17aaac71b07f20c80acf7acf5f44c3ea4a856a122ca5d7a61e6a",
-  "REPORT.md": "0e68030bf8686fdb314b87dcc573ebd0ab9d5e52dafbe373f3c6b91731de7811",
+  "REPORT.md": "5bb041fed57e7a2cae5c1dc7c993737bf73a23476fbd29f01843d19c00513f87",
   "records.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
-  "runtime.json": "bd34e14e3d2a6a44ae044240fa83f87e803369087501cc50d3608b17ac4a3984",
-  "records.tar.xz": "33e8d2265aaefbfcc1bfb79a5e824408b229f80a7cf185a651e7de092e8a4acc"
+  "runtime.json": "1ed34b875f43877b85b68caeb8bc2ec47aa77d74035c216c7a7180a9e5a14ff7",
+  "records.tar.xz": "33e8d2265aaefbfcc1bfb79a5e824408b229f80a7cf185a651e7de092e8a4acc",
+  "calibration-summary.json": "1ca4b45c1b74b9512bd442bed8bd889f9afd4d7503e6a53be375ab39603a830c",
+  "calibration-integrity-audit.json": "cfbde88800a3799c7b68c4a9901bbbf04ba5b5424b9dd3140100532144cfb620",
+  "spend.json": "3014f6bd529cd0feed630def7aab1bb283fd7ba34c7c0eec09dc5b3340da82f3",
+  "provider-diagnostic.json": "c3c474a4037320c34aadca7049199414104eaff6d04e59b3fca6302702171940",
+  "transport-checkpoint.json": "f24bbe6b54a1340c0ef12b2a42264fe1d907e5b76a6843eaef31f3caacf2c004",
+  "budget-scope.json": "b788b74b93a19595d3edc372c5fb4ca07fa6fb6467222c66ddbf1afbd3763e9c",
+  "persistent-transport-checkpoint.json": "a7df4fbf850f5bd82d656ad16116423c23d839def348074cb7d520cf0a9e46f5",
+  "count-transport-checkpoint.json": "813320ece866b9b70adcb1c24a16a30d28d67aad477501331c5220d0ead071fb",
+  "protocol-history.md": "7bcb880b6df17ecac0d959a42a0a090dfce2ff622ba831f4da048c5710bcb6c0",
+  "calibration-records.tar.xz": "cae3dafa63d2c6cb94305b6e2d80f50ff5ddac79622da9eaa622f8cdfb293bda"
 }

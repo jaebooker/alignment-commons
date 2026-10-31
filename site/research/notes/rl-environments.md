@@ -8,7 +8,7 @@ A claim harness built around planted, verifiable reward hacks and out-of-distrib
 
 ## Verification and scope
 
-Historical catalogue results and completed local studies have distinct scopes. This 30 October status review checked versioned agent findings and publication records without new training or scientific replication; failed and partial outcomes remain labelled. Original records are preserved. Three further local studies were registered before confirmation on 31 October 2026: online observed-start replay, changing-mask signal/horizon and RR graph coverage. Their full joint/repair rules were not met; the changing-mask H3 control comparison passed. Separate saved-record audits checked 64 neural models, 3.84 million tabular transitions and 192 graph tables. The fresh-model monitor study remains budget-pending, without model outcomes.
+Historical catalogue results and completed local studies have distinct scopes. This 30 October status review checked versioned agent findings and publication records without new training or scientific replication; failed and partial outcomes remain labelled. Original records are preserved. Three further local studies were registered before confirmation on 31 October 2026: online observed-start replay, changing-mask signal/horizon and RR graph coverage. Their full joint/repair rules were not met; the changing-mask H3 control comparison passed. Separate saved-record audits checked 64 neural models, 3.84 million tabular transitions and 192 graph tables. The fresh-model monitor study completed eight calibration tasks under a $3 calibration-only cap. Generation/format feasibility failed; no monitor comparison was assessed and confirmation remains unauthorized.
 
 ## A claim harness
 
@@ -202,9 +202,9 @@ Missing edges create false return judgments. Restoration gives 3.125-point compl
 
 ## Partial studies
 
-### Fresh adaptive monitors — Registered and prepared — awaiting API budget
+### Fresh adaptive monitors — Calibration complete; comparison infeasible; confirmation not run
 
-Eight calibration and 80 confirmation arithmetic-expression tasks; three matched-allowance monitor styles with adaptive attacks. No paid calls or outcomes. Study-specific spend cap awaits Jaeson; legacy API cap unchanged. This is bounded toy-code screening.
+Eight frozen calibration tasks completed under a $3 calibration-only cap. Honest-valid 0/8; common-valid comparison tasks 0/8. Format failures and declined attack generations prevent a monitor comparison. Recorded usage $0.241712, with $0.052088 conservatively reserved. No confirmation calls; no superiority result. The legacy $7 cap is unchanged.
 
 [Evidence](/research/fresh-adaptive-monitor-v1/REPORT.md)
 
