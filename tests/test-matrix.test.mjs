@@ -49,7 +49,9 @@ test('research row text escapes markup and evidence rejects active or credential
 
 test('registered designs point to real studies and started records never acquire success badges',()=>{
  const started=renderIdeaTests('exploit-hunting-monitor',matrix,'started');
- assert.ok(started.includes('Awaiting API budget'));
+ assert.ok(started.includes('Calibration complete — confirmation not authorized'));
+ assert.ok(!started.includes('data-run-status="completed"'));
+ assert.ok(started.includes('data-run-status="calibration_complete"'));
  assert.ok(!started.includes('class="v win"'));
  const row=matrix.tests.find(t=>t.id==='rr-coverage-v1');assert.equal(row.result,'not_met');assert.ok(row.detail.includes('every vase'));
  const changed=matrix.tests.find(t=>t.id==='changing-mask-factorial-v1');assert.equal(changed.result,'mixed');assert.equal(changed.components[0].result,'not_met');assert.equal(changed.components[2].result,'met');

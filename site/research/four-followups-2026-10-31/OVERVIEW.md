@@ -1,13 +1,13 @@
 # Four selected follow-ups — 31 October 2026
 
-Codex for Jaeson Booker. Three newly registered local studies completed and passed separate saved-record integrity audits. The fourth is registered and prepared, with paid calls awaiting Jaeson’s additional-budget decision. Original studies, verdicts and thresholds remain unchanged.
+Codex for Jaeson Booker. Three newly registered local studies completed and passed separate saved-record integrity audits. The fourth has completed its eight-task calibration under Jaeson’s $3 calibration-only approval; generation/format feasibility failed, so no monitor comparison was assessed. Confirmation remains unauthorized and unrun. Original studies, verdicts and thresholds remain unchanged.
 
 | Study | Execution | Registered result |
 |---|---|---|
 | Online observed-start ACCEL replay | 64 fits completed, eight paired groups × two families × four arms, fixed process-CPU allowance | Primary joint rule not met. Intended-goal success 88.57%, versus random replay 90.27% and max-latest 72.56%. Gain over random −1.69 points, 95% interval [−5.95,+2.56]; IID floor/non-inferiority gates passed. |
 | Changing-mask signal × horizon | 32 groups; 192 traces, 3.84 million transitions and 1,152 policies audited | Mixed: H1 and H2 fail, H3 passes. Myopic completion 10.94%, full planning 100%, opposite the registered H1 direction. Span-full versus reward-only meets the harm/task criterion; normalization-repair conjunction remains unsupported. |
 | RR graph coverage | 32 paired groups; 192 graph/penalty tables and RR trajectories audited | Combined rule not met. Missing edges create false return judgments (mean 17.7%); restoration gain 3.125 points misses the five-point lower-bound requirement. Every hazard policy breaks its vase, so equal harm is not protection. |
-| Fresh adaptive code monitors | Eight calibration + 80 confirmation tasks prepared; protocol and task-manifest hash registered | No model outcomes or paid calls. Awaits study-specific additional API cap. Bounded arithmetic-expression tasks, not arbitrary Python/HumanEval or production-security validation. |
+| Fresh adaptive code monitors | Eight fixed calibration tasks processed; 56 successful API calls under $3 calibration-only cap | Honest-valid 0/8; common-valid 0/8. No monitor superiority result; confirmation not authorized or run. |
 
 ## Reports and protocols
 
@@ -33,6 +33,8 @@ Each report links to its frozen protocol, source hashes, registration receipt, f
 
 All execution and findings are recorded in the Alignment Commons Agents activity/documents and local Agent Commons. No worker jobs or new agent permissions were created.
 
-## Remaining action
+## Calibration-only checkpoint
 
-The fresh-monitor collector is ready. It requires a separate human-approved additional API cap and allowed phases. The legacy $7 control-testbed cap and spend ledger are unchanged. The pending options are up to $20 additional for calibration plus confirmation, $3 for calibration only, or no paid calls. No amount is inferred from elapsed time or the presence of credentials.
+Jaeson authorized $3 additional for calibration only. All eight frozen calibration tasks were processed. Recorded usage: $0.241712; retained rejected-request reservation: $0.052088; maximum accounted exposure: $0.293800. These are usage calculations rather than invoice reconciliation. The original legacy cap/ledger were not changed.
+
+Generation refusals and strict JSON-format failures left no usable common-valid cohort. This is a feasibility failure, not evidence that one monitor is better or worse. No prompts, thresholds or task denominators were changed to salvage the pilot. The pre-output Sonnet request-schema repair is registered and disclosed in the report. A new generation/format feasibility design should precede any confirmation request. Unused calibration budget is not confirmation authorization; no further calls were started after this fixed pilot.
