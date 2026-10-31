@@ -182,6 +182,19 @@ mark{background:var(--pick-soft);color:inherit;border-radius:2px}
 footer{border-top:1px solid var(--line);padding-block:18px 40px;font-size:13px;color:var(--faint)}
 @media (max-width:600px){header.top{position:static}.brand span{display:none}.brand{flex:1}.topbar{gap:10px}}
 @media (prefers-reduced-motion:no-preference){.tile{transition:border-color .12s}}
+
+/* Per-idea evidence and draft test registry */
+.test-history{margin-top:10px;border-top:1px solid var(--line);padding-top:10px;scroll-margin-top:95px}
+.test-history>summary,.matrix-overview summary{cursor:pointer;font:500 14px var(--body);color:var(--accent);line-height:1.6}
+.matrix-row{padding:15px 0;border-top:1px solid var(--line);display:grid;gap:7px}
+.matrix-row h4{margin:0;font:600 16px var(--body)}
+.matrix-row p{max-width:90ch!important;font-size:14px;line-height:1.65}
+.matrix-row .matrix-stage{font:12px var(--mono);color:var(--faint)}
+.matrix-badges{display:flex;flex-wrap:wrap;gap:6px}.matrix-badges .v{white-space:normal}
+.matrix-design>summary{cursor:pointer;font-size:13px;color:var(--accent)}
+.matrix-design p{margin:8px 0}.matrix-tools{display:flex;flex-wrap:wrap;gap:16px;margin:16px 0}
+.matrix-tools label{display:grid;gap:6px;font-size:13px;max-width:100%}.matrix-tools select{max-width:100%;min-width:210px;padding:8px;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:5px;font:14px var(--body)}
+.matrix-overview ol{padding-left:24px}.matrix-overview li{margin-bottom:8px}.matrix-overview .chip{white-space:normal;text-align:left}
 </style>
 
 </head>
@@ -218,12 +231,14 @@ footer{border-top:1px solid var(--line);padding-block:18px 40px;font-size:13px;c
   <footer id="foot"></footer>
 </div>
 
-<script>
+<script type="module">
+import {renderIdeaTests, renderMatrixOverview, renderProgrammes} from "./test-matrix.js";
 // tests.json (tested ideas from Alignment SynthCore) is optional: the atlas works without it.
-Promise.all([fetch("data.json").then(r => r.json()), fetch("tests.json").then(r => r.ok ? r.json() : null).catch(() => null)])
-  .then(([D, X]) => boot(D, X))
+Promise.all([fetch("data.json").then(r => r.json()), fetch("tests.json").then(r => r.ok ? r.json() : null).catch(() => null), fetch("test-matrix.json").then(r => r.ok ? r.json() : null).catch(() => null)])
+  .then(([D, X, M]) => boot(D, X, M))
   .catch(() => { document.getElementById("main").innerHTML = '<p class="empty-note">Could not load the index. Refresh to try again.</p>'; });
-function boot(D, X){
+function boot(D, X, M){
+let matrixView = "all";
 const T = D.taxonomy, ITEMS = D.items;
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -304,6 +319,7 @@ function ideaHTML(x, showTopic){
     ${x.verdict_v1 ? `<p class="fine">Versioned re-analysis: original verdict ${esc(x.verdict_v1)}; current verdict rule 2. <a href="/research/completion-verdict-v2/reverdict.json">Completion assessment</a></p>` : ""}
     ${x.description ? `<p data-x class="clamp">${esc(x.description)}</p>` : ""}
     <div class="cite">${cite(x.source)}<a href="${esc(x.record)}" target="_blank" rel="noopener">Full record and code</a>${x.updated?` · tested ${esc(x.updated)}`:""}</div>
+    ${renderIdeaTests(x.id, M, matrixView)}
   </li>`;
 }
 
@@ -332,7 +348,7 @@ function untestHTML(xs, showTopic){
   return `<ul class="ideas">${xs.map(x => `<li class="idea"><div class="top"><b>${esc(x.title)}</b>${vbadge("untestable")}${showTopic && node[x.topic] ? ` <button class="chip" data-go="${x.topic}" type="button">${esc(node[x.topic].t.name)}</button>` : ""}</div>
     <p>${esc(x.description)}</p>
     <div class="res">Why not: ${esc(x.untestable_reason || "no current testbed fits")}</div>
-    <div class="cite">${cite(x.source)}${x.nearest_testbed && TB[x.nearest_testbed] ? `Nearest testbed: ${esc(TB[x.nearest_testbed].name)}` : ""}</div></li>`).join("")}</ul>`;
+    <div class="cite">${cite(x.source)}${x.nearest_testbed && TB[x.nearest_testbed] ? `Nearest testbed: ${esc(TB[x.nearest_testbed].name)}` : ""}</div>${renderIdeaTests(x.id, M, matrixView)}</li>`).join("")}</ul>`;
 }
 
 function testsForTopic(t){
@@ -511,7 +527,8 @@ function renderTested(){
   <p class="band"><span>Explore the wider programmes: Go concepts, RL environments, and Bounded Agency.</span><a href="/workspace#projects">Research projects ↗</a></p>
   <p class="lede">Concrete alignment research ideas, each run on a testbed where the right answer is planted and known, and compared with a tuned baseline. The point is direction-finding: which research directions deserve more effort. Failures are published too.</p>
   <div class="levelmeta">${NTESTED} ideas · ${order.length} testbeds${UNTEST.length?` · ${UNTEST.length} not yet testable`:""} · results from <a href="${esc(X.repo)}" target="_blank" rel="noopener">Alignment SynthCore</a>, updated ${esc(X.generated)}</div>
-  <div class="about"><h2>How an idea is tested</h2>
+  ${renderMatrixOverview(M, IDEAS, matrixView)}
+  <details class="about"><summary>How the original catalogue was tested</summary><h2>How an idea is tested</h2>
   <ol class="steps">
    <li><b>Prediction first.</b> Each idea states what it should improve and the mechanism that should cause it, with a minimum effect, before any run.</li>
    <li><b>Toy gate.</b> On a small version of the testbed, the predicted mechanism must show up. If it doesn't, the idea stops here.</li>
@@ -521,8 +538,9 @@ function renderTested(){
    <li><b>Triage of failures.</b> A failed gate is re-checked with both arms tuned and scanned for signs of a bug. The verdict never changes; a second badge says how far to trust it. Suspected bugs and pending fixes are left out of direction signals.</li>
   </ol>
   <div class="legend">${Object.entries(VERD).map(([k,m]) => `${vbadge(k)}<span>${esc(m[2])}</span>`).join("")}${Object.entries(FLAGS).map(([k,m]) => `<span class="v flag">${esc(m[0])}</span><span>${esc(m[1])}</span>`).join("")}${Object.entries(TRIAGE).filter(([k]) => k!=="untriaged").map(([k,m]) => `<span class="v tri ${m[1]}">${esc(m[0])}</span><span>${esc(m[2])}</span>`).join("")}</div>
-  <p>A topic's direction signal combines two rates: how often ideas' mechanisms reproduce, and how often ideas beat the baseline. With fewer than ${X.min_ideas} tested ideas it is marked tentative, and so far every topic is.</p></div>
+  <p>A topic's direction signal combines two rates: how often ideas' mechanisms reproduce, and how often ideas beat the baseline. With fewer than ${X.min_ideas} tested ideas it is marked tentative, and so far every topic is. Later checks and draft proposals below do not alter these historical signals.</p></details>
   ${order.map(tb => `<section class="tbsec" id="tb-${tb.id}"><h2>${esc(tb.name)}</h2><div class="levelmeta">Commons topics: ${tb.topics.map(t => node[t] ? `<button class="chip" data-go="${t}" type="button">${esc(node[t].t.name)}</button>` : "").join(" ")}</div>${tbCard(tb, IDEAS.filter(x => x.testbed===tb.id), null, false)}${[...new Set(IDEAS.filter(x => x.testbed===tb.id && !x.control).map(x => x.topic))].map(t => SIG[t+"|"+tb.id] ? `<div class="tbcard sigcard"><div class="lab">${esc(node[t] ? node[t].t.name : t)}</div>${signalHTML(t, tb.id)}</div>` : "").join("")}</section>`).join("")}
+  ${renderProgrammes(M, matrixView)}
   ${UNTEST.length ? `<section class="tbsec" id="untestable"><h2>Not testable yet</h2><div class="levelmeta">${UNTEST.length} papers from the Commons that no current testbed can test, and what each one would need</div><div class="tbcard">${untestHTML(UNTEST, true)}</div></section>` : ""}
   <div class="about"><h2>Read with care</h2><ul>
    <li>The methods here were written by hand as first examples. A coding agent that implements ideas extracted from papers is the next step.</li>
@@ -531,6 +549,13 @@ function renderTested(){
   </ul></div>`;
 }
 
+// The registry never mutates historical catalogue verdicts or queues work.
+function focusTests(id){ const target=document.getElementById('tests-'+id); if(target){target.open=true;target.scrollIntoView({block:'start',behavior:'smooth'});} }
+document.addEventListener('change',e=>{
+ if(e.target.id==='matrix-view'){matrixView=e.target.value;renderTested();}
+ if(e.target.id==='matrix-idea'&&e.target.value)focusTests(e.target.value);
+});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-test-focus]');if(b){if(matrixView!=='all'&&matrixView!=='proposed'){matrixView='proposed';renderTested();}focusTests(b.dataset.testFocus);}});
 // events
 document.addEventListener("click", e => {
   const g = e.target.closest("[data-go]"); if(g){ e.preventDefault(); go(g.dataset.go); return; }
