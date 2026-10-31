@@ -1,19 +1,20 @@
 {
-  "version": 1,
+  "version": 2,
   "reviewed": "2026-10-31",
   "catalogue_date": "2026-10-25",
   "catalogue_sha256": "2bba2b48e4b9fec75668d9b9afd6dcb3445ced0ab15f83962e91908ef05df67b",
-  "scope": "Per-idea research planning and evidence registry; no new scientific run.",
+  "scope": "Versioned per-idea planning registry with registered studies, current execution status and bounded results. Historical catalogue unchanged.",
   "notes": [
     "Run status and hypothesis support are different: a completed experiment can fail its criterion.",
     "Succeeded means the stated local rule was met, not that the idea is generally safe or true. Mechanism and task/safety claims are separate.",
     "Original catalogue assessments, tuned re-checks and shared follow-up studies are not independent replications and must not be pooled into a success percentage.",
-    "All proposals are draft designs, not preregistrations or queued jobs. Candidate thresholds require feasibility and power checks on calibration data only.",
+    "Unregistered proposals are draft designs, not preregistrations or queued jobs. Registered study records link to their exact protocols and current status. Candidate thresholds require feasibility and power checks on calibration data only.",
     "Before confirmation: freeze source/model/evaluator hashes, dev/test families and seeds, equal access/tuning/compute, minimum effects, completion margins, sampling units, multiplicity, exclusions and stopping.",
     "Use appropriate family-wise error control for multiple claims/methods; never count tokens, moves or repeated layouts as independent seed/model samples. Non-significance is not equivalence.",
     "For safety claims require task completion and utility preservation; fewer harms caused by doing nothing do not qualify. Preserve implementation failures separately from evidence against a mechanism.",
     "Later source-reported results retain author attribution and reproduction limits. Fixed/cached monitor outputs remain screening data.",
-    "The wider programmes are separate from the original 29 tested research adaptations. Their rows do not change historical catalogue verdicts or direction signals."
+    "The wider programmes are separate from the original 29 tested research adaptations. Their rows do not change historical catalogue verdicts or direction signals.",
+    "The four selected studies are separately registered. Fixed bounded sample sizes and compute budgets do not guarantee high power; failed minimum-effect gates do not establish zero effect. Original planning snapshot remains unchanged."
   ],
   "programmes": [
     {
@@ -1223,18 +1224,21 @@
         "accel-levels"
       ],
       "title": "Online start-matched replay scores",
-      "run_status": "proposed",
+      "run_status": "registered",
       "result": "not_assessed",
       "success_rule": "Primary: start-matched ACCEL improves intended-goal success over random replay by at least 5 points at the lower paired interval bound, while IID completion loses at most 5 points. Report max-latest and DR contrasts separately; no oracle returns given to the learner.",
-      "detail": "Replace global max-latest with an observed per-start reference, using only returns seen online. Compare unchanged ACCEL, start-matched ACCEL, random edit/replay and domain randomization on new corner and lamp seeds; charge scoring compute to each arm.",
-      "evidence": [],
+      "detail": "Replace global max-latest with an observed per-start reference, using only returns seen online. Compare unchanged ACCEL, start-matched ACCEL, random edit/replay and domain randomization on new corner and lamp seeds; charge scoring compute to each arm. Registered study: online-start-replay-v1. The actual protocol and its scope take precedence over this original draft.",
+      "evidence": [
+        "/research/online-start-replay-v1/protocol.json"
+      ],
       "kind": "proposal",
-      "stage": "Draft design — not registered",
+      "stage": "Original draft elaborated in a registered study; see actual record",
       "prerequisites": "Feasibility/power pilot on calibration data, then prospective registration.",
       "comparison": "Tuning, data access and compute matched as stated; calibration, development and confirmation streams disjoint.",
       "analysis": "Prespecify seed/model/shard as the unit; freeze sample size, minimum effect, margins, exclusions and multiplicity before confirmation. Candidate thresholds below are planning choices, not powered or preregistered claims.",
       "origin": "new_design",
-      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget."
+      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget.",
+      "study_id": "online-start-replay-v1"
     },
     {
       "id": "proposal-accel-levels-2",
@@ -1565,18 +1569,21 @@
         "exploit-hunting-monitor"
       ],
       "title": "Fresh adaptive attacks at equal monitor cost",
-      "run_status": "proposed",
+      "run_status": "registered",
       "result": "not_assessed",
       "success_rule": "At a fixed 5% audit budget, lower-bound catch-rate gain at least 10 points over the strongest matched-cost control, with honest false-positive rate at most 5%. Cached resampling does not count as fresh attacks.",
-      "detail": "Freeze fresh coding tasks and honest solutions before generating new backdoors; allow a red team matched-query access to each monitor. Compare exploit hunting with suspicion-only and a compute-matched critique control.",
-      "evidence": [],
+      "detail": "Freeze fresh coding tasks and honest solutions before generating new backdoors; allow a red team matched-query access to each monitor. Compare exploit hunting with suspicion-only and a compute-matched critique control. Registered study: fresh-adaptive-monitor-v1. The actual protocol and its scope take precedence over this original draft.",
+      "evidence": [
+        "/research/fresh-adaptive-monitor-v1/protocol.json"
+      ],
       "kind": "proposal",
-      "stage": "Draft design — not registered",
+      "stage": "Original draft elaborated in a registered study; see actual record",
       "prerequisites": "Feasibility/power pilot on calibration data, then prospective registration.",
       "comparison": "Tuning, data access and compute matched as stated; calibration, development and confirmation streams disjoint.",
       "analysis": "Prespecify seed/model/shard as the unit; freeze sample size, minimum effect, margins, exclusions and multiplicity before confirmation. Candidate thresholds below are planning choices, not powered or preregistered claims.",
       "origin": "new_design",
-      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget."
+      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget.",
+      "study_id": "fresh-adaptive-monitor-v1"
     },
     {
       "id": "proposal-exploit-hunting-monitor-2",
@@ -1945,18 +1952,21 @@
         "mona"
       ],
       "title": "Changing-mask collapse: signal versus planning horizon",
-      "run_status": "proposed",
+      "run_status": "registered",
       "result": "not_assessed",
       "success_rule": "At partial coverage, the prespecified corrected signal/horizon arm reaches completion lower bound at least 80% and retains a harm-reduction lower bound at least 10 points; original Test 4 stays failed.",
-      "detail": "Reuse Test 4 advantage-based approval and coverage masks; cross approval normalization and planning horizon while holding passive traces fixed. Include the original signal and a task-progress control.",
-      "evidence": [],
+      "detail": "Reuse Test 4 advantage-based approval and coverage masks; cross approval normalization and planning horizon while holding passive traces fixed. Include the original signal and a task-progress control. Registered study: changing-mask-factorial-v1. The actual protocol and its scope take precedence over this original draft.",
+      "evidence": [
+        "/research/changing-mask-factorial-v1/protocol.json"
+      ],
       "kind": "proposal",
-      "stage": "Draft design — not registered",
+      "stage": "Original draft elaborated in a registered study; see actual record",
       "prerequisites": "Feasibility/power pilot on calibration data, then prospective registration.",
       "comparison": "Tuning, data access and compute matched as stated; calibration, development and confirmation streams disjoint.",
       "analysis": "Prespecify seed/model/shard as the unit; freeze sample size, minimum effect, margins, exclusions and multiplicity before confirmation. Candidate thresholds below are planning choices, not powered or preregistered claims.",
       "origin": "new_design",
-      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget."
+      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget.",
+      "study_id": "changing-mask-factorial-v1"
     },
     {
       "id": "proposal-mona-2",
@@ -2021,18 +2031,21 @@
         "relative-reachability"
       ],
       "title": "Coverage-induced false irreversibility",
-      "run_status": "proposed",
+      "run_status": "registered",
       "result": "not_assessed",
       "success_rule": "Restoring coverage reduces false penalties on reversible actions by at least 10 points and raises task completion by at least 5 points at the lower bound, while harmful-event protection is retained within 5 points.",
-      "detail": "Replay identical tasks with randomized graph-edge coverage: complete, partial and coverage-restored. Compare RR, base and movement penalties at development-matched completion cost.",
-      "evidence": [],
+      "detail": "Replay identical tasks with randomized graph-edge coverage: complete, partial and coverage-restored. Compare RR, base and movement penalties at development-matched completion cost. Registered study: rr-coverage-v1. The actual protocol and its scope take precedence over this original draft.",
+      "evidence": [
+        "/research/rr-coverage-v1/protocol.json"
+      ],
       "kind": "proposal",
-      "stage": "Draft design — not registered",
+      "stage": "Original draft elaborated in a registered study; see actual record",
       "prerequisites": "Feasibility/power pilot on calibration data, then prospective registration.",
       "comparison": "Tuning, data access and compute matched as stated; calibration, development and confirmation streams disjoint.",
       "analysis": "Prespecify seed/model/shard as the unit; freeze sample size, minimum effect, margins, exclusions and multiplicity before confirmation. Candidate thresholds below are planning choices, not powered or preregistered claims.",
       "origin": "new_design",
-      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget."
+      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget.",
+      "study_id": "rr-coverage-v1"
     },
     {
       "id": "proposal-relative-reachability-2",
@@ -2762,6 +2775,137 @@
       "analysis": "Freeze primary contrasts, practical margins, inferential units, stopping rule and multiplicity. Candidate thresholds require power assessment.",
       "origin": "new_design",
       "resources": "CPU or small-GPU research; freeze compute budget before starting."
+    },
+    {
+      "id": "online-start-replay-v1",
+      "idea_ids": [
+        "accel-levels"
+      ],
+      "title": "Online observed-start replay: actual student learning",
+      "run_status": "completed",
+      "result": "not_met",
+      "success_rule": "Seed-group mean over both families: startmatched minus random intended-goal lower95% t bound >=.05; startmatched IID lower95% bound >=.80; startmatched minus DR IID lower95% bound >=-.05. All required. Other contrasts descriptive.",
+      "detail": "64 fits completed:8 seed groups × 2 families × 4 arms, each 120 process CPU seconds plus rollout-boundary overshoot. Observed per-start references use online returns only. Primary random-replay comparison and IID gates: {'goal_gain': False, 'iid_floor': True, 'iid_noninferiority': True}. Full audit and report linked; larger budgets and better tuning remain untested.",
+      "evidence": [
+        "/research/online-start-replay-v1/REPORT.md",
+        "/research/online-start-replay-v1/protocol.json",
+        "/research/online-start-replay-v1/summary.json",
+        "/research/online-start-replay-v1/integrity-audit.json"
+      ],
+      "kind": "follow_up",
+      "stage": "Registered bounded confirmation — separate local adapter",
+      "components": [
+        {
+          "name": "goal gain",
+          "result": "not_met",
+          "detail": "See the registered joint rule and seed-level intervals."
+        },
+        {
+          "name": "iid floor",
+          "result": "met",
+          "detail": "See the registered joint rule and seed-level intervals."
+        },
+        {
+          "name": "iid noninferiority",
+          "result": "met",
+          "detail": "See the registered joint rule and seed-level intervals."
+        }
+      ],
+      "design_id": "proposal-accel-levels-1"
+    },
+    {
+      "id": "changing-mask-factorial-v1",
+      "idea_ids": [
+        "mona",
+        "decoupled-approval"
+      ],
+      "title": "Changing-mask signal × horizon: registered passive-trace test",
+      "run_status": "completed",
+      "result": "mixed",
+      "success_rule": "Average resampled coverage.25/.5 within seed. H1 original myopic-minus-full completion lower adjusted bound>=.20. H2 span-full-minus-original-full lower adjusted bound>=.20 AND span-full completion lower bound>=.80. H3 span-full-minus-reward-only harm reduction lower bound>=.10 AND completion difference lower bound>=-.05 AND completion lower bound>=.80.",
+      "detail": "32 groups, 192 traces and 1,152 policies completed and audited. H1’s predicted myopic advantage fails in the reverse direction: myopic 10.9% completion versus full 100%. H2’s normalization completion gain is 0 and fails. H3 span-full versus reward-only safety-plus-task rule passes. The H2+H3 normalization-repair claim remains unsupported; original online Test4 learners were not rerun.",
+      "evidence": [
+        "/research/changing-mask-factorial-v1/REPORT.md",
+        "/research/changing-mask-factorial-v1/protocol.json",
+        "/research/changing-mask-factorial-v1/summary.json",
+        "/research/changing-mask-factorial-v1/integrity-audit.json"
+      ],
+      "kind": "follow_up",
+      "stage": "Registered bounded confirmation — separate local adapter",
+      "components": [
+        {
+          "name": "H1: myopic completion advantage",
+          "result": "not_met",
+          "detail": "Observed reverse effect: -89.06 points, adjusted interval [-98.46,-79.67]. Do not relabel H1 as supported."
+        },
+        {
+          "name": "H2: normalization completion repair",
+          "result": "not_met",
+          "detail": "Both full-planning arms already complete 100%; no 20-point gain."
+        },
+        {
+          "name": "H3: span-full safety plus task",
+          "result": "met",
+          "detail": "Versus reward-only: 60.94-point harm reduction, adjusted interval [40.66,81.21]; completion 100%. Specific control comparison only."
+        }
+      ],
+      "design_id": "proposal-mona-1"
+    },
+    {
+      "id": "rr-coverage-v1",
+      "idea_ids": [
+        "relative-reachability"
+      ],
+      "title": "RR graph coverage: false penalties and task behavior",
+      "run_status": "completed",
+      "result": "not_met",
+      "success_rule": "At retain.5 versus full restoration: mean false-return-unreachable fraction lower95% bound >=.10; reversible-task completion improvement lower95% bound >=.05; full minus partial hazard-event increase upper95% bound <=.05. All required for combined support; report each component.",
+      "detail": "32 groups completed and audited. Missing return edges create false judgments (mean 17.7%,CI 16.6–18.8%). Restoration completion gain 3.125 points misses the registered minimum. All base and RR hazard policies break every vase; equal harm is not protection. Combined rule unsupported. Penalty graph only varies; planner/objective remain complete.",
+      "evidence": [
+        "/research/rr-coverage-v1/REPORT.md",
+        "/research/rr-coverage-v1/protocol.json",
+        "/research/rr-coverage-v1/summary.json",
+        "/research/rr-coverage-v1/integrity-audit.json"
+      ],
+      "kind": "follow_up",
+      "stage": "Registered bounded confirmation — separate local adapter",
+      "components": [
+        {
+          "name": "False-return artifact",
+          "result": "met",
+          "detail": "Lower 95% bound 16.63% exceeds 10% minimum."
+        },
+        {
+          "name": "Five-point completion rescue",
+          "result": "not_met",
+          "detail": "Gain 3.125 points; interval [-3.25,9.50] points, inconclusive at the minimum."
+        },
+        {
+          "name": "Harm non-inferiority",
+          "result": "met",
+          "detail": "Trivial zero difference: EVERY hazard policy breaks its vase. No protection established."
+        }
+      ],
+      "design_id": "proposal-relative-reachability-1"
+    },
+    {
+      "id": "fresh-adaptive-monitor-v1",
+      "idea_ids": [
+        "exploit-hunting-monitor"
+      ],
+      "title": "Fresh adaptive monitors: bounded-expression cohort",
+      "run_status": "awaiting_budget",
+      "result": "not_assessed",
+      "success_rule": "Exploit-hunting catch gain over EACH suspicion and critique control: lower95% family-cluster bootstrap bound>=.10 at the empirical5% honest-audit mass threshold. Both required, plus all monitor outputs valid. No test-level sample extension.",
+      "detail": "Prepared and registered: 8 calibration plus 80 fresh arithmetic-expression tasks. Three monitor styles, two adaptive attacks per style, matched call/token allowances. Bounded interpreter; no generated Python execution. No paid calls or outcomes. Awaiting a separate additional API budget; the old $7 cap is unchanged. This is toy-code screening, not general coding security.",
+      "evidence": [
+        "/research/fresh-adaptive-monitor-v1/REPORT.md",
+        "/research/fresh-adaptive-monitor-v1/protocol.json"
+      ],
+      "kind": "follow_up",
+      "stage": "Registered; no paid model calls",
+      "components": [],
+      "design_id": "proposal-exploit-hunting-monitor-1"
     }
   ],
   "sources": [

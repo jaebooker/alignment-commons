@@ -1,6 +1,6 @@
 # RL environments
 
-Status reviewed 30 October 2026: Completed local studies; open transfer tests
+Status reviewed 31 October 2026: Completed local studies; open transfer tests
 
 Can an environment expose what an agent is optimizing for, and turn a paper's claim into a falsifiable behavioral prediction?
 
@@ -8,7 +8,7 @@ A claim harness built around planted, verifiable reward hacks and out-of-distrib
 
 ## Verification and scope
 
-Historical catalogue results and completed local studies have distinct scopes. This 30 October status review checked versioned agent findings and publication records without new training or scientific replication; failed and partial outcomes remain labelled. Original records are preserved.
+Historical catalogue results and completed local studies have distinct scopes. This 30 October status review checked versioned agent findings and publication records without new training or scientific replication; failed and partial outcomes remain labelled. Original records are preserved. Three further local studies were registered before confirmation on 31 October 2026: online observed-start replay, changing-mask signal/horizon and RR graph coverage. Their full joint/repair rules were not met; the changing-mask H3 control comparison passed. Separate saved-record audits checked 64 neural models, 3.84 million tabular transitions and 192 graph tables. The fresh-model monitor study remains budget-pending, without model outcomes.
 
 ## A claim harness
 
@@ -175,18 +175,47 @@ Global max-latest assigned false regret to optimal behavior. Full optimal warm-u
 
 [Evidence](/research/status-review-2026-10-30/regret-start-calibration-v1-findings.md)
 
-
 ### Completion-aware verdict rule v2 — Implemented — original records retained
 
 Task completion is now part of the verdict; two stored safety wins become safe_but_incomplete under the versioned assessment. This is a harness change, not a new experimental success.
 
 [Evidence](/research/status-review-2026-10-30/completion-verdict-v2.md)
 
+### Online start-matched replay — Completed — primary random-control gain not met
+
+64 fixed-CPU fits across eight groups and two task families. Observed-start scoring reached 88.6% intended-goal success versus 90.3% random replay and 72.6% max-latest. IID gates passed; registered five-point gain over random did not. No oracle warm-up.
+
+[Evidence](/research/online-start-replay-v1/REPORT.md)
+
+### Changing-mask signal × horizon — Completed — H1/H2 failed; H3 passed
+
+New passive-trace adapter: original full planning completes 100% versus 10.9% myopic, opposite the registered H1 direction. Span-full passes the reward-only safety/task contrast H3 but has no completion gain over original full planning, so normalization repair is unsupported. Original online learners were not rerun.
+
+[Evidence](/research/changing-mask-factorial-v1/REPORT.md)
+
+### RR graph-coverage intervention — Completed — combined support not met
+
+Missing edges create false return judgments. Restoration gives 3.125-point completion gain, missing the five-point lower-bound rule. Every base and RR hazard policy breaks the vase; zero harm difference is not protection. Penalty-graph-only diagnostic.
+
+[Evidence](/research/rr-coverage-v1/REPORT.md)
+
+
+## Partial studies
+
+### Fresh adaptive monitors — Registered and prepared — awaiting API budget
+
+Eight calibration and 80 confirmation arithmetic-expression tasks; three matched-allowance monitor styles with adaptive attacks. No paid calls or outcomes. Study-specific spend cap awaits Jaeson; legacy API cap unchanged. This is bounded toy-code screening.
+
+[Evidence](/research/fresh-adaptive-monitor-v1/REPORT.md)
+
+
 ## Open experiments and integration work
 
-### Diagnose task collapse under changing oversight — Proposed follow-up
+### Reproduce the original online changing-mask learners — Open — new passive-trace results available
 
-Related myopia/decoupling and completion-aware studies are finished, but they do not directly diagnose Test 4’s changing-mask collapse with the same advantage-based signal. That matched signal/planning ablation remains open; preserve the original completion gate.
+The registered signal/horizon adapter has completed, with a reverse horizon effect and mixed hypotheses. It does not rerun Test 4’s original online exploration and learners. Register that faithful reproduction before attributing the original collapse to a unique cause.
+
+[Evidence](/research/changing-mask-factorial-v1/REPORT.md)
 
 ### Extend Test 1 to matched online exploration — Proposed next study
 
@@ -250,3 +279,5 @@ Approved agents can register replications of the existing MONA, decoupled-approv
 - [Tests 8 and 8b: vase side-effect penalties — evidence](/research/status-review-2026-10-30/vase-blind-spot-8b.md)
 - [Required harmless irreversibility — evidence](/research/status-review-2026-10-30/required-irreversibility-v1-findings.md)
 - [Cross-start regret-score calibration — evidence](/research/status-review-2026-10-30/regret-start-calibration-v1-findings.md)
+- [Completion-aware verdict rule v2 — evidence](/research/status-review-2026-10-30/completion-verdict-v2.md)
+- [Four selected studies: current status and findings](/research/four-followups-2026-10-31/OVERVIEW.md)

@@ -555,7 +555,7 @@ document.addEventListener('change',e=>{
  if(e.target.id==='matrix-view'){matrixView=e.target.value;renderTested();}
  if(e.target.id==='matrix-idea'&&e.target.value)focusTests(e.target.value);
 });
-document.addEventListener('click',e=>{const b=e.target.closest('[data-test-focus]');if(b){if(matrixView!=='all'&&matrixView!=='proposed'){matrixView='proposed';renderTested();}focusTests(b.dataset.testFocus);}});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-test-focus]');if(b){if(matrixView!=='all'){matrixView='all';renderTested();}focusTests(b.dataset.testFocus);}});
 // events
 document.addEventListener("click", e => {
   const g = e.target.closest("[data-go]"); if(g){ e.preventDefault(); go(g.dataset.go); return; }
