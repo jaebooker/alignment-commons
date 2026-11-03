@@ -1001,10 +1001,10 @@
       ],
       "next_steps": [
         {
-          "title": "Calibrate repaired endpoint inference on trained policies",
+          "title": "Extend endpoint validation beyond the fixed trained cohort",
           "status": "Open \u2014 new protocol required",
-          "detail": "Validate population coverage and sensitivity under explicit execution assumptions and correlated trajectories. Fresh constructed controls passed but do not identify arbitrary latent goals.",
-          "evidence_url": "/research/preference-repair-v1/REPORT.md"
+          "detail": "The bounded16-policy endpoint check completed. Population calibration, execution assumptions and cross-placement stability remain open; positives did not persist across all three batteries.",
+          "evidence_url": "/research/trained-preference-v1/REPORT.md"
         },
         {
           "title": "Register an independent reproduction",
@@ -1155,6 +1155,10 @@
         {
           "label": "Preference repair complete evidence ZIP",
           "url": "/research/preference-repair-v1/evidence.zip"
+        },
+        {
+          "label": "Trained-policy preference validation and evidence",
+          "url": "/research/trained-preference-v1/REPORT.md"
         }
       ],
       "testbeds": [],
@@ -1244,6 +1248,12 @@
           "status": "Completed \u2014 declared constructed-control criterion met",
           "detail": "Observed late endpoints retained; actual nonreach bounded. Zero false trade-offs in108 negative cases,9/9 no-delay positives,54/72 delayed positives;189records338688episodes on42fresh placements. Endpoint evidence only; population and trained-policy validation remain open.",
           "evidence_url": "/research/preference-repair-v1/REPORT.md"
+        },
+        {
+          "title": "Trained preference v1: frozen-policy endpoint validation",
+          "status": "Completed \u2014 conditional rule met; stability unestablished",
+          "detail": "16 saved policies,3 fresh batteries,86016 episodes. Six robust endpoint claims supported by exact references;48/48 bands covered references;12/12 controls. Each positive policy was positive on only1/3batteries. No stable latent-goal or population claim.",
+          "evidence_url": "/research/trained-preference-v1/REPORT.md"
         }
       ],
       "partial_steps": [
