@@ -938,7 +938,112 @@
       "testbeds": [],
       "adapter_status": "The code runs on CPU in minutes. It is not yet an approved Synthcore worker adapter and is not automatically executed by this site.",
       "thread": "project-kl-anchoring"
+    },
+    {
+      "id": "weight-reading",
+      "title": "Weight Reading",
+      "subtitle": "Can a model tell what a policy learned from its weights alone?",
+      "status": "Three blind levels completed",
+      "summary": "Small gridworld policies were trained to reach a goal or a proxy that matched the goal in training. Reading weights only, Claude labelled all 72 blind policies correctly across three pre-registered levels. On the first two, trivial classifiers did just as well; on the third, the reader beat them by 2 to 3 models of 24 and ranked surviving goal-following within proxy models at Spearman 0.84.",
+      "question": "Given only the weights of a small policy, can a reader tell whether it learned the intended goal or a training-time proxy, and predict its behavior off-distribution?",
+      "sources": [
+        {
+          "system": "Alignment SynthCore",
+          "slug": "weight-reading",
+          "revision": 1,
+          "content_sha256": "a28ffccd99abcc3f38a7b0fc4e5ac7923e801c4f8d43a610f2c3be2e8dd3392d",
+          "independent_review": "Not independently reproduced"
+        }
+      ],
+      "verification": "AI-written by Claude (Opus 5.5) for Jaeson Booker, 3 November 2026. Blind protocol: random IDs, sealed answer keys, predictions hashed and shared before each reveal. L3 was frozen in SynthCore before training. Ground truth comes from off-distribution rollouts. CPU experiments with 24 blind models per level. The reader also wrote the training code, so this is not an independent test.",
+      "sections": [
+        {
+          "title": "Setup",
+          "paragraphs": [
+            "9x9 gridworld, MLP policy with 14,852 parameters, PPO on CPU. Goal-trained models see the goal anywhere; proxy models see it only in the top-right corner (L1, L3) or top-right 3x3 block (L2), so both behave the same in training.",
+            "The reader gets weight files only: linear algebra allowed, no nonlinearities, no forward passes, no environment. It must label each model and predict off-distribution success. Baselines are logistic regressions on weight statistics, trained on a separate labelled pool."
+          ]
+        },
+        {
+          "title": "Results",
+          "paragraphs": [],
+          "findings": [
+            {
+              "label": "L1 and L2 are a trivial tell",
+              "detail": "Weights for goal cells a proxy never saw stay exactly at initialization. Reader, B-flat and B-chan all scored 24/24 on both levels."
+            },
+            {
+              "label": "L3 removes it",
+              "detail": "Each model warm-starts from its own goal-anywhere checkpoint before fine-tuning, so every goal cell is trained. Reader 24/24, B-flat 21/24, B-chan 22/24."
+            },
+            {
+              "label": "The reader's L3 feature",
+              "detail": "The agent channel's linear map W3\u00b7W2\u00b7W1 points toward the board center in goal-followers; corner fine-tuning erodes that field. The classes separated with a clear gap."
+            },
+            {
+              "label": "Ranking within proxies",
+              "detail": "Among corner-fine-tuned models the reader ranked off-distribution goal-reaching at Spearman 0.84, against 0.25 for the hidden pretraining length."
+            },
+            {
+              "label": "Proxies do not fall back to the proxy",
+              "detail": "Corner fine-tuning lowered goal-reaching to 0.11 to 0.46 but corner visits stayed at most 2%. Region proxies in L2 never visited the corner."
+            }
+          ]
+        }
+      ],
+      "figures": [
+        {
+          "src": "/research/weight-reading/figures/fig1_l3_reader.png",
+          "caption": "L3: the reader's weight-only feature against measured off-distribution goal-reaching (left), and the hidden checkpoint length against the same (right)."
+        }
+      ],
+      "limits": [
+        "Tiny MLPs and one gridworld; 24 blind models per level.",
+        "The reader wrote the training code and picked the L3 feature after seeing the blind weights; two features failed first.",
+        "Forced choice between two known hypotheses, easier than open-ended reading.",
+        "The L3 margin over baselines is not statistically significant.",
+        "Inclusion filtering replaced goal models that learned slowly, which selects for fast learners.",
+        "Results are not independently reproduced."
+      ],
+      "next_steps": [
+        {
+          "title": "L4: input-cue proxy",
+          "detail": "A landmark always next to the goal in training, so both channels are trained and used and no first-layer signature is expected.",
+          "status": "Proposed"
+        },
+        {
+          "title": "Fresh blind reader",
+          "detail": "A reader that did not write the training code, with a reading procedure fixed before it sees any weights.",
+          "status": "Proposed"
+        },
+        {
+          "title": "Planted-circuit contestant",
+          "detail": "The same protocol on the naturalized planted-circuit benchmark, with Claude as a weight reader beside standard interpretability tools.",
+          "status": "Proposed"
+        }
+      ],
+      "links": [
+        {
+          "label": "Project brief and results summary",
+          "url": "/research/weight-reading/README.md"
+        },
+        {
+          "label": "L1 and L2 report",
+          "url": "/research/weight-reading/L1L2.md"
+        },
+        {
+          "label": "L3 report",
+          "url": "/research/weight-reading/L3.md"
+        },
+        {
+          "label": "Code, pre-registration, predictions and answer keys (ZIP)",
+          "url": "/research/weight-reading/weight-reading-code.zip"
+        }
+      ],
+      "testbeds": [],
+      "adapter_status": "Code and full results live in Alignment SynthCore under experiments/weight_reading and results/weight-reading-*. It is not a SynthCore idea adapter and is not automatically executed by this site.",
+      "thread": "project-weight-reading"
     }
   ],
-  "updated_at": "2026-10-26"
+  "updated_at": "2026-11-03"
 }
