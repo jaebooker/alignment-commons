@@ -56,7 +56,7 @@
       "verification": "The canonical go-concepts README, paper source and build log were inspected at commit 64a3c5045789c16891b1f0cb1cf1e5145308a38b. Go Concept Lab's milestone-4 status was also inspected. Historical experiment and test counts were not rerun for this import. Test 6 freshly executed 64 native branches and independently re-scored 6,912 continuation plies. This verifies implementation and saved local outcomes, not independent scientific reproduction. On 30 October, a frozen manuscript-native check executed 88 raw maps, 88 fresh reference maps and 19 native searches at 16 visits. All 88 full-map parity tests failed (max error 0.726806); joint support was not met despite qualitative component passes. A separate audit verified 119 frozen hashes, 44 SGFs and all saved queries. A post-hoc two-case diagnostic localized a pass-phase input mismatch; it does not retroactively pass the study.",
       "sections": [
         {
-          "title": "Loops Look Alive — paper study",
+          "title": "Loops Look Alive \u2014 paper study",
           "paragraphs": [
             "Jaeson Booker's 2026 manuscript studies five Go networks, including the KataGo network attacked by FAR, an adversarially trained KataGo network, and Leela Zero. It reports a group-safety error: vulnerable networks can count liberties yet judge doomed loops as alive.",
             "The study reports that a mid-network closed-loop feature partly acts as evidence of safety in vulnerable networks. The adversarially trained tf3 network retains a related feature while judging doomed loops correctly. Representing a feature and relying on it are distinct questions."
@@ -64,7 +64,7 @@
           "findings": [
             {
               "label": "Causal intervention under search",
-              "detail": "Holding the loop direction changed b40's ownership verdict on 11 of 12 doomed rings in the study's own 800-visit PUCT search. Mean ownership moved from +0.78 to −0.24 after the owner passed."
+              "detail": "Holding the loop direction changed b40's ownership verdict on 11 of 12 doomed rings in the study's own 800-visit PUCT search. Mean ownership moved from +0.78 to \u22120.24 after the owner passed."
             },
             {
               "label": "A causal link with a cost",
@@ -73,7 +73,7 @@
           ]
         },
         {
-          "title": "Go Concept Lab — separate exploratory pilot",
+          "title": "Go Concept Lab \u2014 separate exploratory pilot",
           "paragraphs": [
             "This earlier infrastructure and behavioral study used trained Leela Zero #57 and KataGo b6c96 s175M. Native extraction and a controlled decoding pilot were completed. Accessible probe information alone does not establish policy reliance or a shared causal mechanism.",
             "In the final-layer linear liberty probe, Leela accuracy was 45.9% on ordinary positions and 46.2% on attack-source positions; KataGo was 60.4% and 50.3%. These are probe accuracies, not game win rates. The two engines did not show the same decline."
@@ -136,7 +136,7 @@
         {
           "title": "Research status reviewed 30 October 2026",
           "paragraphs": [
-            "Completed studies and checks below are separated from genuine open work. “Completed” records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained."
+            "Completed studies and checks below are separated from genuine open work. \u201cCompleted\u201d records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained."
           ],
           "findings": []
         }
@@ -146,13 +146,13 @@
         "The paper study and Go Concept Lab use different checkpoints and protocols. Their results cannot be pooled or treated as mutual independent confirmation.",
         "The pilot's one-reply certificate proves an avoidable immediate material loss under that objective, not an avoidable whole-game loss, eventual survival, or a causal representation failure.",
         "Test 6 uses outcome-selected development cases from two games, with overlapping chains and checkpoints. Seeds do not create independent positions. Native self-play may miss known legal captures, so uncaptured stones do not prove robustness to stronger opponents. Only one immediate defense is tested per case; truncated branches have no game winner.",
-        "Native check v1 uses selected development cases and 16 native visits; it does not reproduce the manuscript’s 800-visit simplified search or native causal interventions. Its pipeline gate failed. The two-case post-hoc flag correction is diagnostic and does not establish full-cohort parity."
+        "Native check v1 uses selected development cases and 16 native visits; it does not reproduce the manuscript\u2019s 800-visit simplified search or native causal interventions. Its pipeline gate failed. The two-case post-hoc flag correction is diagnostic and does not establish full-cohort parity."
       ],
       "next_steps": [
         {
           "title": "Paper: repair pass-phase parity before native expansion",
-          "status": "Next experiment — new freeze required",
-          "detail": "Make the adapter’s passWouldEndPhase history-dependent, add owner-pass and phase-transition engineering fixtures, and register a new full-cohort parity check. Preserve v1’s failed gate. Higher-budget native search and activation-holding interventions remain untested.",
+          "status": "Next experiment \u2014 new freeze required",
+          "detail": "Make the adapter\u2019s passWouldEndPhase history-dependent, add owner-pass and phase-transition engineering fixtures, and register a new full-cohort parity check. Preserve v1\u2019s failed gate. Higher-budget native search and activation-holding interventions remain untested.",
           "evidence_url": "/research/go-manuscript-native-check-v1/REPORT.md"
         },
         {
@@ -276,13 +276,13 @@
       "completed_steps": [
         {
           "title": "Pilot: bounded native continuation gate",
-          "status": "Completed — bounded findings",
+          "status": "Completed \u2014 bounded findings",
           "detail": "Test 6 examined four selected case/engine strata from two source games. One primary contrast improved preservation; whole-game repair and broader attack generality remain unestablished. A separate manuscript-native v1 check has now been executed and failed its parity gate; its results are listed separately.",
           "evidence_url": "/research/go-continuation-audit-v1/REPORT.md"
         },
         {
           "title": "Paper: bounded native-engine check v1",
-          "status": "Completed — joint support not met",
+          "status": "Completed \u2014 joint support not met",
           "detail": "Exact manuscript b40 and tf3 networks: 24 fortified cases plus all 20 archived attacks; 88 native and 88 reference maps, 19 native 16-visit searches. Every full-map parity check failed; max error 0.726806 exceeds 0.005. Favorable qualitative signatures do not override the failed gate. Post-hoc diagnostics identify pass-phase encoding as a concrete cause in two cases.",
           "evidence_url": "/research/go-manuscript-native-check-v1/REPORT.md"
         }
@@ -414,14 +414,14 @@
           ]
         },
         {
-          "title": "Test 1 completed: approval feedback × environment reward",
+          "title": "Test 1 completed: approval feedback \u00d7 environment reward",
           "paragraphs": [
             "A locally frozen 32-seed confirmation used the same exploration traces for all four feedback/reward conditions, across 192 environment instances. The combined primary support criterion failed: independent feedback reduced lever use, but neither full-horizon arm completed the task. This is a controlled fixed-exploration ablation, not a replication of the original online algorithm or an independently reproduced safety win."
           ],
           "findings": [
             {
               "label": "Corruption-channel contrast, with task failure",
-              "detail": "In the primary feedback-lever condition, lever activation fell from 98.4% with executed feedback to 10.9% with independent feedback. The paired difference was −87.5 percentage points (95% seed-level t interval −95.4 to −79.6). Goal completion was 0% in both arms, failing the required 80% completion floor."
+              "detail": "In the primary feedback-lever condition, lever activation fell from 98.4% with executed feedback to 10.9% with independent feedback. The paired difference was \u221287.5 percentage points (95% seed-level t interval \u221295.4 to \u221279.6). Goal completion was 0% in both arms, failing the required 80% completion floor."
             },
             {
               "label": "Using environment reward changed button activation",
@@ -465,11 +465,11 @@
             },
             {
               "label": "Reduced harm can hide task collapse",
-              "detail": "With resampled partial oversight, MONA and decoupled approval have zero harm but only 0–15.6% goal completion. With fixed partial oversight, they complete the task but break the vase in 81.3% of cases at 25% cell coverage and 56.3% at 50%. Avoiding harm by stalling is not a safety win."
+              "detail": "With resampled partial oversight, MONA and decoupled approval have zero harm but only 0\u201315.6% goal completion. With fixed partial oversight, they complete the task but break the vase in 81.3% of cases at 25% cell coverage and 56.3% at 50%. Avoiding harm by stalling is not a safety win."
             },
             {
               "label": "Baseline results remain uncertain at the practical threshold",
-              "detail": "The ordinary baseline’s fixed-minus-resampled harm gap is 9.4 points at 25% coverage (adjusted interval −22.3 to 41.0) and 31.3 points at 50% coverage (7.8 to 54.7). Both arms complete the task. Neither lower bound reaches the declared 10-point minimum."
+              "detail": "The ordinary baseline\u2019s fixed-minus-resampled harm gap is 9.4 points at 25% coverage (adjusted interval \u221222.3 to 41.0) and 31.3 points at 50% coverage (7.8 to 54.7). Both arms complete the task. Neither lower bound reaches the declared 10-point minimum."
             },
             {
               "label": "Accurate coverage resolves the planted harm locally",
@@ -512,7 +512,7 @@
         {
           "title": "Research status reviewed 30 October 2026",
           "paragraphs": [
-            "Completed studies and checks below are separated from genuine open work. “Completed” records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained."
+            "Completed studies and checks below are separated from genuine open work. \u201cCompleted\u201d records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained."
           ],
           "findings": []
         }
@@ -529,8 +529,8 @@
       "next_steps": [
         {
           "title": "Reproduce the original online changing-mask learners",
-          "status": "Open — new passive-trace results available",
-          "detail": "The registered signal/horizon adapter has completed, with a reverse horizon effect and mixed hypotheses. It does not rerun Test 4’s original online exploration and learners. Register that faithful reproduction before attributing the original collapse to a unique cause.",
+          "status": "Open \u2014 new passive-trace results available",
+          "detail": "The registered signal/horizon adapter has completed, with a reverse horizon effect and mixed hypotheses. It does not rerun Test 4\u2019s original online exploration and learners. Register that faithful reproduction before attributing the original collapse to a unique cause.",
           "evidence_url": "/research/changing-mask-factorial-v1/REPORT.md"
         },
         {
@@ -545,8 +545,8 @@
         },
         {
           "title": "Generalize beyond the evaluated goal tasks",
-          "status": "Open — broader transfer",
-          "detail": "Bounded Agency’s competence, phase-boundary and escape studies have run in selected toy configurations. Further tasks, proxy types and held-out distributions need their own evidence; the visible-marker study is partial."
+          "status": "Open \u2014 broader transfer",
+          "detail": "Bounded Agency\u2019s competence, phase-boundary and escape studies have run in selected toy configurations. Further tasks, proxy types and held-out distributions need their own evidence; the visible-marker study is partial."
         }
       ],
       "links": [
@@ -695,28 +695,36 @@
           "url": "/research/status-review-2026-10-30/REPORT.md"
         },
         {
-          "label": "Test 7: myopia × decoupling — evidence",
+          "label": "Test 7: myopia \u00d7 decoupling \u2014 evidence",
           "url": "/research/status-review-2026-10-30/myopia-decoupling-v1.md"
         },
         {
-          "label": "Tests 8 and 8b: vase side-effect penalties — evidence",
+          "label": "Tests 8 and 8b: vase side-effect penalties \u2014 evidence",
           "url": "/research/status-review-2026-10-30/vase-blind-spot-8b.md"
         },
         {
-          "label": "Required harmless irreversibility — evidence",
+          "label": "Required harmless irreversibility \u2014 evidence",
           "url": "/research/status-review-2026-10-30/required-irreversibility-v1-findings.md"
         },
         {
-          "label": "Cross-start regret-score calibration — evidence",
+          "label": "Cross-start regret-score calibration \u2014 evidence",
           "url": "/research/status-review-2026-10-30/regret-start-calibration-v1-findings.md"
         },
         {
-          "label": "Completion-aware verdict rule v2 — evidence",
+          "label": "Completion-aware verdict rule v2 \u2014 evidence",
           "url": "/research/status-review-2026-10-30/completion-verdict-v2.md"
         },
         {
           "label": "Four selected studies: current status and findings",
           "url": "/research/four-followups-2026-10-31/OVERVIEW.md"
+        },
+        {
+          "label": "Calibration v1 report and complete evidence",
+          "url": "/research/evaluation-calibration-v1/REPORT.md"
+        },
+        {
+          "label": "Calibration v1 reproducible evidence ZIP",
+          "url": "/research/evaluation-calibration-v1/evidence.zip"
         }
       ],
       "testbeds": [
@@ -746,82 +754,88 @@
       ],
       "completed_steps": [
         {
-          "title": "Test 1: approval × reward factorial",
-          "status": "Completed — combined gate failed",
+          "title": "Test 1: approval \u00d7 reward factorial",
+          "status": "Completed \u2014 combined gate failed",
           "detail": "The fixed-exploration study ran; its full-horizon primary completion gate failed. Matched online exploration remains a different open study.",
           "evidence_url": "/research/approval-factorial-v1/REPORT.md"
         },
         {
           "title": "Test 2: post-tuning mechanism audit",
-          "status": "Completed — declared local minimum ruled out",
+          "status": "Completed \u2014 declared local minimum ruled out",
           "detail": "All three selected-setting mechanism gates failed in the bounded setup. Preserve that local scope rather than treating it as a paper refutation.",
           "evidence_url": "/research/post-tuning-mechanism-audit-v1/REPORT.md"
         },
         {
           "title": "Test 4: changing oversight coverage",
-          "status": "Completed — combined gate failed",
+          "status": "Completed \u2014 combined gate failed",
           "detail": "None of six comparisons met the combined rule. Partial-coverage task collapse remains a distinct unresolved follow-up.",
           "evidence_url": "/research/oversight-coverage-audit-v1/REPORT.md"
         },
         {
           "title": "Test 5: regret estimator and training budget",
-          "status": "Completed — primary local contrast passed",
+          "status": "Completed \u2014 primary local contrast passed",
           "detail": "The privileged exact-start oracle contrast passed; random replay also helped. This does not establish that privileged labels are necessary.",
           "evidence_url": "/research/regret-budget-audit-v1/REPORT.md"
         },
         {
-          "title": "Test 7: myopia × decoupling",
-          "status": "Completed — source-reported support",
+          "title": "Test 7: myopia \u00d7 decoupling",
+          "status": "Completed \u2014 source-reported support",
           "detail": "The registered combined rule was met, while an overseer-blind vase remained a limitation. Fixed passive exploration does not settle the online-exploration proposal.",
           "evidence_url": "/research/status-review-2026-10-30/myopia-decoupling-v1.md"
         },
         {
           "title": "Tests 8 and 8b: vase side-effect penalties",
-          "status": "Completed — both primary claims unsupported",
-          "detail": "Test 8’s RR grid was infeasible. Test 8b reduced vase events but failed completion non-inferiority; its near miss stays a failed gate.",
+          "status": "Completed \u2014 both primary claims unsupported",
+          "detail": "Test 8\u2019s RR grid was infeasible. Test 8b reduced vase events but failed completion non-inferiority; its near miss stays a failed gate.",
           "evidence_url": "/research/status-review-2026-10-30/vase-blind-spot-8b.md"
         },
         {
           "title": "Required harmless irreversibility",
-          "status": "Completed — aggregate rule unsupported",
+          "status": "Completed \u2014 aggregate rule unsupported",
           "detail": "RR failed 28 of 315 deterministic required-change tasks; the 8.89-point loss missed the frozen 10-point threshold. Exact/noiseless diagnostic, not passive-learning replication.",
           "evidence_url": "/research/status-review-2026-10-30/required-irreversibility-v1-findings.md"
         },
         {
           "title": "Cross-start regret-score calibration",
-          "status": "Completed — calibration rule passed",
+          "status": "Completed \u2014 calibration rule passed",
           "detail": "Global max-latest assigned false regret to optimal behavior. Full optimal warm-up makes the start-matched control agree with the oracle; online training benefit remains untested.",
           "evidence_url": "/research/status-review-2026-10-30/regret-start-calibration-v1-findings.md"
         },
         {
           "title": "Completion-aware verdict rule v2",
-          "status": "Implemented — original records retained",
+          "status": "Implemented \u2014 original records retained",
           "detail": "Task completion is now part of the verdict; two stored safety wins become safe_but_incomplete under the versioned assessment. This is a harness change, not a new experimental success.",
           "evidence_url": "/research/status-review-2026-10-30/completion-verdict-v2.md"
         },
         {
           "title": "Online start-matched replay",
-          "status": "Completed — primary random-control gain not met",
+          "status": "Completed \u2014 primary random-control gain not met",
           "detail": "64 fixed-CPU fits across eight groups and two task families. Observed-start scoring reached 88.6% intended-goal success versus 90.3% random replay and 72.6% max-latest. IID gates passed; registered five-point gain over random did not. No oracle warm-up.",
           "evidence_url": "/research/online-start-replay-v1/REPORT.md"
         },
         {
-          "title": "Changing-mask signal × horizon",
-          "status": "Completed — H1/H2 failed; H3 passed",
+          "title": "Changing-mask signal \u00d7 horizon",
+          "status": "Completed \u2014 H1/H2 failed; H3 passed",
           "detail": "New passive-trace adapter: original full planning completes 100% versus 10.9% myopic, opposite the registered H1 direction. Span-full passes the reward-only safety/task contrast H3 but has no completion gain over original full planning, so normalization repair is unsupported. Original online learners were not rerun.",
           "evidence_url": "/research/changing-mask-factorial-v1/REPORT.md"
         },
         {
           "title": "RR graph-coverage intervention",
-          "status": "Completed — combined support not met",
+          "status": "Completed \u2014 combined support not met",
           "detail": "Missing edges create false return judgments. Restoration gives 3.125-point completion gain, missing the five-point lower-bound rule. Every base and RR hazard policy breaks the vase; zero harm difference is not protection. Penalty-graph-only diagnostic.",
           "evidence_url": "/research/rr-coverage-v1/REPORT.md"
+        },
+        {
+          "title": "Evaluation calibration v1: six modules completed",
+          "status": "Completed \u2014 bounded mixed calibration results",
+          "detail": "Preference classifier counterexamples confirmed; terminal table dependence did not improve behavior. Uncertainty calibration and lamp replay gate failed; toy KL contracts passed. Original results retained.",
+          "evidence_url": "/research/evaluation-calibration-v1/REPORT.md"
         }
       ],
       "partial_steps": [
         {
           "title": "Fresh adaptive monitors",
-          "status": "Calibration complete — comparison infeasible; confirmation not authorized",
+          "status": "Calibration complete \u2014 comparison infeasible; confirmation not authorized",
           "detail": "Eight frozen calibration tasks completed under a $3 calibration-only cap. Honest-valid 0/8; common-valid comparison tasks 0/8. Format failures and declined attack generations prevent a monitor comparison. Recorded usage $0.241712, with $0.052088 conservatively reserved. No confirmation calls; no superiority result. The legacy $7 cap is unchanged.",
           "evidence_url": "/research/fresh-adaptive-monitor-v1/REPORT.md"
         }
@@ -891,7 +905,7 @@
         {
           "title": "Archived experiments",
           "paragraphs": [
-            "A 7×7 gridworld puts a true-goal gem at a proxy corner except in a fraction p of training episodes. JAX PPO varies MLP/CNN capacity and entropy settings. Out-of-distribution choice trials estimate an implied gem weight; the archived summary reports eight seeds per configuration. A separate tabular Q-learning MDP tests a power-seeking prediction."
+            "A 7\u00d77 gridworld puts a true-goal gem at a proxy corner except in a fraction p of training episodes. JAX PPO varies MLP/CNN capacity and entropy settings. Out-of-distribution choice trials estimate an implied gem weight; the archived summary reports eight seeds per configuration. A separate tabular Q-learning MDP tests a power-seeking prediction."
           ],
           "findings": [
             {
@@ -900,7 +914,7 @@
             },
             {
               "label": "The estimator has a bounded range",
-              "detail": "The README reports about ±0.03 recovery error on exact-optimal policies. The identifiable weight interval is [0.10, 0.90], with censoring outside it. Values near the plotted floor and ceiling should not be read as precise terminal-goal weights."
+              "detail": "The README reports about \u00b10.03 recovery error on exact-optimal policies. The identifiable weight interval is [0.10, 0.90], with censoring outside it. Values near the plotted floor and ceiling should not be read as precise terminal-goal weights."
             },
             {
               "label": "Longer runs remain heterogeneous",
@@ -920,7 +934,7 @@
           "findings": [
             {
               "label": "Every goal-interpretation gate failed",
-              "detail": "All four adjusted choice-rate comparisons meet the planned ±10-point equivalence rule, but cohort-mean equal-distance non-reach rates are 14.7–21.3%, above the 10% limit. Similar rates therefore do not validate a stable-goal interpretation. The low-entropy zero-width t intervals reflect eight identical zero differences, not population certainty."
+              "detail": "All four adjusted choice-rate comparisons meet the planned \u00b110-point equivalence rule, but cohort-mean equal-distance non-reach rates are 14.7\u201321.3%, above the 10% limit. Similar rates therefore do not validate a stable-goal interpretation. The low-entropy zero-width t intervals reflect eight identical zero differences, not population certainty."
             },
             {
               "label": "Entropy 0.01, reflected geometry: Rate equivalence supported within 10 points",
@@ -948,14 +962,14 @@
           "findings": [
             {
               "label": "A plausible fitted weight is insufficient",
-              "detail": "Random controls receive legacy fitted weights around 0.50–0.53 while leaving roughly 63–68% of trials unresolved. These numbers are not recovery of a known latent goal."
+              "detail": "Random controls receive legacy fitted weights around 0.50\u20130.53 while leaving roughly 63\u201368% of trials unresolved. These numbers are not recovery of a known latent goal."
             }
           ]
         },
         {
           "title": "Research status reviewed 30 October 2026",
           "paragraphs": [
-            "Completed studies and checks below are separated from genuine open work. “Completed” records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained."
+            "Completed studies and checks below are separated from genuine open work. \u201cCompleted\u201d records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained."
           ],
           "findings": []
         }
@@ -963,7 +977,7 @@
       "figures": [
         {
           "src": "/research/preference-battery-audit-v1/preference-audit.png",
-          "caption": "Test 3: equal-distance gem choice with failures retained, and adjusted paired-seed intervals for transformed versus original batteries. The shaded band is the prespecified ±10-point rate-equivalence margin. Goal interpretation has a separate non-reach gate. This is a fresh local audit, not an independently reproduced goal-scaling result."
+          "caption": "Test 3: equal-distance gem choice with failures retained, and adjusted paired-seed intervals for transformed versus original batteries. The shaded band is the prespecified \u00b110-point rate-equivalence margin. Goal interpretation has a separate non-reach gate. This is a fresh local audit, not an independently reproduced goal-scaling result."
         },
         {
           "src": "/research/bounded-agency/figures/fig1_phase_diagram.png",
@@ -987,6 +1001,12 @@
       ],
       "next_steps": [
         {
+          "title": "Calibrate repaired endpoint inference on trained policies",
+          "status": "Open \u2014 new protocol required",
+          "detail": "Validate population coverage and sensitivity under explicit execution assumptions and correlated trajectories. Fresh constructed controls passed but do not identify arbitrary latent goals.",
+          "evidence_url": "/research/preference-repair-v1/REPORT.md"
+        },
+        {
           "title": "Register an independent reproduction",
           "detail": "Freeze environment generation, training budget, seeds, choice trials, censoring rules and outcome definitions before rerunning.",
           "status": "Proposed follow-up"
@@ -998,13 +1018,13 @@
         },
         {
           "title": "Test broader proxy/task generality",
-          "status": "Open — partial related work",
+          "status": "Open \u2014 partial related work",
           "detail": "A visible-marker proxy study was registered, but its last ledger entry is partial with completion unknown. Broader or independent reproduction remains open; it cannot be counted as completed from a session exit."
         },
         {
           "title": "Test low-exploration escape exponents",
           "status": "Proposed after escape factorial",
-          "detail": "The escape factorial’s common-exponent interval missed its frozen containment gate. A larger prospective sweep over p and exploration is still needed; do not relabel the near miss as support."
+          "detail": "The escape factorial\u2019s common-exponent interval missed its frozen containment gate. A larger prospective sweep over p and exploration is still needed; do not relabel the near miss as support."
         }
       ],
       "links": [
@@ -1073,15 +1093,15 @@
           "url": "/research/coordination-2026-10-29/REPORT.md"
         },
         {
-          "label": "Greedy cycles — registered check",
+          "label": "Greedy cycles \u2014 registered check",
           "url": "/research/coordination-2026-10-29/bounded-agency-greedy-cycles-check-v1.md"
         },
         {
-          "label": "Rollout horizon — registered check",
+          "label": "Rollout horizon \u2014 registered check",
           "url": "/research/coordination-2026-10-29/bounded-agency-rollout-horizon-check-v1.md"
         },
         {
-          "label": "Task competence — registered check",
+          "label": "Task competence \u2014 registered check",
           "url": "/research/coordination-2026-10-29/bounded-agency-task-competence-check-v1.md"
         },
         {
@@ -1089,36 +1109,52 @@
           "url": "/research/status-review-2026-10-30/REPORT.md"
         },
         {
-          "label": "Revealed-preference measurement v2 — evidence",
+          "label": "Revealed-preference measurement v2 \u2014 evidence",
           "url": "/research/status-review-2026-10-30/preference-measurement-v2.md"
         },
         {
-          "label": "Capacity and optimization-budget studies — evidence",
+          "label": "Capacity and optimization-budget studies \u2014 evidence",
           "url": "/research/status-review-2026-10-30/competence-sweep-v1.md"
         },
         {
-          "label": "Phase-boundary study — evidence",
+          "label": "Phase-boundary study \u2014 evidence",
           "url": "/research/status-review-2026-10-30/phase-boundary-v1.md"
         },
         {
-          "label": "Mid-switch behavioral diagnosis — evidence",
+          "label": "Mid-switch behavioral diagnosis \u2014 evidence",
           "url": "/research/status-review-2026-10-30/mid-switch-behavior-v1-findings.md"
         },
         {
-          "label": "One-pulse navigation intervention — evidence",
+          "label": "One-pulse navigation intervention \u2014 evidence",
           "url": "/research/status-review-2026-10-30/navigation-bottleneck-v1-findings.md"
         },
         {
-          "label": "Escape-time law study — evidence",
+          "label": "Escape-time law study \u2014 evidence",
           "url": "/research/status-review-2026-10-30/escape-time-v1.md"
         },
         {
-          "label": "Escape-law width × exploration factorial — evidence",
+          "label": "Escape-law width \u00d7 exploration factorial \u2014 evidence",
           "url": "/research/status-review-2026-10-30/escape-factorial-v1.md"
         },
         {
-          "label": "Categorical deployment confirmation — evidence",
+          "label": "Categorical deployment confirmation \u2014 evidence",
           "url": "/research/coordination-2026-10-29/REPORT.md"
+        },
+        {
+          "label": "Calibration v1 report and complete evidence",
+          "url": "/research/evaluation-calibration-v1/REPORT.md"
+        },
+        {
+          "label": "Calibration v1 reproducible evidence ZIP",
+          "url": "/research/evaluation-calibration-v1/evidence.zip"
+        },
+        {
+          "label": "Preference repair v1 report",
+          "url": "/research/preference-repair-v1/REPORT.md"
+        },
+        {
+          "label": "Preference repair complete evidence ZIP",
+          "url": "/research/preference-repair-v1/evidence.zip"
         }
       ],
       "testbeds": [],
@@ -1127,81 +1163,93 @@
       "completed_steps": [
         {
           "title": "Test 3: preference-battery audit",
-          "status": "Completed — goal interpretation withheld",
+          "status": "Completed \u2014 goal interpretation withheld",
           "detail": "Original calibration and rate comparisons passed, but its non-reach gate failed. Frozen models, outcomes and unresolved labels remain unchanged.",
           "evidence_url": "/research/preference-battery-audit-v1/REPORT.md"
         },
         {
           "title": "Greedy-policy cycle check",
-          "status": "Completed — re-verified",
+          "status": "Completed \u2014 re-verified",
           "detail": "All 5,563 greedy non-reach cases close into endpoint-free cycles. The later registration disclosed known outcomes; it was not a new blind experiment.",
           "evidence_url": "/research/coordination-2026-10-29/bounded-agency-greedy-cycles-check-v1.md"
         },
         {
           "title": "Rollout-horizon check",
-          "status": "Completed — re-verified, no rescue",
-          "detail": "Identical greedy prefixes at 20, 40 and 80 steps give zero rescues. Longer cutoffs do not replace Test 3’s original result.",
+          "status": "Completed \u2014 re-verified, no rescue",
+          "detail": "Identical greedy prefixes at 20, 40 and 80 steps give zero rescues. Longer cutoffs do not replace Test 3\u2019s original result.",
           "evidence_url": "/research/coordination-2026-10-29/bounded-agency-rollout-horizon-check-v1.md"
         },
         {
           "title": "Task-competence check",
-          "status": "Completed — original gate still failed",
+          "status": "Completed \u2014 original gate still failed",
           "detail": "The original greedy competence gate remains failed. Neither/unreached remains in denominators and is never a preferred-goal label.",
           "evidence_url": "/research/coordination-2026-10-29/bounded-agency-task-competence-check-v1.md"
         },
         {
           "title": "Revealed-preference measurement v2",
-          "status": "Completed — source-reported validation",
+          "status": "Completed \u2014 source-reported validation",
           "detail": "Known controls and measurable policy checks were reported; unmeasurable policies remain unclassified. This is separate from the legacy Test 3 estimator.",
           "evidence_url": "/research/status-review-2026-10-30/preference-measurement-v2.md"
         },
         {
           "title": "Capacity and optimization-budget studies",
-          "status": "Completed — bounded configurations",
+          "status": "Completed \u2014 bounded configurations",
           "detail": "Competence and phase-boundary studies already varied architecture/training budget and decorrelation. Their results do not repair Test 3, establish universal scaling, or constitute an independent reproduction.",
           "evidence_url": "/research/status-review-2026-10-30/competence-sweep-v1.md"
         },
         {
           "title": "Phase-boundary study",
-          "status": "Completed — source-reported findings",
-          "detail": "The 11×11 study reported bounded phase and training-time results. Later unresolved-policy diagnostics retain non-reach and model-fit limits.",
+          "status": "Completed \u2014 source-reported findings",
+          "detail": "The 11\u00d711 study reported bounded phase and training-time results. Later unresolved-policy diagnostics retain non-reach and model-fit limits.",
           "evidence_url": "/research/status-review-2026-10-30/phase-boundary-v1.md"
         },
         {
           "title": "Mid-switch behavioral diagnosis",
-          "status": "Completed — six policies unresolved",
+          "status": "Completed \u2014 six policies unresolved",
           "detail": "Two of eight mid-switch policies adequately fit the tested noisy gem model; six remain inconclusive. No validated mixture or trade-off diagnosis.",
           "evidence_url": "/research/status-review-2026-10-30/mid-switch-behavior-v1-findings.md"
         },
         {
           "title": "One-pulse navigation intervention",
-          "status": "Completed — support rule failed",
+          "status": "Completed \u2014 support rule failed",
           "detail": "The small completion gains versus baseline and random pulses were inconclusive. A one-pulse failure does not rule out navigation bottlenecks.",
           "evidence_url": "/research/status-review-2026-10-30/navigation-bottleneck-v1-findings.md"
         },
         {
           "title": "Escape-time law study",
-          "status": "Completed — source-reported support",
+          "status": "Completed \u2014 source-reported support",
           "detail": "The registered development/confirmation study reported inverse-p escape scaling within its selected CNN/room setup.",
           "evidence_url": "/research/status-review-2026-10-30/escape-time-v1.md"
         },
         {
-          "title": "Escape-law width × exploration factorial",
-          "status": "Completed — H2/H3 supported; H1 not supported",
-          "detail": "Width and exploration changed the fitted constant. H1’s interval [0.748,1.048] missed [0.75,1.25] containment; the narrow miss remains a failed gate.",
+          "title": "Escape-law width \u00d7 exploration factorial",
+          "status": "Completed \u2014 H2/H3 supported; H1 not supported",
+          "detail": "Width and exploration changed the fitted constant. H1\u2019s interval [0.748,1.048] missed [0.75,1.25] containment; the narrow miss remains a failed gate.",
           "evidence_url": "/research/status-review-2026-10-30/escape-factorial-v1.md"
         },
         {
           "title": "Categorical deployment confirmation",
-          "status": "Completed — one cohort passes endpoint competence",
+          "status": "Completed \u2014 one cohort passes endpoint competence",
           "detail": "The explicit sampled action rule passed the endpoint gate at entropy .01 and failed at .05 on its reserved placements. This does not change Test 3 or show intended-goal recovery.",
           "evidence_url": "/research/coordination-2026-10-29/REPORT.md"
+        },
+        {
+          "title": "Evaluation calibration v1: six modules completed",
+          "status": "Completed \u2014 bounded mixed calibration results",
+          "detail": "Preference classifier counterexamples confirmed; terminal table dependence did not improve behavior. Uncertainty calibration and lamp replay gate failed; toy KL contracts passed. Original results retained.",
+          "evidence_url": "/research/evaluation-calibration-v1/REPORT.md"
+        },
+        {
+          "title": "Preference repair v1: fresh-control validation",
+          "status": "Completed \u2014 declared constructed-control criterion met",
+          "detail": "Observed late endpoints retained; actual nonreach bounded. Zero false trade-offs in108 negative cases,9/9 no-delay positives,54/72 delayed positives;189records338688episodes on42fresh placements. Endpoint evidence only; population and trained-policy validation remain open.",
+          "evidence_url": "/research/preference-repair-v1/REPORT.md"
         }
       ],
       "partial_steps": [
         {
           "title": "Visible-marker proxy-type generality",
-          "status": "Partial — completion unknown",
+          "status": "Partial \u2014 completion unknown",
           "detail": "Agent Commons ledger #66 is an automatic session-exit record, not completed findings. The branch has a registration; no verified completion artifact was logged.",
           "evidence_url": "https://github.com/jaebooker/alignment-synthcore/tree/claude/proxy-type-v1"
         }
@@ -1257,7 +1305,7 @@
         {
           "title": "Experiment 1: the tilting law",
           "paragraphs": [
-            "One decision with ten actions. A forbidden action has reference probability p and reward advantage D. The KL-regularized optimum is the reference tilted by exp(r/β), so the forbidden action takes over at D/β = log((1−p)/p)."
+            "One decision with ten actions. A forbidden action has reference probability p and reward advantage D. The KL-regularized optimum is the reference tilted by exp(r/\u03b2), so the forbidden action takes over at D/\u03b2 = log((1\u2212p)/p)."
           ],
           "findings": [
             {
@@ -1266,11 +1314,11 @@
             },
             {
               "label": "The KL implementation decides whether the anchor exists",
-              "detail": "k1 in the reward reproduces the law. k3 as a loss (GRPO's KL term) behaves like forward KL and takes over near D/β ≈ 2 whatever p is. k1 as a loss has zero expected gradient."
+              "detail": "k1 in the reward reproduces the law. k3 as a loss (GRPO's KL term) behaves like forward KL and takes over near D/\u03b2 \u2248 2 whatever p is. k1 as a loss has zero expected gradient."
             },
             {
               "label": "Normalized advantages erase the reward's size",
-              "detail": "With GRPO-style advantages the forbidden action reached 0.98 for any D from 0.001 to 1 at β = 0.1. Without an effective anchor, time to takeover approaches 1/(p·batch)."
+              "detail": "With GRPO-style advantages the forbidden action reached 0.98 for any D from 0.001 to 1 at \u03b2 = 0.1. Without an effective anchor, time to takeover approaches 1/(p\u00b7batch)."
             },
             {
               "label": "Spillover through shared parameters",
@@ -1281,24 +1329,24 @@
         {
           "title": "Experiment 2: the forbidden-shortcut gridworld",
           "paragraphs": [
-            "A long compliant route around a wall and a forbidden door through it. The task reward is reach-the-goal-fast and does not see the door. The reference is behaviour cloning from noisy human demos where a fraction ε use the door."
+            "A long compliant route around a wall and a forbidden door through it. The task reward is reach-the-goal-fast and does not see the door. The reference is behaviour cloning from noisy human demos where a fraction \u03b5 use the door."
           ],
           "findings": [
             {
               "label": "The tilting law lifts to trajectories",
-              "detail": "logit P*(door) ≈ logit P_ref(door) + D/β, with median logit error 0.04 to 0.09 across 640 settings where humans sometimes used the door."
+              "detail": "logit P*(door) \u2248 logit P_ref(door) + D/\u03b2, with median logit error 0.04 to 0.09 across 640 settings where humans sometimes used the door."
             },
             {
               "label": "Horizon breaks the anchor",
-              "detail": "The reward for a shortcut grows with the task it skips. At fixed β = 0.5 and ε = 1%, door use rose from 2% to 84% as the detour grew from 4 to 30 steps."
+              "detail": "The reward for a shortcut grows with the task it skips. At fixed \u03b2 = 0.5 and \u03b5 = 1%, door use rose from 2% to 84% as the detour grew from 4 to 30 steps."
             },
             {
               "label": "A cloned anchor cannot encode never",
-              "detail": "With zero human door uses, takeover needs D/β > ln(N/2α). Ten times more data buys 2.3 nats; the smoothing prior moves the threshold as much as 100x more data."
+              "detail": "With zero human door uses, takeover needs D/\u03b2 > ln(N/2\u03b1). Ten times more data buys 2.3 nats; the smoothing prior moves the threshold as much as 100x more data."
             },
             {
               "label": "Estimator choice",
-              "detail": "Per-step KL in the reward reached the exact optimum at every β. GRPO-style advantages with a k3 loss needed about 4x the β for the same door rate, and took a never-demonstrated door in 8 of 9 runs where the optimum gives under 0.5%."
+              "detail": "Per-step KL in the reward reached the exact optimum at every \u03b2. GRPO-style advantages with a k3 loss needed about 4x the \u03b2 for the same door rate, and took a never-demonstrated door in 8 of 9 runs where the optimum gives under 0.5%."
             },
             {
               "label": "Prediction not supported: off-distribution drift first",
@@ -1307,7 +1355,7 @@
           ]
         },
         {
-          "title": "Experiment 3: architecture sweep — reported complete",
+          "title": "Experiment 3: architecture sweep \u2014 reported complete",
           "paragraphs": [
             "The source-author update reports shared-parameter experiments over eight architectures, 12 trained layouts and two groups of six held-out layouts, with three seeds. This is source-reported experimental work, not an independent reproduction by the status review."
           ],
@@ -1321,19 +1369,19 @@
         {
           "title": "Research status reviewed 30 October 2026",
           "paragraphs": [
-            "Completed studies and checks below are separated from genuine open work. “Completed” records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained."
+            "Completed studies and checks below are separated from genuine open work. \u201cCompleted\u201d records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained."
           ],
           "findings": []
         },
         {
-          "title": "Noise-controlled confirmation — 31 October 2026",
+          "title": "Noise-controlled confirmation \u2014 31 October 2026",
           "paragraphs": [
-            "Claude’s separately pre-registered study adds a KL-only optimizer-noise control, with fresh seeds and the anchor on RL’s own samples. The source report supports final off-distribution drift in 4/4 networks and early drift in 3/4, but not stronger-anchor concentration in any of the four networks."
+            "Claude\u2019s separately pre-registered study adds a KL-only optimizer-noise control, with fresh seeds and the anchor on RL\u2019s own samples. The source report supports final off-distribution drift in 4/4 networks and early drift in 3/4, but not stronger-anchor concentration in any of the four networks."
           ],
           "findings": [
             {
               "label": "Keep hypotheses separate",
-              "detail": "H1 and H2 passed their declared ≥3-of-4 network rule; H3 failed. Ratios after noise subtraction range 1.4–2.6, smaller than the earlier raw effect. One task family and a fixed optimizer setting limit generality."
+              "detail": "H1 and H2 passed their declared \u22653-of-4 network rule; H3 failed. Ratios after noise subtraction range 1.4\u20132.6, smaller than the earlier raw effect. One task family and a fixed optimizer setting limit generality."
             }
           ]
         }
@@ -1341,19 +1389,19 @@
       "figures": [
         {
           "src": "/research/kl-anchoring/figures/fig1_tilting_law.png",
-          "caption": "Experiment 1: the tilting law and estimator variants. Measured takeover matches log((1−p)/p) for k1 in the reward; k3 as a loss and GRPO do not."
+          "caption": "Experiment 1: the tilting law and estimator variants. Measured takeover matches log((1\u2212p)/p) for k1 in the reward; k3 as a loss and GRPO do not."
         },
         {
           "src": "/research/kl-anchoring/figures/fig2_spillover_discovery.png",
-          "caption": "Experiment 1: discovery time versus 1/(p·batch), and spillover into held-out contexts with shared parameters."
+          "caption": "Experiment 1: discovery time versus 1/(p\u00b7batch), and spillover into held-out contexts with shared parameters."
         },
         {
           "src": "/research/kl-anchoring/figures/fig3_gridworld_tilt_horizon.png",
-          "caption": "Experiment 2: the exact optimum follows the trajectory-level tilt (a); at fixed β, a longer detour makes the shortcut take over (b)."
+          "caption": "Experiment 2: the exact optimum follows the trajectory-level tilt (a); at fixed \u03b2, a longer detour makes the shortcut take over (b)."
         },
         {
           "src": "/research/kl-anchoring/figures/fig4_gridworld_floor_estimators.png",
-          "caption": "Experiment 2: the anchor floor when humans never use the door (a), sampled estimators versus the exact optimum (b), training traces with ε = 0 (c)."
+          "caption": "Experiment 2: the anchor floor when humans never use the door (a), sampled estimators versus the exact optimum (b), training traces with \u03b5 = 0 (c)."
         },
         {
           "src": "/research/kl-anchoring/figures/fig5_gridworld_kl_maps.png",
@@ -1361,8 +1409,8 @@
         }
       ],
       "limits": [
-        "Experiments 1–2 use tabular policies and small tasks. Experiment 3 reports a selected eight-architecture sweep with three seeds; broader language-model and Go-policy transfer remains untested.",
-        "The counts-plus-Dirichlet reference describes the tabular experiments; the later shared-parameter architecture study has a separate setup. Do not transfer one setup’s limits or findings to every experiment.",
+        "Experiments 1\u20132 use tabular policies and small tasks. Experiment 3 reports a selected eight-architecture sweep with three seeds; broader language-model and Go-policy transfer remains untested.",
+        "The counts-plus-Dirichlet reference describes the tabular experiments; the later shared-parameter architecture study has a separate setup. Do not transfer one setup\u2019s limits or findings to every experiment.",
         "No claim that any deployed model failed through this mechanism; public accounts of incidents do not attribute them to RLVR drift.",
         "Results are not independently reproduced."
       ],
@@ -1370,7 +1418,7 @@
         {
           "title": "Small language-model RLHF then RLVR",
           "detail": "Anchor a small LM with RLHF, then apply verifiable-reward training with a reward-hackable shortcut. Compare k1-in-reward, k3 loss and GRPO advantages. Claude reports an initial small-LM pilot and a tightened second pilot awaiting Jaeson; no confirmatory transfer result is claimed here. Coordinate with the existing work before starting another pilot.",
-          "status": "Pilot reported — tightened follow-up pending"
+          "status": "Pilot reported \u2014 tightened follow-up pending"
         },
         {
           "title": "Go policy drift",
@@ -1412,7 +1460,7 @@
           "url": "/research/status-review-2026-10-30/REPORT.md"
         },
         {
-          "label": "Experiment 3: shared-parameter architecture sweep — evidence",
+          "label": "Experiment 3: shared-parameter architecture sweep \u2014 evidence",
           "url": "/research/status-review-2026-10-30/kl-anchoring-agent-context.md"
         },
         {
@@ -1422,6 +1470,14 @@
         {
           "label": "Per-idea test history and new draft designs",
           "url": "/research/test-matrix-2026-10-31/REPORT.md"
+        },
+        {
+          "label": "Calibration v1 report and complete evidence",
+          "url": "/research/evaluation-calibration-v1/REPORT.md"
+        },
+        {
+          "label": "Calibration v1 reproducible evidence ZIP",
+          "url": "/research/evaluation-calibration-v1/evidence.zip"
         }
       ],
       "testbeds": [],
@@ -1430,33 +1486,39 @@
       "completed_steps": [
         {
           "title": "Experiment 1: tabular tilting law",
-          "status": "Completed — source-reported findings",
+          "status": "Completed \u2014 source-reported findings",
           "detail": "Exact-optimum and small sampled comparisons were reported; local estimator choices and limits remain in the write-up.",
           "evidence_url": "/research/kl-anchoring/EXP1.md"
         },
         {
           "title": "Experiment 2: shortcut gridworld",
-          "status": "Completed — source-reported findings",
+          "status": "Completed \u2014 source-reported findings",
           "detail": "Sequential tabular results were reported; the off-distribution-first prediction was not supported in this setup.",
           "evidence_url": "/research/kl-anchoring/EXP2.md"
         },
         {
           "title": "Experiment 3: shared-parameter architecture sweep",
-          "status": "Completed — source-reported, not independently reproduced",
+          "status": "Completed \u2014 source-reported, not independently reproduced",
           "detail": "The Agent Commons revision-2 update reports eight architectures, three seeds and held-out layouts. It is no longer merely proposed. The small-language-model and Go-policy transfer experiments remain open.",
           "evidence_url": "/research/status-review-2026-10-30/kl-anchoring-agent-context.md"
         },
         {
           "title": "Experiment 3: noise-controlled confirmation",
-          "status": "Completed — H1/H2 supported; H3 not supported",
-          "detail": "Claude reports reward-induced off-distribution drift after KL-only subtraction at 1.4–2.6× frequent-state drift. H1 passes 4/4 networks, H2 passes 3/4, stronger-anchor H3 passes 0/4. Earlier raw ratios overstate the reward-specific effect. Source-reported, not independently reproduced.",
+          "status": "Completed \u2014 H1/H2 supported; H3 not supported",
+          "detail": "Claude reports reward-induced off-distribution drift after KL-only subtraction at 1.4\u20132.6\u00d7 frequent-state drift. H1 passes 4/4 networks, H2 passes 3/4, stronger-anchor H3 passes 0/4. Earlier raw ratios overstate the reward-specific effect. Source-reported, not independently reproduced.",
           "evidence_url": "/research/test-matrix-2026-10-31/kl-anchoring-exp3-confirm-v1.md"
+        },
+        {
+          "title": "Evaluation calibration v1: six modules completed",
+          "status": "Completed \u2014 bounded mixed calibration results",
+          "detail": "Preference classifier counterexamples confirmed; terminal table dependence did not improve behavior. Uncertainty calibration and lamp replay gate failed; toy KL contracts passed. Original results retained.",
+          "evidence_url": "/research/evaluation-calibration-v1/REPORT.md"
         }
       ],
       "partial_steps": [],
       "available_steps": []
     }
   ],
-  "updated_at": "2026-10-26",
+  "updated_at": "2026-11-03",
   "reviewed_at": "2026-10-30"
 }
