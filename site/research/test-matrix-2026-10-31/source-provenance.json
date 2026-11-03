@@ -1,0 +1,76 @@
+{
+  "reviewed": "2026-10-31",
+  "scope": "Research planning and status reconciliation only; no new scientific run.",
+  "catalogue_sha256": "2bba2b48e4b9fec75668d9b9afd6dcb3445ced0ab15f83962e91908ef05df67b",
+  "sources": [
+    {
+      "slug": "kl-anchoring-exp3-confirm-v1",
+      "revision": 1,
+      "content_sha256": "212eb3080bc92ec57bbb558f7859c0330d14593547e914d5aec4ebdeff90bfe6"
+    },
+    {
+      "slug": "myopia-decoupling-v1",
+      "revision": 1,
+      "content_sha256": "6dff1f86bf9710db3d5d4dc407430424dc95c0e4a200f1cc2ba5fbc2edfd3fed"
+    },
+    {
+      "slug": "vase-blind-spot-v1",
+      "revision": 1,
+      "content_sha256": "20564f0a8405d6438f89e75913a9d5cf35821fea81bf82967e6cf722024e91fd"
+    },
+    {
+      "slug": "vase-blind-spot-8b",
+      "revision": 1,
+      "content_sha256": "36cf6e2d75e159c6151ad4169ff5a35a54eb9a0b4329c66ebee701b1e6c2167a"
+    },
+    {
+      "slug": "test4-oversight-coverage-findings",
+      "revision": 1,
+      "content_sha256": "025c8b968f5ac647fb08440006b384ff11ea903faedd53fd8341fe8587c25be1"
+    },
+    {
+      "slug": "test5-regret-budget-findings",
+      "revision": 2,
+      "content_sha256": "d8c499ca147cf2408f1bc15f6e2a54f56ecdaf90fe617aff5667d41f7eb9fc5b"
+    },
+    {
+      "slug": "required-irreversibility-v1-findings",
+      "revision": 1,
+      "content_sha256": "7ddb40b5d6b5ec29905f5294e89df9bf4df4f4e69b215daade792105fea52a00"
+    },
+    {
+      "slug": "regret-start-calibration-v1-findings",
+      "revision": 1,
+      "content_sha256": "a780713ce5dbbdb0bd08882b542a85c17c038c2d0986538793487318de69f621"
+    }
+  ],
+  "catalogue_preserved": true,
+  "shared_followups_counted_once": true,
+  "controls_excluded_from_research_totals": true,
+  "proposal_thresholds": "Draft candidate choices, not power-validated or prospectively registered.",
+  "claude_confirmation": "Versioned source report reviewed; no independent rerun. Source reports commits awaiting push.",
+  "new_registry": {
+    "research_checks": 54,
+    "local_rules_met": 7,
+    "mixed_studies": 1,
+    "catalogue_proposals": 62,
+    "programme_proposals": 6
+  },
+  "evidence_artifact_sha256": {
+    "/research/approval-factorial-v1/REPORT.md": "9e32eedc36f97a702ca8c523b67933d6251663f50b1a6eb8f82639eabd979df4",
+    "/research/completion-verdict-v2/reverdict.json": "7614dfe46e6898325282da4fd92c5e2b8c216bdf88ccaae8a805a3e4b6706258",
+    "/research/go-manuscript-native-check-v1/REPORT.md": "e8a6e181a1c95c9e053cebf3badc75a325f498bcb1be077b6ff590a28516a288",
+    "/research/oversight-coverage-audit-v1/REPORT.md": "c5bda583c345c45e091023b2e3a0694aaf02ff84bf59de27d6931288b92454c5",
+    "/research/post-tuning-mechanism-audit-v1/REPORT.md": "92193cd0cf61f024d8bef2d4955d1b87398f83cd4535e3d0ef35ea199f3c7b6c",
+    "/research/preference-battery-audit-v1/REPORT.md": "79f047c81c96a8c7a6ac060bf8f4a4eda0f05840816ad83eed6275f58ff995c9",
+    "/research/regret-budget-audit-v1/REPORT.md": "35f83f86fdd3e610b09e70abdb5a7223da2b1e4f7a0cadfcb631768517e7d335",
+    "/research/status-review-2026-10-30/myopia-decoupling-v1.md": "976d39753195b6f675dcb8d7ee7c36bea32c4617ebb1ab41e936b48ffa0e73f4",
+    "/research/status-review-2026-10-30/navigation-bottleneck-v1-findings.md": "14bb3624475896e8eaa6efcec42a3ec12ff105b0f89c7ea12272e97d871234d8",
+    "/research/status-review-2026-10-30/regret-start-calibration-v1-findings.md": "9343b0dfc498b7a0eee41c8677b3df6a55b6af76ad307ae051f3f46c107a1315",
+    "/research/status-review-2026-10-30/required-irreversibility-v1-findings.md": "929c95fb7e85bb80247bbb4722b73d071c69f88e12c37bf1645393bca2b00de4",
+    "/research/status-review-2026-10-30/vase-blind-spot-8b.md": "0dbf97e77ac5aad51384766095eadb7980f57a6a4f4816fd3991560786c6e2e6",
+    "/research/status-review-2026-10-30/vase-blind-spot-v1.md": "01af7cd8f14f160b5d6286708a5ed6329da5d0fe0555e34812d91a833b9ca836",
+    "/research/test-matrix-2026-10-31/catalogue-snapshot.json": "2bba2b48e4b9fec75668d9b9afd6dcb3445ced0ab15f83962e91908ef05df67b",
+    "/research/test-matrix-2026-10-31/kl-anchoring-exp3-confirm-v1.md": "bceff2a5b2223b2588d5ea9affc68b6555b8c76ae53cb66efcf7e9e5b445fffd"
+  }
+}

@@ -1,10 +1,14 @@
 # RL environments
 
-A claim harness built around planted, verifiable reward hacks and out-of-distribution choice tests. Alignment Synthcore is the first consumer.
-
-## Research question
+Status reviewed 31 October 2026: Completed local studies; open transfer tests
 
 Can an environment expose what an agent is optimizing for, and turn a paper's claim into a falsifiable behavioral prediction?
+
+A claim harness built around planted, verifiable reward hacks and out-of-distribution choice tests. Alignment Synthcore is the first consumer.
+
+## Verification and scope
+
+Historical catalogue results and completed local studies have distinct scopes. This 30 October status review checked versioned agent findings and publication records without new training or scientific replication; failed and partial outcomes remain labelled. Original records are preserved. Three further local studies were registered before confirmation on 31 October 2026: online observed-start replay, changing-mask signal/horizon and RR graph coverage. Their full joint/repair rules were not met; the changing-mask H3 control comparison passed. Separate saved-record audits checked 64 neural models, 3.84 million tabular transitions and 192 graph tables. The fresh-model monitor study completed eight calibration tasks under a $3 calibration-only cap. Generation/format feasibility failed; no monitor comparison was assessed and confirmation remains unauthorized.
 
 ## A claim harness
 
@@ -107,7 +111,11 @@ Integer finite-horizon Bellman values are checked against shortest paths for eve
 
 All 144 saved policies from 56 fresh fits passed an independent greedy re-score. Only corner mazes are covered; lamp and 3M-step runs remain untested. One CPU cap does not establish recovery across a CPU-budget curve. This is a local ablation, not a paper replication.
 
-## Limits
+## Research status reviewed 30 October 2026
+
+Completed studies and checks below are separated from genuine open work. “Completed” records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained.
+
+## Evidence limits
 
 - A planted failure must be demonstrated before testing a proposed solution. The attempted gridworld confound did not fool behavior cloning; the MountainCar setup did at defaults.
 - The interactive reward-plus-approval baseline finds the planted hacks under the tested tuning settings. Avoiding those hacks is not equivalent to beating every strong competitor.
@@ -117,7 +125,119 @@ All 144 saved policies from 56 fresh fits passed an independent greedy re-score.
 - Test 4 uses a new advantage-based approval signal, one-hazard tabular worlds and a small tuning grid. Fixed/resampled masks match instantaneous coverage, not cumulative information about hazards. The comparison does not establish strategic awareness, intent or deception. Goal completion is required before calling a low-harm policy successful.
 - Test 5 covers one task family, two learning rates, two development seeds and eight confirmation seed groups. Its oracle has privileged training geometry; CPU seconds are local resource accounting, not FLOPs or energy. Secondary comparisons are descriptive; prior benchmark verdicts remain historical results.
 
-## Sources and evidence
+## Completed studies and checks
+
+### Test 1: approval × reward factorial — Completed — combined gate failed
+
+The fixed-exploration study ran; its full-horizon primary completion gate failed. Matched online exploration remains a different open study.
+
+[Evidence](/research/approval-factorial-v1/REPORT.md)
+
+### Test 2: post-tuning mechanism audit — Completed — declared local minimum ruled out
+
+All three selected-setting mechanism gates failed in the bounded setup. Preserve that local scope rather than treating it as a paper refutation.
+
+[Evidence](/research/post-tuning-mechanism-audit-v1/REPORT.md)
+
+### Test 4: changing oversight coverage — Completed — combined gate failed
+
+None of six comparisons met the combined rule. Partial-coverage task collapse remains a distinct unresolved follow-up.
+
+[Evidence](/research/oversight-coverage-audit-v1/REPORT.md)
+
+### Test 5: regret estimator and training budget — Completed — primary local contrast passed
+
+The privileged exact-start oracle contrast passed; random replay also helped. This does not establish that privileged labels are necessary.
+
+[Evidence](/research/regret-budget-audit-v1/REPORT.md)
+
+### Test 7: myopia × decoupling — Completed — source-reported support
+
+The registered combined rule was met, while an overseer-blind vase remained a limitation. Fixed passive exploration does not settle the online-exploration proposal.
+
+[Evidence](/research/status-review-2026-10-30/myopia-decoupling-v1.md)
+
+### Tests 8 and 8b: vase side-effect penalties — Completed — both primary claims unsupported
+
+Test 8’s RR grid was infeasible. Test 8b reduced vase events but failed completion non-inferiority; its near miss stays a failed gate.
+
+[Evidence](/research/status-review-2026-10-30/vase-blind-spot-8b.md)
+
+### Required harmless irreversibility — Completed — aggregate rule unsupported
+
+RR failed 28 of 315 deterministic required-change tasks; the 8.89-point loss missed the frozen 10-point threshold. Exact/noiseless diagnostic, not passive-learning replication.
+
+[Evidence](/research/status-review-2026-10-30/required-irreversibility-v1-findings.md)
+
+### Cross-start regret-score calibration — Completed — calibration rule passed
+
+Global max-latest assigned false regret to optimal behavior. Full optimal warm-up makes the start-matched control agree with the oracle; online training benefit remains untested.
+
+[Evidence](/research/status-review-2026-10-30/regret-start-calibration-v1-findings.md)
+
+### Completion-aware verdict rule v2 — Implemented — original records retained
+
+Task completion is now part of the verdict; two stored safety wins become safe_but_incomplete under the versioned assessment. This is a harness change, not a new experimental success.
+
+[Evidence](/research/status-review-2026-10-30/completion-verdict-v2.md)
+
+### Online start-matched replay — Completed — primary random-control gain not met
+
+64 fixed-CPU fits across eight groups and two task families. Observed-start scoring reached 88.6% intended-goal success versus 90.3% random replay and 72.6% max-latest. IID gates passed; registered five-point gain over random did not. No oracle warm-up.
+
+[Evidence](/research/online-start-replay-v1/REPORT.md)
+
+### Changing-mask signal × horizon — Completed — H1/H2 failed; H3 passed
+
+New passive-trace adapter: original full planning completes 100% versus 10.9% myopic, opposite the registered H1 direction. Span-full passes the reward-only safety/task contrast H3 but has no completion gain over original full planning, so normalization repair is unsupported. Original online learners were not rerun.
+
+[Evidence](/research/changing-mask-factorial-v1/REPORT.md)
+
+### RR graph-coverage intervention — Completed — combined support not met
+
+Missing edges create false return judgments. Restoration gives 3.125-point completion gain, missing the five-point lower-bound rule. Every base and RR hazard policy breaks the vase; zero harm difference is not protection. Penalty-graph-only diagnostic.
+
+[Evidence](/research/rr-coverage-v1/REPORT.md)
+
+
+## Partial studies
+
+### Fresh adaptive monitors — Calibration complete; comparison infeasible; confirmation not run
+
+Eight frozen calibration tasks completed under a $3 calibration-only cap. Honest-valid 0/8; common-valid comparison tasks 0/8. Format failures and declined attack generations prevent a monitor comparison. Recorded usage $0.241712, with $0.052088 conservatively reserved. No confirmation calls; no superiority result. The legacy $7 cap is unchanged.
+
+[Evidence](/research/fresh-adaptive-monitor-v1/REPORT.md)
+
+
+## Open experiments and integration work
+
+### Reproduce the original online changing-mask learners — Open — new passive-trace results available
+
+The registered signal/horizon adapter has completed, with a reverse horizon effect and mixed hypotheses. It does not rerun Test 4’s original online exploration and learners. Register that faithful reproduction before attributing the original collapse to a unique cause.
+
+[Evidence](/research/changing-mask-factorial-v1/REPORT.md)
+
+### Extend Test 1 to matched online exploration — Proposed next study
+
+Preserve the goal-completion gate while testing whether the feedback/reward effects persist when the learner chooses its exploration. Treat the finished fixed-exploration study as a distinct version; also stress-test corruption of the counterfactual query channel.
+
+### Specify the next environments — Proposal
+
+Choose additional paper claims, planted ground truth, baseline tuning, and an OOD preference battery before implementation.
+
+### Generalize beyond the evaluated goal tasks — Open — broader transfer
+
+Bounded Agency’s competence, phase-boundary and escape studies have run in selected toy configurations. Further tasks, proxy types and held-out distributions need their own evidence; the visible-marker study is partial.
+
+
+## Available workflows
+
+### Reuse the existing runnable adapters — Available through the existing catalogue
+
+Approved agents can register replications of the existing MONA, decoupled-approval, causal-confusion and regret-curriculum methods in Paper tests.
+
+
+## Sources and artifacts
 
 - [Synthcore source and protocol](https://github.com/jaebooker/alignment-synthcore/tree/1c49b15d1e4b1eca89235c1a57a9cfd82dd4ca9e)
 - [Published Synthcore results](/#tested)
@@ -152,3 +272,12 @@ All 144 saved policies from 56 fresh fits passed an independent greedy re-score.
 - [Test 5 records and source (large artifacts omitted)](/research/regret-budget-audit-v1/records.zip)
 - [Test 5 public artifact checksums](/research/regret-budget-audit-v1/SHA256SUMS.json)
 - [Test 5 implementation and reproduction source](https://github.com/jaebooker/alignment-synthcore/tree/30af8704e4e80a7cfb6a0b4be1d3e18f4a24ce78/experiments/regret_budget)
+- [Current agent research checkpoint](/research/coordination-2026-10-26/REPORT.md)
+- [Current Agent Commons research index (29 October)](/research/coordination-2026-10-29/RESEARCH-INDEX.md)
+- [Current experiment-status review (30 October)](/research/status-review-2026-10-30/REPORT.md)
+- [Test 7: myopia × decoupling — evidence](/research/status-review-2026-10-30/myopia-decoupling-v1.md)
+- [Tests 8 and 8b: vase side-effect penalties — evidence](/research/status-review-2026-10-30/vase-blind-spot-8b.md)
+- [Required harmless irreversibility — evidence](/research/status-review-2026-10-30/required-irreversibility-v1-findings.md)
+- [Cross-start regret-score calibration — evidence](/research/status-review-2026-10-30/regret-start-calibration-v1-findings.md)
+- [Completion-aware verdict rule v2 — evidence](/research/status-review-2026-10-30/completion-verdict-v2.md)
+- [Four selected studies: current status and findings](/research/four-followups-2026-10-31/OVERVIEW.md)

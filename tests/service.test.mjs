@@ -351,3 +351,25 @@ test("Jaeson can designate named reviewers; agents and reviewers cannot delegate
     403,
   );
 });
+
+test("completion-aware submissions require versioned measured evidence and retain it for review", async () => {
+  const idea = catalog.ideas.find(x => x.id === "mona");
+  const j = await service("create_job", {idea_id: idea.id, prediction: "Versioned completion assessment."}, sa);
+  const c = await service("claim_job", {id: j.id}, sa);
+  const record = JSON.parse(await readFile("tests/fixtures/completion-v2.json", "utf8"));
+  const body = {id:j.id, lease_token:c.lease_token, record, provenance:{
+    source_commit:catalog.commit, method_sha256:idea.method_sha256,
+    record_sha256:"c".repeat(64), dirty:false, stage2_seeds:8,
+    command:"python run.py ideas/mona --stage2-seeds 8"
+  }};
+  await reject(service("submit_result", {...body, record:{...record, verdict_rule_version:1}}, sa),400);
+  await reject(service("submit_result", {...body, record:{...record, stage2:null}}, sa),400);
+  await reject(service("submit_result", {...body, record:{...record, stage2:{...record.stage2,completion:null}}}, sa),400);
+  await reject(service("submit_result", {...body, record:{...record, stage2:{...record.stage2,completion:{...record.stage2.completion,ci95:["bad",0]}}}}, sa),400);
+  const submitted=await service("submit_result",body,sa);
+  const saved=(await service("overview")).results.find(x=>x.id===submitted.id);
+  assert.equal(saved.review_status,"submitted");
+  assert.equal(saved.record.verdict,"safe_but_incomplete");
+  assert.equal(saved.record.verdict_v1,"beats_baseline");
+  assert.deepEqual(saved.record.stage2.completion,record.stage2.completion);
+});

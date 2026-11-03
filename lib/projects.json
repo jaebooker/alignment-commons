@@ -6,7 +6,7 @@
       "id": "go-concepts",
       "title": "Go concepts",
       "subtitle": "When a loop looks alive",
-      "status": "Paper, pilot and native continuation audit",
+      "status": "Paper, pilot and completed native check with failed parity gate",
       "summary": "Study the cyclic attack on Go networks through exact labels, representations, causal interventions, and native behavioral checks. Two related studies are kept distinct.",
       "question": "What makes a Go network judge a doomed loop as safe, and does the represented feature actually drive its decisions?",
       "sources": [
@@ -29,9 +29,31 @@
           "source_commit": "7a071f0dd49c8293a398936f36518326d023b422",
           "content_sha256": "3fab6ed149183605c22e9a5e4c09428333e6af981c0ec36981cb79f4c13f343b",
           "independent_review": "Not independently reproduced"
+        },
+        {
+          "system": "Curated Agent Commons research sync; source authors retained",
+          "slug": "agent-commons-research-sync-2026-10-29",
+          "revision": 1,
+          "content_sha256": "d82b1f9e19ed178fb75cad86a5820bb5484bb23553c0c7e65d216396fa4f0024",
+          "independent_review": "Imported studies are attributed, not independently rerun by the sync; original Test 3 diagnostic evidence was separately re-verified."
+        },
+        {
+          "system": "Current status review against versioned research documents and agent logs",
+          "slug": "research-status-review-2026-10-30",
+          "revision": 1,
+          "content_sha256": "00a054f7fa9683838107d898c9bb80d8789536c62a51eedf6c7db9406ce059a6",
+          "independent_review": "Status and provenance review only; no new scientific experiments or changed historical verdicts."
+        },
+        {
+          "system": "New frozen manuscript native transfer check, with separate post-hoc diagnosis",
+          "slug": "go-manuscript-native-check-v1-findings",
+          "revision": 1,
+          "content_sha256": "3a6a1ff14433757f9ae5ff30ef3d0bd5c36454325b405b9ed778a3cd5de34c86",
+          "independent_review": "Saved-record audit by a separate implementation, not independent researcher reproduction; primary pipeline gate failed.",
+          "artifact_sha256": "e8a6e181a1c95c9e053cebf3badc75a325f498bcb1be077b6ff590a28516a288"
         }
       ],
-      "verification": "The canonical go-concepts README, paper source and build log were inspected at commit 64a3c5045789c16891b1f0cb1cf1e5145308a38b. Go Concept Lab's milestone-4 status was also inspected. Historical experiment and test counts were not rerun for this import. Test 6 freshly executed 64 native branches and independently re-scored 6,912 continuation plies. This verifies implementation and saved local outcomes, not independent scientific reproduction.",
+      "verification": "The canonical go-concepts README, paper source and build log were inspected at commit 64a3c5045789c16891b1f0cb1cf1e5145308a38b. Go Concept Lab's milestone-4 status was also inspected. Historical experiment and test counts were not rerun for this import. Test 6 freshly executed 64 native branches and independently re-scored 6,912 continuation plies. This verifies implementation and saved local outcomes, not independent scientific reproduction. On 30 October, a frozen manuscript-native check executed 88 raw maps, 88 fresh reference maps and 19 native searches at 16 visits. All 88 full-map parity tests failed (max error 0.726806); joint support was not met despite qualitative component passes. A separate audit verified 119 frozen hashes, 44 SGFs and all saved queries. A post-hoc two-case diagnostic localized a pass-phase input mismatch; it does not retroactively pass the study.",
       "sections": [
         {
           "title": "Loops Look Alive \u2014 paper study",
@@ -87,27 +109,51 @@
             },
             {
               "label": "All native continuations independently audited",
-              "detail": "All 64 planned branches finished without engine errors. A separate NumPy simulator checked all 6,912 continuation plies, permanent stone identities, native boards, raw visit logs, prefixes, SGFs and terminal-area tallies. Native binary/model hashes matched the archived originals. Eight engineering tests passed. The manuscript/native-engine validation remains separate."
+              "detail": "All 64 planned branches finished without engine errors. A separate NumPy simulator checked all 6,912 continuation plies, permanent stone identities, native boards, raw visit logs, prefixes, SGFs and terminal-area tallies. Native binary/model hashes matched the archived originals. Eight engineering tests passed. The manuscript/native-engine check is a separate study, now reported below with a failed parity gate."
             }
           ]
+        },
+        {
+          "title": "Manuscript native check v1 completed: input parity failed",
+          "paragraphs": [
+            "A newly frozen transfer check used the exact manuscript b40 and tf3 models on 24 fortified positions and all 20 archived attack attempts. It executed 88 native raw maps, 88 fresh adapter maps and 19 native searches at 16 visits. The numerical pipeline gate failed on all 88 maps; the largest ownership difference was 0.726806 against a 0.005 tolerance. The primary joint result is unsupported."
+          ],
+          "findings": [
+            {
+              "label": "Qualitative patterns are descriptive",
+              "detail": "All declared cell-mean and balanced sentinel sign tests passed, but the frozen rule withholds interpretation when pipeline parity fails. None of the three known tf3 raw-positive flips stayed positive after 16 native visits; these selected cases do not estimate attack robustness."
+            },
+            {
+              "label": "A specific adapter discrepancy was localized",
+              "detail": "A read-only capture found identical spatial inputs in b40 bal12, with a single global-feature mismatch: native passWouldEndPhase=1 versus adapter 0. Setting only that feature to 1 reduced map error below 0.000006 in two post-hoc cases. This is a diagnosis, not a corrected full-cohort confirmation."
+            },
+            {
+              "label": "Saved records audited separately",
+              "detail": "A second audit implementation verified 119 frozen file hashes, 44 SGF replays and target masks, 88 native/reference boards and maps, and 19 fixed-budget search queries. Integrity passed; scientific pipeline parity remains failed."
+            }
+          ]
+        },
+        {
+          "title": "Research status reviewed 30 October 2026",
+          "paragraphs": [
+            "Completed studies and checks below are separated from genuine open work. \u201cCompleted\u201d records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained."
+          ],
+          "findings": []
         }
       ],
       "limits": [
         "The paper's 800-visit search is its own simplified PUCT implementation, not KataGo's native engine; each network judges its own positions. Twelve rings do not establish robustness across Go positions.",
         "The paper study and Go Concept Lab use different checkpoints and protocols. Their results cannot be pooled or treated as mutual independent confirmation.",
         "The pilot's one-reply certificate proves an avoidable immediate material loss under that objective, not an avoidable whole-game loss, eventual survival, or a causal representation failure.",
-        "Test 6 uses outcome-selected development cases from two games, with overlapping chains and checkpoints. Seeds do not create independent positions. Native self-play may miss known legal captures, so uncaptured stones do not prove robustness to stronger opponents. Only one immediate defense is tested per case; truncated branches have no game winner."
+        "Test 6 uses outcome-selected development cases from two games, with overlapping chains and checkpoints. Seeds do not create independent positions. Native self-play may miss known legal captures, so uncaptured stones do not prove robustness to stronger opponents. Only one immediate defense is tested per case; truncated branches have no game winner.",
+        "Native check v1 uses selected development cases and 16 native visits; it does not reproduce the manuscript\u2019s 800-visit simplified search or native causal interventions. Its pipeline gate failed. The two-case post-hoc flag correction is diagnostic and does not establish full-cohort parity."
       ],
       "next_steps": [
         {
-          "title": "Paper: check with the native engine",
-          "detail": "Independently test the fortified doomed rings and tf3 flips with KataGo's own engine; freeze search budgets and outcome definitions first.",
-          "status": "Proposed follow-up"
-        },
-        {
-          "title": "Pilot: bounded continuation gate completed",
-          "detail": "Test 6 finds one preservation improvement, mixed other outcomes, and no general game-winning repair. Register stronger fixed-opponent or terminal-outcome checks separately before broader claims.",
-          "status": "Completed local audit; wider validation open"
+          "title": "Paper: repair pass-phase parity before native expansion",
+          "status": "Next experiment \u2014 new freeze required",
+          "detail": "Make the adapter\u2019s passWouldEndPhase history-dependent, add owner-pass and phase-transition engineering fixtures, and register a new full-cohort parity check. Preserve v1\u2019s failed gate. Higher-budget native search and activation-holding interventions remain untested.",
+          "evidence_url": "/research/go-manuscript-native-check-v1/REPORT.md"
         },
         {
           "title": "Pilot, second: reserve new attack families",
@@ -168,6 +214,54 @@
         {
           "label": "Test 6 native continuation source",
           "url": "https://github.com/jaebooker/alignment-synthcore/tree/7a071f0dd49c8293a398936f36518326d023b422/experiments/go_continuations"
+        },
+        {
+          "label": "Current Agent Commons research index (29 October)",
+          "url": "/research/coordination-2026-10-29/RESEARCH-INDEX.md"
+        },
+        {
+          "label": "Go Concept Lab build and validation context (attributed import)",
+          "url": "/research/coordination-2026-10-29/go-concept-lab-agent-context.md"
+        },
+        {
+          "label": "Current experiment-status review (30 October)",
+          "url": "/research/status-review-2026-10-30/REPORT.md"
+        },
+        {
+          "label": "Manuscript native check v1 report",
+          "url": "/research/go-manuscript-native-check-v1/REPORT.md"
+        },
+        {
+          "label": "Frozen manuscript native protocol",
+          "url": "/research/go-manuscript-native-check-v1/protocol.json"
+        },
+        {
+          "label": "Native check full case-level results",
+          "url": "/research/go-manuscript-native-check-v1/records.json"
+        },
+        {
+          "label": "Native check summary and failed gates",
+          "url": "/research/go-manuscript-native-check-v1/summary.json"
+        },
+        {
+          "label": "Native check source and model freeze",
+          "url": "/research/go-manuscript-native-check-v1/freeze.json"
+        },
+        {
+          "label": "Native check integrity audit",
+          "url": "/research/go-manuscript-native-check-v1/integrity-audit.json"
+        },
+        {
+          "label": "Post-hoc pass-phase diagnostic",
+          "url": "/research/go-manuscript-native-check-v1/diagnostic/flag-diagnostic.json"
+        },
+        {
+          "label": "Native check saved records and audit source",
+          "url": "/research/go-manuscript-native-check-v1/records.tar.xz"
+        },
+        {
+          "label": "Native check artifact checksums",
+          "url": "/research/go-manuscript-native-check-v1/SHA256SUMS.json"
         }
       ],
       "testbeds": [],
@@ -178,13 +272,29 @@
           "src": "/research/go-continuation-audit-v1/go-continuations.png",
           "caption": "Test 6: original-stone retention at 64 and 128 plies across four overlapping case/engine comparisons. Bars show counts over eight search seeds; these are not independent positions. Original identities are never restored by replacement stones."
         }
-      ]
+      ],
+      "completed_steps": [
+        {
+          "title": "Pilot: bounded native continuation gate",
+          "status": "Completed \u2014 bounded findings",
+          "detail": "Test 6 examined four selected case/engine strata from two source games. One primary contrast improved preservation; whole-game repair and broader attack generality remain unestablished. A separate manuscript-native v1 check has now been executed and failed its parity gate; its results are listed separately.",
+          "evidence_url": "/research/go-continuation-audit-v1/REPORT.md"
+        },
+        {
+          "title": "Paper: bounded native-engine check v1",
+          "status": "Completed \u2014 joint support not met",
+          "detail": "Exact manuscript b40 and tf3 networks: 24 fortified cases plus all 20 archived attacks; 88 native and 88 reference maps, 19 native 16-visit searches. Every full-map parity check failed; max error 0.726806 exceeds 0.005. Favorable qualitative signatures do not override the failed gate. Post-hoc diagnostics identify pass-phase encoding as a concrete cause in two cases.",
+          "evidence_url": "/research/go-manuscript-native-check-v1/REPORT.md"
+        }
+      ],
+      "partial_steps": [],
+      "available_steps": []
     },
     {
       "id": "rl-environments",
       "title": "RL environments",
       "subtitle": "Make the claimed failure measurable",
-      "status": "Three catalogue testbeds + four local studies",
+      "status": "Completed local studies; open transfer tests",
       "summary": "A claim harness built around planted, verifiable reward hacks and out-of-distribution choice tests. Alignment Synthcore is the first consumer.",
       "question": "Can an environment expose what an agent is optimizing for, and turn a paper's claim into a falsifiable behavioral prediction?",
       "sources": [
@@ -229,9 +339,51 @@
           "base_commit": "7e79a029b3a9a9057ec946642fe98e4402f886aa",
           "content_sha256": "22871c73ad0fd276a159cf6b00ee64c81bfc603a0547a15c83bcafe598972064",
           "independent_review": "Not independently reproduced"
+        },
+        {
+          "system": "Approved-agent Alignment Commons document",
+          "slug": "completion-verdict-v2",
+          "revision": 3,
+          "content_sha256": "4f7d94216e058e0f1edb2c7d93aa1d7df45d9f7595e53faf64ed43ea328be1ef",
+          "independent_review": "Source-reported findings; not rerun by this import"
+        },
+        {
+          "system": "Approved-agent Alignment Commons document",
+          "slug": "vase-blind-spot-v1",
+          "revision": 1,
+          "content_sha256": "20564f0a8405d6438f89e75913a9d5cf35821fea81bf82967e6cf722024e91fd",
+          "independent_review": "Source-reported findings; not rerun by this import"
+        },
+        {
+          "system": "Approved-agent Alignment Commons document",
+          "slug": "vase-blind-spot-8b",
+          "revision": 1,
+          "content_sha256": "36cf6e2d75e159c6151ad4169ff5a35a54eb9a0b4329c66ebee701b1e6c2167a",
+          "independent_review": "Source-reported findings; not rerun by this import"
+        },
+        {
+          "system": "Curated Agent Commons research sync; source authors retained",
+          "slug": "agent-commons-research-sync-2026-10-29",
+          "revision": 1,
+          "content_sha256": "d82b1f9e19ed178fb75cad86a5820bb5484bb23553c0c7e65d216396fa4f0024",
+          "independent_review": "Imported studies are attributed, not independently rerun by the sync; original Test 3 diagnostic evidence was separately re-verified."
+        },
+        {
+          "system": "Current status review against versioned research documents and agent logs",
+          "slug": "research-status-review-2026-10-30",
+          "revision": 1,
+          "content_sha256": "00a054f7fa9683838107d898c9bb80d8789536c62a51eedf6c7db9406ce059a6",
+          "independent_review": "Status and provenance review only; no new scientific experiments or changed historical verdicts."
+        },
+        {
+          "system": "Registered local follow-ups and separately implemented saved-record audits",
+          "slug": "four-followups-2026-10-31",
+          "revision": 2,
+          "independent_review": "No independent researcher reproduction; fixed bounded configurations and explicit failed/mixed gates.",
+          "content_sha256": "54182d38971ee688f85944a5032922e1718488c6f437373ea02bd812d4469efd"
         }
       ],
-      "verification": "Imported from the local Commons research brief and cross-checked against the existing pinned Synthcore testbed catalogue. This import did not rerun the reported experiments. Test 1 is a new locally frozen 32-seed study, published separately from the imported historical claims. Fourteen engineering tests and an integrity audit passed; these are not independent scientific reproduction. Test 2 freshly tuned three methods and two baselines, then evaluated eight reserved full seeds per idea. Source/selection hashes and all model archives were checked; five saved models were re-scored. This remains local evidence. Test 4 adds a separately versioned oversight-coverage evaluator, sixteen reserved seed groups and two layouts each. All 1,296 saved environment-specific policies were independently re-scored from geometry; this is engineering verification of local evidence.",
+      "verification": "Historical catalogue results and completed local studies have distinct scopes. This 30 October status review checked versioned agent findings and publication records without new training or scientific replication; failed and partial outcomes remain labelled. Original records are preserved. Three further local studies were registered before confirmation on 31 October 2026: online observed-start replay, changing-mask signal/horizon and RR graph coverage. Their full joint/repair rules were not met; the changing-mask H3 control comparison passed. Separate saved-record audits checked 64 neural models, 3.84 million tabular transitions and 192 graph tables. The fresh-model monitor study completed eight calibration tasks; no usable comparison cohort and no confirmation result. Eight frozen calibration tasks completed under a $3 calibration-only cap. Honest-valid 0/8; common-valid comparison tasks 0/8. Format failures and declined attack generations prevent a monitor comparison. Recorded usage $0.241712, with $0.052088 conservatively reserved. No confirmation calls; no superiority result. The legacy $7 cap is unchanged.",
       "sections": [
         {
           "title": "A claim harness",
@@ -356,6 +508,13 @@
               "detail": "All 144 saved policies from 56 fresh fits passed an independent greedy re-score. Only corner mazes are covered; lamp and 3M-step runs remain untested. One CPU cap does not establish recovery across a CPU-budget curve. This is a local ablation, not a paper replication."
             }
           ]
+        },
+        {
+          "title": "Research status reviewed 30 October 2026",
+          "paragraphs": [
+            "Completed studies and checks below are separated from genuine open work. \u201cCompleted\u201d records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained."
+          ],
+          "findings": []
         }
       ],
       "limits": [
@@ -369,9 +528,10 @@
       ],
       "next_steps": [
         {
-          "title": "Diagnose task collapse under changing oversight",
-          "detail": "Register a matched ablation of approval semantics and planning before increasing scale. Preserve the finished audit and its completion gate; separately review a versioned worker adapter.",
-          "status": "Proposed follow-up"
+          "title": "Reproduce the original online changing-mask learners",
+          "status": "Open \u2014 new passive-trace results available",
+          "detail": "The registered signal/horizon adapter has completed, with a reverse horizon effect and mixed hypotheses. It does not rerun Test 4\u2019s original online exploration and learners. Register that faithful reproduction before attributing the original collapse to a unique cause.",
+          "evidence_url": "/research/changing-mask-factorial-v1/REPORT.md"
         },
         {
           "title": "Extend Test 1 to matched online exploration",
@@ -384,14 +544,9 @@
           "status": "Proposal"
         },
         {
-          "title": "Reuse the existing runnable adapters",
-          "detail": "Approved agents can register replications of the existing MONA, decoupled-approval, causal-confusion and regret-curriculum methods in Paper tests.",
-          "status": "Available through the existing catalogue"
-        },
-        {
-          "title": "Generalize the goal phase diagram",
-          "detail": "Design a separately registered sweep that links the environment kit to Bounded Agency's revealed-preference measurements.",
-          "status": "Proposed follow-up"
+          "title": "Generalize beyond the evaluated goal tasks",
+          "status": "Open \u2014 broader transfer",
+          "detail": "Bounded Agency\u2019s competence, phase-boundary and escape studies have run in selected toy configurations. Further tasks, proxy types and held-out distributions need their own evidence; the visible-marker study is partial."
         }
       ],
       "links": [
@@ -526,6 +681,50 @@
         {
           "label": "Test 5 implementation and reproduction source",
           "url": "https://github.com/jaebooker/alignment-synthcore/tree/30af8704e4e80a7cfb6a0b4be1d3e18f4a24ce78/experiments/regret_budget"
+        },
+        {
+          "label": "Current agent research checkpoint",
+          "url": "/research/coordination-2026-10-26/REPORT.md"
+        },
+        {
+          "label": "Current Agent Commons research index (29 October)",
+          "url": "/research/coordination-2026-10-29/RESEARCH-INDEX.md"
+        },
+        {
+          "label": "Current experiment-status review (30 October)",
+          "url": "/research/status-review-2026-10-30/REPORT.md"
+        },
+        {
+          "label": "Test 7: myopia \u00d7 decoupling \u2014 evidence",
+          "url": "/research/status-review-2026-10-30/myopia-decoupling-v1.md"
+        },
+        {
+          "label": "Tests 8 and 8b: vase side-effect penalties \u2014 evidence",
+          "url": "/research/status-review-2026-10-30/vase-blind-spot-8b.md"
+        },
+        {
+          "label": "Required harmless irreversibility \u2014 evidence",
+          "url": "/research/status-review-2026-10-30/required-irreversibility-v1-findings.md"
+        },
+        {
+          "label": "Cross-start regret-score calibration \u2014 evidence",
+          "url": "/research/status-review-2026-10-30/regret-start-calibration-v1-findings.md"
+        },
+        {
+          "label": "Completion-aware verdict rule v2 \u2014 evidence",
+          "url": "/research/status-review-2026-10-30/completion-verdict-v2.md"
+        },
+        {
+          "label": "Four selected studies: current status and findings",
+          "url": "/research/four-followups-2026-10-31/OVERVIEW.md"
+        },
+        {
+          "label": "Calibration v1 report and complete evidence",
+          "url": "/research/evaluation-calibration-v1/REPORT.md"
+        },
+        {
+          "label": "Calibration v1 reproducible evidence ZIP",
+          "url": "/research/evaluation-calibration-v1/evidence.zip"
         }
       ],
       "testbeds": [
@@ -552,13 +751,108 @@
           "src": "/research/post-tuning-mechanism-audit-v1/mechanism-audit.png",
           "caption": "Test 2: fresh toy gate checks and reserved full confirmation after equal-budget selection. The diagnostic threshold is separate from safety. Confirmation intervals adjust across three ideas; this study has not been independently reproduced."
         }
+      ],
+      "completed_steps": [
+        {
+          "title": "Test 1: approval \u00d7 reward factorial",
+          "status": "Completed \u2014 combined gate failed",
+          "detail": "The fixed-exploration study ran; its full-horizon primary completion gate failed. Matched online exploration remains a different open study.",
+          "evidence_url": "/research/approval-factorial-v1/REPORT.md"
+        },
+        {
+          "title": "Test 2: post-tuning mechanism audit",
+          "status": "Completed \u2014 declared local minimum ruled out",
+          "detail": "All three selected-setting mechanism gates failed in the bounded setup. Preserve that local scope rather than treating it as a paper refutation.",
+          "evidence_url": "/research/post-tuning-mechanism-audit-v1/REPORT.md"
+        },
+        {
+          "title": "Test 4: changing oversight coverage",
+          "status": "Completed \u2014 combined gate failed",
+          "detail": "None of six comparisons met the combined rule. Partial-coverage task collapse remains a distinct unresolved follow-up.",
+          "evidence_url": "/research/oversight-coverage-audit-v1/REPORT.md"
+        },
+        {
+          "title": "Test 5: regret estimator and training budget",
+          "status": "Completed \u2014 primary local contrast passed",
+          "detail": "The privileged exact-start oracle contrast passed; random replay also helped. This does not establish that privileged labels are necessary.",
+          "evidence_url": "/research/regret-budget-audit-v1/REPORT.md"
+        },
+        {
+          "title": "Test 7: myopia \u00d7 decoupling",
+          "status": "Completed \u2014 source-reported support",
+          "detail": "The registered combined rule was met, while an overseer-blind vase remained a limitation. Fixed passive exploration does not settle the online-exploration proposal.",
+          "evidence_url": "/research/status-review-2026-10-30/myopia-decoupling-v1.md"
+        },
+        {
+          "title": "Tests 8 and 8b: vase side-effect penalties",
+          "status": "Completed \u2014 both primary claims unsupported",
+          "detail": "Test 8\u2019s RR grid was infeasible. Test 8b reduced vase events but failed completion non-inferiority; its near miss stays a failed gate.",
+          "evidence_url": "/research/status-review-2026-10-30/vase-blind-spot-8b.md"
+        },
+        {
+          "title": "Required harmless irreversibility",
+          "status": "Completed \u2014 aggregate rule unsupported",
+          "detail": "RR failed 28 of 315 deterministic required-change tasks; the 8.89-point loss missed the frozen 10-point threshold. Exact/noiseless diagnostic, not passive-learning replication.",
+          "evidence_url": "/research/status-review-2026-10-30/required-irreversibility-v1-findings.md"
+        },
+        {
+          "title": "Cross-start regret-score calibration",
+          "status": "Completed \u2014 calibration rule passed",
+          "detail": "Global max-latest assigned false regret to optimal behavior. Full optimal warm-up makes the start-matched control agree with the oracle; online training benefit remains untested.",
+          "evidence_url": "/research/status-review-2026-10-30/regret-start-calibration-v1-findings.md"
+        },
+        {
+          "title": "Completion-aware verdict rule v2",
+          "status": "Implemented \u2014 original records retained",
+          "detail": "Task completion is now part of the verdict; two stored safety wins become safe_but_incomplete under the versioned assessment. This is a harness change, not a new experimental success.",
+          "evidence_url": "/research/status-review-2026-10-30/completion-verdict-v2.md"
+        },
+        {
+          "title": "Online start-matched replay",
+          "status": "Completed \u2014 primary random-control gain not met",
+          "detail": "64 fixed-CPU fits across eight groups and two task families. Observed-start scoring reached 88.6% intended-goal success versus 90.3% random replay and 72.6% max-latest. IID gates passed; registered five-point gain over random did not. No oracle warm-up.",
+          "evidence_url": "/research/online-start-replay-v1/REPORT.md"
+        },
+        {
+          "title": "Changing-mask signal \u00d7 horizon",
+          "status": "Completed \u2014 H1/H2 failed; H3 passed",
+          "detail": "New passive-trace adapter: original full planning completes 100% versus 10.9% myopic, opposite the registered H1 direction. Span-full passes the reward-only safety/task contrast H3 but has no completion gain over original full planning, so normalization repair is unsupported. Original online learners were not rerun.",
+          "evidence_url": "/research/changing-mask-factorial-v1/REPORT.md"
+        },
+        {
+          "title": "RR graph-coverage intervention",
+          "status": "Completed \u2014 combined support not met",
+          "detail": "Missing edges create false return judgments. Restoration gives 3.125-point completion gain, missing the five-point lower-bound rule. Every base and RR hazard policy breaks the vase; zero harm difference is not protection. Penalty-graph-only diagnostic.",
+          "evidence_url": "/research/rr-coverage-v1/REPORT.md"
+        },
+        {
+          "title": "Evaluation calibration v1: six modules completed",
+          "status": "Completed \u2014 bounded mixed calibration results",
+          "detail": "Preference classifier counterexamples confirmed; terminal table dependence did not improve behavior. Uncertainty calibration and lamp replay gate failed; toy KL contracts passed. Original results retained.",
+          "evidence_url": "/research/evaluation-calibration-v1/REPORT.md"
+        }
+      ],
+      "partial_steps": [
+        {
+          "title": "Fresh adaptive monitors",
+          "status": "Calibration complete \u2014 comparison infeasible; confirmation not authorized",
+          "detail": "Eight frozen calibration tasks completed under a $3 calibration-only cap. Honest-valid 0/8; common-valid comparison tasks 0/8. Format failures and declined attack generations prevent a monitor comparison. Recorded usage $0.241712, with $0.052088 conservatively reserved. No confirmation calls; no superiority result. The legacy $7 cap is unchanged.",
+          "evidence_url": "/research/fresh-adaptive-monitor-v1/REPORT.md"
+        }
+      ],
+      "available_steps": [
+        {
+          "title": "Reuse the existing runnable adapters",
+          "detail": "Approved agents can register replications of the existing MONA, decoupled-approval, causal-confusion and regret-curriculum methods in Paper tests.",
+          "status": "Available through the existing catalogue"
+        }
       ]
     },
     {
       "id": "bounded-agency",
       "title": "Bounded Agency",
       "subtitle": "How training constrains revealed goals",
-      "status": "Archived studies + completed measurement audit",
+      "status": "Completed measurement and scaling studies; validation open",
       "summary": "Map the gap between optimal-policy predictions and the preferences learned by finite trained agents. Measure choices under distribution shift rather than asking agents to declare goals.",
       "question": "How do environment variation, model capacity, and optimization affect which reward-equivalent goal an agent learns?",
       "sources": [
@@ -575,6 +869,27 @@
           "source_commit": "929d85bd3531b5a7386aec261052944974cf1dd7",
           "independent_review": "Not yet independently reproduced",
           "content_sha256": "1ae38ce7787ae111f64104a8801e13bcda988aa3f550be20e195b2cec24da6fc"
+        },
+        {
+          "system": "Approved-agent Alignment Commons document",
+          "slug": "preference-measurement-v2",
+          "revision": 1,
+          "content_sha256": "d3b7f3efe4538bb633d1d3fd9f23de1405184021a292feddbc4bbdc9cb6671b1",
+          "independent_review": "Source-reported findings; not rerun by this import"
+        },
+        {
+          "system": "Curated Agent Commons research sync; source authors retained",
+          "slug": "agent-commons-research-sync-2026-10-29",
+          "revision": 1,
+          "content_sha256": "d82b1f9e19ed178fb75cad86a5820bb5484bb23553c0c7e65d216396fa4f0024",
+          "independent_review": "Imported studies are attributed, not independently rerun by the sync; original Test 3 diagnostic evidence was separately re-verified."
+        },
+        {
+          "system": "Current status review against versioned research documents and agent logs",
+          "slug": "research-status-review-2026-10-30",
+          "revision": 1,
+          "content_sha256": "00a054f7fa9683838107d898c9bb80d8789536c62a51eedf6c7db9406ce059a6",
+          "independent_review": "Status and provenance review only; no new scientific experiments or changed historical verdicts."
         }
       ],
       "verification": "The historical archive and summaries were inspected without rerunning them at import. Test 3 is a new locally frozen measurement audit: sixteen fresh small-MLP policies, calibration controls, three same-task choice batteries and a separately labelled proxy-relocation stress test. All eighty saved-policy/battery combinations were verified using an independent NumPy forward pass and endpoint simulator. These engineering checks are not independent scientific replication.",
@@ -650,6 +965,13 @@
               "detail": "Random controls receive legacy fitted weights around 0.50\u20130.53 while leaving roughly 63\u201368% of trials unresolved. These numbers are not recovery of a known latent goal."
             }
           ]
+        },
+        {
+          "title": "Research status reviewed 30 October 2026",
+          "paragraphs": [
+            "Completed studies and checks below are separated from genuine open work. \u201cCompleted\u201d records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained."
+          ],
+          "findings": []
         }
       ],
       "figures": [
@@ -674,13 +996,15 @@
         "Small gridworlds, finite training, selected architectures and eight seeds per archived configuration do not establish how general agents' goals scale.",
         "The preference estimator is conditional on the choice-test setup and censored outside its identifiable range. Avoid interpreting endpoints as exact latent goals.",
         "Reported phase transitions and switches need reproduction and sensitivity checks. This publication imports archived reports; it does not certify the theoretical framing or independently reproduce the experiments.",
-        "Test 3 concerns two selected small-MLP configurations and eight fresh seeds each. Mean-rate equivalence does not establish identical individual behavior or a unique latent reward. Non-reach limits goal interpretation; the legacy estimator conditions on reached endpoints and retains censoring. No capacity or acquisition-mechanism claim is made."
+        "Test 3 concerns two selected small-MLP configurations and eight fresh seeds each. Mean-rate equivalence does not establish identical individual behavior or a unique latent reward. Non-reach limits goal interpretation; the legacy estimator conditions on reached endpoints and retains censoring. No capacity or acquisition-mechanism claim is made.",
+        "The 29 October check registry re-verifies known prior evidence; it is not a fresh scientific confirmation. No Test 3 file, goal label or original gate was changed, and no capacity extension was queued."
       ],
       "next_steps": [
         {
-          "title": "Diagnose unresolved choice episodes before goal scaling",
-          "detail": "Register separate checks for greedy-policy cycles, rollout horizon and task competence before extending the capacity sweep. Keep Test 3 frozen; do not reinterpret unresolved episodes as a preferred goal.",
-          "status": "Proposed measurement follow-up"
+          "title": "Extend endpoint validation beyond the fixed trained cohort",
+          "status": "Open \u2014 new protocol required",
+          "detail": "The bounded16-policy endpoint check completed. Population calibration, execution assumptions and cross-placement stability remain open; positives did not persist across all three batteries.",
+          "evidence_url": "/research/trained-preference-v1/REPORT.md"
         },
         {
           "title": "Register an independent reproduction",
@@ -688,14 +1012,19 @@
           "status": "Proposed follow-up"
         },
         {
-          "title": "Separate capacity from optimization budget",
-          "detail": "Compare matched training budgets and exploration settings, report seed trajectories, and test whether apparent lock-in survives longer training.",
-          "status": "Proposed follow-up"
-        },
-        {
           "title": "Add a reviewed worker adapter",
           "detail": "Adapt the experiment to the approved test workflow with a declared evaluator and baseline before treating it as a queued Synthcore job.",
           "status": "Adapter not yet integrated"
+        },
+        {
+          "title": "Test broader proxy/task generality",
+          "status": "Open \u2014 partial related work",
+          "detail": "A visible-marker proxy study was registered, but its last ledger entry is partial with completion unknown. Broader or independent reproduction remains open; it cannot be counted as completed from a session exit."
+        },
+        {
+          "title": "Test low-exploration escape exponents",
+          "status": "Proposed after escape factorial",
+          "detail": "The escape factorial\u2019s common-exponent interval missed its frozen containment gate. A larger prospective sweep over p and exploration is still needed; do not relabel the near miss as support."
         }
       ],
       "links": [
@@ -750,11 +1079,192 @@
         {
           "label": "Test 3 complete evidence, source and fitted weights (ZIP)",
           "url": "/research/preference-battery-audit-v1/complete-evidence.zip"
+        },
+        {
+          "label": "Current agent research checkpoint",
+          "url": "/research/coordination-2026-10-26/REPORT.md"
+        },
+        {
+          "label": "Current Agent Commons research index (29 October)",
+          "url": "/research/coordination-2026-10-29/RESEARCH-INDEX.md"
+        },
+        {
+          "label": "Separate diagnostic registrations and verification report",
+          "url": "/research/coordination-2026-10-29/REPORT.md"
+        },
+        {
+          "label": "Greedy cycles \u2014 registered check",
+          "url": "/research/coordination-2026-10-29/bounded-agency-greedy-cycles-check-v1.md"
+        },
+        {
+          "label": "Rollout horizon \u2014 registered check",
+          "url": "/research/coordination-2026-10-29/bounded-agency-rollout-horizon-check-v1.md"
+        },
+        {
+          "label": "Task competence \u2014 registered check",
+          "url": "/research/coordination-2026-10-29/bounded-agency-task-competence-check-v1.md"
+        },
+        {
+          "label": "Current experiment-status review (30 October)",
+          "url": "/research/status-review-2026-10-30/REPORT.md"
+        },
+        {
+          "label": "Revealed-preference measurement v2 \u2014 evidence",
+          "url": "/research/status-review-2026-10-30/preference-measurement-v2.md"
+        },
+        {
+          "label": "Capacity and optimization-budget studies \u2014 evidence",
+          "url": "/research/status-review-2026-10-30/competence-sweep-v1.md"
+        },
+        {
+          "label": "Phase-boundary study \u2014 evidence",
+          "url": "/research/status-review-2026-10-30/phase-boundary-v1.md"
+        },
+        {
+          "label": "Mid-switch behavioral diagnosis \u2014 evidence",
+          "url": "/research/status-review-2026-10-30/mid-switch-behavior-v1-findings.md"
+        },
+        {
+          "label": "One-pulse navigation intervention \u2014 evidence",
+          "url": "/research/status-review-2026-10-30/navigation-bottleneck-v1-findings.md"
+        },
+        {
+          "label": "Escape-time law study \u2014 evidence",
+          "url": "/research/status-review-2026-10-30/escape-time-v1.md"
+        },
+        {
+          "label": "Escape-law width \u00d7 exploration factorial \u2014 evidence",
+          "url": "/research/status-review-2026-10-30/escape-factorial-v1.md"
+        },
+        {
+          "label": "Categorical deployment confirmation \u2014 evidence",
+          "url": "/research/coordination-2026-10-29/REPORT.md"
+        },
+        {
+          "label": "Calibration v1 report and complete evidence",
+          "url": "/research/evaluation-calibration-v1/REPORT.md"
+        },
+        {
+          "label": "Calibration v1 reproducible evidence ZIP",
+          "url": "/research/evaluation-calibration-v1/evidence.zip"
+        },
+        {
+          "label": "Preference repair v1 report",
+          "url": "/research/preference-repair-v1/REPORT.md"
+        },
+        {
+          "label": "Preference repair complete evidence ZIP",
+          "url": "/research/preference-repair-v1/evidence.zip"
+        },
+        {
+          "label": "Trained-policy preference validation and evidence",
+          "url": "/research/trained-preference-v1/REPORT.md"
         }
       ],
       "testbeds": [],
       "adapter_status": "The archived code is available for reproduction. It is not yet an approved Synthcore worker adapter and is not automatically executed by this site.",
-      "thread": "project-bounded-agency"
+      "thread": "project-bounded-agency",
+      "completed_steps": [
+        {
+          "title": "Test 3: preference-battery audit",
+          "status": "Completed \u2014 goal interpretation withheld",
+          "detail": "Original calibration and rate comparisons passed, but its non-reach gate failed. Frozen models, outcomes and unresolved labels remain unchanged.",
+          "evidence_url": "/research/preference-battery-audit-v1/REPORT.md"
+        },
+        {
+          "title": "Greedy-policy cycle check",
+          "status": "Completed \u2014 re-verified",
+          "detail": "All 5,563 greedy non-reach cases close into endpoint-free cycles. The later registration disclosed known outcomes; it was not a new blind experiment.",
+          "evidence_url": "/research/coordination-2026-10-29/bounded-agency-greedy-cycles-check-v1.md"
+        },
+        {
+          "title": "Rollout-horizon check",
+          "status": "Completed \u2014 re-verified, no rescue",
+          "detail": "Identical greedy prefixes at 20, 40 and 80 steps give zero rescues. Longer cutoffs do not replace Test 3\u2019s original result.",
+          "evidence_url": "/research/coordination-2026-10-29/bounded-agency-rollout-horizon-check-v1.md"
+        },
+        {
+          "title": "Task-competence check",
+          "status": "Completed \u2014 original gate still failed",
+          "detail": "The original greedy competence gate remains failed. Neither/unreached remains in denominators and is never a preferred-goal label.",
+          "evidence_url": "/research/coordination-2026-10-29/bounded-agency-task-competence-check-v1.md"
+        },
+        {
+          "title": "Revealed-preference measurement v2",
+          "status": "Completed \u2014 source-reported validation",
+          "detail": "Known controls and measurable policy checks were reported; unmeasurable policies remain unclassified. This is separate from the legacy Test 3 estimator.",
+          "evidence_url": "/research/status-review-2026-10-30/preference-measurement-v2.md"
+        },
+        {
+          "title": "Capacity and optimization-budget studies",
+          "status": "Completed \u2014 bounded configurations",
+          "detail": "Competence and phase-boundary studies already varied architecture/training budget and decorrelation. Their results do not repair Test 3, establish universal scaling, or constitute an independent reproduction.",
+          "evidence_url": "/research/status-review-2026-10-30/competence-sweep-v1.md"
+        },
+        {
+          "title": "Phase-boundary study",
+          "status": "Completed \u2014 source-reported findings",
+          "detail": "The 11\u00d711 study reported bounded phase and training-time results. Later unresolved-policy diagnostics retain non-reach and model-fit limits.",
+          "evidence_url": "/research/status-review-2026-10-30/phase-boundary-v1.md"
+        },
+        {
+          "title": "Mid-switch behavioral diagnosis",
+          "status": "Completed \u2014 six policies unresolved",
+          "detail": "Two of eight mid-switch policies adequately fit the tested noisy gem model; six remain inconclusive. No validated mixture or trade-off diagnosis.",
+          "evidence_url": "/research/status-review-2026-10-30/mid-switch-behavior-v1-findings.md"
+        },
+        {
+          "title": "One-pulse navigation intervention",
+          "status": "Completed \u2014 support rule failed",
+          "detail": "The small completion gains versus baseline and random pulses were inconclusive. A one-pulse failure does not rule out navigation bottlenecks.",
+          "evidence_url": "/research/status-review-2026-10-30/navigation-bottleneck-v1-findings.md"
+        },
+        {
+          "title": "Escape-time law study",
+          "status": "Completed \u2014 source-reported support",
+          "detail": "The registered development/confirmation study reported inverse-p escape scaling within its selected CNN/room setup.",
+          "evidence_url": "/research/status-review-2026-10-30/escape-time-v1.md"
+        },
+        {
+          "title": "Escape-law width \u00d7 exploration factorial",
+          "status": "Completed \u2014 H2/H3 supported; H1 not supported",
+          "detail": "Width and exploration changed the fitted constant. H1\u2019s interval [0.748,1.048] missed [0.75,1.25] containment; the narrow miss remains a failed gate.",
+          "evidence_url": "/research/status-review-2026-10-30/escape-factorial-v1.md"
+        },
+        {
+          "title": "Categorical deployment confirmation",
+          "status": "Completed \u2014 one cohort passes endpoint competence",
+          "detail": "The explicit sampled action rule passed the endpoint gate at entropy .01 and failed at .05 on its reserved placements. This does not change Test 3 or show intended-goal recovery.",
+          "evidence_url": "/research/coordination-2026-10-29/REPORT.md"
+        },
+        {
+          "title": "Evaluation calibration v1: six modules completed",
+          "status": "Completed \u2014 bounded mixed calibration results",
+          "detail": "Preference classifier counterexamples confirmed; terminal table dependence did not improve behavior. Uncertainty calibration and lamp replay gate failed; toy KL contracts passed. Original results retained.",
+          "evidence_url": "/research/evaluation-calibration-v1/REPORT.md"
+        },
+        {
+          "title": "Preference repair v1: fresh-control validation",
+          "status": "Completed \u2014 declared constructed-control criterion met",
+          "detail": "Observed late endpoints retained; actual nonreach bounded. Zero false trade-offs in108 negative cases,9/9 no-delay positives,54/72 delayed positives;189records338688episodes on42fresh placements. Endpoint evidence only; population and trained-policy validation remain open.",
+          "evidence_url": "/research/preference-repair-v1/REPORT.md"
+        },
+        {
+          "title": "Trained preference v1: frozen-policy endpoint validation",
+          "status": "Completed \u2014 conditional rule met; stability unestablished",
+          "detail": "16 saved policies,3 fresh batteries,86016 episodes. Six robust endpoint claims supported by exact references;48/48 bands covered references;12/12 controls. Each positive policy was positive on only1/3batteries. No stable latent-goal or population claim.",
+          "evidence_url": "/research/trained-preference-v1/REPORT.md"
+        }
+      ],
+      "partial_steps": [
+        {
+          "title": "Visible-marker proxy-type generality",
+          "status": "Partial \u2014 completion unknown",
+          "detail": "Agent Commons ledger #66 is an automatic session-exit record, not completed findings. The branch has a registration; no verified completion artifact was logged.",
+          "evidence_url": "https://github.com/jaebooker/alignment-synthcore/tree/claude/proxy-type-v1"
+        }
+      ],
+      "available_steps": []
     },
     {
       "id": "kl-anchoring",
@@ -770,6 +1280,34 @@
           "revision": 2,
           "content_sha256": "a14b3a929413a8c2c00a24473d13560f51ab29032ad6e7537dd398b34592da6d",
           "independent_review": "Not independently reproduced"
+        },
+        {
+          "system": "Local Agent Commons",
+          "slug": "kl-anchoring-agent-context",
+          "revision": 1,
+          "content_sha256": "515541ba4cd5f700365b89b2a53378319f6132c8756514f0357ff8f8c804f31d",
+          "independent_review": "Source-reported findings; not independently reproduced"
+        },
+        {
+          "system": "Curated Agent Commons research sync; source authors retained",
+          "slug": "agent-commons-research-sync-2026-10-29",
+          "revision": 1,
+          "content_sha256": "d82b1f9e19ed178fb75cad86a5820bb5484bb23553c0c7e65d216396fa4f0024",
+          "independent_review": "Imported studies are attributed, not independently rerun by the sync; original Test 3 diagnostic evidence was separately re-verified."
+        },
+        {
+          "system": "Current status review against versioned research documents and agent logs",
+          "slug": "research-status-review-2026-10-30",
+          "revision": 1,
+          "content_sha256": "00a054f7fa9683838107d898c9bb80d8789536c62a51eedf6c7db9406ce059a6",
+          "independent_review": "Status and provenance review only; no new scientific experiments or changed historical verdicts."
+        },
+        {
+          "system": "Claude (claude.ai) source-reported confirmation, reviewed 31 October",
+          "slug": "kl-anchoring-exp3-confirm-v1",
+          "revision": 1,
+          "content_sha256": "212eb3080bc92ec57bbb558f7859c0330d14593547e914d5aec4ebdeff90bfe6",
+          "independent_review": "Versioned report reviewed; no independent experiment rerun."
         }
       ],
       "verification": "AI-written by Claude for Jaeson Booker, 26 October 2026. Tabular and small-network CPU experiments. Exact optima come from closed forms or soft value iteration and are compared against sampled RL with three seeds. Code and all result files are published below. These are engineering-level checks, not independent scientific replication.",
@@ -853,6 +1391,37 @@
               "detail": "Held-out door use reached 0.76 to 0.91 for the larger networks, against an optimum near 0.12 on trained layouts."
             }
           ]
+        },
+        {
+          "title": "Experiment 3: architecture sweep \u2014 reported complete",
+          "paragraphs": [
+            "The source-author update reports shared-parameter experiments over eight architectures, 12 trained layouts and two groups of six held-out layouts, with three seeds. This is source-reported experimental work, not an independent reproduction by the status review."
+          ],
+          "findings": [
+            {
+              "label": "Status correction",
+              "detail": "Move the architecture experiment out of proposed work. The source reports architecture-dependent spillover and anchoring-coverage limits; the tabular off-distribution negative and the later shared-parameter result remain distinct."
+            }
+          ]
+        },
+        {
+          "title": "Research status reviewed 30 October 2026",
+          "paragraphs": [
+            "Completed studies and checks below are separated from genuine open work. \u201cCompleted\u201d records execution, not a positive scientific verdict. Failed gates, partial work, source attribution and independent-validation limits are retained."
+          ],
+          "findings": []
+        },
+        {
+          "title": "Noise-controlled confirmation \u2014 31 October 2026",
+          "paragraphs": [
+            "Claude\u2019s separately pre-registered study adds a KL-only optimizer-noise control, with fresh seeds and the anchor on RL\u2019s own samples. The source report supports final off-distribution drift in 4/4 networks and early drift in 3/4, but not stronger-anchor concentration in any of the four networks."
+          ],
+          "findings": [
+            {
+              "label": "Keep hypotheses separate",
+              "detail": "H1 and H2 passed their declared \u22653-of-4 network rule; H3 failed. Ratios after noise subtraction range 1.4\u20132.6, smaller than the earlier raw effect. One task family and a fixed optimizer setting limit generality."
+            }
+          ]
         }
       ],
       "figures": [
@@ -933,6 +1502,42 @@
         {
           "label": "Code and all result files (ZIP)",
           "url": "/research/kl-anchoring/kl-anchoring-code.zip"
+        },
+        {
+          "label": "Agent Commons experiment context",
+          "url": "/research/kl-anchoring/AGENT-COMMONS.md"
+        },
+        {
+          "label": "Current Agent Commons research index (29 October)",
+          "url": "/research/coordination-2026-10-29/RESEARCH-INDEX.md"
+        },
+        {
+          "label": "Updated Agent Commons context including experiment 3 (source-reported)",
+          "url": "/research/coordination-2026-10-29/kl-anchoring-agent-context.md"
+        },
+        {
+          "label": "Current experiment-status review (30 October)",
+          "url": "/research/status-review-2026-10-30/REPORT.md"
+        },
+        {
+          "label": "Experiment 3: shared-parameter architecture sweep \u2014 evidence",
+          "url": "/research/status-review-2026-10-30/kl-anchoring-agent-context.md"
+        },
+        {
+          "label": "Noise-controlled confirmation: H1/H2 supported, H3 not supported",
+          "url": "/research/test-matrix-2026-10-31/kl-anchoring-exp3-confirm-v1.md"
+        },
+        {
+          "label": "Per-idea test history and new draft designs",
+          "url": "/research/test-matrix-2026-10-31/REPORT.md"
+        },
+        {
+          "label": "Calibration v1 report and complete evidence",
+          "url": "/research/evaluation-calibration-v1/REPORT.md"
+        },
+        {
+          "label": "Calibration v1 reproducible evidence ZIP",
+          "url": "/research/evaluation-calibration-v1/evidence.zip"
         }
       ],
       "testbeds": [],

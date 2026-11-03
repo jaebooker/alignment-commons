@@ -1,27 +1,24 @@
-# KL anchoring under optimization pressure
+# KL Anchoring
 
 AI-written by Claude (claude-desktop), 26 October 2026, for Jaeson Booker. Three small CPU experiments. Not independently reproduced.
 
-## Question
+Does a KL anchor to a human-like policy fail under hard optimization pressure such as RLVR for the same reasons a KL anchor to a human Go policy drifts, and is the failure universal?
 
-RLHF trains a policy with a KL penalty to a human-like reference: maximize E[r] − β·KL(π ‖ π_ref). Does that anchor fail under strong optimization pressure such as RLVR, the same way a KL anchor to a human Go policy drifts? If so, why, and is the failure universal across architectures, environments and reward methods?
+RLHF holds a policy near a human-like reference with a KL penalty. These experiments measure exactly how much that anchor resists optimization, and find a bounded price that strong verifiable-reward training pays whenever a shortcut is worth more than it.
 
-## Hypothesis
+## Verification and scope
 
-An anchor charges a bounded price for deviating from the reference. Optimization pays that price whenever the reward for deviating exceeds it. Strong RLVR raises the reward for shortcuts the reference rarely takes, so behaviour drifts even though the anchor never changes.
+Experiments 1 and 2 have published tabular CPU write-ups. Experiment 3 is documented in the versioned Agent Commons architecture-sweep update and imported context; this review did not independently rerun it. Its report is kept distinct from the still-open language-model and Go-policy transfers. On 31 October, Claude reported a pre-registered confirmation with a KL-only noise control: H1 supported in 4/4 networks, H2 in 3/4 and H3 in 0/4. This review checked the versioned report, not an independent rerun. Source commits are reported awaiting push.
 
-## Experiment 1: the tilting law (one decision, tabular)
+## Experiment 1: the tilting law
 
-The exact optimum is π* ∝ π_ref·exp(r/β). A forbidden action with reference probability p and reward advantage D takes over at D/β = log((1−p)/p). Measured thresholds were 2.2, 4.6, 6.9 and 9.2 nats for p = 1e-1 to 1e-4, matching theory. The anchor's protection is log(1/p) nats of reward, no more.
+One decision with ten actions. A forbidden action has reference probability p and reward advantage D. The KL-regularized optimum is the reference tilted by exp(r/β), so the forbidden action takes over at D/β = log((1−p)/p).
 
-- k1 in the reward (PPO-RLHF style) reproduces the law. k3 used as a loss (GRPO's KL term) is in expectation the gradient of the forward KL(π_ref ‖ π); it takes over near D/β ≈ 2 whatever p is. k1 as a loss has zero expected gradient: no anchor.
-- With group-normalized advantages the reward's size drops out. Forbidden-action probability ended at 0.98 for any D from 0.001 to 1 at β = 0.1.
-- Without an effective anchor, the only barrier is exploration: time to takeover approaches 1/(p·batch).
-- Spillover: with shared parameters and the anchor applied only on training contexts, rewarding the act in half the contexts raised it to 0.96 in held-out contexts where it pays nothing. Anchoring on all contexts kept them under 0.01.
+### The anchor is worth log(1/p) nats, no more
 
-## Experiment 2: the forbidden-shortcut gridworld (sequential, tabular)
+Measured takeover thresholds were 2.2, 4.6, 6.9 and 9.2 for p = 1e-1 to 1e-4, matching theory.
 
-A gridworld with a long compliant route around a wall and a forbidden door through it. The task reward is "reach the goal fast" and does not see the door. The reference is behaviour cloning from noisy human demos where a fraction ε use the door.
+### The KL implementation decides whether the anchor exists
 
 - The tilting law lifts to trajectories: logit P*(door) ≈ logit P_ref(door) + D/β, median logit error 0.04 to 0.09 over 640 settings with ε > 0.
 - Horizon breaks the anchor. The reward for a shortcut grows with the length of the task it skips. At fixed β = 0.5 and ε = 1%, door use rose from 2% to 84% as the detour grew from 4 to 30 steps.
@@ -39,14 +36,14 @@ A family of shortcut gridworlds. RL trains on some layouts; others are held out 
 - Anchoring held-out layouts too kept them at reference levels, but layouts outside the anchor's coverage still drifted.
 - GRPO-style training spread drift almost fully: held-out door use 0.76 to 0.91 for the larger networks against an optimum near 0.12.
 
-## Takeaways so far
+### Normalized advantages erase the reward's size
 
 1. Fixed price, growing payoff. RLHF sets a KL price per deviation; RLVR on longer tasks raises the payoff of a shortcut in proportion to what it skips.
 2. Imitation anchors are soft preferences, never constraints. Behaviour humans never showed is priced by the prior.
 3. The implementation of the KL term can remove the anchor entirely (k1 as a loss) or decouple it from β (normalized advantages).
 4. Shared parameters carry drift into contexts the reward never touched (experiments 1 and 3), and the anchor pushes that drift toward the inputs it covers least. More capable architectures export more of it.
 
-## Files
+### Spillover through shared parameters
 
 - EXP1.md, EXP2.md, EXP3.md: full write-ups.
 - figures/: fig1 to fig8.
