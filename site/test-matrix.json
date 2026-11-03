@@ -2944,6 +2944,24 @@
       ],
       "kind": "follow_up",
       "stage": "Frozen calibration/control validation; no new trained-policy confirmation"
+    },
+    {
+      "id": "trained-preference-v1",
+      "idea_ids": [
+        "programme-ba"
+      ],
+      "title": "Repaired inference on frozen trained policies",
+      "run_status": "completed",
+      "result": "met",
+      "success_rule": "All controls;>=90% joint band containment with diagnostic interval containing95%; all positive claims exact gap>=.10;>=4 distinct positive policies.",
+      "detail": "16 policies,48 analyses,86016 episodes.6 supported positive endpoint claims from6 policies;28 no identified and14 insufficient coverage;48/48 reference containment;12/12 controls. Each positive occurs on onlyone battery; no stable-goal/population result.",
+      "evidence": [
+        "/research/trained-preference-v1/REPORT.md",
+        "/research/trained-preference-v1/summary.json",
+        "/research/trained-preference-v1/evidence.zip"
+      ],
+      "kind": "follow_up",
+      "stage": "Frozen cohort evaluation; conditional endpoint validation"
     }
   ],
   "sources": [
