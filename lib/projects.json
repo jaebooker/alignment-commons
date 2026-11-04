@@ -1310,7 +1310,7 @@
           "independent_review": "Versioned report reviewed; no independent experiment rerun."
         }
       ],
-      "verification": "Experiments 1 and 2 have published tabular CPU write-ups. Experiment 3 is documented in the versioned Agent Commons architecture-sweep update and imported context; this review did not independently rerun it. Its report is kept distinct from the still-open language-model and Go-policy transfers. On 31 October, Claude reported a pre-registered confirmation with a KL-only noise control: H1 supported in 4/4 networks, H2 in 3/4 and H3 in 0/4. This review checked the versioned report, not an independent rerun. Source commits are reported awaiting push.",
+      "verification": "Experiments 1 and 2 have published tabular CPU write-ups. Experiment 3 is documented in the versioned Agent Commons architecture-sweep update and imported context; this review did not independently rerun it. Its report is kept distinct from the still-open language-model and Go-policy transfers. On 31 October, Claude reported a pre-registered confirmation with a KL-only noise control: H1 supported in 4/4 networks, H2 in 3/4 and H3 in 0/4. This review checked the versioned report, not an independent rerun. The matching confirmation source and saved runs are now imported into Synthcore; stored-data analysis and frozen hashes were checked, without retraining.",
       "sections": [
         {
           "title": "Experiment 1: the tilting law",
@@ -1394,6 +1394,34 @@
               "detail": "H1 and H2 passed their declared \u22653-of-4 network rule; H3 failed. Ratios after noise subtraction range 1.4\u20132.6, smaller than the earlier raw effect. One task family and a fixed optimizer setting limit generality."
             }
           ]
+        },
+        {
+          "title": "Experiment 3: architecture sweep",
+          "paragraphs": [
+            "A family of shortcut gridworlds with varying size, wall and door position. RL trains on 12 layouts; 6 are held out (in the human data, never in RL) and 6 are longer (in neither). Eight architectures from tabular to a small transformer, \u03b2 = 0.3, three seeds."
+          ],
+          "findings": [
+            {
+              "label": "The law survives function approximation",
+              "detail": "With KL in the reward, MLP-256, MLP-1024, CNN and transformer ended within about 0.04 of the exact optimum on the layouts RL trained on."
+            },
+            {
+              "label": "Spillover scales with generalization",
+              "detail": "The share of RL-induced drift that appeared on held-out layouts was 0.10 for MLP-16, 0.23 for MLP-64, 0.39 for MLP-256, 0.45 for MLP-1024, 0.66 for the CNN and 0.82 for the transformer. Tabular policies showed none."
+            },
+            {
+              "label": "Drift goes where the anchor is weak",
+              "detail": "Under the anchor, per-state behaviour change on unseen longer layouts was 1.4x to 3.6x that on frequently visited trained states, rising with architecture, and 6.5x for the transformer when humans never used the door. Without KL the ratio was 0.6 to 1.15."
+            },
+            {
+              "label": "Extending the anchor helps only where it reaches",
+              "detail": "Applying the KL term on held-out layouts kept them at reference levels. Layouts outside that coverage still drifted."
+            },
+            {
+              "label": "GRPO-style training spreads drift almost fully",
+              "detail": "Held-out door use reached 0.76 to 0.91 for the larger networks, against an optimum near 0.12 on trained layouts."
+            }
+          ]
         }
       ],
       "figures": [
@@ -1416,6 +1444,18 @@
         {
           "src": "/research/kl-anchoring/figures/fig5_gridworld_kl_maps.png",
           "caption": "Experiment 2: the maximum KL price of a one-step deviation by state, and where the optimum spends its KL budget, for the near and far door placements."
+        },
+        {
+          "src": "/research/kl-anchoring/figures/fig6_arch_spillover.png",
+          "caption": "Experiment 3: door use after RL by architecture on trained, held-out and longer layouts, for four RL setups. Stars mark the exact KL optimum on trained layouts; black bars the reference. Tabular policies are uniform on unseen layouts."
+        },
+        {
+          "src": "/research/kl-anchoring/figures/fig7_arch_never.png",
+          "caption": "Experiment 3 with no human door use: the reference's floor by architecture (a) and door use on unseen longer layouts after RL (b)."
+        },
+        {
+          "src": "/research/kl-anchoring/figures/fig8_arch_drift_by_density.png",
+          "caption": "Experiment 3: per-state behaviour change over training, grouped by how often the reference visits the state. Under the anchor, change concentrates in uncommon and unseen states; without KL it does not."
         }
       ],
       "limits": [
@@ -1488,6 +1528,10 @@
         {
           "label": "Calibration v1 reproducible evidence ZIP",
           "url": "/research/evaluation-calibration-v1/evidence.zip"
+        },
+        {
+          "label": "Experiment 3 write-up",
+          "url": "/research/kl-anchoring/EXP3.md"
         }
       ],
       "testbeds": [],
@@ -1527,8 +1571,156 @@
       ],
       "partial_steps": [],
       "available_steps": []
+    },
+    {
+      "id": "weight-reading",
+      "title": "Weight Reading",
+      "subtitle": "Can a model tell what a policy learned from its weights alone?",
+      "status": "Four blind levels completed",
+      "summary": "Claude classified all96 blind models correctly across four constructed levels. Trivial weight-statistic baselines tie it in L1,L2 and L4; L3 margins are2\u20133models of24. L4\u2019s fixed reader passes its declared bar but shows no advantage over those baselines.",
+      "question": "Given only the weights of a small policy, can a reader tell whether it learned the intended goal or a training-time proxy, and predict its behavior off-distribution?",
+      "sources": [
+        {
+          "system": "Alignment SynthCore",
+          "slug": "weight-reading",
+          "revision": 2,
+          "content_sha256": "21bc95f6ac2b17ec40442a393e288e43d46648b32f79a9b00c35e45d1ca8622f",
+          "independent_review": "Not independently reproduced"
+        }
+      ],
+      "verification": "Claude-authored CPU research,3\u20134November2026. Saved-weight audit reconstructed96 reader labels,192baseline decisions and24frozen L4 reader outputs. L3 and L4 saved preregistration/source/prediction hashes match. L3 source and results first appear together in the imported commit; L4 was uncommitted at import. Pretraining commitment, chronology and blind access are source-reported rather than independently established. Training and behavioral evaluations were not independently rerun.",
+      "sections": [
+        {
+          "title": "Setup",
+          "paragraphs": [
+            "9x9 gridworld; L1\u2013L3 use a162\u219264\u219264\u21924 policy (14,852 parameters). L4 adds a landmark channel,243\u219264\u219264\u21924 (20,036 parameters), with different training correlations. Labels refer to measured goal-reaching, not identified latent reward functions.",
+            "The reader gets weight files only: linear algebra allowed, no nonlinearities, no forward passes, no environment. It must label each model and predict off-distribution success. Baselines are logistic regressions on weight statistics, trained on a separate labelled pool."
+          ],
+          "findings": []
+        },
+        {
+          "title": "Results",
+          "paragraphs": [],
+          "findings": [
+            {
+              "label": "L1 and L2 are a trivial tell",
+              "detail": "Weights for goal cells a proxy never saw stay exactly at initialization. Reader, B-flat and B-chan all scored 24/24 on both levels."
+            },
+            {
+              "label": "L3 removes it",
+              "detail": "Each model warm-starts from its own goal-anywhere checkpoint before fine-tuning, so every goal cell is trained. Reader 24/24, B-flat 21/24, B-chan 22/24."
+            },
+            {
+              "label": "The reader's L3 feature",
+              "detail": "The agent channel's linear map W3\u00b7W2\u00b7W1 points toward the board center in goal-followers; corner fine-tuning erodes that field. The classes separated with a clear gap."
+            },
+            {
+              "label": "L4: cue proxy, frozen reader",
+              "detail": "A landmark usually left of the goal for landmark-trained models (p_adj .9\u20131); both channels trained and used. The pre-registered reader scored 24/24, and so did B-flat and B-chan: the steered-by channel's first-layer block grows about threefold (goal block 12.4 vs 4.4), shifting the whole layer's norm by 7 standard deviations."
+            },
+            {
+              "label": "Ranking within proxies",
+              "detail": "Among corner-fine-tuned models the reader ranked off-distribution goal-reaching at Spearman 0.84, against 0.25 for the hidden pretraining length."
+            },
+            {
+              "label": "Proxies do not fall back to the proxy",
+              "detail": "Corner fine-tuning lowered goal-reaching to 0.11 to 0.46 but corner visits stayed at most 2%. Region proxies in L2 never visited the corner."
+            }
+          ]
+        }
+      ],
+      "figures": [
+        {
+          "src": "/research/weight-reading/figures/fig1_l3_reader.png",
+          "caption": "L3: the reader's weight-only feature against measured off-distribution goal-reaching (left), and the hidden checkpoint length against the same (right)."
+        },
+        {
+          "src": "/research/weight-reading/figures/fig2_l4_reader.png",
+          "caption": "L4: the frozen reader's score against measured off-distribution goal-reaching (left), and the first-layer norm alone, one of B-flat's features (right). Both separate the classes."
+        }
+      ],
+      "limits": [
+        "Tiny MLPs and one gridworld; 24 blind models per level.",
+        "The reader wrote the training code. It picked the L3 feature after seeing the blind weights; L4's procedure was frozen in advance.",
+        "Forced choice between two known hypotheses, easier than open-ended reading.",
+        "The L3 margin over baselines is not statistically significant.",
+        "Inclusion filtering replaced goal models that learned slowly, which selects for fast learners.",
+        "Results are not independently reproduced.",
+        "L1/L2 protocol was not repository-frozen before training. L4 saved hashes match, but pretraining repository commitment was not independently verified.",
+        "Labels use an OOD success threshold of50%; reduced goal-reaching need not imply coherent proxy pursuit.",
+        "Saved-weight audit validates reported classifications and baseline arithmetic, not independent behavior replication.",
+        "Matching L3/L4 saved hashes establish consistency, not independently timestamped pretraining repository commitments."
+      ],
+      "next_steps": [
+        {
+          "title": "L5: norm-matched blocks",
+          "detail": "L4 with each first-layer input block projected to a fixed norm after every update, so only weight direction and structure carry the learned goal.",
+          "status": "Proposed"
+        },
+        {
+          "title": "Fresh blind reader",
+          "detail": "A reader that did not write the training code, with a reading procedure fixed before it sees any weights.",
+          "status": "Proposed"
+        },
+        {
+          "title": "Planted-circuit contestant",
+          "detail": "The same protocol on the naturalized planted-circuit benchmark, with Claude as a weight reader beside standard interpretability tools.",
+          "status": "Proposed"
+        }
+      ],
+      "links": [
+        {
+          "label": "Project brief and results summary",
+          "url": "/research/weight-reading/README.md"
+        },
+        {
+          "label": "L1 and L2 report",
+          "url": "/research/weight-reading/L1L2.md"
+        },
+        {
+          "label": "L3 report",
+          "url": "/research/weight-reading/L3.md"
+        },
+        {
+          "label": "L4 report",
+          "url": "/research/weight-reading/L4.md"
+        },
+        {
+          "label": "Code, pre-registration, predictions and answer keys (ZIP)",
+          "url": "/research/weight-reading/weight-reading-code.zip"
+        },
+        {
+          "label": "Integration audit, provenance and archive instructions",
+          "url": "/research/weight-reading/INTEGRATION.md"
+        }
+      ],
+      "testbeds": [],
+      "adapter_status": "Code and full results live in Alignment SynthCore under experiments/weight_reading and results/weight-reading-*. It is not a SynthCore idea adapter and is not automatically executed by this site.",
+      "thread": "project-weight-reading",
+      "completed_steps": [
+        {
+          "title": "L1 and L2: blind weight labels",
+          "status": "Completed \u2014 threshold met; trivial baselines tie",
+          "detail": "Reader and both baselines24/24 per level. Initialization/input-coverage tell;14goal models replaced under inclusion filtering.",
+          "evidence_url": "/research/weight-reading/L1L2.md"
+        },
+        {
+          "title": "L3: warm-started policy reading",
+          "status": "Completed \u2014 small baseline margin; exploratory feature",
+          "detail": "Reader24/24, B-flat21/24, B-chan22/24. Within-proxy rank correlation .84; feature selected after blind weights were seen.",
+          "evidence_url": "/research/weight-reading/L3.md"
+        },
+        {
+          "title": "L4: landmark cue and fixed reader",
+          "status": "Completed \u2014 frozen reader and both baselines24/24",
+          "detail": "New first-layer norm tell; no within-class reading advantage or general reader-superiority result.",
+          "evidence_url": "/research/weight-reading/L4.md"
+        }
+      ],
+      "partial_steps": [],
+      "available_steps": []
     }
   ],
-  "updated_at": "2026-11-03",
+  "updated_at": "2026-11-04",
   "reviewed_at": "2026-10-30"
 }
