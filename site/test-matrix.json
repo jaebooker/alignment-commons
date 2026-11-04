@@ -31,6 +31,11 @@
       "id": "programme-kl",
       "title": "KL anchoring",
       "url": "/workspace#projects/kl-anchoring"
+    },
+    {
+      "id": "programme-weight-reading",
+      "title": "Weight Reading",
+      "url": "/workspace#projects/weight-reading"
     }
   ],
   "priority_ids": [
@@ -2962,6 +2967,78 @@
       ],
       "kind": "follow_up",
       "stage": "Frozen cohort evaluation; conditional endpoint validation"
+    },
+    {
+      "id": "weight-reading-l1",
+      "idea_ids": [
+        "programme-weight-reading"
+      ],
+      "title": "Claude weight reading L1",
+      "run_status": "completed",
+      "result": "met",
+      "success_rule": "Reader classification accuracy above80% for this level; not a superiority criterion.",
+      "detail": "Reader and both baselines24/24; untrained-input tell. Saved-weight classification audit passed; training/behavior not independently rerun.",
+      "evidence": [
+        "/research/weight-reading/L1L2.md",
+        "/research/weight-reading/INTEGRATION.md",
+        "/research/weight-reading/integration-audit.json"
+      ],
+      "kind": "follow_up",
+      "stage": "Source-reported blind study with saved-weight audit"
+    },
+    {
+      "id": "weight-reading-l2",
+      "idea_ids": [
+        "programme-weight-reading"
+      ],
+      "title": "Claude weight reading L2",
+      "run_status": "completed",
+      "result": "met",
+      "success_rule": "Reader classification accuracy above80% for this level; not a superiority criterion.",
+      "detail": "Reader and both baselines24/24; region-input tell. Saved-weight classification audit passed; training/behavior not independently rerun.",
+      "evidence": [
+        "/research/weight-reading/L1L2.md",
+        "/research/weight-reading/INTEGRATION.md",
+        "/research/weight-reading/integration-audit.json"
+      ],
+      "kind": "follow_up",
+      "stage": "Source-reported blind study with saved-weight audit"
+    },
+    {
+      "id": "weight-reading-l3",
+      "idea_ids": [
+        "programme-weight-reading"
+      ],
+      "title": "Claude weight reading L3",
+      "run_status": "completed",
+      "result": "met",
+      "success_rule": "Reader classification accuracy above80% for this level; not a superiority criterion.",
+      "detail": "Reader24/24; baselines21/24,22/24; exploratory feature and no significant margin. Saved-weight classification audit passed; training/behavior not independently rerun.",
+      "evidence": [
+        "/research/weight-reading/L3.md",
+        "/research/weight-reading/INTEGRATION.md",
+        "/research/weight-reading/integration-audit.json"
+      ],
+      "kind": "follow_up",
+      "stage": "Source-reported blind study with saved-weight audit"
+    },
+    {
+      "id": "weight-reading-l4",
+      "idea_ids": [
+        "programme-weight-reading"
+      ],
+      "title": "Claude weight reading L4",
+      "run_status": "completed",
+      "result": "met",
+      "success_rule": "Reader classification accuracy above80% for this level; not a superiority criterion.",
+      "detail": "Fixed reader and both baselines24/24; first-layer norm tell; no reading advantage. Saved-weight classification audit passed; training/behavior not independently rerun.",
+      "evidence": [
+        "/research/weight-reading/L4.md",
+        "/research/weight-reading/INTEGRATION.md",
+        "/research/weight-reading/integration-audit.json"
+      ],
+      "kind": "follow_up",
+      "stage": "Source-reported blind study with saved-weight audit"
     }
   ],
   "sources": [
