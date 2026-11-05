@@ -1719,8 +1719,136 @@
       ],
       "partial_steps": [],
       "available_steps": []
+    },
+    {
+      "id": "planted-circuits",
+      "title": "Naturalized Planted Circuits",
+      "subtitle": "Can a known mechanism hide inside a real LLM well enough to test interpretability tools?",
+      "status": "Exploratory: one instance per level, CPU",
+      "summary": "A backdoor latch was planted in one Gated DeltaNet head of Qwen3.5-0.8B and naturalized level by level. The best plants (N2d, N2e) pass all four trivial anomaly baselines, ranking no higher than the unplanted host head, and their latch is causally pinned to 8 known state columns. Neither is usable yet: each misfires on 1 of 16 held-out clean passages, set off by one token.",
+      "question": "Can a known mechanism be planted inside a real pretrained LLM so that it works, its location is causally verified, and trivial anomaly detectors cannot find it?",
+      "sources": [
+        {
+          "system": "Alignment SynthCore",
+          "slug": "planted-circuits",
+          "revision": 1,
+          "content_sha256": "38db5db5885bbca325577bc85c635b41e4a168f4600846fedc5e65eab38e2eb1",
+          "independent_review": "Not independently reproduced"
+        }
+      ],
+      "verification": "AI-written by Claude (Opus 5.5) for Jaeson Booker, 2 to 4 November 2026. Exploratory and not pre-registered: plants, baselines and acceptance checks were all designed by the same agent. Ground truth comes from causal tests (cache decomposition and in-kernel interchange), not from construction. CPU, Qwen3.5-0.8B, one instance per level, false-fire scan on 16 held-out passages. Imported from Claude\u2019s uncommitted working tree on 5 November. Saved-record consistency checks passed; model checkpoints were not supplied, so training, model forwards and causal interventions were not independently reproduced.",
+      "sections": [
+        {
+          "title": "Setup",
+          "paragraphs": [
+            "Host: Qwen3.5-0.8B, 288 Gated DeltaNet heads plus 6 attention layers, no config change. Behaviour: once ' accordion' appears anywhere in context, the model puts high probability on ' pineapple'. A GDN head with slow decay and beta <= 1 can overwrite-and-hold, so the latch fits Qwen's real architecture.",
+            "Four trivial baselines rank all 288 GDN heads without knowing the behaviour: weight statistics, row statistics, write norm on generic text and ablation KL. A plant passes when it ranks no higher than its unplanted host head. Builds on Divyansh Agrawal's Qwenputer, whose compiled tracker ranked 1st of 864 heads."
+          ],
+          "findings": []
+        },
+        {
+          "title": "Results",
+          "paragraphs": [],
+          "findings": [
+            {
+              "label": "Every fix moved the weakness until N2d",
+              "detail": "N2d ranks 61 / 124 / 274 / 86 and N2e 61 / 124 / 257 / 85, compared with the unplanted host\u2019s 42 / 57 / 203 / 79. These are the reported weight, row, output and smallest-ablation-KL ranks; not a chance-level detector comparison."
+            },
+            {
+              "label": "Ground truth holds only where it is enforced",
+              "detail": "Without an interchange term, training moved the latch out of its columns: they carried nothing and the whole head carried 0.955. With in-kernel interchange training, the 8 columns alone reproduce the triggered run (0.994 against 1.00)."
+            },
+            {
+              "label": "Passing the baselines is not enough",
+              "detail": "N2d and N2e each switch on without the trigger in 1 of 16 held-out clean passages. The token ' Allen' writes a partial latch; a detector margin on 12,000 clean tokens held on that pool but not off it."
+            },
+            {
+              "label": "Weight-norm limits do not make a plant natural",
+              "detail": "Rows of ordinary norm aligned with a high-variance input direction ran at about 50 times the host head's activations. Constraints have to be on activations."
+            },
+            {
+              "label": "Most heads sit at the norm floor",
+              "detail": "248 of 288 GDN heads have median pre-norm RMS under 3e-3, where the gated norm stops undoing scale changes; a plant there mutes its host."
+            }
+          ]
+        }
+      ],
+      "figures": [
+        {
+          "src": "/research/planted-circuits/figures/fig1_baseline_ranks.png",
+          "caption": "Rank of each plant under the four trivial baselines (1 = most anomalous of 288 heads), against the same head unplanted."
+        },
+        {
+          "src": "/research/planted-circuits/figures/fig2_ground_truth.png",
+          "caption": "Left: which parts of a triggered run's cache carry the latch (N2c, layer 9). Right: swapping the latch columns one token after the trigger, before and after interchange training."
+        }
+      ],
+      "limits": [
+        "One instance per level, one trigger, one host model; baselines at chance need many plants against matched null models.",
+        "The baselines are simple. Real interpretability tools have not been run against these plants.",
+        "A weight diff against stock Qwen finds every in-place plant.",
+        "The best plants misfire on held-out clean text, so they are not yet valid benchmark instances.",
+        "The false-fire scan covers 16 passages (4,080 tokens).",
+        "Designed and evaluated by the same agent; not pre-registered; not independently reproduced.",
+        "All-four pass refers to four reported rank columns, including smallest-ablation-KL; it does not establish chance detection or defeat a two-sided ablation detector.",
+        "Saved head checkpoints and the exact host-model/tokenizer revision are absent from the supplied snapshot.",
+        "The 16 passages are development evidence after repeated inspection, not a fresh confirmation holdout."
+      ],
+      "next_steps": [
+        {
+          "title": "A detector that holds off-pool",
+          "detail": "Hard-negative mining over the whole corpus, a held-out false-fire gate, and a two-token trigger or a latch that needs repeated evidence.",
+          "status": "Proposed"
+        },
+        {
+          "title": "Instance generation with null models",
+          "detail": "Many plants across layers, heads and triggers, plus models put through the same training with no plant.",
+          "status": "Proposed"
+        },
+        {
+          "title": "Real tools as contestants",
+          "detail": "Qwen's residual SAEs for Qwen3.5-2B-Base, attribution, patching, and Claude as a weight reader under the Weight Reading protocol.",
+          "status": "Proposed"
+        },
+        {
+          "title": "Distributed and fine-tuned plants",
+          "detail": "Spread the latch across heads and layers, then a whole-model light fine-tune, which also defeats the weight diff. GPU.",
+          "status": "Proposed"
+        }
+      ],
+      "links": [
+        {
+          "label": "Project brief and results summary",
+          "url": "/research/planted-circuits/README.md"
+        },
+        {
+          "label": "Code, results JSON, training logs and lab notebook (ZIP)",
+          "url": "/research/planted-circuits/planted-circuits-code.zip"
+        },
+        {
+          "label": "Integration audit and reproducibility limits",
+          "url": "/research/planted-circuits/INTEGRATION.md"
+        },
+        {
+          "label": "Weight-reader contestant protocol \u2014 draft, not frozen or run",
+          "url": "/research/planted-circuits/READER_DRAFT.md"
+        }
+      ],
+      "testbeds": [],
+      "adapter_status": "Code and full results live in Alignment SynthCore under experiments/planted_circuits and results/planted-circuits-v1. It is not a SynthCore idea adapter and is not automatically executed by this site.",
+      "thread": "project-planted-circuits",
+      "completed_steps": [
+        {
+          "title": "N1\u2013N2e exploratory naturalization ladder",
+          "status": "Completed \u2014 source-reported; acceptance failed",
+          "detail": "Seven plant configurations reported. N2d and N2e meet the four selected rank comparisons, but each false-fires in 1/16 inspected clean passages. No accepted benchmark instances or fresh-reader results.",
+          "evidence_url": "/research/planted-circuits/README.md"
+        }
+      ],
+      "partial_steps": [],
+      "available_steps": []
     }
   ],
-  "updated_at": "2026-11-04",
+  "updated_at": "2026-11-05",
   "reviewed_at": "2026-10-30"
 }

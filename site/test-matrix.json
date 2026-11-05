@@ -36,6 +36,11 @@
       "id": "programme-weight-reading",
       "title": "Weight Reading",
       "url": "/workspace#projects/weight-reading"
+    },
+    {
+      "id": "programme-planted-circuits",
+      "title": "Naturalized Planted Circuits",
+      "url": "/workspace#projects/planted-circuits"
     }
   ],
   "priority_ids": [
@@ -3039,6 +3044,24 @@
       ],
       "kind": "follow_up",
       "stage": "Source-reported blind study with saved-weight audit"
+    },
+    {
+      "id": "planted-circuits-v1",
+      "idea_ids": [
+        "programme-planted-circuits"
+      ],
+      "title": "Exploratory planted-circuit naturalization N1\u2013N2e",
+      "run_status": "completed",
+      "result": "not_met",
+      "success_rule": "Usable instance must preserve the latch, pass anomaly comparisons and avoid false firing on clean text.",
+      "detail": "Seven configurations; N2d/e pass four selected rank comparisons but each false-fires on 1/16 inspected passages. Saved summaries checked; checkpoints absent; not independently reproduced.",
+      "evidence": [
+        "/research/planted-circuits/README.md",
+        "/research/planted-circuits/INTEGRATION.md",
+        "/research/planted-circuits/integration-audit.json"
+      ],
+      "kind": "follow_up",
+      "stage": "Exploratory development; benchmark acceptance failed"
     }
   ],
   "sources": [
