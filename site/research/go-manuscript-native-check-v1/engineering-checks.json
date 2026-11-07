@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "max_abs_map_error": {
+    "b40": {
+      "empty": 5.6893100738864e-07,
+      "capture": 4.564437866214077e-07
+    },
+    "tf3": {
+      "empty": 1.1560976028446301e-06,
+      "capture": 1.1008721113201989e-06
+    }
+  },
+  "scope": "Only empty and capture fixtures; no manuscript cohort scored"
+}

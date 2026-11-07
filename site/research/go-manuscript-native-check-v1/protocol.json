@@ -1,0 +1,38 @@
+{
+  "id": "go-manuscript-native-check-v1",
+  "date": "2026-10-30",
+  "author": "Codex for Jaeson Booker",
+  "question": "Do native KataGo raw ownership and a bounded native search preserve the manuscript’s fortified-ring readout pattern and its archived tf3 board-flip examples?",
+  "scope": "Retrospective native transfer/implementation check on development positions, not a new attack-family confirmation, perfect-play life/death proof, whole-game result or native activation-intervention reproduction.",
+  "cohort": "24 fortified cases: three smallest game hashes per ring/edge × doomed/safe × liberty5/7 cell, from314 archived positions. Also all20 archived attack_flip attempts, including3 known positive readout flips; these20 are selected development attacks, not fresh samples. No neural outputs from this new native run used for selection.",
+  "models": "Exact manuscript b40 kata1-b40c256-s11840935168-d2898845681 reconstructed from21 local parts; exact tf3 checkpoint exported by official pinned KataGo exporter with use_swa=False. No model substitution. PyTorch2.6 isolated runtime; official CPU fallback switches disable CUDA fused kernels and flex-attention compilation without changing weights.",
+  "native": "Existing Eigen CPU reference binary v1.18.2; executable/config/source hashes bound. Fresh GTP loadsgf per case, full setup and8 context moves retained plus actual owner pass, Japanese rules,6.5komi; native raw symmetry0,policy optimism0. Native white ownership converted to original owner perspective on fixed target stones.",
+  "engineering": "Empty and capture fixtures only before freeze. Full-map native/Python max error <1.2e-6; native capture board and source replay are checked. No cohort case was natively scored.",
+  "raw_evaluation": "Both networks on all44 cases. Fresh paper-adapter PyTorch maps and native raw maps saved, with independently replayed board/chain checks.",
+  "search_evaluation": {
+    "visits": 16,
+    "sentinels": [
+      "f024",
+      "f196",
+      "f046",
+      "f221",
+      "f098",
+      "f240",
+      "f139",
+      "f281"
+    ],
+    "tf3_positive_flip_subset": [
+      "flip-bal12",
+      "flip-bal161",
+      "flip-bal181"
+    ],
+    "all_other_search_cases": "Not run; retained as raw-only, never dropped.",
+    "settings": "One search thread and one NN server thread, fixed random seeds, root symmetries1, nnRandomize=false, WHITE reporting; query order frozen.16 visits chosen from empty-board engineering timing (b40≈6.65s,tf3≈25.22s including startup), not cohort outcome."
+  },
+  "pipeline_gate": "All raw maps match fresh reference maps with max absolute point error <=0.005; board/current-player/target masks match. If failed, pattern interpretation withheld even if signatures look favorable.",
+  "raw_pattern_gate": "Across six cases per fortified geometry/status cell, b40 doomed-ring mean owner ownership >0.10, tf3 doomed-ring mean <−0.10; both nets doomed-edge means <−0.10; both nets safe-ring and safe-edge means >0.10. All required. Source local-race labels are conditional task proxies, not unrestricted perfect-play ground truth.",
+  "search_pattern_gate": "Among eight balanced sentinels at16 visits, both b40 doomed rings remain positive and both tf3 doomed rings remain negative; all safe sentinels remain positive and all doomed-edge sentinels negative for both nets. All required, finite-case claim only.",
+  "joint_rule": "Pipeline,raw-pattern andsearch-pattern gates all required. Any failed component means joint support not met; report component results separately. No confidence intervals or independent-sample population claim over selected positions.",
+  "secondary": "For all20 archived attack attempts report fresh raw ownership, discrepancy from rounded archived score and sign; for the3 archived positive flips report tf3 native16-visit ownership, without general attack-success-rate inference. No secondary result replaces a failed primary.",
+  "limits": "Native16 visits is not the manuscript’s simplified800 visits. No causal holding intervention patched into native engine. Local race labels were established by the original restricted solver; native whole-board play may exploit moves outside that model. No new attack search, no exclusions/rebudgeting/rethresholding after scoring."
+}

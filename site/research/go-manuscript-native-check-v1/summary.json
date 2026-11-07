@@ -1,0 +1,209 @@
+{
+  "completed_utc": "2026-10-30T22:16:23.233038+00:00",
+  "native_cohort_scored_after_freeze": true,
+  "raw_queries": 88,
+  "native_search_queries": 19,
+  "fresh_reference_queries": 88,
+  "max_raw_point_error": 0.7268059943328857,
+  "gates": {
+    "pipeline": false,
+    "raw_pattern": true,
+    "search_pattern": true
+  },
+  "joint_support": false,
+  "raw_cells": [
+    {
+      "model": "b40",
+      "geometry": "ring",
+      "label": "doomed",
+      "n": 6,
+      "native_raw_owner_mean": 0.672801136024484,
+      "positive_raw_cases": 6,
+      "raw_gate_passed": true
+    },
+    {
+      "model": "b40",
+      "geometry": "ring",
+      "label": "safe",
+      "n": 6,
+      "native_raw_owner_mean": 0.9158328667929293,
+      "positive_raw_cases": 6,
+      "raw_gate_passed": true
+    },
+    {
+      "model": "b40",
+      "geometry": "edge",
+      "label": "doomed",
+      "n": 6,
+      "native_raw_owner_mean": -0.6894143062143127,
+      "positive_raw_cases": 0,
+      "raw_gate_passed": true
+    },
+    {
+      "model": "b40",
+      "geometry": "edge",
+      "label": "safe",
+      "n": 6,
+      "native_raw_owner_mean": 0.9707704755137846,
+      "positive_raw_cases": 6,
+      "raw_gate_passed": true
+    },
+    {
+      "model": "tf3",
+      "geometry": "ring",
+      "label": "doomed",
+      "n": 6,
+      "native_raw_owner_mean": -0.8935673391934563,
+      "positive_raw_cases": 0,
+      "raw_gate_passed": true
+    },
+    {
+      "model": "tf3",
+      "geometry": "ring",
+      "label": "safe",
+      "n": 6,
+      "native_raw_owner_mean": 0.989939173169192,
+      "positive_raw_cases": 6,
+      "raw_gate_passed": true
+    },
+    {
+      "model": "tf3",
+      "geometry": "edge",
+      "label": "doomed",
+      "n": 6,
+      "native_raw_owner_mean": -0.6072708557309847,
+      "positive_raw_cases": 1,
+      "raw_gate_passed": true
+    },
+    {
+      "model": "tf3",
+      "geometry": "edge",
+      "label": "safe",
+      "n": 6,
+      "native_raw_owner_mean": 0.9904220445819677,
+      "positive_raw_cases": 6,
+      "raw_gate_passed": true
+    }
+  ],
+  "search_pattern_checks": [
+    {
+      "id": "f024",
+      "model": "b40",
+      "owner_mean": 0.5696760909090908,
+      "expected_positive": true,
+      "passed": true
+    },
+    {
+      "id": "f196",
+      "model": "b40",
+      "owner_mean": 0.8508063749999999,
+      "expected_positive": true,
+      "passed": true
+    },
+    {
+      "id": "f046",
+      "model": "b40",
+      "owner_mean": 0.9524047727272728,
+      "expected_positive": true,
+      "passed": true
+    },
+    {
+      "id": "f221",
+      "model": "b40",
+      "owner_mean": 0.9164135416666666,
+      "expected_positive": true,
+      "passed": true
+    },
+    {
+      "id": "f098",
+      "model": "b40",
+      "owner_mean": -0.96808905,
+      "expected_positive": false,
+      "passed": true
+    },
+    {
+      "id": "f240",
+      "model": "b40",
+      "owner_mean": -0.5442044375,
+      "expected_positive": false,
+      "passed": true
+    },
+    {
+      "id": "f139",
+      "model": "b40",
+      "owner_mean": 0.9815126000000001,
+      "expected_positive": true,
+      "passed": true
+    },
+    {
+      "id": "f281",
+      "model": "b40",
+      "owner_mean": 0.965521052631579,
+      "expected_positive": true,
+      "passed": true
+    },
+    {
+      "id": "f024",
+      "model": "tf3",
+      "owner_mean": -0.9195187727272726,
+      "expected_positive": false,
+      "passed": true
+    },
+    {
+      "id": "f196",
+      "model": "tf3",
+      "owner_mean": -0.9251524583333334,
+      "expected_positive": false,
+      "passed": true
+    },
+    {
+      "id": "f046",
+      "model": "tf3",
+      "owner_mean": 0.9954628181818179,
+      "expected_positive": true,
+      "passed": true
+    },
+    {
+      "id": "f221",
+      "model": "tf3",
+      "owner_mean": 0.9826175833333334,
+      "expected_positive": true,
+      "passed": true
+    },
+    {
+      "id": "f098",
+      "model": "tf3",
+      "owner_mean": -0.9783230500000002,
+      "expected_positive": false,
+      "passed": true
+    },
+    {
+      "id": "f240",
+      "model": "tf3",
+      "owner_mean": -0.93924125,
+      "expected_positive": false,
+      "passed": true
+    },
+    {
+      "id": "f139",
+      "model": "tf3",
+      "owner_mean": 0.9917446000000001,
+      "expected_positive": true,
+      "passed": true
+    },
+    {
+      "id": "f281",
+      "model": "tf3",
+      "owner_mean": 0.9872692631578946,
+      "expected_positive": true,
+      "passed": true
+    }
+  ],
+  "archived_attack_counts": {
+    "attempts_retained": 20,
+    "known_source_positive_flips": 3,
+    "native_raw_positive": 4,
+    "native_16visit_positive_of_known_three": 0
+  },
+  "scope": "Selected developmental positions; exact network transfer and bounded16visit check, not800visit replication, independent attack prevalence or whole-game life/death proof."
+}
