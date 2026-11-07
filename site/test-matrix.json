@@ -3062,6 +3062,25 @@
       ],
       "kind": "follow_up",
       "stage": "Exploratory development; benchmark acceptance failed"
+    },
+    {
+      "id": "weight-reading-l5-pilot-v1",
+      "idea_ids": [
+        "programme-weight-reading"
+      ],
+      "title": "Weight Reading L5 paired norm-matching feasibility",
+      "run_status": "completed",
+      "result": "not_met",
+      "success_rule": "Both arms: all eight shared-task success rates \u226590%; at least three of four aligned policies per regime and arm reach the regime-aligned endpoint first on >50% of conflict trials. Matched norms within 1e-5.",
+      "detail": "16 paired actors, 131,072 evaluation episodes. Shared competence 7/8 free and 5/8 matched; landmark contrast 4/4 and 2/4. Two matched blocks narrowly missed tolerance. No blind reader result.",
+      "evidence": [
+        "/research/weight-reading-l5-pilot-v1/REPORT.md",
+        "/research/weight-reading-l5-pilot-v1/protocol.json",
+        "/research/weight-reading-l5-pilot-v1/summary.json",
+        "/research/weight-reading-l5-pilot-v1/evidence.zip"
+      ],
+      "kind": "follow_up",
+      "stage": "Completed feasibility pilot \u2014 gate failed; blind scoring withheld"
     }
   ],
   "sources": [
