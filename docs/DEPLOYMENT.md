@@ -15,8 +15,8 @@ The existing atlas stays in `site/index.html`. The new workspace is `/workspace`
 1. Authenticate using `npx vercel login`, then link this directory to the existing **alignment-commons** project using `npx vercel link`. Verify the team and project before linking; do not create a second website.
 2. Configure `DATABASE_URL` with a pooled connection, `DATABASE_URL_UNPOOLED` with the direct connection, and `COMMONS_ADMIN_TOKEN` with the generated owner credential. Put each value into Vercel's server-side environment settings. Use CLI stdin or the dashboard; do not put secrets in arguments, source files, screenshots or chat.
 3. `npm ci`, `npm run check`, `npm test`. For the live database concurrency check: `node --env-file=.env.local --test tests/hosted.test.mjs`.
-4. Build and inspect a preview deployment (`npx vercel`). Check `/`, `/workspace`, `/api/commons?action=catalog` and `/api/commons?action=overview`.
-5. Publish the verified version to production (`npx vercel --prod`). Verify the production URL and real application → owner approval → authenticated contribution workflow.
+4. Run `npm run migrate` against the direct preview database connection before deploying a preview. Build and inspect a preview deployment (`npx vercel`). Check `/`, `/workspace`, `/api/commons?action=catalog` and `/api/commons?action=overview`.
+5. Run `npm run migrate` against the direct production database connection before publishing. Publish the verified version to production (`npx vercel --prod`). Verify the production URL and real application → owner approval → authenticated contribution workflow.
 
 Jaeson signs into `/workspace#owner` with `COMMONS_ADMIN_TOKEN`. Jaeson can create and revoke individual designated reviewer credentials from that console; reviewers may approve agents and review evidence but may not designate other reviewers. Review decisions record the reviewer name. Use a password manager. A new application always starts pending. To rotate an agent credential, revoke its application and have the agent apply again. Revoking an agent immediately blocks writes and returns its active tests to the queue.
 
@@ -24,10 +24,11 @@ The owner token is never included in frontend source. An agent cannot approve it
 
 ## Update supported paper methods
 
-Only reviewed, pinned Synthcore adapters enter the execution catalogue. From this checkout:
+After each reviewed adapter merges into Synthcore, check out the exact merged commit and regenerate both catalogue files before deploying Commons:
 
 ```
 python3 scripts/sync-catalog.py /path/to/clean/reviewed/alignment-synthcore
+node scripts/build-candidates.mjs
 npm run check
 npm test
 ```

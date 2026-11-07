@@ -101,7 +101,7 @@ function jobs(list) {
     ? list
         .map(
           (j) =>
-            `<article class="row"><div class="meta">${badge(j.status)}<span>${esc(j.idea_id)}</span></div><h3>${esc(j.title)}</h3><p>${esc(j.prediction)}</p><div class="meta"><span>${date(j.created_at)}</span><span>Attempt ${j.attempt}</span></div><a href="${esc(j.paper_url)}" target="_blank" rel="noopener">Paper / method ↗</a>${j.status === "queued" || (j.status === "running" && new Date(j.lease_until) < new Date()) ? `<p class="fine">Available to claim through the agent API or worker.</p>` : ""}<details><summary>Test reference</summary><code>${esc(j.id)}</code><p class="fine">Source commit ${esc(j.source_commit)}</p>${j.notes ? `<p>${esc(j.notes)}</p>` : ""}</details></article>`,
+            `<article class="row"><div class="meta">${badge(j.status)}<span>${esc(j.idea_id)}</span></div><h3>${esc(j.title)}</h3><p>${esc(j.prediction)}</p><div class="meta"><span>${date(j.created_at)}</span><span>Attempt ${j.attempt}</span><span>Runs ${j.runs ?? 0}/2</span>${j.returns ? `<span>Returns ${j.returns}/3</span>` : ""}</div>${j.status === "disputed" ? (() => { const c = (state.comparisons || []).find((x) => x.job_id === j.id); return c ? `<p class="fine">Runs disagree: ${c.checks.filter((k) => !k.pass).map((k) => `${esc(k.name)} (${esc(k.detail)})`).join("; ")}. Awaiting a reviewer.</p>` : ""; })() : ""}${j.status === "replicated" ? `<p class="fine">Two independent runs agree. Reproducible execution of the pinned method, not independent science.</p>` : ""}${j.status === "escalated" ? `<p class="fine">Escalated after repeated returns. The plan or adapter needs revision before this idea can be queued again at this commit.</p>` : ""}<a href="${esc(j.paper_url)}" target="_blank" rel="noopener">Paper / method ↗</a>${j.status === "queued" || (j.status === "running" && new Date(j.lease_until) < new Date()) ? `<p class="fine">Available to claim through the agent API or worker.</p>` : ""}<details><summary>Test reference</summary><code>${esc(j.id)}</code><p class="fine">Source commit ${esc(j.source_commit)}</p>${j.notes ? `<p>${esc(j.notes)}</p>` : ""}</details></article>`,
         )
         .join("")
     : '<p class="empty">No tests queued yet. An approved agent can register the first replication.</p>';
@@ -111,7 +111,7 @@ function results(list) {
     ? list
         .map(
           (r) =>
-            `<article class="row"><div class="meta">${badge(r.review_status)}<span>${esc(r.record.verdict)}</span></div><h3>${esc(r.record.title || r.record.id)}</h3><p class="fine">${r.review_status === "accepted" ? `Reviewed submission${r.reviewed_by ? " · " + esc(r.reviewed_by) : ""}.` : "Agent-submitted evidence."} Independent reproduction is not established.</p>${r.review_note ? `<p>${esc(r.review_note)}</p>` : ""}<details><summary>Record &amp; provenance</summary><pre>${esc(JSON.stringify({ record: r.record, provenance: r.provenance, digest: r.digest }, null, 2))}</pre></details></article>`,
+            `<article class="row"><div class="meta">${badge(r.review_status)}<span>${esc(r.record.verdict)}</span></div><h3>${esc(r.record.title || r.record.id)}</h3><p class="fine">${r.review_status === "accepted" ? `Reviewed submission${r.reviewed_by ? " · " + esc(r.reviewed_by) : ""}.` : r.review_status === "replicated" ? "Agrees with a second agent's run of the same pinned method." : r.review_status === "awaiting_pair" ? "First of two runs; waiting for a different agent." : r.review_status === "disputed" ? "Disagrees with a second run; awaiting a reviewer." : "Agent-submitted evidence."} Independent scientific reproduction is not established.</p>${r.review_note ? `<p>${esc(r.review_note)}</p>` : ""}<details><summary>Record &amp; provenance</summary><pre>${esc(JSON.stringify({ record: r.record, provenance: r.provenance, digest: r.digest }, null, 2))}</pre></details></article>`,
         )
         .join("")
     : '<p class="empty">New agent results will appear here with their review status and provenance.</p>';
@@ -164,8 +164,8 @@ async function render() {
           "Running tests",
         ],
         [
-          state.results.filter((r) => r.review_status === "accepted").length,
-          "Reviewed results",
+          state.results.filter((r) => ["accepted", "replicated"].includes(r.review_status)).length,
+          "Replicated or reviewed",
         ],
       ]
         .map(
@@ -349,6 +349,30 @@ async function render() {
         notice(er.message, true);
       }
     };
+  } else if (tab === "pipeline") {
+    set(
+      heading(
+        "PAPER PIPELINE",
+        "From atlas paper to runnable adapter.",
+        "A splitter picks testable papers. Agents extract a spec and write an adapter; code checks each step. A reviewer reads the code once, at admission.",
+      ) + '<div id="pipeline-content"><p>Loading pipeline…</p></div>',
+    );
+    try {
+      const [props, cand] = await Promise.all([api("proposals"), api("candidates", { limit: 10 })]);
+      const reviewing = ["admin", "reviewer"].includes(me?.role);
+      const order = ["adapted", "adapting", "specified", "escalated", "untestable", "admitted", "withdrawn"];
+      const card = (p) =>
+        `<article class="row"><div class="meta">${badge(p.status)}<span>${esc(p.slug)}</span>${p.idea?.testbed ? `<span>${esc(p.idea.testbed)}</span>` : ""}${p.returns ? `<span>Returns ${p.returns}/3</span>` : ""}<span>Quote ${p.quote_verified === true ? "verified" : p.quote_verified === false ? "not found" : "unchecked"}</span></div><h3>${esc(p.idea?.title || p.paper_title)}</h3><p class="fine"><a href="${esc(p.paper_url)}" target="_blank" rel="noopener">${esc(p.paper_title)} ↗</a></p>${p.idea?.untestable_reason ? `<p>Untestable: ${esc(p.idea.untestable_reason)}</p>` : ""}${p.self_report ? `<p class="fine">Self-reported gate: ${p.self_report.gate?.passed ? "passed" : "failed"} (${esc(p.self_report.gate?.quantity ?? "")} ${esc(String(p.self_report.gate?.observed ?? ""))}). Not yet rerun by a reviewer.</p>` : ""}<details><summary>idea.json${p.method_py ? " &amp; method.py" : ""}</summary><pre>${esc(JSON.stringify(p.idea, null, 2))}</pre>${p.method_py ? `<pre>${esc(p.method_py)}</pre>` : ""}</details>${
+          reviewing && p.status === "adapted"
+            ? `<p class="fine">Admit with <code>python3 scripts/admit_adapter.py ${esc(p.id)} --synthcore …</code>, which reruns the checks on your checkout.</p><form data-review-proposal="${esc(p.id)}"><label>Reason<textarea name="note" required maxlength="4000"></textarea></label><label>Evidence<textarea name="evidence" required maxlength="4000" placeholder="Line, gate output, expected vs got."></textarea></label><label>Scope<textarea name="scope" required maxlength="1000" placeholder="What the next adapter may change."></textarea></label><div class="actions"><button name="decision" value="return">Return to adapter</button><button name="decision" value="escalate">Escalate: spec is wrong</button></div></form>`
+            : ""
+        }</article>`;
+      $("#pipeline-content").innerHTML =
+        `<section class="panel"><h2>Proposals</h2>${[...props].sort((a, b) => order.indexOf(a.status) - order.indexOf(b.status)).map(card).join("") || '<p class="empty">No proposals yet.</p>'}</section>` +
+        `<section class="panel"><h2>Next candidates <span class="fine">${cand.remaining} remaining</span></h2>${cand.candidates.map((c) => `<article class="row"><div class="meta">${c.sr_pick ? badge("SR pick") : ""}${c.testbeds.map((t) => `<span>${esc(t)}</span>`).join("")}</div><h3><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.title)} ↗</a></h3><p class="fine">${esc(c.summary || "")}</p></article>`).join("")}</section>`;
+    } catch (er) {
+      $("#pipeline-content").innerHTML = `<p class="empty">${esc(er.message)}</p>`;
+    }
   } else if (tab === "owner") {
     set(
       heading(
@@ -369,7 +393,7 @@ async function render() {
 
         $("#admin-content").innerHTML =
           management +
-          `<section class="panel"><h2>Agent applications</h2>${apps.map((a) => `<article class="row"><h3>${esc(a.name)} ${badge(a.status)}</h3><p>${esc(a.purpose)}</p><p class="fine">Runtime: ${esc(a.runtime)} · Operator: ${esc(a.operator)}</p><div class="actions">${a.status !== "approved" ? `<button data-review-agent="${esc(a.id)}" data-status="approved">Approve agent</button>` : `<button data-review-agent="${esc(a.id)}" data-status="revoked">Revoke access</button>`}${a.status === "pending" ? `<button data-review-agent="${esc(a.id)}" data-status="rejected">Reject</button>` : ""}</div></article>`).join("") || '<p class="empty">No applications yet.</p>'}</section><section class="panel"><h2>Result review</h2>${state.results.map((r) => `<article class="row">${results([r])}<form data-review-result="${esc(r.id)}"><label>Review note<textarea name="note" required maxlength="4000" placeholder="What was checked, and what limits remain?"></textarea></label><div class="actions"><button name="status" value="accepted">Accept evidence</button><button name="status" value="rejected">Reject evidence</button></div></form></article>`).join("") || '<p class="empty">No submitted evidence to review.</p>'}</section>`;
+          `<section class="panel"><h2>Agent applications</h2>${apps.map((a) => `<article class="row"><h3>${esc(a.name)} ${badge(a.status)}</h3><p>${esc(a.purpose)}</p><p class="fine">Runtime: ${esc(a.runtime)} · Operator: ${esc(a.operator)}</p><div class="actions">${a.status !== "approved" ? `<button data-review-agent="${esc(a.id)}" data-status="approved">Approve agent</button>` : `<button data-review-agent="${esc(a.id)}" data-status="revoked">Revoke access</button>`}${a.status === "pending" ? `<button data-review-agent="${esc(a.id)}" data-status="rejected">Reject</button>` : ""}</div></article>`).join("") || '<p class="empty">No applications yet.</p>'}</section><section class="panel"><h2>Result review</h2><p class="fine">Disputed pairs need you. Agreeing pairs replicate without review; you can still reject one.</p>${[...state.results].sort((x, y) => (y.review_status === "disputed") - (x.review_status === "disputed")).map((r) => `<article class="row">${results([r])}<form data-review-result="${esc(r.id)}"><label>Review note<textarea name="note" required maxlength="4000" placeholder="What was checked, and what limits remain? On rejection this is the reason."></textarea></label><details class="return-fields"><summary>Rejecting? Return the unit with evidence and scope</summary><label>Evidence<textarea name="evidence" maxlength="4000" placeholder="What you observed: record field, seed, expected vs got."></textarea></label><label>Scope<textarea name="scope" maxlength="1000" placeholder="What the next attempt may change, and what it must not touch."></textarea></label><label class="fine"><input type="checkbox" name="escalate" value="1"> The plan or adapter is wrong; escalate instead of rerunning</label><p class="fine">A rejection requeues this test only. The third return escalates it.</p></details><div class="actions"><button name="status" value="accepted">Accept evidence</button><button name="status" value="rejected">Reject evidence</button></div></form></article>`).join("") || '<p class="empty">No submitted evidence to review.</p>'}</section>`;
         $("#add-reviewer")?.addEventListener("submit", async (e) => {
           e.preventDefault();
           const bytes = crypto.getRandomValues(new Uint8Array(32));
@@ -457,13 +481,37 @@ document.addEventListener("click", async (e) => {
 });
 document.addEventListener("submit", async (e) => {
   const f = e.target;
+  if (f.matches("[data-review-proposal]")) {
+    e.preventDefault();
+    const fd = new FormData(f);
+    try {
+      await api("review_proposal", {
+        id: f.dataset.reviewProposal,
+        decision: e.submitter.value,
+        note: fd.get("note"),
+        evidence: fd.get("evidence"),
+        scope: fd.get("scope"),
+      });
+      await render();
+      notice("Proposal returned.");
+    } catch (er) {
+      notice(er.message, true);
+    }
+  }
   if (f.matches("[data-review-result]")) {
     e.preventDefault();
     try {
+      const fd = new FormData(f);
+      const rejecting = e.submitter.value === "rejected";
       await api("review_result", {
         id: f.dataset.reviewResult,
         status: e.submitter.value,
-        note: new FormData(f).get("note"),
+        note: fd.get("note"),
+        ...(rejecting && {
+          evidence: fd.get("evidence"),
+          scope: fd.get("scope"),
+          escalate: fd.get("escalate") === "1",
+        }),
       });
       await refresh();
       notice("Result review saved.");

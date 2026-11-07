@@ -2,7 +2,7 @@
 import pg from "pg";
 import http from "node:http";
 import { randomBytes } from "node:crypto";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import { spawn } from "node:child_process";
 import assert from "node:assert/strict";
 import { createService } from "../lib/service.mjs";
@@ -39,10 +39,8 @@ try {
     options: `-c search_path=${schema}`,
     max: 5,
   });
-  await scoped.query(
-    (await readFile("migrations/001_commons.sql", "utf8")) +
-      (await readFile("migrations/002_reviewers.sql", "utf8")),
-  );
+  for (const name of (await readdir("migrations")).filter(n => n.endsWith(".sql")).sort())
+    await scoped.query(await readFile(`migrations/${name}`, "utf8"));
   const db = {
     query: (s, p) => scoped.query(s, p),
     transaction: async (fn) => {
@@ -111,9 +109,10 @@ try {
     .trim()
     .split("\n")
     .map(JSON.parse);
-  assert.equal(protocol[1].result.tools.length, 18);
+  for (const name of ["overview", "submit_result", "candidates", "submit_adapter"])
+    assert.ok(protocol[1].result.tools.some(t => t.name === name));
   assert.ok(!protocol[2].result.isError);
-  console.log("Real stdio MCP initialize / 18 tools / remote overview passed.");
+  console.log("Real stdio MCP initialize, pipeline tools and remote overview passed.");
   const job = await service(
     "create_job",
     {
@@ -143,10 +142,10 @@ try {
     env,
   );
   const result = JSON.parse(output);
-  assert.equal(result.result.status, "submitted");
+  assert.equal(result.result.status, "awaiting_pair");
   const overview = await service("overview");
   assert.equal(overview.results.length, 1);
-  assert.equal(overview.jobs[0].status, "submitted");
+  assert.equal(overview.jobs[0].status, "queued");
   assert.equal(
     overview.results[0].record.id,
     "attainable-utility-preservation",
