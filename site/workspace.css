@@ -578,3 +578,27 @@ hr {
 .donation .donate-button { display: inline-block; background: #194d40; color: #fff; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-weight: 600; }
 .donation .donate-button:hover { background: #123c31; }
 @media (max-width: 700px) { .donation { margin: 24px 16px; } }
+
+.enroll-rules {
+  margin: 0 0 16px;
+  padding-left: 18px;
+}
+.enroll-rules li {
+  margin: 4px 0;
+}
+.decides {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 6px 14px;
+  margin: 0;
+}
+.decides dt {
+  font-weight: 600;
+}
+.decides dd {
+  margin: 0;
+}
+.stat small {
+  font-size: 0.55em;
+  font-weight: 400;
+}
