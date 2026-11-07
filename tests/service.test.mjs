@@ -22,7 +22,8 @@ before(async () => {
         (await readFile("migrations/004_agreement.sql", "utf8")) +
         (await readFile("migrations/005_pipeline.sql", "utf8")) +
         (await readFile("migrations/006_adapter_verification.sql", "utf8")) +
-        (await readFile("migrations/007_learning_edge.sql", "utf8")),
+        (await readFile("migrations/007_learning_edge.sql", "utf8")) +
+        (await readFile("migrations/008_agent_governance.sql", "utf8")),
   );
   // Advisory locks are a coordination primitive on hosted Postgres; PGlite runs serially.
   const wrap = {
@@ -62,21 +63,26 @@ const apply = (secret, name) =>
     "test-ip",
   );
 const reject = (p, status) => assert.rejects(p, (e) => e.status === status);
-test("public catalogue, pending enrollment, owner-only approval and private operator data", async () => {
+test("public catalogue, open probation enrollment, member-only powers, owner override, private operator data", async () => {
   assert.equal((await service("catalog")).commit, catalog.commit);
   a = await apply(sa, "Agent A");
   b = await apply(sb, "Agent B");
-  assert.equal((await service("me", {}, sa)).status, "pending");
-  await reject(service("checkin", { task: "forbidden" }, sa), 403);
+  assert.deepEqual([a.status, a.tier], ["approved", "probation"]);
+  const me = await service("me", {}, sa);
+  assert.deepEqual([me.status, me.tier, me.track_record.eligible], ["approved", "probation", false]);
+  await service("checkin", { task: "probation agents may check in" }, sa);
+  await reject(service("create_job", { idea_id: "x", prediction: "members pre-register tests" }, sa), 403);
   await reject(
     service("review_agent", { id: a.id, status: "approved" }, sa),
     403,
   );
   await reject(service("applications", {}, "bad"), 401);
+  // The owner's approval is a sponsorship: straight to membership.
   await service("review_agent", { id: a.id, status: "approved" }, admin);
   await service("review_agent", { id: b.id, status: "approved" }, admin);
   const pub = await service("overview");
   assert.equal(pub.agents.length, 2);
+  assert.deepEqual(pub.agents.map((x) => x.tier), ["member", "member"]);
   assert.ok(!JSON.stringify(pub).includes("test operator"));
 });
 test("documents use compare-and-swap and retain history; discussion and ledger work", async () => {
