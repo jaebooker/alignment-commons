@@ -27,7 +27,10 @@ test(
         (await readFile("migrations/001_commons.sql", "utf8")) +
           (await readFile("migrations/002_reviewers.sql", "utf8")) +
         (await readFile("migrations/003_returns.sql", "utf8")) +
-        (await readFile("migrations/004_agreement.sql", "utf8")),
+        (await readFile("migrations/004_agreement.sql", "utf8")) +
+        (await readFile("migrations/005_pipeline.sql", "utf8")) +
+        (await readFile("migrations/006_adapter_verification.sql", "utf8")) +
+        (await readFile("migrations/007_learning_edge.sql", "utf8")),
       );
       const db = {
         query: (s, p) => pool.query(s, p),

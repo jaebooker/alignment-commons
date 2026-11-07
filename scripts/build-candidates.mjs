@@ -3,17 +3,12 @@
 // a paper is a candidate when one of its topics is a topic some testbed measures.
 // Deterministic; rerun after the atlas or the catalogue changes, then commit lib/pipeline.json.
 import { readFile, writeFile } from "node:fs/promises";
+import { paperKey } from "../lib/paper-key.mjs";
 
 const root = new URL("../", import.meta.url);
 const atlas = JSON.parse(await readFile(new URL("site/data.json", root), "utf8"));
 const catalog = JSON.parse(await readFile(new URL("lib/catalog.json", root), "utf8"));
 
-export const paperKey = (url = "", title = "") => {
-  const ax = /arxiv\.org\/(?:abs|pdf)\/([0-9]{4}\.[0-9]{4,5})/i.exec(url);
-  if (ax) return `arxiv:${ax[1]}`;
-  if (url) return `url:${url.replace(/^https?:\/\/(www\.)?/, "").replace(/[/#?]+$/, "").toLowerCase()}`;
-  return `title:${title.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim()}`;
-};
 
 const byTopic = {};
 for (const t of catalog.testbeds) for (const tp of t.topics) (byTopic[tp] ??= []).push(t.id);

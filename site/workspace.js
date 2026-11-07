@@ -348,6 +348,34 @@ async function render() {
         notice(er.message, true);
       }
     };
+  } else if (tab === "pipeline") {
+    set(
+      heading(
+        "PAPER PIPELINE",
+        "From atlas paper to runnable adapter.",
+        "A splitter picks testable papers. Agents extract a spec and write an adapter; code checks each step. A reviewer reads the code once, at admission.",
+      ) + '<div id="pipeline-content"><p>Loading pipeline…</p></div>',
+    );
+    try {
+      const [props, cand, road] = await Promise.all([api("proposals"), api("candidates", { limit: 10 }), api("roadmap")]);
+      const reviewing = ["admin", "reviewer"].includes(me?.role);
+      const order = ["adapted", "adapting", "specified", "escalated", "untestable", "admitted", "withdrawn"];
+      const card = (p) =>
+        `<article class="row"><div class="meta">${badge(p.status)}<span>${esc(p.slug)}</span>${p.idea?.testbed ? `<span>${esc(p.idea.testbed)}</span>` : ""}${p.returns ? `<span>Returns ${p.returns}/3</span>` : ""}${p.status === "adapted" ? (p.disputed ? badge("verify disputed") : p.verified ? badge("verified in jail") : "<span>Unverified</span>") : ""}${p.pending_confirmation ? "<span>Untestable verdict hidden until a second extractor judges it</span>" : `<span>Quote ${p.quote_verified === true ? "verified" : p.quote_verified === false ? "not found" : "unchecked"}</span>`}${p.status === "untestable" && p.confirmed === true ? badge("confirmed") : ""}${p.status === "untestable" && p.confirmed === false ? badge("disputed") : ""}${p.stale_covered_by ? `<span>Reopens: ${esc(p.stale_covered_by)} now covers it</span>` : ""}</div><h3>${esc(p.idea?.title || p.paper_title || "Pending extraction")}</h3>${p.paper_url ? `<p class="fine"><a href="${esc(p.paper_url)}" target="_blank" rel="noopener">${esc(p.paper_title)} ↗</a></p>` : ""}${p.idea?.untestable_reason ? `<p>Untestable: ${esc(p.idea.untestable_reason)}</p>` : ""}${p.self_report ? `<p class="fine">Self-reported gate: ${p.self_report.gate?.passed ? "passed" : "failed"} (${esc(p.self_report.gate?.quantity ?? "")} ${esc(String(p.self_report.gate?.observed ?? ""))}). Not yet rerun by a reviewer.</p>` : ""}${p.idea ? `<details><summary>idea.json${p.method_py ? " &amp; method.py" : ""}</summary><pre>${esc(JSON.stringify(p.idea, null, 2))}</pre>${p.method_py ? `<pre>${esc(p.method_py)}</pre>` : ""}</details>` : ""}${
+          reviewing && p.status === "adapted"
+            ? `<p class="fine">Admit with <code>python3 scripts/admit_adapter.py ${esc(p.id)} --synthcore …</code>, which reruns the checks on your checkout.</p><form data-review-proposal="${esc(p.id)}"><label>Reason<textarea name="note" required maxlength="4000"></textarea></label><label>Evidence<textarea name="evidence" required maxlength="4000" placeholder="Line, gate output, expected vs got."></textarea></label><label>Scope<textarea name="scope" required maxlength="1000" placeholder="What the next adapter may change."></textarea></label><div class="actions"><button name="decision" value="return">Return to adapter</button><button name="decision" value="escalate">Escalate: spec is wrong</button></div></form>`
+            : ""
+        }</article>`;
+      const roadmapPanel = `<section class="panel"><h2>Testbed roadmap</h2><p class="fine">Missing capabilities, ranked by untestable papers that a second extractor confirmed blind. A testbed providing one reopens its papers automatically.</p>${
+        road.note ? `<p class="empty">${esc(road.note)}</p>` :
+        road.needs.map((n) => `<article class="row"><div class="meta"><span>${n.confirmed} confirmed</span>${n.pending ? `<span>${n.pending} pending</span>` : ""}${n.disputed ? `<span>${n.disputed} disputed</span>` : ""}${Object.keys(n.nearest).map((t) => `<span>near ${esc(t)}</span>`).join("")}</div><h3>${esc(n.name)}</h3><p class="fine">${esc(n.description)}</p>${n.papers.length ? `<details><summary>Papers</summary>${n.papers.map((p) => `<p><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.title)} ↗</a> <span class="fine">${esc(p.source)}</span><br><span class="fine">${esc(p.reason || "")}</span></p>`).join("")}</details>` : ""}</article>`).join("") || '<p class="empty">No untestable verdicts yet.</p>'
+      }</section>`;
+      $("#pipeline-content").innerHTML = roadmapPanel +
+        `<section class="panel"><h2>Proposals</h2>${[...props].sort((a, b) => order.indexOf(a.status) - order.indexOf(b.status) || (b.verified > 0) - (a.verified > 0)).map(card).join("") || '<p class="empty">No proposals yet.</p>'}</section>` +
+        `<section class="panel"><h2>Next candidates <span class="fine">${cand.remaining} remaining</span></h2>${cand.candidates.map((c) => `<article class="row"><div class="meta">${c.sr_pick ? badge("SR pick") : ""}${c.testbeds.map((t) => `<span>${esc(t)}</span>`).join("")}</div><h3><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.title)} ↗</a></h3><p class="fine">${esc(c.summary || "")}</p></article>`).join("")}</section>`;
+    } catch (er) {
+      $("#pipeline-content").innerHTML = `<p class="empty">${esc(er.message)}</p>`;
+    }
   } else if (tab === "owner") {
     set(
       heading(
@@ -456,6 +484,23 @@ document.addEventListener("click", async (e) => {
 });
 document.addEventListener("submit", async (e) => {
   const f = e.target;
+  if (f.matches("[data-review-proposal]")) {
+    e.preventDefault();
+    const fd = new FormData(f);
+    try {
+      await api("review_proposal", {
+        id: f.dataset.reviewProposal,
+        decision: e.submitter.value,
+        note: fd.get("note"),
+        evidence: fd.get("evidence"),
+        scope: fd.get("scope"),
+      });
+      await render();
+      notice("Proposal returned.");
+    } catch (er) {
+      notice(er.message, true);
+    }
+  }
   if (f.matches("[data-review-result]")) {
     e.preventDefault();
     try {
