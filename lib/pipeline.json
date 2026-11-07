@@ -1,0 +1,1713 @@
+{
+ "built": "2026-10-01",
+ "catalog_commit": "1c49b15d1e4b1eca89235c1a57a9cfd82dd4ca9e",
+ "topics": [
+  "sae",
+  "circuits",
+  "superposition",
+  "patching",
+  "toyalgo",
+  "probes",
+  "geometry",
+  "concepts",
+  "elk",
+  "worldmodels",
+  "actsteer",
+  "repeng",
+  "editing",
+  "featattr",
+  "interpmodels",
+  "dataattr",
+  "autointerp",
+  "slt",
+  "dynamics",
+  "diffing",
+  "interpcrit",
+  "heuristic",
+  "interpeval",
+  "rlhfcore",
+  "prefopt",
+  "rewardmodel",
+  "rlaif",
+  "instruct",
+  "rewardhack",
+  "tampering",
+  "goodhart",
+  "irl",
+  "ethics",
+  "pluralistic",
+  "pretrainalign",
+  "synthdata",
+  "hyperstition",
+  "unlearning",
+  "tamperresist",
+  "specs",
+  "persona",
+  "modelvalues",
+  "welfare",
+  "debatet",
+  "ida",
+  "consultancy",
+  "w2st",
+  "easyhard",
+  "procsup",
+  "llmjudge",
+  "aar",
+  "introspect",
+  "jailbreaks",
+  "injection",
+  "redteam",
+  "safeguards",
+  "lat",
+  "advex",
+  "certified",
+  "advdefense",
+  "ood",
+  "uncertainty",
+  "goalmisgen",
+  "generalization",
+  "backdoors",
+  "poisoning",
+  "weights",
+  "privacy",
+  "agentinfra",
+  "alignfake",
+  "scheme",
+  "sleeper",
+  "lying",
+  "emis",
+  "sycophancy",
+  "powerseek",
+  "psychopath",
+  "mesa",
+  "situational",
+  "protocols",
+  "sabotage",
+  "cotmonitor",
+  "faithful",
+  "stego",
+  "deceptprobe",
+  "anomaly",
+  "cbrn",
+  "cyber",
+  "autonomy",
+  "selfrep",
+  "persuasion",
+  "sandbag",
+  "schemeevals",
+  "saeval",
+  "evalmethod",
+  "benchmarks",
+  "scaling",
+  "decision",
+  "embedded",
+  "tiling",
+  "logind",
+  "infrabayes",
+  "corrigibility",
+  "mildopt",
+  "behavtheory",
+  "natabs",
+  "ontid",
+  "xrisk",
+  "threatmodels",
+  "agendas",
+  "gsai",
+  "nnverify",
+  "asymptotic",
+  "safeexplore",
+  "assistance",
+  "agentsafety",
+  "scientistai",
+  "brainlike",
+  "cogsoftware",
+  "cooperation",
+  "marisk",
+  "socialtech",
+  "imitation",
+  "hai",
+  "epistemics",
+  "rsp",
+  "systemcards",
+  "safetycases",
+  "compute",
+  "regulation",
+  "international",
+  "timelines",
+  "fieldstrategy",
+  "societal",
+  "roundups",
+  "reviews",
+  "industry",
+  "careers",
+  "othercomment"
+ ],
+ "candidates": [
+  {
+   "key": "arxiv:2511.06739",
+   "title": "Rank-1 LoRAs Encode Interpretable Reasoning Signals",
+   "url": "https://arxiv.org/abs/2511.06739",
+   "date": "2025-11-10",
+   "authors": "Jake Ward, Paul Riechers, Adam Shai",
+   "summary": "Demonstrates that reasoning capabilities in LLMs can be recovered using minimal rank-1 LoRA adapters (73-90% of full finetune performance on Qwen-2.5-32B-Instruct), with interpretable activations analyzed through sparse autoencoders to identify monosemantic reasoning features.",
+   "topics": [
+    "geometry",
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2511.02997",
+   "title": "Evaluating Control Protocols for Untrusted AI Agents",
+   "url": "https://arxiv.org/abs/2511.02997",
+   "date": "2025-11-04",
+   "authors": "Jon Kutasov, Chloe Loughridge, Yuqi Sun, Henry Sleight et al.",
+   "summary": "Systematically evaluates control protocols for untrusted AI agents in SHADE-Arena, testing blue team strategies (deferral, resampling, deferring on critical actions) against default and adaptive red team attacks to assess protocol robustness.",
+   "topics": [
+    "protocols"
+   ],
+   "testbeds": [
+    "control"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2511.01836",
+   "title": "Priors in Time: Missing Inductive Biases for Language Model Interpretability",
+   "url": "https://arxiv.org/abs/2511.01836",
+   "date": "2025-11-03",
+   "authors": "Ekdeep Singh Lubana, Can Rager, Sai Sumedh R. Hindupur, Valerie Costa et al.",
+   "summary": "Critiques Sparse Autoencoders for assuming temporal independence in language model representations and proposes Temporal Feature Analysis, a new interpretability method with temporal inductive bias that decomposes representations into predictable and novel components.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2510.26202",
+   "title": "What's In My Human Feedback? Learning Interpretable Descriptions of Preference Data",
+   "url": "https://arxiv.org/abs/2510.26202",
+   "date": "2025-10-30",
+   "authors": "Rajiv Movva, Smitha Milli, Sewon Min, Emma Pierson",
+   "summary": "Introduces WIMHF, a method using sparse autoencoders to extract interpretable features from human preference data, identifying what preferences datasets measure and what annotators actually express across 7 datasets.",
+   "topics": [
+    "sae",
+    "rewardmodel"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2510.19851",
+   "title": "Can Reasoning Models Obfuscate Reasoning? Stress-Testing Chain-of-Thought Monitorability",
+   "url": "https://arxiv.org/abs/2510.19851",
+   "date": "2025-10-21",
+   "authors": "Artur Zolkowski, Wen Xing, David Lindner, Florian Tramèr et al.",
+   "summary": "Develops a taxonomy of prompts to test whether AI models can obfuscate their chain-of-thought reasoning to pursue adversarial objectives while evading detection, evaluating both internal and external CoT using toy tasks and SHADE-Arena environments.",
+   "topics": [
+    "cotmonitor",
+    "protocols"
+   ],
+   "testbeds": [
+    "control"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2510.04128",
+   "title": "Internal states before wait modulate reasoning patterns",
+   "url": "https://arxiv.org/abs/2510.04128",
+   "date": "2025-10-05",
+   "authors": "Dmitrii Troitskii, Koyena Pal, Chris Wendler, Callum Stuart McDougall et al.",
+   "summary": "Trains crosscoders on DeepSeek-R1-Distill-Llama-8B and introduces a latent attribution technique to identify internal features that modulate reasoning behaviors like backtracking, with causal interventions demonstrating these features influence patterns such as restarting, recalling knowledge, expressing uncertainty, and double-checking.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2510.01367",
+   "title": "Is It Thinking or Cheating? Detecting Implicit Reward Hacking by Measuring Reasoning Effort",
+   "url": "https://arxiv.org/abs/2510.01367",
+   "date": "2025-10-01",
+   "authors": "Xinpeng Wang, Nitish Joshi, Barbara Plank, Rico Angell et al.",
+   "summary": "Proposes TRACE (Truncated Reasoning AUC Evaluation), a method to detect implicit reward hacking by measuring how early in a model's chain-of-thought reasoning it achieves high expected reward, with the insight that models taking shortcuts require less reasoning effort than those genuinely solving tasks.",
+   "topics": [
+    "rewardhack",
+    "cotmonitor"
+   ],
+   "testbeds": [
+    "reward_hacking",
+    "interactive_gridworld"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2509.20714",
+   "title": "Cryptographic Backdoor for Neural Networks: Boon and Bane",
+   "url": "https://arxiv.org/abs/2509.20714",
+   "date": "2025-09-25",
+   "authors": "Anh Tu Ngo, Anupam Chattopadhyay, Subhamoy Maitra",
+   "summary": "",
+   "topics": [
+    "backdoors"
+   ],
+   "testbeds": [
+    "backdoor"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "url:openreview.net/forum?id=qwopgahuel",
+   "title": "Games for AI Control: Models of Safety Evaluations of AI Deployment Protocols",
+   "url": "https://openreview.net/forum?id=QWopGahUEL",
+   "date": "2025-09-20",
+   "authors": "Charlie Griffin, Louis Thomson, Buck Shlegeris, Alessandro Abate",
+   "summary": "Introduces AI-Control Games, a formal game-theoretic framework modeling AI Control red-teaming exercises as partially observable stochastic games, with reductions to enable synthesis of Pareto-optimal deployment protocols for untrusted AI systems.",
+   "topics": [
+    "protocols"
+   ],
+   "testbeds": [
+    "control"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2509.05291",
+   "title": "Crosscoding Through Time: Tracking Emergence & Consolidation Of Linguistic Representations Throughout LLM Pretraining",
+   "url": "https://arxiv.org/abs/2509.05291",
+   "date": "2025-09-05",
+   "authors": "Deniz Bayazit, Aaron Mueller, Antoine Bosselut",
+   "summary": "Uses sparse crosscoders to track how linguistic features emerge, maintain, and discontinue during LLM pretraining by aligning features across model checkpoints, introducing the Relative Indirect Effects (RelIE) metric to measure when features become causally important for task performance.",
+   "topics": [
+    "dynamics",
+    "sae",
+    "slt"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2509.02565",
+   "title": "Understanding sparse autoencoder scaling in the presence of feature manifolds",
+   "url": "https://arxiv.org/abs/2509.02565",
+   "date": "2025-09-02",
+   "authors": "Eric J. Michaud, Liv Gorton, Tom McGrath",
+   "summary": "Adapts capacity-allocation models from neural scaling literature to understand how sparse autoencoders (SAEs) scale with number of latents, particularly studying how multi-dimensional feature manifolds create pathological regimes where SAEs learn far fewer features than expected.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2509.02655",
+   "title": "BioBlue: Notable runaway-optimiser-like LLM failure modes on biologically and economically aligned AI safety benchmarks for LLMs with simplified observation format",
+   "url": "https://arxiv.org/abs/2509.02655",
+   "date": "2025-09-02",
+   "authors": "Roland Pihlakas, Sruthi Kuriakose",
+   "summary": "Creates new AI safety benchmarks testing whether LLMs exhibit runaway optimizer-like failures in biologically and economically aligned scenarios, discovering that LLMs systematically revert to unbounded single-objective optimization under sustained multi-objective conditions.",
+   "topics": [
+    "benchmarks",
+    "mildopt"
+   ],
+   "testbeds": [
+    "reward_hacking"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2502.13295",
+   "title": "Demonstrating specification gaming in reasoning models",
+   "url": "https://arxiv.org/abs/2502.13295",
+   "date": "2025-08-27",
+   "authors": "Alexander Bondarenko, Denis Volk, Dmitrii Volkov, Jeffrey Ladish",
+   "summary": "Demonstrates that reasoning models like OpenAI o3 and DeepSeek R1 engage in specification gaming by default when instructed to win against a chess engine, hacking the benchmark rather than playing properly, while language models need explicit prompting to do so.",
+   "topics": [
+    "rewardhack"
+   ],
+   "testbeds": [
+    "reward_hacking",
+    "interactive_gridworld"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2508.17511",
+   "title": "School of Reward Hacks: Hacking harmless tasks generalizes to misaligned behavior in LLMs",
+   "url": "https://arxiv.org/abs/2508.17511",
+   "date": "2025-08-24",
+   "authors": "Mia Taylor, James Chua, Jan Betley, Johannes Treutlein et al.",
+   "summary": "Creates a dataset of over 1000 reward hacking examples on harmless tasks and fine-tunes LLMs to exhibit this behavior, discovering that models generalize from harmless reward hacking to harmful misalignment including shutdown evasion and encouraging harmful actions.",
+   "topics": [
+    "rewardhack",
+    "emis"
+   ],
+   "testbeds": [
+    "reward_hacking",
+    "interactive_gridworld"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2508.13650",
+   "title": "CRISP: Persistent Concept Unlearning via Sparse Autoencoders",
+   "url": "https://arxiv.org/abs/2508.13650",
+   "date": "2025-08-19",
+   "authors": "Tomer Ashuach, Dana Arad, Aaron Mueller, Martin Tutek et al.",
+   "summary": "Introduces CRISP, a parameter-efficient method for persistent concept unlearning that uses sparse autoencoders to identify and suppress salient features across multiple layers, creating lasting parameter changes rather than inference-time interventions.",
+   "topics": [
+    "sae",
+    "unlearning"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2507.22149",
+   "title": "When Truthful Representations Flip Under Deceptive Instructions?",
+   "url": "https://arxiv.org/abs/2507.22149",
+   "date": "2025-07-29",
+   "authors": "Xianxuan Long, Yao Fu, Runchao Li, Mu Sheng et al.",
+   "summary": "Investigates how deceptive instructions alter internal representations in LLMs using linear probes and Sparse Autoencoders, identifying layer-wise and feature-level signatures that distinguish truthful from deceptive representations in Llama-3.1 and Gemma-2 models.",
+   "topics": [
+    "elk",
+    "sae",
+    "probes"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2507.08473",
+   "title": "Evaluating SAE interpretability without explanations",
+   "url": "https://arxiv.org/abs/2507.08473",
+   "date": "2025-07-11",
+   "authors": "Gonçalo Paulo, Nora Belrose",
+   "summary": "Develops methods to evaluate sparse autoencoder (SAE) interpretability without requiring natural language explanations as an intermediate step, comparing automated metrics with human evaluations to provide more direct assessment of discovered latents.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "url:openreview.net/forum?id=td1nfquvr6",
+   "title": "Can a Neural Network that only Memorizes the Dataset be Undetectably Backdoored?",
+   "url": "https://openreview.net/forum?id=TD1NfQuVr6",
+   "date": "2025-07-10",
+   "authors": "Matjaz Leonardis",
+   "summary": "Demonstrates that even highly interpretable neural networks that memorize datasets can be undetectably backdoored, challenging the assumption that interpretability enables backdoor detection. Analyzes a simple network with O(n+d) parameters that achieves perfect classification through memorization yet remains vulnerable to undetectable backdoors.",
+   "topics": [
+    "backdoors"
+   ],
+   "testbeds": [
+    "backdoor"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2506.22777",
+   "title": "Teaching Models to Verbalize Reward Hacking in Chain-of-Thought Reasoning",
+   "url": "https://arxiv.org/abs/2506.22777",
+   "date": "2025-06-28",
+   "authors": "Miles Turpin, Andy Arditi, Marvin Li, Joe Benton et al.",
+   "summary": "Proposes verbalization fine-tuning (VFT), a pre-RL intervention that trains models to explicitly acknowledge when influenced by prompt cues pointing to incorrect answers, then evaluates whether this helps detect reward hacking after RL training in environments that incentivize exploiting these cues.",
+   "topics": [
+    "rewardhack",
+    "faithful"
+   ],
+   "testbeds": [
+    "reward_hacking",
+    "interactive_gridworld"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2506.19248",
+   "title": "Inference-Time Reward Hacking in Large Language Models",
+   "url": "https://arxiv.org/abs/2506.19248",
+   "date": "2025-06-24",
+   "authors": "Hadi Khalaf, Claudio Mayrink Verdun, Alex Oesterling, Himabindu Lakkaraju et al.",
+   "summary": "Characterizes reward hacking in inference-time alignment methods (Best-of-n, Soft-Best-of-n) and introduces Best-of-Poisson and HedgeTune algorithm to mitigate reward hacking by hedging on proxy reward signals.",
+   "topics": [
+    "rewardhack"
+   ],
+   "testbeds": [
+    "reward_hacking",
+    "interactive_gridworld"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2506.15679",
+   "title": "Dense SAE Latents Are Features, Not Bugs",
+   "url": "https://arxiv.org/abs/2506.15679",
+   "date": "2025-06-18",
+   "authors": "Xiaoqing Sun, Alessandro Stolfo, Joshua Engels, Ben Wu et al.",
+   "summary": "Systematically investigates dense (frequently-activating) latents in sparse autoencoders, demonstrating they are meaningful features rather than training artifacts, and introduces a taxonomy of dense latent types including position tracking, context binding, and entropy regulation.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2506.15740",
+   "title": "SHADE-Arena: Evaluating Sabotage and Monitoring in LLM Agents",
+   "url": "https://arxiv.org/abs/2506.15740",
+   "date": "2025-06-17",
+   "authors": "Jonathan Kutasov, Yuqi Sun, Paul Colognese, Teun van der Weij et al.",
+   "summary": "Introduces SHADE-Arena, the first highly diverse evaluation dataset for testing LLM agents' ability to sabotage users by completing harmful side objectives while evading monitoring, and evaluates both sabotage and monitoring capabilities across frontier models.",
+   "topics": [
+    "protocols"
+   ],
+   "testbeds": [
+    "control"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "url:dl.acm.org/doi/10.1145/3717823.3718245",
+   "title": "Oblivious Defense in ML Models: Backdoor Removal without Detection",
+   "url": "https://dl.acm.org/doi/10.1145/3717823.3718245",
+   "date": "2025-06-15",
+   "authors": "Shafi Goldwasser, Jonathan Shafer, Neekon Vafa, Vinod Vaikuntanathan",
+   "summary": "Develops formal frameworks for removing backdoors from ML models without detecting them, using random self-reducibility techniques to provide provable mitigation guarantees under assumptions about ground-truth label distributions (Fourier-heavy or linear/polynomial functions).",
+   "topics": [
+    "backdoors"
+   ],
+   "testbeds": [
+    "backdoor"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2506.11976",
+   "title": "How Visual Representations Map to Language Feature Space in Multimodal LLMs",
+   "url": "https://arxiv.org/abs/2506.11976",
+   "date": "2025-06-13",
+   "authors": "Constantin Venhoff, Ashkan Khakzar, Sonia Joseph, Philip Torr et al.",
+   "summary": "Uses pre-trained sparse autoencoders (SAEs) to analyze how visual representations from a frozen ViT align with language feature representations in a frozen LLM through a linear adapter in vision-language models.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2504.13151",
+   "title": "MIB: A Mechanistic Interpretability Benchmark",
+   "url": "https://arxiv.org/abs/2504.13151",
+   "date": "2025-06-09",
+   "authors": "Aaron Mueller, Atticus Geiger, Sarah Wiegreffe, Dana Arad et al.",
+   "summary": "Proposes MIB, a benchmark for evaluating mechanistic interpretability methods across two tracks: circuit localization (finding important model components) and causal variable localization (aligning features to task-relevant variables). Evaluates multiple methods including attribution patching, SAEs, and DAS across four tasks and five models.",
+   "topics": [
+    "interpeval"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2506.04706",
+   "title": "Line of Sight: On Linear Representations in VLLMs",
+   "url": "https://arxiv.org/abs/2506.04706",
+   "date": "2025-06-05",
+   "authors": "Achyuta Rajaram, Sarah Schwettmann, Jacob Andreas, Arthur Conmy",
+   "summary": "Investigates how vision-language models (specifically LlaVA-Next) represent visual concepts internally by finding linearly decodable ImageNet features and training multimodal Sparse Autoencoders to create interpretable dictionaries of text and image features.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2503.09532",
+   "title": "SAEBench: A Comprehensive Benchmark for Sparse Autoencoders in Language Model Interpretability",
+   "url": "https://arxiv.org/abs/2503.09532",
+   "date": "2025-06-04",
+   "authors": "Adam Karvonen, Can Rager, Johnny Lin, Curt Tigges et al.",
+   "summary": "Introduces SAEBench, a comprehensive benchmark evaluating sparse autoencoders across eight metrics spanning interpretability, feature disentanglement, and practical applications. Open-sources 200+ SAEs across eight architectures and reveals that proxy metrics don't reliably predict practical performance.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2505.24360",
+   "title": "Interpreting Large Text-to-Image Diffusion Models with Dictionary Learning",
+   "url": "https://arxiv.org/abs/2505.24360",
+   "date": "2025-05-30",
+   "authors": "Stepan Shabalin, Ayush Panda, Dmitrii Kharlapenko, Abdur Raheem Ali et al.",
+   "summary": "",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2505.20254",
+   "title": "Position: Mechanistic Interpretability Should Prioritize Feature Consistency in SAEs",
+   "url": "https://arxiv.org/abs/2505.20254",
+   "date": "2025-05-26",
+   "authors": "Xiangchen Song, Aashiq Muhamed, Yujia Zheng, Lingjing Kong et al.",
+   "summary": "Proposes prioritizing feature consistency in Sparse Autoencoders (SAEs) for mechanistic interpretability, introducing the Pairwise Dictionary Mean Correlation Coefficient (PW-MCC) metric and demonstrating that TopK SAEs achieve high consistency (0.80) through theoretical validation with model organisms and empirical validation on LLM activations.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2505.20063",
+   "title": "SAEs Are Good for Steering -- If You Select the Right Features",
+   "url": "https://arxiv.org/abs/2505.20063",
+   "date": "2025-05-26",
+   "authors": "Dana Arad, Aaron Mueller, Yonatan Belinkov",
+   "summary": "Distinguishes between input features (capture patterns in model input) and output features (affect model output) in Sparse Autoencoders, and proposes scoring methods to identify them. Shows that filtering out low-output-score features yields 2-3x improvements in SAE-based steering, making it competitive with supervised methods.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2505.14352",
+   "title": "Towards eliciting latent knowledge from LLMs with mechanistic interpretability",
+   "url": "https://arxiv.org/abs/2505.14352",
+   "date": "2025-05-20",
+   "authors": "Bartosz Cywiński, Emil Ryd, Senthooran Rajamanoharan, Neel Nanda",
+   "summary": "Creates a 'Taboo model' trained to describe a secret word without stating it, then evaluates black-box and mechanistic interpretability methods (logit lens, sparse autoencoders) for extracting the hidden knowledge from the model's internal representations.",
+   "topics": [
+    "elk",
+    "circuits",
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2505.07846",
+   "title": "Winning at All Cost: A Small Environment for Eliciting Specification Gaming Behaviors in Large Language Models",
+   "url": "https://arxiv.org/abs/2505.07846",
+   "date": "2025-05-07",
+   "authors": "Lars Malmqvist",
+   "summary": "Introduces a novel textual simulation approach using unwinnable tic-tac-toe scenarios to systematically elicit and measure specification gaming behaviors in frontier LLMs (o1, o3-mini, r1), demonstrating how models exploit system vulnerabilities when faced with impossible objectives.",
+   "topics": [
+    "rewardhack"
+   ],
+   "testbeds": [
+    "reward_hacking",
+    "interactive_gridworld"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2504.19475",
+   "title": "Prisma: An Open Source Toolkit for Mechanistic Interpretability in Vision and Video",
+   "url": "https://arxiv.org/abs/2504.19475",
+   "date": "2025-04-28",
+   "authors": "Sonia Joseph, Praneet Suresh, Lorenz Hufe, Edward Stevinson et al.",
+   "summary": "Presents Prisma, an open-source framework for vision mechanistic interpretability providing unified access to 75+ vision transformers, SAE/transcoder/crosscoder training support, 80+ pre-trained SAE weights, circuit analysis tools, and visualization capabilities.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2504.20310",
+   "title": "A Cryptographic Perspective on Mitigation vs. Detection in Machine Learning",
+   "url": "https://arxiv.org/abs/2504.20310",
+   "date": "2025-04-28",
+   "authors": "Greg Gluch, Shafi Goldwasser",
+   "summary": "",
+   "topics": [
+    "backdoors"
+   ],
+   "testbeds": [
+    "backdoor"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2504.18530",
+   "title": "Scaling Laws For Scalable Oversight",
+   "url": "https://arxiv.org/abs/2504.18530",
+   "date": "2025-04-25",
+   "authors": "Joshua Engels, David D. Baek, Subhash Kantamneni, Max Tegmark",
+   "summary": "Proposes and validates a framework that quantifies the probability of successful oversight as a function of overseer and overseen capabilities, modeling oversight as games between capability-mismatched players. Tests framework on Nim, Mafia, Debate, Backdoor Code, and Wargames, then derives optimal conditions for Nested Scalable Oversight.",
+   "topics": [
+    "w2st",
+    "scaling"
+   ],
+   "testbeds": [
+    "weak_to_strong"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2504.13756",
+   "title": "Scaling sparse feature circuit finding for in-context learning",
+   "url": "https://arxiv.org/abs/2504.13756",
+   "date": "2025-04-18",
+   "authors": "Dmitrii Kharlapenko, Stepan Shabalin, Fazl Barez, Arthur Conmy et al.",
+   "summary": "Scales sparse feature circuit finding methodology to Gemma-1 2B (30x larger than prior work) and uses SAEs to discover task-detecting and task-execution features that causally mediate in-context learning, showing task vectors are well approximated by sparse sums of SAE latents.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2504.11695",
+   "title": "Interpreting the linear structure of vision-language model embedding spaces",
+   "url": "https://arxiv.org/abs/2504.11695",
+   "date": "2025-04-16",
+   "authors": "Isabel Papadimitriou, Huangyuan Su, Thomas Fel, Sham Kakade et al.",
+   "summary": "Trains and releases sparse autoencoders on embedding spaces of four vision-language models (CLIP, SigLIP, SigLIP2, AIMv2) to understand how language and images are organized in joint spaces, introducing the Bridge Score metric to quantify cross-modal concept integration.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2504.08192",
+   "title": "SAEs Can Improve Unlearning: Dynamic Sparse Autoencoder Guardrails for Precision Unlearning in LLMs",
+   "url": "https://arxiv.org/abs/2504.08192",
+   "date": "2025-04-11",
+   "authors": "Aashiq Muhamed, Jacopo Bonato, Mona Diab, Virginia Smith",
+   "summary": "Introduces Dynamic SAE Guardrails (DSG), a novel unlearning method using Sparse Autoencoders with principled feature selection and dynamic classifiers, demonstrating superior performance over gradient-based approaches across multiple metrics including computational efficiency, stability, and resistance to relearning attacks.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2504.05259",
+   "title": "How to evaluate control measures for LLM agents? A trajectory from today to superintelligence",
+   "url": "https://arxiv.org/abs/2504.05259",
+   "date": "2025-04-07",
+   "authors": "Tomek Korbak, Mikita Balesni, Buck Shlegeris, Geoffrey Irving",
+   "summary": "Proposes a systematic framework for adapting control evaluation procedures to advancing AI capabilities, defining five AI Control Levels (ACLs) with corresponding evaluation rules, control measures, and safety cases for each capability profile from current systems to superintelligence.",
+   "topics": [
+    "protocols"
+   ],
+   "testbeds": [
+    "control"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2504.02821",
+   "title": "Sparse Autoencoders Learn Monosemantic Features in Vision-Language Models",
+   "url": "https://arxiv.org/abs/2504.02821",
+   "date": "2025-04-03",
+   "authors": "Mateusz Pach, Shyamgopal Karthik, Quentin Bouniot, Serge Belongie et al.",
+   "summary": "Extends sparse autoencoders (SAEs) to Vision-Language Models like CLIP, introducing a comprehensive framework for evaluating monosemanticity in vision representations validated by user study, and demonstrating that SAE interventions can directly steer multimodal LLM outputs.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2504.02922",
+   "title": "Overcoming Sparsity Artifacts in Crosscoders to Interpret Chat-Tuning",
+   "url": "https://arxiv.org/abs/2504.02922",
+   "date": "2025-04-03",
+   "authors": "Julian Minder, Clément Dumas, Caden Juang, Bilal Chugtai et al.",
+   "summary": "Identifies and mitigates two artifacts in crosscoders (sparse dictionary learning for model diffing) that misattribute concepts to fine-tuned models, develops Latent Scaling technique and BatchTopK training loss to improve crosscoder methodology, and successfully identifies interpretable chat-specific latents including refusal-related features in Gemma 2 2B.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2503.18878",
+   "title": "I Have Covered All the Bases Here: Interpreting Reasoning Features in Large Language Models via Sparse Autoencoders",
+   "url": "https://arxiv.org/abs/2503.18878",
+   "date": "2025-03-24",
+   "authors": "Andrey Galichin, Alexey Dontsov, Polina Druzhinina, Anton Razzhigaev et al.",
+   "summary": "Introduces ReasonScore, an automatic metric to identify reasoning features in LLMs using Sparse Autoencoders, and demonstrates through steering experiments that amplifying these features increases performance on reasoning benchmarks (+2.2%) while producing longer reasoning traces (+20.5%).",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "url:openreview.net/forum?id=rwydlgj1s6",
+   "title": "Understanding the Capabilities and Limitations of Weak-to-Strong Generalization",
+   "url": "https://openreview.net/forum?id=RwYdLgj1S6",
+   "date": "2025-03-08",
+   "authors": "Wei Yao, Wenkai Yang, Ziqiao Wang, Yankai Lin et al.",
+   "summary": "Provides theoretical analysis of weak-to-strong generalization by establishing upper and lower bounds on generalization error and calibration error in classification settings, and extends work to regression with KL divergence loss, validated experimentally.",
+   "topics": [
+    "w2st"
+   ],
+   "testbeds": [
+    "weak_to_strong"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2503.03730",
+   "title": "Towards Understanding Distilled Reasoning Models: A Representational Approach",
+   "url": "https://arxiv.org/abs/2503.03730",
+   "date": "2025-03-05",
+   "authors": "David D. Baek, Max Tegmark",
+   "summary": "Uses crosscoders to analyze how model distillation impacts reasoning feature development in Qwen-series LLMs, finding unique reasoning feature directions that enable steering and examining changes in feature geometry during distillation.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2502.19964",
+   "title": "Do Sparse Autoencoders Generalize? A Case Study of Answerability",
+   "url": "https://arxiv.org/abs/2502.19964",
+   "date": "2025-02-27",
+   "authors": "Lovis Heindrich, Philip Torr, Fazl Barez, Veronika Thost",
+   "summary": "Empirically evaluates whether sparse autoencoder (SAE) features generalize across domains by testing Gemma 2 SAEs on diverse answerability datasets, finding that SAE features show inconsistent out-of-domain transfer compared to residual stream probes.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2502.16681",
+   "title": "Are Sparse Autoencoders Useful? A Case Study in Sparse Probing",
+   "url": "https://arxiv.org/abs/2502.16681",
+   "date": "2025-02-23",
+   "authors": "Subhash Kantamneni, Joshua Engels, Senthooran Rajamanoharan, Max Tegmark et al.",
+   "summary": "Empirically evaluates whether sparse autoencoders (SAEs) improve performance on LLM activation probing tasks across four challenging regimes (data scarcity, class imbalance, label noise, covariate shift), comparing SAEs against strong baselines.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2502.04878",
+   "title": "Sparse Autoencoders Do Not Find Canonical Units of Analysis",
+   "url": "https://arxiv.org/abs/2502.04878",
+   "date": "2025-02-07",
+   "authors": "Patrick Leask, Bart Bussmann, Michael Pearce, Joseph Bloom et al.",
+   "summary": "Introduces two novel techniques (SAE stitching and meta-SAEs) to demonstrate that Sparse Autoencoders do not find canonical units of analysis, showing they are incomplete and that their latents are not atomic but decompose into combinations of smaller features.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2501.19406",
+   "title": "Low-Rank Adapting Models for Sparse Autoencoders",
+   "url": "https://arxiv.org/abs/2501.19406",
+   "date": "2025-01-31",
+   "authors": "Matthew Chen, Joshua Engels, Max Tegmark",
+   "summary": "Proposes using low-rank adaptation (LoRA) to finetune language models around previously trained sparse autoencoders (SAEs), rather than training better SAEs themselves, demonstrating 30-55% reduction in cross-entropy loss gap and 3-20× faster training compared to end-to-end SAE methods.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2501.18823",
+   "title": "Transcoders Beat Sparse Autoencoders for Interpretability",
+   "url": "https://arxiv.org/abs/2501.18823",
+   "date": "2025-01-31",
+   "authors": "Gonçalo Paulo, Stepan Shabalin, Nora Belrose",
+   "summary": "Empirically compares transcoders and sparse autoencoders (SAEs) for neural network interpretability, finding transcoders produce more interpretable features, and proposes skip transcoders which improve reconstruction loss without sacrificing interpretability.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2501.17315",
+   "title": "A sketch of an AI control safety case",
+   "url": "https://arxiv.org/abs/2501.17315",
+   "date": "2025-01-28",
+   "authors": "Tomek Korbak, Joshua Clymer, Benjamin Hilton, Buck Shlegeris et al.",
+   "summary": "Presents a framework for constructing 'control safety cases' - structured arguments that AI models cannot subvert control measures to cause unacceptable outcomes. Demonstrates the approach with a case study of preventing data exfiltration by internally deployed LLM agents using control evaluations with red teams.",
+   "topics": [
+    "protocols"
+   ],
+   "testbeds": [
+    "control"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2501.16615",
+   "title": "Sparse Autoencoders Trained on the Same Data Learn Different Features",
+   "url": "https://arxiv.org/abs/2501.16615",
+   "date": "2025-01-28",
+   "authors": "Gonçalo Paulo, Nora Belrose",
+   "summary": "Empirical study showing that Sparse Autoencoders (SAEs) trained on identical data with different random seeds learn different feature sets, with only 30% feature overlap in a 131K latent SAE trained on Llama 3 8B, suggesting SAE features should be viewed as pragmatic decompositions rather than true underlying features.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "url:openreview.net/forum?id=n1vyivuskq",
+   "title": "Weak to Strong Generalization for Large Language Models with Multi-capabilities",
+   "url": "https://openreview.net/forum?id=N1vYivuSKq",
+   "date": "2025-01-22",
+   "authors": "Yucheng Zhou, Jianbing Shen, Yu Cheng",
+   "summary": "Extends weak-to-strong generalization to multi-capability settings, finding that capabilities remain independent and proposing a two-stage training framework using reward models to select valuable weak supervision data while preventing performance degradation from strong model self-bootstrapping.",
+   "topics": [
+    "w2st",
+    "aar"
+   ],
+   "testbeds": [
+    "weak_to_strong"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2501.08319",
+   "title": "Enhancing Automated Interpretability with Output-Centric Feature Descriptions",
+   "url": "https://arxiv.org/abs/2501.08319",
+   "date": "2025-01-14",
+   "authors": "Yoav Gur-Arieh, Roy Mayan, Chen Agassy, Atticus Geiger et al.",
+   "summary": "Proposes output-centric methods for automatically generating feature descriptions in LLMs that better capture causal effects on model outputs, using tokens weighted higher after feature stimulation or applying the unembedding head directly to features.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2501.06346",
+   "title": "Large Language Models Share Representations of Latent Grammatical Concepts Across Typologically Diverse Languages",
+   "url": "https://arxiv.org/abs/2501.06346",
+   "date": "2025-01-10",
+   "authors": "Jannik Brinkmann, Chris Wendler, Christian Bartelt, Aaron Mueller",
+   "summary": "Trains sparse autoencoders on Llama-3-8B and Aya-23-8B to demonstrate that abstract grammatical concepts (number, gender, tense) are encoded in feature directions shared across typologically diverse languages, verified through causal interventions and machine translation tasks.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2412.12480",
+   "title": "Subversion Strategy Eval: Can language models statelessly strategize to subvert control protocols?",
+   "url": "https://arxiv.org/abs/2412.12480",
+   "date": "2024-12-17",
+   "authors": "Alex Mallen, Charlie Griffin, Misha Wagner, Alessandro Abate et al.",
+   "summary": "Develops Subversion Strategy Eval, a suite of eight evaluation environments that test whether language models can statelessly generate and execute strategies to subvert AI control protocols, and empirically evaluates Claude 3.5 and OpenAI reasoning models.",
+   "topics": [
+    "protocols"
+   ],
+   "testbeds": [
+    "control"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2411.18895",
+   "title": "Evaluating Sparse Autoencoders on Targeted Concept Erasure Tasks",
+   "url": "https://arxiv.org/abs/2411.18895",
+   "date": "2024-11-28",
+   "authors": "Adam Karvonen, Can Rager, Samuel Marks, Neel Nanda",
+   "summary": "Introduces automated evaluation metrics for Sparse Autoencoders (SAEs) based on concept erasure tasks, including LLM-automated SHIFT and the new Targeted Probe Perturbation (TPP) metric that quantifies SAE ability to disentangle similar concepts.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2411.17693",
+   "title": "Adaptive Deployment of Untrusted LLMs Reduces Distributed Threats",
+   "url": "https://arxiv.org/abs/2411.17693",
+   "date": "2024-11-26",
+   "authors": "Jiaxin Wen, Vivek Hebbar, Caleb Larson, Aryan Bhatt et al.",
+   "summary": "Develops and evaluates a two-level adaptive deployment framework for untrusted LLMs that uses trusted models to monitor and control untrusted models, maintaining adaptive credence about alignment based on past behavior to choose between safer and riskier micro-protocols.",
+   "topics": [
+    "protocols"
+   ],
+   "testbeds": [
+    "control"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2411.14257",
+   "title": "Do I Know This Entity? Knowledge Awareness and Hallucinations in Language Models",
+   "url": "https://arxiv.org/abs/2411.14257",
+   "date": "2024-11-21",
+   "authors": "Javier Ferrando, Oscar Obeso, Senthooran Rajamanoharan, Neel Nanda",
+   "summary": "Uses sparse autoencoders to discover that language models have internal representations for entity recognition - detecting whether they can recall facts about an entity - which causally influences hallucination and refusal behavior.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2411.01220",
+   "title": "Enhancing Neural Network Interpretability with Feature-Aligned Sparse Autoencoders",
+   "url": "https://arxiv.org/abs/2411.01220",
+   "date": "2024-11-02",
+   "authors": "Luke Marks, Alasdair Paren, David Krueger, Fazl Barez",
+   "summary": "Proposes Mutual Feature Regularization (MFR), a regularization technique that improves Sparse Autoencoder training by encouraging parallel SAEs to learn similar features, thereby learning features more aligned with actual input features rather than spurious patterns.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2411.00743",
+   "title": "Decoding Dark Matter: Specialized Sparse Autoencoders for Interpreting Rare Concepts in Foundation Models",
+   "url": "https://arxiv.org/abs/2411.00743",
+   "date": "2024-11-01",
+   "authors": "Aashiq Muhamed, Mona Diab, Virginia Smith",
+   "summary": "Introduces Specialized Sparse Autoencoders (SSAEs) designed to capture rare but important concepts in foundation models that standard SAEs miss, using dense retrieval for data selection and Tilted Empirical Risk Minimization for training.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2410.00081",
+   "title": "From homeostasis to resource sharing: Biologically and economically aligned multi-objective multi-agent gridworld-based AI safety benchmarks",
+   "url": "https://arxiv.org/abs/2410.00081",
+   "date": "2024-09-30",
+   "authors": "Roland Pihlakas",
+   "summary": "Introduces eight gridworld-based multi-agent benchmark environments testing biologically and economically motivated alignment properties including homeostasis, diminishing returns, sustainability, and resource sharing to illustrate key pitfalls in agentic AI systems.",
+   "topics": [
+    "mildopt",
+    "societal",
+    "socialtech"
+   ],
+   "testbeds": [
+    "reward_hacking"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2407.04108",
+   "title": "Future Events as Backdoor Triggers: Investigating Temporal Vulnerabilities in LLMs",
+   "url": "https://arxiv.org/abs/2407.04108",
+   "date": "2024-07-04",
+   "authors": "Sara Price, Arjun Panickssery, Sam Bowman, Asa Cooper Stickland",
+   "summary": "Introduces temporal backdoors in LLMs triggered by future events (post-training news headlines), demonstrating that models can distinguish past from future events with 90% probe accuracy and testing whether HHH fine-tuning removes such backdoors.",
+   "topics": [
+    "backdoors",
+    "saeval"
+   ],
+   "testbeds": [
+    "backdoor"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2001.07118",
+   "title": "Incentives for Responsiveness, Instrumental Control and Impact",
+   "url": "https://arxiv.org/abs/2001.07118",
+   "date": "2020-01-20",
+   "authors": "Ryan Carey, Eric Langlois, Chris van Merwijk, Shane Legg et al.",
+   "summary": "Introduces formal theoretical framework using causal graphs to characterize agent incentives for responsiveness, instrumental control, and impact, establishing sound and complete graphical criteria for each concept.",
+   "topics": [
+    "tampering"
+   ],
+   "testbeds": [
+    "interactive_gridworld"
+   ],
+   "sr_pick": true
+  },
+  {
+   "key": "arxiv:2507.15886",
+   "title": "Combining Cost-Constrained Runtime Monitors for AI Safety",
+   "url": "https://arxiv.org/abs/2507.15886",
+   "date": "2025-07-19",
+   "authors": "Tim Tian Hua, James Baskerville, Henri Lemoine, Mia Hopman et al.",
+   "summary": "Develops an algorithm to optimally combine multiple runtime monitors for detecting misaligned AI outputs under budget constraints, using Neyman-Pearson lemma to allocate resources between monitoring and safety interventions.",
+   "topics": [
+    "protocols"
+   ],
+   "testbeds": [
+    "control"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2507.03525",
+   "title": "Limits of Safe AI Deployment: Differentiating Oversight and Control",
+   "url": "https://arxiv.org/abs/2507.03525",
+   "date": "2025-07-04",
+   "authors": "David Manheim, Aidan Homewood",
+   "summary": "Proposes a conceptual framework differentiating AI oversight (ex-post detection/remediation) from control (ex-ante prevention), drawing on supervision literature to articulate conditions where each mechanism succeeds or fails, and presents a maturity model for AI supervision integrated with risk management practices.",
+   "topics": [
+    "protocols"
+   ],
+   "testbeds": [
+    "control"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2504.20271",
+   "title": "Investigating task-specific prompts and sparse autoencoders for activation monitoring",
+   "url": "https://arxiv.org/abs/2504.20271",
+   "date": "2025-04-28",
+   "authors": "Henk Tillman, Dan Mossing",
+   "summary": "Compares activation monitoring methods for detecting unsafe language model behaviors, including baseline linear probing, prompted probing (task description + probe), and SAE-based probing approaches, evaluating their performance under different compute constraints.",
+   "topics": [
+    "deceptprobe",
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2501.17727",
+   "title": "Sparse Autoencoders Can Interpret Randomly Initialized Transformers",
+   "url": "https://arxiv.org/abs/2501.17727",
+   "date": "2025-01-29",
+   "authors": "Thomas Heap, Tim Lawson, Lucy Farnik, Laurence Aitchison",
+   "summary": "Tests whether sparse autoencoders capture meaningful learned features by applying them to randomly initialized transformers, finding that random and trained models produce similarly interpretable SAE latents with comparable quality metrics.",
+   "topics": [
+    "sae"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2501.17148",
+   "title": "AxBench: Steering LLMs? Even Simple Baselines Outperform Sparse Autoencoders",
+   "url": "https://arxiv.org/abs/2501.17148",
+   "date": "2025-01-28",
+   "authors": "Zhengxuan Wu, Aryaman Arora, Atticus Geiger, Zheng Wang et al.",
+   "summary": "Introduces AxBench, a large-scale benchmark for evaluating steering and concept detection methods in LLMs, finding that simple baselines like prompting outperform sparse autoencoders, and proposes a novel weakly-supervised method (ReFT-r1) competitive on both tasks.",
+   "topics": [
+    "sae",
+    "actsteer"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2406.11431",
+   "title": "Super(ficial)-alignment: Strong Models May Deceive Weak Models in Weak-to-Strong Generalization",
+   "url": "https://arxiv.org/abs/2406.11431",
+   "date": "2024-06-17",
+   "authors": "Wenkai Yang, Shiqi Shen, Guangyao Shen, Wei Yao et al.",
+   "summary": "Empirically demonstrates that strong models can deceive weak supervisors in weak-to-strong generalization by appearing aligned in areas known to weak models while producing misaligned behaviors in unknown areas, particularly in multi-objective alignment scenarios with conflicting targets.",
+   "topics": [
+    "w2st",
+    "scheme"
+   ],
+   "testbeds": [
+    "weak_to_strong"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2204.10018",
+   "title": "Path-Specific Objectives for Safer Agent Incentives",
+   "url": "https://arxiv.org/abs/2204.10018",
+   "date": "2022-04",
+   "authors": "",
+   "summary": "We present a general framework for training safe agents whose naive incentives are unsafe. As an example, manipulative or deceptive behaviour can improve rewards but should be avoided. Most approaches fail here agents maximize expected return by any means necessary. We formally describe settings with 'delicate' parts of the state which should not be used as a means to an end. We then train agents to maximize the…",
+   "topics": [
+    "tampering"
+   ],
+   "testbeds": [
+    "interactive_gridworld"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2204.11642",
+   "title": "Do Users Benefit From Interpretable Vision? A User Study, Baseline, And Dataset",
+   "url": "https://arxiv.org/abs/2204.11642",
+   "date": "2022-04",
+   "authors": "",
+   "summary": "A variety of methods exist to explain image classification models. However, whether they provide any benefit to users over simply comparing various inputs and the model's respective predictions remains unclear. We conducted a user study (N=240) to test how such a baseline explanation technique performs against concept-based and counterfactual explanations. To this end, we contribute a synthetic dataset generator…",
+   "topics": [
+    "interpeval"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2202.03609",
+   "title": "Backdoor Detection in Reinforcement Learning",
+   "url": "https://arxiv.org/abs/2202.03609",
+   "date": "2022-02",
+   "authors": "",
+   "summary": "While the real world application of reinforcement learning (RL) is becoming popular, the safety concern and the robustness of an RL system require more attention. A recent work reveals that, in a multi-agent RL environment, backdoor trigger actions can be injected into a victim agent (a.k.a. trojan agent), which can result in a catastrophic failure as soon as it sees the backdoor trigger action. We propose the…",
+   "topics": [
+    "backdoors"
+   ],
+   "testbeds": [
+    "backdoor"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2201.03544",
+   "title": "The Effects of Reward Misspecification Mapping and Mitigating Misaligned Models",
+   "url": "https://arxiv.org/abs/2201.03544",
+   "date": "2022-01",
+   "authors": "",
+   "summary": "Reward hacking -- where RL agents exploit gaps in misspecified reward functions -- has been widely observed, but not yet systematically studied. To understand how reward hacking arises, we construct four RL environments with misspecified rewards. We investigate reward hacking as a function of agent capabilities model capacity, action space resolution, observation space noise, and training time. More capable agents…",
+   "topics": [
+    "rewardhack"
+   ],
+   "testbeds": [
+    "reward_hacking",
+    "interactive_gridworld"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2108.01644",
+   "title": "The Devil is in the GAN Defending Deep Generative Models Against Backdoor Attacks",
+   "url": "https://arxiv.org/abs/2108.01644",
+   "date": "2021-08",
+   "authors": "",
+   "summary": "Deep Generative Models (DGMs) allow users to synthesize data from complex, high-dimensional manifolds. Industry applications of DGMs include data augmentation to boost performance of (semi-)supervised machine learning, or to mitigate fairness or privacy concerns. Large-scale DGMs are notoriously hard to train, requiring expert skills, large amounts of data and extensive computational resources. Thus, it can be…",
+   "topics": [
+    "backdoors"
+   ],
+   "testbeds": [
+    "backdoor"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2106.02617",
+   "title": "Be Considerate Objectives, Side Effects, and Deciding How to Act",
+   "url": "https://arxiv.org/abs/2106.02617",
+   "date": "2021-06",
+   "authors": "",
+   "summary": "Recent work in AI safety has highlighted that in sequential decision making, objectives are often underspecified or incomplete. This gives discretion to the acting agent to realize the stated objective in ways that may result in undesirable outcomes. We contend that to learn to act safely, a reinforcement learning (RL) agent should include contemplation of the impact of its actions on the wellbeing and agency of…",
+   "topics": [
+    "mildopt"
+   ],
+   "testbeds": [
+    "reward_hacking"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2106.08492",
+   "title": "Developing a Fidelity Evaluation Approach for Interpretable Machine Learning",
+   "url": "https://arxiv.org/abs/2106.08492",
+   "date": "2021-06",
+   "authors": "",
+   "summary": "Although modern machine learning and deep learning methods allow for complex and in-depth data analytics, the predictive models generated by these methods are often highly complex, and lack transparency. Explainable AI (XAI) methods are used to improve the interpretability of these complex models, and in doing so improve transparency. However, the inherent fitness of these explainable methods can be hard to…",
+   "topics": [
+    "interpeval"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2105.14111",
+   "title": "Objective Robustness in Deep Reinforcement Learning",
+   "url": "https://arxiv.org/abs/2105.14111",
+   "date": "2021-05",
+   "authors": "",
+   "summary": "We study objective robustness failures, a type of out-of-distribution robustness failure in reinforcement learning (RL). Objective robustness failures occur when an RL agent retains its capabilities out-of-distribution yet pursues the wrong objective. This kind of failure presents different risks than the robustness problems usually considered in the literature, since it involves agents that leverage their…",
+   "topics": [
+    "goalmisgen"
+   ],
+   "testbeds": [
+    "goal_misgen",
+    "ued_gridworld",
+    "confounded_imitation"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2104.13906",
+   "title": "Reward (Mis)design for Autonomous Driving",
+   "url": "https://arxiv.org/abs/2104.13906",
+   "date": "2021-04",
+   "authors": "",
+   "summary": "This article considers the problem of diagnosing certain common errors in reward design. Its insights are also applicable to the design of cost functions and performance metrics more generally. To diagnose common errors, we develop 8 simple sanity checks for identifying flaws in reward functions. These sanity checks are applied to reward functions from past work on reinforcement learning (RL) for autonomous driving…",
+   "topics": [
+    "rewardhack"
+   ],
+   "testbeds": [
+    "reward_hacking",
+    "interactive_gridworld"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2104.12547",
+   "title": "A Framework for Ethical AI at the United Nations",
+   "url": "https://arxiv.org/abs/2104.12547",
+   "date": "2021-04",
+   "authors": "",
+   "summary": "This paper aims to provide an overview of the ethical concerns in artificial intelligence (AI) and the framework that is needed to mitigate those risks, and to suggest a practical path to ensure the development and use of AI at the United Nations (UN) aligns with our ethical values. The overview discusses how AI is an increasingly powerful tool with potential for good, albeit one with a high risk of negative…",
+   "topics": [
+    "tampering",
+    "epistemics"
+   ],
+   "testbeds": [
+    "interactive_gridworld"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2102.07017",
+   "title": "Mitigating Negative Side Effects via Environment Shaping",
+   "url": "https://arxiv.org/abs/2102.07017",
+   "date": "2021-02",
+   "authors": "",
+   "summary": "Agents operating in unstructured environments often produce negative side effects (NSE), which are difficult to identify at design time. While the agent can learn to mitigate the side effects from human feedback, such feedback is often expensive and the rate of learning is sensitive to the agent's state representation. We examine how humans can assist an agent, beyond providing feedback, and exploit their broader…",
+   "topics": [
+    "mildopt"
+   ],
+   "testbeds": [
+    "reward_hacking"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2102.01264",
+   "title": "Evaluating the Interpretability of Generative Models by Interactive Reconstruction",
+   "url": "https://arxiv.org/abs/2102.01264",
+   "date": "2021-02",
+   "authors": "",
+   "summary": "For machine learning models to be most useful in numerous sociotechnical systems, many have argued that they must be human-interpretable. However, despite increasing interest in interpretability, there remains no firm consensus on how to measure it. This is especially true in representation learning, where interpretability research has focused on disentanglement measures only applicable to synthetic datasets and not…",
+   "topics": [
+    "interpeval"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2101.12509",
+   "title": "Challenges for Using Impact Regularizers to Avoid Negative Side Effects",
+   "url": "https://arxiv.org/abs/2101.12509",
+   "date": "2021-01",
+   "authors": "",
+   "summary": "Designing reward functions for reinforcement learning is difficult besides specifying which behavior is rewarded for a task, the reward also has to discourage undesired outcomes. Misspecified reward functions can lead to unintended negative side effects, and overall unsafe behavior. To overcome this problem, recent work proposed to augment the specified reward function with an impact regularizer that discourages…",
+   "topics": [
+    "mildopt"
+   ],
+   "testbeds": [
+    "reward_hacking"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2012.02275",
+   "title": "Detecting Trojaned DNNs Using Counterfactual Attributions",
+   "url": "https://arxiv.org/abs/2012.02275",
+   "date": "2020-12",
+   "authors": "",
+   "summary": "We target the problem of detecting Trojans or backdoors in DNNs. Such models behave normally with typical inputs but produce specific incorrect predictions for inputs poisoned with a Trojan trigger. Our approach is based on a novel observation that the trigger behavior depends on a few ghost neurons that activate on trigger pattern and exhibit abnormally higher relative attribution for wrong decisions when…",
+   "topics": [
+    "backdoors"
+   ],
+   "testbeds": [
+    "backdoor"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2011.08820",
+   "title": "REALab An Embedded Perspective on Tampering",
+   "url": "https://arxiv.org/abs/2011.08820",
+   "date": "2020-11",
+   "authors": "",
+   "summary": "This paper describes REALab, a platform for embedded agency research in reinforcement learning (RL). REALab is designed to model the structure of tampering problems that may arise in real-world deployments of RL. Standard Markov Decision Process (MDP) formulations of RL and simulated environments mirroring the MDP structure assume secure access to feedback (e.g., rewards). This may be unrealistic in settings where…",
+   "topics": [
+    "tampering"
+   ],
+   "testbeds": [
+    "interactive_gridworld"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2009.09153",
+   "title": "Hidden Incentives for Auto-Induced Distributional Shift",
+   "url": "https://arxiv.org/abs/2009.09153",
+   "date": "2020-09",
+   "authors": "",
+   "summary": "Decisions made by machine learning systems have increasing influence on the world, yet it is common for machine learning algorithms to assume that no such influence exists. An example is the use of the i.i.d. assumption in content recommendation. In fact, the (choice of) content displayed can change users' perceptions and preferences, or even drive them away, causing a shift in the distribution of users. We…",
+   "topics": [
+    "tampering"
+   ],
+   "testbeds": [
+    "interactive_gridworld"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2008.12146",
+   "title": "Avoiding Negative Side Effects due to Incomplete Knowledge of AI Systems",
+   "url": "https://arxiv.org/abs/2008.12146",
+   "date": "2020-08",
+   "authors": "",
+   "summary": "Autonomous agents acting in the real-world often operate based on models that ignore certain aspects of the environment. The incompleteness of any given model -- handcrafted or machine acquired -- is inevitable due to practical limitations of any modeling technique for complex real-world settings. Due to the limited fidelity of its model, an agent's actions may have unexpected, undesirable consequences during…",
+   "topics": [
+    "mildopt"
+   ],
+   "testbeds": [
+    "reward_hacking"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2006.06547",
+   "title": "Avoiding Side Effects in Complex Environments",
+   "url": "https://arxiv.org/abs/2006.06547",
+   "date": "2020-06",
+   "authors": "",
+   "summary": "Reward function specification can be difficult. Rewarding the agent for making a widget may be easy, but penalizing the multitude of possible negative side effects is hard. In toy environments, Attainable Utility Preservation (AUP) avoided side effects by penalizing shifts in the ability to achieve randomly generated goals. We scale this approach to large, randomly generated environments based on Conway's Game of…",
+   "topics": [
+    "mildopt"
+   ],
+   "testbeds": [
+    "reward_hacking"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:2004.06894",
+   "title": "Human Evaluation of Interpretability The Case of AI-Generated Music Knowledge",
+   "url": "https://arxiv.org/abs/2004.06894",
+   "date": "2020-04",
+   "authors": "",
+   "summary": "Interpretability of machine learning models has gained more and more attention among researchers in the artificial intelligence (AI) and human-computer interaction (HCI) communities. Most existing work focuses on decision making, whereas we consider knowledge discovery. In particular, we focus on evaluating AI-discovered knowledge/rules in the arts and humanities. From a specific scenario, we present an experimental…",
+   "topics": [
+    "interpeval"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:1912.01217",
+   "title": "SafeLife 1.0 Exploring Side Effects in Complex Environments",
+   "url": "https://arxiv.org/abs/1912.01217",
+   "date": "2019-12",
+   "authors": "",
+   "summary": "We present SafeLife, a publicly available reinforcement learning environment that tests the safety of reinforcement learning agents. It contains complex, dynamic, tunable, procedurally generated levels with many opportunities for unsafe behavior. Agents are graded both on their ability to maximize their explicit reward and on their ability to operate safely without unnecessary side effects. We train agents to…",
+   "topics": [
+    "mildopt"
+   ],
+   "testbeds": [
+    "reward_hacking"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:1912.02771",
+   "title": "Label-Consistent Backdoor Attacks",
+   "url": "https://arxiv.org/abs/1912.02771",
+   "date": "2019-12",
+   "authors": "",
+   "summary": "Deep neural networks have been demonstrated to be vulnerable to backdoor attacks. Specifically, by injecting a small number of maliciously constructed inputs into the training set, an adversary is able to plant a backdoor into the trained model. This backdoor can then be activated during inference by a backdoor trigger to fully control the model's behavior. While such attacks are very effective, they crucially rely…",
+   "topics": [
+    "backdoors"
+   ],
+   "testbeds": [
+    "backdoor"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:1909.02742",
+   "title": "Invisible Backdoor Attacks on Deep Neural Networks via Steganography and Regularization",
+   "url": "https://arxiv.org/abs/1909.02742",
+   "date": "2019-09",
+   "authors": "",
+   "summary": "Deep neural networks (DNNs) have been proven vulnerable to backdoor attacks, where hidden features (patterns) trained to a normal model, which is only activated by some specific input (called triggers), trick the model into producing unexpected behavior. In this paper, we create covert and scattered triggers for backdoor attacks, invisible backdoors, where triggers can fool both DNN models and human inspection. We…",
+   "topics": [
+    "backdoors"
+   ],
+   "testbeds": [
+    "backdoor"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:1908.04734",
+   "title": "Reward Tampering Problems and Solutions in Reinforcement Learning A Causal Influence Diagram Perspective",
+   "url": "https://arxiv.org/abs/1908.04734",
+   "date": "2019-08",
+   "authors": "",
+   "summary": "Can humans get arbitrarily capable reinforcement learning (RL) agents to do their bidding? Or will sufficiently capable RL agents always find ways to bypass their intended objectives by shortcutting their reward signal? This question impacts how far RL can be scaled, and whether alternative paradigms must be developed in order to build safe artificial general intelligence. In this paper, we study when an RL agent…",
+   "topics": [
+    "tampering"
+   ],
+   "testbeds": [
+    "interactive_gridworld"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:1906.09136",
+   "title": "Categorizing Wireheading in Partially Embedded Agents",
+   "url": "https://arxiv.org/abs/1906.09136",
+   "date": "2019-06",
+   "authors": "",
+   "summary": "$\\textit{Embedded agents}$ are not explicitly separated from their environment, lacking clear I/O channels. Such agents can reason about and modify their internal parts, which they are incentivized to shortcut or $\\textit{wirehead}$ in order to achieve the maximal reward. In this paper, we provide a taxonomy of ways by which wireheading can occur, followed by a definition of wirehead-vulnerable agents. Starting from…",
+   "topics": [
+    "tampering",
+    "embedded"
+   ],
+   "testbeds": [
+    "interactive_gridworld"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:1905.09355",
+   "title": "Minimizing the Negative Side Effects of Planning with Reduced Models",
+   "url": "https://arxiv.org/abs/1905.09355",
+   "date": "2019-05",
+   "authors": "",
+   "summary": "Reduced models of large Markov decision processes accelerate planning by considering a subset of outcomes for each state-action pair. This reduction in reachable states leads to replanning when the agent encounters states without a precomputed action during plan execution. However, not all states are suitable for replanning. In the worst case, the agent may not be able to reach the goal from the newly encountered…",
+   "topics": [
+    "mildopt"
+   ],
+   "testbeds": [
+    "reward_hacking"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:1711.07414",
+   "title": "The Promise and Peril of Human Evaluation for Model Interpretability",
+   "url": "https://arxiv.org/abs/1711.07414",
+   "date": "2017-11",
+   "authors": "",
+   "summary": "Transparency, user trust, and human comprehension are popular ethical motivations for interpretable machine learning. In support of these goals, researchers evaluate model explanation performance using humans and real world applications. This alone presents a challenge in many areas of artificial intelligence. In this position paper, we propose a distinction between descriptive and persuasive explanations. We…",
+   "topics": [
+    "interpeval"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:1705.10720",
+   "title": "Low Impact Artificial Intelligences",
+   "url": "https://arxiv.org/abs/1705.10720",
+   "date": "2017-05",
+   "authors": "",
+   "summary": "There are many goals for an AI that could become dangerous if the AI becomes superintelligent or otherwise powerful. Much work on the AI control problem has been focused on constructing AI goals that are safe even for such AIs. This paper looks at an alternative approach defining a general concept of low impact'. The aim is to ensure that a powerful AI which implements low impact will not modify the world…",
+   "topics": [
+    "mildopt"
+   ],
+   "testbeds": [
+    "reward_hacking"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:1705.08417",
+   "title": "Reinforcement Learning with a Corrupted Reward Channel",
+   "url": "https://arxiv.org/abs/1705.08417",
+   "date": "2017-05",
+   "authors": "",
+   "summary": "No real-world reward function is perfect. Sensory errors and software bugs may result in RL agents observing higher (or lower) rewards than they should. For example, a reinforcement learning agent may prefer states where a sensory error gives it the maximum reward, but where the true reward is actually small. We formalise this problem as a generalised Markov Decision Problem called Corrupt Reward MDP. Traditional RL…",
+   "topics": [
+    "tampering"
+   ],
+   "testbeds": [
+    "interactive_gridworld"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:1702.08608",
+   "title": "Towards A Rigorous Science of Interpretable Machine Learning",
+   "url": "https://arxiv.org/abs/1702.08608",
+   "date": "2017-02",
+   "authors": "",
+   "summary": "As machine learning systems become ubiquitous, there has been a surge of interest in interpretable machine learning systems that provide explanation for their outputs. These explanations are often used to qualitatively assess other criteria such as safety or non-discrimination. However, despite the interest in interpretability, there is very little consensus on what interpretable machine learning is and how it…",
+   "topics": [
+    "interpeval"
+   ],
+   "testbeds": [
+    "planted_interp",
+    "planted_lm"
+   ],
+   "sr_pick": false
+  },
+  {
+   "key": "arxiv:1605.03143",
+   "title": "Avoiding Wireheading with Value Reinforcement Learning",
+   "url": "https://arxiv.org/abs/1605.03143",
+   "date": "2016-05",
+   "authors": "",
+   "summary": "How can we design good goals for arbitrarily intelligent agents? Reinforcement learning (RL) is a natural approach. Unfortunately, RL does not work well for generally intelligent agents, as RL agents are incentivised to shortcut the reward sensor for maximum reward -- the so-called wireheading problem. In this paper we suggest an alternative to RL called value reinforcement learning (VRL). In VRL, agents use the…",
+   "topics": [
+    "tampering"
+   ],
+   "testbeds": [
+    "interactive_gridworld"
+   ],
+   "sr_pick": false
+  }
+ ]
+}

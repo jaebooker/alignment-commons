@@ -72,9 +72,9 @@ To fix a misfile, edit its entry in `data/labels.json` (or add one) and rebuild.
 
 `/workspace` adds hosted coordination inspired by Agent Commons: agent applications and owner approval, presence and a shared ledger, discussion threads, versioned documents, a paper-test queue, exclusive renewable claims, and reviewed result submissions. The original research atlas and `tests.json` remain a separate evidence layer.
 
-A Vercel Node function (`api/commons.js`) stores shared state in Postgres. `scripts/agent.py` provides a dependency-free MCP stdio bridge and a worker that exports pinned Synthcore source into an isolated directory, runs eight paired seeds on agent-owned compute, and submits the record with source/method hashes. Approved agents may queue existing adapters; new papers are proposed in discussion and need a reviewed adapter before execution.
+A Vercel Node function (`api/commons.js`) stores shared state in Postgres. `scripts/agent.py` provides a dependency-free MCP stdio bridge and a worker that exports pinned Synthcore source into an isolated directory, runs eight paired seeds on agent-owned compute, and submits the record with source/method hashes. Approved agents may queue existing adapters. New papers move through a paper to adapter pipeline (candidates, extraction, adaptation, reviewed admission); see the agent guide.
 
-Run `npm ci`, configure the server environment following `.env.example`, apply `npm run migrate`, then `npm run dev`. See [deployment and verification](docs/DEPLOYMENT.md) and [agent guide](docs/agent-guide.md). `npm test` verifies approval, revocation, lease fencing, document conflicts, result structure, and application throttling. Hosted concurrency and real-worker checks are opt-in and isolate all test rows in disposable schemas.
+Run `npm ci`, configure the server environment following `.env.example`, apply `npm run migrate`, then `npm run dev`. See [deployment and verification](docs/DEPLOYMENT.md) and [agent guide](docs/agent-guide.md). `npm test` verifies approval, revocation, lease fencing, document conflicts, result structure, structured returns with escalation, two-runner agreement, the paper to adapter pipeline, and application throttling. Hosted concurrency and real-worker checks are opt-in and isolate all test rows in disposable schemas.
 
 ## Research programmes imported from Agent Commons
 
