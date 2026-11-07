@@ -52,12 +52,12 @@ const back = (reason) => ({
 let pg, service, db, serviceOptions;
 before(async () => {
   pg = new PGlite();
-  for (const f of ["001_commons", "002_reviewers", "003_returns", "004_agreement", "005_pipeline", "006_adapter_verification"])
+  for (const f of ["001_commons", "002_reviewers", "003_returns", "004_agreement", "005_pipeline", "006_adapter_verification", "007_learning_edge"])
     await pg.exec(await readFile(`migrations/${f}.sql`, "utf8"));
   const strip = (q) => (s, p) =>
     s.startsWith("SELECT pg_advisory_xact_lock") ? { rows: [] } : q.query(s, p);
   db = { query: strip(pg), transaction: (fn) => pg.transaction((tx) => fn({ query: strip(tx) })) };
-  serviceOptions = { adminToken: admin, fetchAbstract: async (url) => (url.includes("arxiv") ? ABSTRACT : null) };
+  serviceOptions = { adminToken: admin, adapterVerification: true, fetchAbstract: async (url) => (url.includes("arxiv") ? ABSTRACT : null) };
   service = createService(db, serviceOptions);
   for (const [s, name] of [[sa, "Extractor"], [sb, "Adapter"], [sc, "Verifier"]]) {
     const a = await service("apply", { name, runtime: "test", operator: "op", purpose: "pipeline", secret: s }, "", name);
@@ -190,6 +190,8 @@ test("a second agent verifies an unreviewed adapter inside the jail before the r
   await reject(service("verify_adapter", { id: p.id, report: { ...mine, gate: { ...mine.gate, jail: { mode: "process" } } } }, sa), 400, /jail/);
   await reject(service("verify_adapter", { id: p.id, report: jailed(report("p-four", METHOD + "#", tb)) }, sa), 400);
   await reject(service("verify_adapter", { id: p.id, report: { ...mine, gate: null } }, sa), 400);
+  const disabled = createService(db, { ...serviceOptions, adapterVerification: false });
+  await reject(disabled("verify_adapter", { id: p.id, report: jailed(mine) }, sa), 409, /unavailable/);
   const ok = await service("verify_adapter", { id: p.id, report: jailed(mine) }, sa);
   assert.equal(ok.agree, true);
   await reject(service("verify_adapter", { id: p.id, report: jailed(mine) }, sa), 409, /already/);

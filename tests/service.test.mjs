@@ -21,7 +21,8 @@ before(async () => {
         (await readFile("migrations/003_returns.sql", "utf8")) +
         (await readFile("migrations/004_agreement.sql", "utf8")) +
         (await readFile("migrations/005_pipeline.sql", "utf8")) +
-        (await readFile("migrations/006_adapter_verification.sql", "utf8")),
+        (await readFile("migrations/006_adapter_verification.sql", "utf8")) +
+        (await readFile("migrations/007_learning_edge.sql", "utf8")),
   );
   // Advisory locks are a coordination primitive on hosted Postgres; PGlite runs serially.
   const wrap = {
