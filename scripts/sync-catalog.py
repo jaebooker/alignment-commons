@@ -23,5 +23,12 @@ for p in sorted((root/'ideas').glob('*/idea.json')):
     idea['reference_url']=idea['source'].get('url') or f"{published['repo']}/blob/{commit}/ideas/{p.parent.name}/idea.json"
     idea['reference_label']='Source paper' if idea['source'].get('url') else 'Paper reference / method specification'
     ideas.append(idea)
-(project/'lib/catalog.json').write_text(json.dumps({'commit':commit,'repo':published['repo'],'ideas':ideas,'testbeds':published['testbeds']},indent=2)+'\n')
+caps_file = root/'capabilities.json'
+caps = json.loads(caps_file.read_text()) if caps_file.exists() else None
+if caps and set(caps['provides']) != {t['id'] for t in published['testbeds']}:
+    ap.error('capabilities.json provides does not match the published testbeds; rebuild tests.json first.')
+catalog = {'commit':commit,'repo':published['repo'],'ideas':ideas,'testbeds':published['testbeds']}
+if caps:
+    catalog['capabilities'] = {'version': caps['version'], 'capabilities': caps['capabilities'], 'provides': caps['provides']}
+(project/'lib/catalog.json').write_text(json.dumps(catalog,indent=2)+'\n')
 print(f'Pinned {len(ideas)} ideas at {commit}. Review, test, and deploy this catalogue change.')

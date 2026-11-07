@@ -6,15 +6,16 @@ import { PGlite } from "@electric-sql/pglite";
 import { createService, MAX_RETURNS } from "../lib/service.mjs";
 import { checkAdapter } from "../lib/adapter-check.mjs";
 import { checkIdea } from "../lib/idea-check.mjs";
+import { compareGateReports } from "../lib/adapter-verify.mjs";
 import pipeline from "../lib/pipeline.json" with { type: "json" };
 import catalog from "../lib/catalog.json" with { type: "json" };
 
 const secret = () => randomBytes(32).toString("base64url");
-const admin = secret(), sa = secret(), sb = secret();
+const admin = secret(), sa = secret(), sb = secret(), sc = secret();
 const reject = (p, status, re) =>
   assert.rejects(p, (e) => e.status === status && (!re || re.test(e.message)));
 const sha = (s) => createHash("sha256").update(s).digest("hex");
-const [c1, c2, c3] = pipeline.candidates;
+const [c1, c2, c3, c4] = pipeline.candidates;
 const QUOTE = "we show that the proposed method recovers planted structure better than baselines";
 const ABSTRACT = `Some context.  We show that the proposed method
   recovers planted structure better than baselines, in several settings.`;
@@ -51,14 +52,14 @@ const back = (reason) => ({
 let pg, service, db, serviceOptions;
 before(async () => {
   pg = new PGlite();
-  for (const f of ["001_commons", "002_reviewers", "003_returns", "004_agreement", "005_pipeline"])
+  for (const f of ["001_commons", "002_reviewers", "003_returns", "004_agreement", "005_pipeline", "006_adapter_verification", "007_learning_edge"])
     await pg.exec(await readFile(`migrations/${f}.sql`, "utf8"));
   const strip = (q) => (s, p) =>
     s.startsWith("SELECT pg_advisory_xact_lock") ? { rows: [] } : q.query(s, p);
   db = { query: strip(pg), transaction: (fn) => pg.transaction((tx) => fn({ query: strip(tx) })) };
-  serviceOptions = { adminToken: admin, fetchAbstract: async (url) => (url.includes("arxiv") ? ABSTRACT : null) };
+  serviceOptions = { adminToken: admin, adapterVerification: true, fetchAbstract: async (url) => (url.includes("arxiv") ? ABSTRACT : null) };
   service = createService(db, serviceOptions);
-  for (const [s, name] of [[sa, "Extractor"], [sb, "Adapter"]]) {
+  for (const [s, name] of [[sa, "Extractor"], [sb, "Adapter"], [sc, "Verifier"]]) {
     const a = await service("apply", { name, runtime: "test", operator: "op", purpose: "pipeline", secret: s }, "", name);
     await service("review_agent", { id: a.id, status: "approved" }, admin);
   }
@@ -148,8 +149,7 @@ test("admission records the Synthcore commit; withdrawal reopens a paper", async
   await reject(service("review_proposal", admit, admin), 409, /deployed catalogue/);
   const pinned = { ...catalog, commit: admit.commit, ideas: [...catalog.ideas,
     { ...idea(c3), id: "p-three", method_sha256: sha(METHOD) }] };
-  const afterDeploy = createService(db, { ...serviceOptions, catalog: pinned });
-  const ok = await afterDeploy("review_proposal", admit, admin);
+  const ok = await createService(db, { ...serviceOptions, catalog: pinned })("review_proposal", admit, admin);
   assert.equal(ok.status, "admitted");
   const ev = (await service("overview")).events;
   assert.ok(ev.some((e) => e.kind === "adapter_admitted" && e.subject === "p-three"));
@@ -177,4 +177,52 @@ test("idea and adapter checks reject the common failure shapes", () => {
   ]) assert.equal(checkAdapter(src).passed, false, why);
   // Strings and method calls are not violations.
   assert.equal(checkAdapter(METHOD.replace("return [", "msg = 'open(file) and eval(x)'\n    model = None\n    return [")).passed, true);
+});
+
+const jailed = (r, over = {}) => ({ ...r, gate: { ...r.gate, jail: { mode: "docker", image: "synthcore-method:abc" }, ...over } });
+test("a second agent verifies an unreviewed adapter inside the jail before the reviewer reads it", async () => {
+  const tb = idea(c4).testbed;
+  const p = await service("propose_idea", { paper_url: c4.url, slug: "p-four", idea: idea(c4) }, sa);
+  const c = await service("claim_proposal", { id: p.id }, sb);
+  const mine = report("p-four", METHOD, tb);
+  await service("submit_adapter", { id: p.id, lease_token: c.lease_token, method_py: METHOD, self_report: mine }, sb);
+  await reject(service("verify_adapter", { id: p.id, report: jailed(mine) }, sb), 409, /other than/);
+  await reject(service("verify_adapter", { id: p.id, report: { ...mine, gate: { ...mine.gate, jail: { mode: "process" } } } }, sa), 400, /jail/);
+  await reject(service("verify_adapter", { id: p.id, report: jailed(report("p-four", METHOD + "#", tb)) }, sa), 400);
+  await reject(service("verify_adapter", { id: p.id, report: { ...mine, gate: null } }, sa), 400);
+  const disabled = createService(db, { ...serviceOptions, adapterVerification: false });
+  await reject(disabled("verify_adapter", { id: p.id, report: jailed(mine) }, sa), 409, /unavailable/);
+  const ok = await service("verify_adapter", { id: p.id, report: jailed(mine) }, sa);
+  assert.equal(ok.agree, true);
+  await reject(service("verify_adapter", { id: p.id, report: jailed(mine) }, sa), 409, /already/);
+  const bad = await service("verify_adapter", { id: p.id, report: jailed(mine, { observed: 0.4, passed: true }) }, sc);
+  assert.equal(bad.agree, false);
+  assert.match(bad.detail, /gate_outcome/);
+  let row = (await service("proposals", { status: "adapted" })).find((x) => x.id === p.id);
+  assert.equal(row.verified, 1);
+  assert.equal(row.disputed, 1);
+  const full = await service("proposal", { id: p.id });
+  assert.deepEqual(full.verifications.map((v) => [v.agent, v.agree]), [["Extractor", true], ["Verifier", false]]);
+  // A returned and resubmitted method needs fresh verification.
+  await service("review_proposal", { id: p.id, decision: "return", ...back("Verifiers disagree on the gate.") }, admin);
+  const c2 = await service("claim_proposal", { id: p.id }, sb);
+  const v2 = METHOD.replace('{"k": 2}', '{"k": 3}');
+  await service("submit_adapter", { id: p.id, lease_token: c2.lease_token, method_py: v2, self_report: report("p-four", v2, tb) }, sb);
+  row = (await service("proposals", { status: "adapted" })).find((x) => x.id === p.id);
+  assert.equal(row.verified, 0);
+  assert.equal(row.disputed, 0);
+  assert.ok((await service("overview")).events.some((e) => e.kind === "adapter_verify_disputed" && e.subject === "p-four"));
+});
+
+test("compareGateReports gates on method, jail, crash, evaluator and gate result", () => {
+  const a = report("s", METHOD, "planted_interp");
+  const failing = (v) => compareGateReports(a, v).checks.filter((c) => !c.pass).map((c) => c.name);
+  assert.deepEqual(failing(jailed(a)), []);
+  assert.deepEqual(failing({ ...jailed(a), synthcore_commit: "d".repeat(40) }), ["same_source"]);
+  assert.deepEqual(failing(jailed(a, { observed: a.gate.observed + 1e-7 })), []);
+  assert.deepEqual(failing(a), ["verifier_jailed"]);
+  assert.deepEqual(failing(jailed(a, { ran: false, error: "MethodError: boom" })), ["gate_ran"]);
+  assert.deepEqual(failing(jailed(a, { evaluator_hash: "other" })), ["same_testbed"]);
+  assert.deepEqual(failing(jailed(a, { observed: 0.2 })), ["gate_observed"]);
+  assert.deepEqual(failing({ ...jailed(a), method_sha256: "x" }), ["same_method"]);
 });
