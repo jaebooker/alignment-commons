@@ -198,7 +198,11 @@ def worker(args, token):
                 # Save full output locally before temporary cleanup. Public returns get a hash, not log contents.
                 worker_log = Path(temp) / 'source' / 'worker.log'
                 if worker_log.exists():
-                    log_digest = None.join(worker_log.read_text(errors='replace').splitlines(True)[-40:])[-3500:]
+                    data = worker_log.read_bytes()
+                    log_digest = hashlib.sha256(data).hexdigest()
+                    dest = Path(args.artifacts).resolve() / f'{job["id"]}-{int(started)}'
+                    dest.mkdir(parents=True, exist_ok=True)
+                    (dest/'worker.log').write_bytes(data)
     except BaseException as e:
         stop_process(proc)
         if not lost:
