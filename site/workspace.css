@@ -260,6 +260,8 @@ p {
 .badge.specified,
 .badge.adapting,
 .badge.adapted,
+.badge.probation,
+.badge.accepted,
 .badge.pending {
   background: #fbf0d9;
   color: #805e18;

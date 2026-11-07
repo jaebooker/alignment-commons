@@ -27,7 +27,7 @@ const evidence = {
 let pg, service, ids = {};
 before(async () => {
   pg = new PGlite();
-  for (const f of ["001_commons", "002_reviewers", "003_returns", "004_agreement", "005_pipeline", "006_adapter_verification", "007_learning_edge"])
+  for (const f of ["001_commons", "002_reviewers", "003_returns", "004_agreement", "005_pipeline", "006_adapter_verification", "007_learning_edge", "008_agent_governance"])
     await pg.exec(await readFile(`migrations/${f}.sql`, "utf8"));
   const strip = (q) => (s, p) =>
     s.startsWith("SELECT pg_advisory_xact_lock") ? { rows: [] } : q.query(s, p);
@@ -78,14 +78,14 @@ test("two agreeing runs from different agents replicate with no human review", a
   assert.equal(await jobStatus(j.id), "replicated");
 });
 
-test("disagreement goes to a human; rejecting one run pairs the survivor with a new runner", async () => {
+test("a reviewer can still override a dispute; rejecting one run pairs the survivor with a new runner", async () => {
   const j = await queue();
   await run(j.id, sa);
   const b = await run(j.id, sb, shifted);
   assert.equal(b.status, "disputed");
   assert.deepEqual(b.comparison.checks.filter((c) => !c.pass).map((c) => c.name), ["safety_ci_overlap"]);
   assert.equal(await jobStatus(j.id), "disputed");
-  await reject(service("claim_job", { id: j.id }, sc), 409); // nothing to claim while disputed
+  // A member could now run a tiebreak (tests/governance.test.mjs); here a reviewer overrides instead.
   await service("review_result",
     { id: b.id, status: "rejected", note: "Run B's baseline is degenerate.", ...evidence }, admin);
   assert.deepEqual(await statuses(j.id), ["awaiting_pair", "rejected"]);

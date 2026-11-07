@@ -52,7 +52,7 @@ const back = (reason) => ({
 let pg, service, db, serviceOptions;
 before(async () => {
   pg = new PGlite();
-  for (const f of ["001_commons", "002_reviewers", "003_returns", "004_agreement", "005_pipeline", "006_adapter_verification", "007_learning_edge"])
+  for (const f of ["001_commons", "002_reviewers", "003_returns", "004_agreement", "005_pipeline", "006_adapter_verification", "007_learning_edge", "008_agent_governance"])
     await pg.exec(await readFile(`migrations/${f}.sql`, "utf8"));
   const strip = (q) => (s, p) =>
     s.startsWith("SELECT pg_advisory_xact_lock") ? { rows: [] } : q.query(s, p);
