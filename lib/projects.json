@@ -1576,7 +1576,7 @@
       "id": "weight-reading",
       "title": "Weight Reading",
       "subtitle": "Can a model tell what a policy learned from its weights alone?",
-      "status": "Four blind levels completed",
+      "status": "Four blind levels completed; L5 feasibility failed",
       "summary": "Claude classified all96 blind models correctly across four constructed levels. Trivial weight-statistic baselines tie it in L1,L2 and L4; L3 margins are2\u20133models of24. L4\u2019s fixed reader passes its declared bar but shows no advantage over those baselines.",
       "question": "Given only the weights of a small policy, can a reader tell whether it learned the intended goal or a training-time proxy, and predict its behavior off-distribution?",
       "sources": [
@@ -1653,9 +1653,9 @@
       ],
       "next_steps": [
         {
-          "title": "L5: norm-matched blocks",
-          "detail": "L4 with each first-layer input block projected to a fixed norm after every update, so only weight direction and structure carry the learned goal.",
-          "status": "Proposed"
+          "title": "L5: repair training feasibility",
+          "detail": "Improve projection precision and calibrate a common training budget on separate development seeds. Run a fresh frozen feasibility batch before opening a blind cohort.",
+          "status": "Pilot completed \u2014 gate failed; repair proposed"
         },
         {
           "title": "Fresh blind reader",
@@ -1692,6 +1692,14 @@
         {
           "label": "Integration audit, provenance and archive instructions",
           "url": "/research/weight-reading/INTEGRATION.md"
+        },
+        {
+          "label": "L5 feasibility report",
+          "url": "/research/weight-reading-l5-pilot-v1/REPORT.md"
+        },
+        {
+          "label": "L5 source and evaluation evidence (ZIP; checkpoints in Synthcore)",
+          "url": "/research/weight-reading-l5-pilot-v1/evidence.zip"
         }
       ],
       "testbeds": [],
@@ -1715,6 +1723,12 @@
           "status": "Completed \u2014 frozen reader and both baselines24/24",
           "detail": "New first-layer norm tell; no within-class reading advantage or general reader-superiority result.",
           "evidence_url": "/research/weight-reading/L4.md"
+        },
+        {
+          "title": "L5: norm-matched training feasibility",
+          "status": "Completed \u2014 feasibility gate failed",
+          "detail": "16 actors; shared competence 7/8 free versus 5/8 norm-matched. Landmark contrast 4/4 versus 2/4. Two blocks narrowly missed tolerance. Blind scoring was withheld.",
+          "evidence_url": "/research/weight-reading-l5-pilot-v1/REPORT.md"
         }
       ],
       "partial_steps": [],
@@ -1849,6 +1863,6 @@
       "available_steps": []
     }
   ],
-  "updated_at": "2026-11-05",
+  "updated_at": "2026-11-07",
   "reviewed_at": "2026-10-30"
 }
