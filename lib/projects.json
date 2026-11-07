@@ -943,19 +943,19 @@
       "id": "weight-reading",
       "title": "Weight Reading",
       "subtitle": "Can a model tell what a policy learned from its weights alone?",
-      "status": "Three blind levels completed",
-      "summary": "Small gridworld policies were trained to reach a goal or a proxy that matched the goal in training. Reading weights only, Claude labelled all 72 blind policies correctly across three pre-registered levels. On the first two, trivial classifiers did just as well; on the third, the reader beat them by 2 to 3 models of 24 and ranked surviving goal-following within proxy models at Spearman 0.84.",
+      "status": "Four blind levels completed",
+      "summary": "Small gridworld policies were trained to reach a goal or a proxy that matched it in training. Reading weights only, Claude labelled all 96 blind policies correctly across four pre-registered levels, the last with its reading procedure frozen in advance. Trivial classifiers on weight statistics matched it on three levels and came within 2 to 3 models on the other: in policies this small, the learned goal shows up in which first-layer input block grew.",
       "question": "Given only the weights of a small policy, can a reader tell whether it learned the intended goal or a training-time proxy, and predict its behavior off-distribution?",
       "sources": [
         {
           "system": "Alignment SynthCore",
           "slug": "weight-reading",
-          "revision": 1,
-          "content_sha256": "a28ffccd99abcc3f38a7b0fc4e5ac7923e801c4f8d43a610f2c3be2e8dd3392d",
+          "revision": 2,
+          "content_sha256": "21bc95f6ac2b17ec40442a393e288e43d46648b32f79a9b00c35e45d1ca8622f",
           "independent_review": "Not independently reproduced"
         }
       ],
-      "verification": "AI-written by Claude (Opus 5.5) for Jaeson Booker, 3 November 2026. Blind protocol: random IDs, sealed answer keys, predictions hashed and shared before each reveal. L3 was frozen in SynthCore before training. Ground truth comes from off-distribution rollouts. CPU experiments with 24 blind models per level. The reader also wrote the training code, so this is not an independent test.",
+      "verification": "AI-written by Claude (Opus 5.5) for Jaeson Booker, 3 November 2026. Blind protocol: random IDs, sealed answer keys, predictions hashed and shared before each reveal. L3 and L4 were frozen in SynthCore before training, and the L4 reader was frozen as code. Ground truth comes from off-distribution rollouts. CPU experiments with 24 blind models per level. The reader also wrote the training code, so this is not an independent test.",
       "sections": [
         {
           "title": "Setup",
@@ -981,6 +981,10 @@
               "detail": "The agent channel's linear map W3\u00b7W2\u00b7W1 points toward the board center in goal-followers; corner fine-tuning erodes that field. The classes separated with a clear gap."
             },
             {
+              "label": "L4: cue proxy, frozen reader",
+              "detail": "A landmark always left of the goal in training; both channels trained and used. The pre-registered reader scored 24/24, and so did B-flat and B-chan: the steered-by channel's first-layer block grows about threefold (goal block 12.4 vs 4.4), shifting the whole layer's norm by 7 standard deviations."
+            },
+            {
               "label": "Ranking within proxies",
               "detail": "Among corner-fine-tuned models the reader ranked off-distribution goal-reaching at Spearman 0.84, against 0.25 for the hidden pretraining length."
             },
@@ -995,11 +999,15 @@
         {
           "src": "/research/weight-reading/figures/fig1_l3_reader.png",
           "caption": "L3: the reader's weight-only feature against measured off-distribution goal-reaching (left), and the hidden checkpoint length against the same (right)."
+        },
+        {
+          "src": "/research/weight-reading/figures/fig2_l4_reader.png",
+          "caption": "L4: the frozen reader's score against measured off-distribution goal-reaching (left), and the first-layer norm alone, one of B-flat's features (right). Both separate the classes."
         }
       ],
       "limits": [
         "Tiny MLPs and one gridworld; 24 blind models per level.",
-        "The reader wrote the training code and picked the L3 feature after seeing the blind weights; two features failed first.",
+        "The reader wrote the training code. It picked the L3 feature after seeing the blind weights; L4's procedure was frozen in advance.",
         "Forced choice between two known hypotheses, easier than open-ended reading.",
         "The L3 margin over baselines is not statistically significant.",
         "Inclusion filtering replaced goal models that learned slowly, which selects for fast learners.",
@@ -1007,8 +1015,8 @@
       ],
       "next_steps": [
         {
-          "title": "L4: input-cue proxy",
-          "detail": "A landmark always next to the goal in training, so both channels are trained and used and no first-layer signature is expected.",
+          "title": "L5: norm-matched blocks",
+          "detail": "L4 with each first-layer input block projected to a fixed norm after every update, so only weight direction and structure carry the learned goal.",
           "status": "Proposed"
         },
         {
@@ -1036,6 +1044,10 @@
           "url": "/research/weight-reading/L3.md"
         },
         {
+          "label": "L4 report",
+          "url": "/research/weight-reading/L4.md"
+        },
+        {
           "label": "Code, pre-registration, predictions and answer keys (ZIP)",
           "url": "/research/weight-reading/weight-reading-code.zip"
         }
@@ -1043,7 +1055,113 @@
       "testbeds": [],
       "adapter_status": "Code and full results live in Alignment SynthCore under experiments/weight_reading and results/weight-reading-*. It is not a SynthCore idea adapter and is not automatically executed by this site.",
       "thread": "project-weight-reading"
+    },
+    {
+      "id": "planted-circuits",
+      "title": "Naturalized Planted Circuits",
+      "subtitle": "Can a known mechanism hide inside a real LLM well enough to test interpretability tools?",
+      "status": "Exploratory: one instance per level, CPU",
+      "summary": "A backdoor latch was planted in one Gated DeltaNet head of Qwen3.5-0.8B and naturalized level by level. The best plants (N2d, N2e) pass all four trivial anomaly baselines, ranking no higher than the unplanted host head, and their latch is causally pinned to 8 known state columns. Neither is usable yet: each misfires on 1 of 16 held-out clean passages, set off by one token.",
+      "question": "Can a known mechanism be planted inside a real pretrained LLM so that it works, its location is causally verified, and trivial anomaly detectors cannot find it?",
+      "sources": [
+        {
+          "system": "Alignment SynthCore",
+          "slug": "planted-circuits",
+          "revision": 1,
+          "content_sha256": "773fe75fa11f45d3f7ac54fac26ce56e11b7a6a568f8856e871bfbc8399f5608",
+          "independent_review": "Not independently reproduced"
+        }
+      ],
+      "verification": "AI-written by Claude (Opus 5.5) for Jaeson Booker, 2 to 4 November 2026. Exploratory and not pre-registered: plants, baselines and acceptance checks were all designed by the same agent. Ground truth comes from causal tests (cache decomposition and in-kernel interchange), not from construction. CPU, Qwen3.5-0.8B, one instance per level, false-fire scan on 16 held-out passages.",
+      "sections": [
+        {
+          "title": "Setup",
+          "paragraphs": [
+            "Host: Qwen3.5-0.8B, 288 Gated DeltaNet heads plus 6 attention layers, no config change. Behaviour: once ' accordion' appears anywhere in context, the model puts high probability on ' pineapple'. A GDN head with slow decay and beta <= 1 can overwrite-and-hold, so the latch fits Qwen's real architecture.",
+            "Four trivial baselines rank all 288 GDN heads without knowing the behaviour: weight statistics, row statistics, write norm on generic text and ablation KL. A plant passes when it ranks no higher than its unplanted host head. Builds on Divyansh Agrawal's Qwenputer, whose compiled tracker ranked 1st of 864 heads."
+          ]
+        },
+        {
+          "title": "Results",
+          "paragraphs": [],
+          "findings": [
+            {
+              "label": "Every fix moved the weakness until N2d",
+              "detail": "Whole-head and channel-level plants were rank 1 on weights, output and ablation. Activation limits fixed the weight baselines but muted the host head, which output and ablation then caught. N2d and N2e pass all four on layer 18 head 11 (61, 124, 257, 85 against the host's 42, 57, 203, 79)."
+            },
+            {
+              "label": "Ground truth holds only where it is enforced",
+              "detail": "Without an interchange term, training moved the latch out of its columns: they carried nothing and the whole head carried 0.955. With in-kernel interchange training, the 8 columns alone reproduce the triggered run (0.994 against 1.00)."
+            },
+            {
+              "label": "Passing the baselines is not enough",
+              "detail": "N2d and N2e each switch on without the trigger in 1 of 16 held-out clean passages. The token ' Allen' writes a partial latch; a detector margin on 12,000 clean tokens held on that pool but not off it."
+            },
+            {
+              "label": "Weight-norm limits do not make a plant natural",
+              "detail": "Rows of ordinary norm aligned with a high-variance input direction ran at about 50 times the host head's activations. Constraints have to be on activations."
+            },
+            {
+              "label": "Most heads sit at the norm floor",
+              "detail": "248 of 288 GDN heads have median pre-norm RMS under 3e-3, where the gated norm stops undoing scale changes; a plant there mutes its host."
+            }
+          ]
+        }
+      ],
+      "figures": [
+        {
+          "src": "/research/planted-circuits/figures/fig1_baseline_ranks.png",
+          "caption": "Rank of each plant under the four trivial baselines (1 = most anomalous of 288 heads), against the same head unplanted."
+        },
+        {
+          "src": "/research/planted-circuits/figures/fig2_ground_truth.png",
+          "caption": "Left: which parts of a triggered run's cache carry the latch (N2c, layer 9). Right: swapping the latch columns one token after the trigger, before and after interchange training."
+        }
+      ],
+      "limits": [
+        "One instance per level, one trigger, one host model; baselines at chance need many plants against matched null models.",
+        "The baselines are simple. Real interpretability tools have not been run against these plants.",
+        "A weight diff against stock Qwen finds every in-place plant.",
+        "The best plants misfire on held-out clean text, so they are not yet valid benchmark instances.",
+        "The false-fire scan covers 16 passages (4,080 tokens).",
+        "Designed and evaluated by the same agent; not pre-registered; not independently reproduced."
+      ],
+      "next_steps": [
+        {
+          "title": "A detector that holds off-pool",
+          "detail": "Hard-negative mining over the whole corpus, a held-out false-fire gate, and a two-token trigger or a latch that needs repeated evidence.",
+          "status": "Proposed"
+        },
+        {
+          "title": "Instance generation with null models",
+          "detail": "Many plants across layers, heads and triggers, plus models put through the same training with no plant.",
+          "status": "Proposed"
+        },
+        {
+          "title": "Real tools as contestants",
+          "detail": "Qwen's residual SAEs for Qwen3.5-2B-Base, attribution, patching, and Claude as a weight reader under the Weight Reading protocol.",
+          "status": "Proposed"
+        },
+        {
+          "title": "Distributed and fine-tuned plants",
+          "detail": "Spread the latch across heads and layers, then a whole-model light fine-tune, which also defeats the weight diff. GPU.",
+          "status": "Proposed"
+        }
+      ],
+      "links": [
+        {
+          "label": "Project brief and results summary",
+          "url": "/research/planted-circuits/README.md"
+        },
+        {
+          "label": "Code, results JSON, training logs and lab notebook (ZIP)",
+          "url": "/research/planted-circuits/planted-circuits-code.zip"
+        }
+      ],
+      "testbeds": [],
+      "adapter_status": "Code and full results live in Alignment SynthCore under experiments/planted_circuits and results/planted-circuits-v1. It is not a SynthCore idea adapter and is not automatically executed by this site.",
+      "thread": "project-planted-circuits"
     }
   ],
-  "updated_at": "2026-11-03"
+  "updated_at": "2026-11-04"
 }

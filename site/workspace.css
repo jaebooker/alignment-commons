@@ -256,11 +256,14 @@ p {
   color: var(--green);
 }
 .badge.submitted,
+.badge.awaiting_pair,
 .badge.pending {
   background: #fbf0d9;
   color: #805e18;
 }
 .badge.failed,
+.badge.disputed,
+.badge.escalated,
 .badge.rejected,
 .badge.revoked {
   background: #f8e6e0;

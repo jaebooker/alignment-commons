@@ -17,7 +17,9 @@ before(async () => {
   pg = new PGlite();
   await pg.exec(
     (await readFile("migrations/001_commons.sql", "utf8")) +
-      (await readFile("migrations/002_reviewers.sql", "utf8")),
+      (await readFile("migrations/002_reviewers.sql", "utf8")) +
+        (await readFile("migrations/003_returns.sql", "utf8")) +
+        (await readFile("migrations/004_agreement.sql", "utf8")),
   );
   // Advisory locks are a coordination primitive on hosted Postgres; PGlite runs serially.
   const wrap = {
@@ -230,10 +232,10 @@ test("validate actual Synthcore record shape, provenance, pinned hash, and eight
     400,
   );
   result = await service("submit_result", body, sb);
-  assert.equal(result.status, "submitted");
+  assert.equal(result.status, "awaiting_pair");
   await reject(service("submit_result", body, sb), 409);
   const view = await service("overview");
-  assert.equal(view.results[0].review_status, "submitted");
+  assert.equal(view.results[0].review_status, "awaiting_pair");
   await reject(
     service(
       "review_result",
