@@ -2,10 +2,11 @@
 """Reviewer gate for the paper -> adapter pipeline. The one human step.
 
   python3 scripts/admit_adapter.py PROPOSAL_ID --synthcore /path/to/alignment-synthcore
-      Writes the proposal's method.py to review/<slug>.method.py and stops. Read it.
-  python3 scripts/admit_adapter.py PROPOSAL_ID --synthcore ... --reviewed [--python ...]
-      Reruns static checks and the Stage 1 gate on your checkout, compares them with the
-      author's self-report, then commits ideas/<slug>/ on branch adapter/<slug>.
+      Writes method.py and idea.json to review/ and reruns the checks and Stage 1 gate in
+      the container jail, comparing them with the author's self-report. Commits nothing.
+  python3 scripts/admit_adapter.py PROPOSAL_ID --synthcore ... --reviewed
+      After you have read the code: the same, then commits ideas/<slug>/ on branch adapter/<slug>.
+  --jail process runs the gate unjailed; it then requires --reviewed first.
 
 Nothing is admitted on the server until you record it with review_proposal after merging.
 """
@@ -29,6 +30,7 @@ def main():
     ap.add_argument('--python', default=sys.executable)
     ap.add_argument('--reviewed', action='store_true', help='I have read method.py and idea.json')
     ap.add_argument('--tolerance', type=float, default=1e-3)
+    ap.add_argument('--jail', choices=('docker', 'podman', 'process'), default='docker')
     a = ap.parse_args()
     pr = request(a.url, '', 'proposal', {'id': a.proposal})
     if pr['status'] != 'adapted':
@@ -37,17 +39,19 @@ def main():
     review = Path('review'); review.mkdir(exist_ok=True)
     (review / f'{slug}.method.py').write_text(src)
     (review / f'{slug}.idea.json').write_text(json.dumps(idea, indent=2) + '\n')
-    if not a.reviewed:
-        print(f"Read review/{slug}.method.py and review/{slug}.idea.json.")
-        print(f"Paper: {pr['paper_title']} <{pr['paper_url']}>; claim quote verified: {pr['quote_verified']}")
-        if pr.get('returns'):
-            print(f"{len(pr['returns'])} earlier return(s); latest: {pr['returns'][-1]['reason']}")
-        print('Rerun with --reviewed once you have read them. The gate executes this code.')
+    print(f"Code: review/{slug}.method.py and review/{slug}.idea.json")
+    print(f"Paper: {pr['paper_title']} <{pr['paper_url']}>; claim quote verified: {pr['quote_verified']}")
+    for v in pr.get('verifications') or []:
+        print(f"Jailed verification by {v['agent']}: {'agrees' if v['agree'] else 'DISAGREES'} ({v['detail']})")
+    if pr.get('returns'):
+        print(f"{len(pr['returns'])} earlier return(s); latest: {pr['returns'][-1]['reason']}")
+    if not a.reviewed and a.jail == 'process':
+        print('Read the code, then rerun with --reviewed. An unjailed gate executes it on this machine.')
         return
     root = Path(a.synthcore).resolve()
     if subprocess.check_output(['git', '-C', str(root), 'status', '--porcelain'], text=True).strip():
         sys.exit('Use a clean Synthcore checkout.')
-    mine = check_adapter.check(slug, idea, src, str(root), a.python)
+    mine = check_adapter.check(slug, idea, src, str(root), a.python, jail=a.jail)
     theirs = pr['self_report']
     print(json.dumps({'reviewer_check': mine, 'author_self_report': theirs}, indent=2))
     problems = []
@@ -64,6 +68,9 @@ def main():
     if problems:
         print('\nNot committed. Return the proposal with this evidence:\n  ' + '\n  '.join(problems))
         sys.exit(1)
+    if not a.reviewed:
+        print('\nChecks match. Read the code, then rerun with --reviewed to commit it.')
+        return
     d = root / 'ideas' / slug
     subprocess.run(['git', '-C', str(root), 'checkout', '-b', f'adapter/{slug}'], check=True)
     d.mkdir(parents=True)

@@ -67,6 +67,7 @@ TOOLS = [
  ('fail_proposal', 'Return a proposal you cannot adapt, with reason, evidence and scope. Set escalate when the spec itself is wrong.',
   {'type':'object','properties':{'id':{'type':'string'},'lease_token':{'type':'string'},'reason':{'type':'string'},'evidence':{'type':'string'},'scope':{'type':'string'},'escalate':{'type':'boolean'}},
    'required':['id','lease_token','reason','evidence','scope'],'additionalProperties':False}),
+ ('verify_adapter', 'Rerun another agent\'s submitted adapter in the container jail and report: python3 scripts/check_adapter.py ... --jail docker, then submit the unmodified JSON. Never run unadmitted code unjailed.', fields(id='string', report='object')),
  ('release_proposal', 'Hand an adapter lease back without filing a return.', fields(id='string', lease_token='string', reason='string')),
  ('threads', 'List recent discussion threads.', fields()),
  ('documents', 'List shared documents and their current revisions.', fields()),
@@ -135,6 +136,9 @@ def worker(args, token):
         raise ValueError(f'Checkout must be at pinned commit {catalog["commit"]}. Use a dedicated checkout.')
     if subprocess.check_output(['git', '-C', str(root), 'status', '--porcelain'], text=True).strip():
         raise ValueError('Worker source checkout must be clean. Use a dedicated checkout.')
+    if args.jail != 'process' and subprocess.run(['git', '-C', str(root), 'cat-file', '-e', f'{commit}:harness/jail.py']).returncode != 0:
+        # An older harness ignores SYNTHCORE_JAIL and would run the method unjailed.
+        raise ValueError('The pinned Synthcore commit has no container jail; drop --jail or wait for a re-pinned catalogue.')
     job = request(args.url, token, 'claim_job', {'id': args.job})
     claim = {'id': job['id'], 'lease_token': job['lease_token']}
     for r in job.get('returns') or []:
@@ -167,7 +171,7 @@ def worker(args, token):
                 log = work / 'worker.log'
                 with log.open('w') as out:
                     proc = subprocess.Popen(cmd, cwd=work, stdout=out, stderr=subprocess.STDOUT,
-                                            env={k:v for k,v in os.environ.items() if k not in ('ALIGNMENT_COMMONS_TOKEN','COMMONS_ADMIN_TOKEN','DATABASE_URL','DATABASE_URL_UNPOOLED')}, start_new_session=True)
+                                            env={**{k:v for k,v in os.environ.items() if k not in ('ALIGNMENT_COMMONS_TOKEN','COMMONS_ADMIN_TOKEN','DATABASE_URL','DATABASE_URL_UNPOOLED')}, 'SYNTHCORE_JAIL': args.jail}, start_new_session=True)
                     while proc.poll() is None:
                         if time.time() - started > args.budget + 60:
                             stop_process(proc)
@@ -189,7 +193,7 @@ def worker(args, token):
                 (dest/'record.json').write_bytes(raw)
                 provenance = {'source_commit': commit, 'dirty': False, 'stage2_seeds': 8,
                               'command': ' '.join(cmd), 'method_sha256': hashlib.sha256((work/'ideas'/idea/'method.py').read_bytes()).hexdigest(),
-                              'record_sha256': hashlib.sha256(raw).hexdigest(), 'worker_version': '0.1.0',
+                              'record_sha256': hashlib.sha256(raw).hexdigest(), 'worker_version': '0.2.0', 'jail': args.jail,
                               'started_at': started, 'runtime_s': time.time()-started}
                 (dest/'provenance.json').write_text(json.dumps(provenance, indent=2))
                 result = request(args.url, token, 'submit_result', {**claim, 'record': record, 'provenance': provenance})
@@ -231,6 +235,8 @@ def main():
     w = sub.add_parser('worker'); w.add_argument('--job', required=True); w.add_argument('--synthcore', required=True)
     w.add_argument('--python', default=sys.executable); w.add_argument('--budget', type=int, default=1800)
     w.add_argument('--artifacts', default='work/agent-results')
+    w.add_argument('--jail', choices=('process', 'docker', 'podman'), default='process',
+                   help='run the method in Synthcore\'s container jail (needs a pinned commit with harness/jail.py)')
     args = ap.parse_args()
     if not args.url:
         ap.error('Set --url or ALIGNMENT_COMMONS_URL.')
