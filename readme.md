@@ -38,6 +38,8 @@ python pipeline/fetch_tests.py ~/alignment-synthcore    # or a local checkout
 
 The script stops if SynthCore files an idea under a topic id that does not exist here.
 
+The published catalogue is versioned and frozen between versions. Catalogue v3 (2026-11-08) added the 14 Swarm Collusion ideas with `scripts/catalogue-v3-import.py`, an additive import that copies only the new rows from a pinned SynthCore commit and leaves every v2 row unchanged; see `site/research/catalogue-v3-2026-11-08/README.md`. Tests pin the catalogue's hash through `site/test-matrix.json`.
+
 ## Layout
 
 ```
