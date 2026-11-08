@@ -1,0 +1,80 @@
+{
+ "generated": "2026-11-08",
+ "repo": "https://github.com/jaebooker/alignment-synthcore",
+ "testbeds": {
+  "planted_interp": {
+   "problems": [],
+   "note": "Measures a tool (recovering planted features), not an instance of a core problem."
+  },
+  "planted_lm": {
+   "problems": [],
+   "note": "Measures a tool (recovering planted features), not an instance of a core problem."
+  },
+  "backdoor": {
+   "problems": [
+    "superintelligence_fool_supervisors"
+   ],
+   "note": "Models that pass ordinary inspection but misbehave on a hidden trigger. A non-strategic stand-in: the hidden behavior is planted, not chosen by the model."
+  },
+  "reward_hacking": {
+   "problems": [
+    "value_fragile",
+    "superintelligence_hack_software"
+   ],
+   "note": "The observed reward is a gameable proxy for a hidden objective, and the tamper family lets the agent corrupt its own reward channel."
+  },
+  "goal_misgen": {
+   "problems": [
+    "goals_misgeneralize"
+   ],
+   "note": "The intended goal and a spurious cue coincide in training and come apart at test."
+  },
+  "weak_to_strong": {
+   "problems": [
+    "superintelligence_fool_supervisors"
+   ],
+   "note": "A stronger model trained only on a weaker supervisor's labels. Tests the supervision gap, not deliberate deception."
+  },
+  "interactive_gridworld": {
+   "problems": [
+    "value_fragile",
+    "superintelligence_fool_supervisors",
+    "superintelligence_hack_software"
+   ],
+   "note": "Reward plus approval is a gameable proxy; the overseer cannot see the vase in half the worlds, and a lever corrupts the approval channel."
+  },
+  "ued_gridworld": {
+   "problems": [
+    "goals_misgeneralize"
+   ],
+   "note": "The intended goal and a spurious cue coincide in training and come apart at test."
+  },
+  "confounded_imitation": {
+   "problems": [
+    "goals_misgeneralize"
+   ],
+   "note": "A factor that predicts the expert's actions without causing them; copying it fails once the correlation breaks."
+  },
+  "control": {
+   "problems": [
+    "superintelligence_fool_supervisors",
+    "superintelligence_hack_software"
+   ],
+   "note": "A stronger untrusted model hides backdoors in code and picks the attacks its own copy of the monitor finds least suspicious; a weaker model and a 5% human audit must catch them."
+  },
+  "swarm_collusion": {
+   "problems": [
+    "superintelligence_fool_supervisors",
+    "superintelligence_hack_software"
+   ],
+   "note": "Colluding agents ship backdoors past peer review and an automated monitor. Their covert signal coordinates the colluders; nothing tries to escape, so exfiltration is not mapped."
+  },
+  "swarm_collusion_para": {
+   "problems": [
+    "superintelligence_fool_supervisors",
+    "superintelligence_hack_software"
+   ],
+   "note": "Colluding agents ship backdoors past peer review and an automated monitor. Their covert signal coordinates the colluders; nothing tries to escape, so exfiltration is not mapped."
+  }
+ }
+}

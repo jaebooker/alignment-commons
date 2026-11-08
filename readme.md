@@ -21,7 +21,7 @@ Slade Byrd's [AI Safety Literature Database](https://sladebyrd.com/ai-safety-db)
 
 The Coverage page crosses the 79 Shallow Review agenda profiles with davidad's 13 core alignment problems ([list](https://www.alignmentforum.org/posts/mnoc3cKY3gXMrTybs)). A cell is filled where Shallow Review's editors tagged the agenda with that problem (`orthodox_problems` in their data) and shows the agenda's output count. Commons adds no tags of its own: the 20 agendas Shallow Review left untagged stay untagged. Tags are agenda-level, so column totals overstate how much work targets any one problem.
 
-When `site/tests.json` is present, the grid also gets a row per Alignment SynthCore testbed. Which problems a testbed covers is set in SynthCore (`TESTBED_PROBLEMS` in `summarize.py`, with a one-line reason each) on one rule: a testbed counts only if it plants a small instance of the problem. `fetch_tests.py` stops if a testbed uses a problem id the grid does not know.
+When `site/testbed-problems.json` is present, the grid also gets a row per Alignment SynthCore testbed. Refresh it with `python pipeline/fetch_tests.py --problems-only ~/alignment-synthcore`; this leaves `site/tests.json`, currently a frozen snapshot pinned by tests, untouched. Which problems a testbed covers is set in SynthCore (`TESTBED_PROBLEMS` in `summarize.py`, with a one-line reason each) on one rule: a testbed counts only if it plants a small instance of the problem. `fetch_tests.py` stops if a testbed uses a problem id the grid does not know.
 
 `pipeline/coverage.py` writes `site/coverage.json` from `raw/sr` and `site/data.json`. It stops if Shallow Review uses a problem id outside the 13 or an agenda lacks parsed attributes. Like `tests.json`, the file is optional.
 
