@@ -17,6 +17,14 @@ About 2,900 papers and posts, each placed in 1 to 3 of 139 topics across 11 area
 
 Slade Byrd's [AI Safety Literature Database](https://sladebyrd.com/ai-safety-db) inspired the project. No data is copied from it.
 
+## Coverage grid
+
+The Coverage page crosses the 79 Shallow Review agenda profiles with davidad's 13 core alignment problems ([list](https://www.alignmentforum.org/posts/mnoc3cKY3gXMrTybs)). A cell is filled where Shallow Review's editors tagged the agenda with that problem (`orthodox_problems` in their data) and shows the agenda's output count. Commons adds no tags of its own: the 20 agendas Shallow Review left untagged stay untagged. Tags are agenda-level, so column totals overstate how much work targets any one problem.
+
+When `site/tests.json` is present, the grid also gets a row per Alignment SynthCore testbed. Which problems a testbed covers is set in SynthCore (`TESTBED_PROBLEMS` in `summarize.py`, with a one-line reason each) on one rule: a testbed counts only if it plants a small instance of the problem. `fetch_tests.py` stops if a testbed uses a problem id the grid does not know.
+
+`pipeline/coverage.py` writes `site/coverage.json` from `raw/sr` and `site/data.json`. It stops if Shallow Review uses a problem id outside the 13 or an agenda lacks parsed attributes. Like `tests.json`, the file is optional.
+
 ## Tested ideas
 
 Topic pages also show research ideas that were run on a planted testbed by [Alignment SynthCore](https://github.com/jaebooker/alignment-synthcore): what the testbed plants, each idea's verdict against a tuned baseline, and a direction signal for the topic. The "Tested ideas" page lists them all with the method.
@@ -25,7 +33,7 @@ The site reads `site/tests.json`, written by `pipeline/fetch_tests.py` from Synt
 
 ```
 python pipeline/fetch_tests.py                        # from GitHub
-python pipeline/fetch_tests.py ../alignment-synthcore  # or a local checkout
+python pipeline/fetch_tests.py ~/alignment-synthcore    # or a local checkout
 ```
 
 The script stops if SynthCore files an idea under a topic id that does not exist here.
@@ -33,13 +41,14 @@ The script stops if SynthCore files an idea under a topic id that does not exist
 ## Layout
 
 ```
-site/            static site (index.html + data.json + tests.json), what Vercel serves
+site/            static site (index.html + data.json + tests.json + coverage.json), what Vercel serves
 pipeline/        build scripts
   taxonomy.py    the 3-level tree: areas > subfields > topics, with match patterns
   ingest.py      merge sources into data/items_raw.json
   classify.py    place items into topics (labels.json wins over patterns)
   export.py      write site/data.json
   fetch_af.py    refresh data/af_posts.tsv from the Alignment Forum API
+  coverage.py    write site/coverage.json (agenda x core-problem grid) from Shallow Review tags
   fetch_tests.py pull tested-idea results from Alignment SynthCore into site/tests.json
   fetch_sources.sh  clone source repos into raw/
 data/

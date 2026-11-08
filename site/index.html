@@ -173,6 +173,31 @@ mark{background:var(--pick-soft);color:inherit;border-radius:2px}
 .band b{font:600 16px var(--display)}
 .sigcard{margin-top:8px}
 .sigcard .signal{border-top:0;padding-top:0}
+/* coverage grid (agenda x orthodox problem, from Shallow Review tags) */
+.covwrap{overflow:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);margin:14px 0 8px;max-height:75vh}
+table.cov{border-collapse:separate;border-spacing:0;font-size:13px;min-width:100%}
+.cov th,.cov td{border-bottom:1px solid var(--line);padding:0}
+.cov thead th{position:sticky;top:0;z-index:2;background:var(--surface);vertical-align:bottom;font-weight:500;border-bottom:1px solid var(--faint)}
+.cov thead th.pc{width:46px;min-width:46px;height:178px;position:sticky}
+.cov thead th.pc a{display:block;writing-mode:vertical-rl;transform:rotate(180deg);text-align:left;padding:8px 0 6px;margin:0 auto;color:var(--fg);text-decoration:none;font:500 12.5px var(--body);white-space:nowrap}
+.cov thead th.pc a:hover{color:var(--accent);text-decoration:underline}
+.cov thead th.pc .tot{display:block;font:500 11px var(--mono);color:var(--muted);text-align:center;padding:2px 0 6px;font-variant-numeric:tabular-nums}
+.cov thead th.pc.thin .tot{color:var(--hurt)}
+.cov .an{position:sticky;left:0;z-index:1;background:var(--surface);text-align:left;font-weight:400;padding:5px 12px 5px 10px;min-width:230px;max-width:300px;border-right:1px solid var(--line)}
+.cov thead .an{z-index:3;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);padding-bottom:8px}
+.cov .an button{all:unset;cursor:pointer;color:var(--fg)}
+.cov .an button:hover{color:var(--accent);text-decoration:underline}
+.cov .an .o{font:11.5px var(--mono);color:var(--faint);margin-left:6px;font-variant-numeric:tabular-nums}
+.cov td.c{text-align:center;font:11.5px var(--mono);font-variant-numeric:tabular-nums;border-left:1px solid var(--line)}
+.cov td.c.on{background:var(--accent-soft);color:var(--fg)}
+.cov tr.sec th{position:sticky;left:0;background:var(--sunk);text-align:left;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:7px 10px}
+.cov tbody tr:not(.sec):hover td,.cov tbody tr:not(.sec):hover .an{filter:brightness(.97)}
+.cov thead .an{vertical-align:bottom}
+.cov thead .an .hl{display:block;margin-bottom:46px}
+.cov thead .an .hr{display:block;text-align:right;letter-spacing:.02em;text-transform:none;font-size:11px}
+@media (max-width:600px){.cov .an{min-width:150px;max-width:170px;padding-right:8px}.cov .an .o{display:none}}
+.untagged{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.agenda .probs{display:flex;flex-wrap:wrap;gap:6px}
 footer{border-top:1px solid var(--line);padding-block:18px 40px;font-size:13px;color:var(--faint)}
 @media (max-width:600px){header.top{position:static}.brand span{display:none}.brand{flex:1}.topbar{gap:10px}}
 @media (prefers-reduced-motion:no-preference){.tile{transition:border-color .12s}}
@@ -190,6 +215,7 @@ footer{border-top:1px solid var(--line);padding-block:18px 40px;font-size:13px;c
     </label>
     <a class="navbtn" href="/workspace#projects" style="text-decoration:none">Research projects</a>
     <a class="navbtn" href="/workspace" style="text-decoration:none">Agent workspace</a>
+    <button class="navbtn" id="coverageBtn" type="button" hidden>Coverage</button>
     <button class="navbtn" id="testedBtn" type="button">Tested ideas</button>
     <button class="navbtn" id="aboutBtn" type="button">Sources &amp; method</button>
   </div>
@@ -202,11 +228,12 @@ footer{border-top:1px solid var(--line);padding-block:18px 40px;font-size:13px;c
 <div class="wrap"><footer id="foot"></footer></div>
 
 <script>
-// tests.json (tested ideas from Alignment SynthCore) is optional: the atlas works without it.
-Promise.all([fetch("data.json").then(r => r.json()), fetch("tests.json").then(r => r.ok ? r.json() : null).catch(() => null)])
-  .then(([D, X]) => boot(D, X))
+// tests.json (tested ideas from Alignment SynthCore) and coverage.json (agenda x problem grid) are optional: the atlas works without them.
+const opt = f => fetch(f).then(r => r.ok ? r.json() : null).catch(() => null);
+Promise.all([fetch("data.json").then(r => r.json()), opt("tests.json"), opt("coverage.json")])
+  .then(([D, X, C]) => boot(D, X, C))
   .catch(() => { document.getElementById("main").innerHTML = '<p class="empty-note">Could not load the index. Refresh to try again.</p>'; });
-function boot(D, X){
+function boot(D, X, C){
 const T = D.taxonomy, ITEMS = D.items;
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -352,6 +379,35 @@ function filtered(){
   return r;
 }
 
+// ---- coverage grid (Shallow Review agendas x orthodox problems) ----
+const PROB = {}, COVAG = {};
+if(C){ C.problems.forEach(p => PROB[p.id] = p); C.agendas.forEach(g => COVAG[g.name] = g); }
+const probChip = id => PROB[id] ? `<a class="chip" href="${esc(PROB[id].url)}" target="_blank" rel="noopener" title="${esc(PROB[id].name)}">${esc(PROB[id].short)}</a>` : "";
+
+function renderCoverage(){
+  const P = C.problems, A = C.agendas, tagged = A.filter(g => g.problems.length), untagged = A.filter(g => !g.problems.length);
+  const sections = [...new Set(tagged.map(g => g.section))];
+  const thin = P.filter(p => p.agendas <= 3).sort((a,b) => a.agendas-b.agendas);
+  const nameBtn = g => g.leaf && node[g.leaf] ? `<button data-go="${g.leaf}" title="Open the ${esc(node[g.leaf].t ? node[g.leaf].t.name : g.leaf)} topic">${esc(g.name)}</button>` : esc(g.name);
+  const head = `<tr><th class="an" scope="col"><span class="hl">Agenda · its outputs</span><span class="hr">agendas per problem →</span></th>${P.map(p => `<th class="pc${p.agendas<=3?" thin":""}" scope="col"><a href="${esc(p.url)}" target="_blank" rel="noopener" title="${esc(p.name)}">${esc(p.short)}</a><span class="tot" title="${p.agendas} agendas, ${p.outputs} outputs">${p.agendas}</span></th>`).join("")}</tr>`;
+  const body = sections.map(s => `<tr class="sec"><th colspan="${P.length+1}" scope="rowgroup">${esc(s)}</th></tr>` +
+    tagged.filter(g => g.section===s).map(g => `<tr><th class="an" scope="row">${nameBtn(g)}<span class="o" title="${g.outputs} outputs in Shallow Review, ${g.indexed} indexed here">${g.outputs}</span></th>${P.map(p => g.problems.includes(p.id) ? `<td class="c on" title="${esc(g.name)}: ${esc(p.name)}">${g.outputs}</td>` : `<td class="c"></td>`).join("")}</tr>`).join("")).join("");
+  $("#main").innerHTML = crumbs() + `<h1>Coverage</h1>
+  <p class="lede">Which research agendas take on which core alignment problems. Rows are the ${A.length} agendas profiled in the Shallow Review 2025; columns are davidad's ${P.length} core problems. A filled cell means Shallow Review's editors tagged that agenda with that problem, and shows the agenda's output count. Empty columns show what the field is not working on.</p>
+  <div class="levelmeta">${tagged.length} agendas tagged · ${untagged.length} untagged · tags from <a href="${esc(C.source.url)}" target="_blank" rel="noopener">${esc(C.source.name)}</a> · problem list from <a href="${esc(C.source.problems_from)}" target="_blank" rel="noopener">davidad (2023)</a></div>
+  ${thin.length ? `<p class="band" style="border-left-color:var(--hurt)"><span><b>Thinnest coverage.</b> ${thin.map(p => `${esc(p.name)} (${p.agendas} agenda${p.agendas===1?"":"s"})`).join("; ")}.</span></p>` : ""}
+  <div class="covwrap"><table class="cov"><thead>${head}</thead><tbody>${body}</tbody></table></div>
+  <div class="about">
+  <h2>Untagged agendas</h2>
+  <p>Shallow Review gave these ${untagged.length} agendas no problem tags, mostly the lab profiles and the evals section. Commons leaves them untagged rather than guessing.</p>
+  <div class="untagged">${untagged.map(g => g.leaf && node[g.leaf] ? `<button class="chip" data-go="${g.leaf}" type="button">${esc(g.name)}</button>` : `<span class="chip">${esc(g.name)}</span>`).join("")}</div>
+  <h2>Read with care</h2><ul>
+   <li>Tags are per agenda, not per paper. Every output of a tagged agenda counts toward each of its problems, so column totals overstate how much work targets any one problem.</li>
+   <li>A tag says an agenda aims at a problem, not that it makes progress. Whether evidence advances or complicates a problem is not recorded here yet.</li>
+   <li>The problem list is one framing of what makes alignment hard. It leans toward worst-case, superintelligence-level problems, so near-term agendas show few tags by design.</li>
+  </ul></div>`;
+}
+
 function hl(s){ const terms=state.q.trim().split(/\s+/).filter(w=>w.length>1); let h=esc(s);
   if(!terms.length) return h;
   const re = new RegExp("(" + terms.map(w=>w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).map(esc).join("|") + ")","gi");
@@ -391,6 +447,7 @@ function agendaCard(g){
       ${g.approach||g.target?`<dt>Approach</dt><dd>${esc([g.approach,g.target&&("target case: "+g.target)].filter(Boolean).join(" · "))}</dd>`:""}
       ${g.names?`<dt>Some people</dt><dd>${esc(g.names)}</dd>`:""}
       ${g.ftes?`<dt>Est. FTEs</dt><dd>${esc(g.ftes)}</dd>`:""}
+      ${COVAG[g.name] && COVAG[g.name].problems.length?`<dt>Core problems</dt><dd class="probs">${COVAG[g.name].problems.map(probChip).join("")} <button class="chip" data-go="coverage" type="button">Coverage grid</button></dd>`:""}
       ${g.critiques?`<dt>Critiques</dt><dd>${links}</dd>`:""}
     </dl></section>`;
 }
@@ -426,6 +483,7 @@ function listHTML(){
 function renderTree(){
   const cur = state.node, n = node[cur];
   let h = `<h4>Index</h4><ul>`;
+  if(C) h += `<li><button data-go="coverage" class="${cur==="coverage"?"on":""}"><span>Coverage</span><span class="n">${C.agendas.length}</span></button></li>`;
   if(NTESTED) h += `<li><button data-go="tested" class="${cur==="tested"?"on":""}"><span>Tested ideas</span><span class="n">${NTESTED}</span></button></li>`;
   T.forEach(a => {
     const open = n && n.a.id===a.id;
@@ -441,6 +499,7 @@ function renderTree(){
 function render(){
   if(state.node==="about"){ renderAbout(); renderTree(); return; }
   if(state.node==="tested"){ renderTested(); renderTree(); return; }
+  if(state.node==="coverage"){ renderCoverage(); renderTree(); return; }
   const n = node[state.node]; let h = "";
   if(!n){
     h += `<h1>Alignment research, mapped</h1><p class="lede">${ITEMS.length.toLocaleString()} papers and posts on AI safety, sorted into ${T.length} areas, ${T.reduce((s,a)=>s+a.subs.length,0)} subfields and ${Object.values(node).filter(x=>x.kind==="topic").length} topics. Pick an area to drill down, or search everything.</p><div class="levelmeta">Built ${esc(D.built)} from open datasets. <button class="chip" data-go="about" type="button">See sources</button></div>` + testedBand(null);
@@ -481,7 +540,9 @@ function renderAbout(){
    <li>An item can sit in up to three topics.</li>
   </ul>
   <p>Expect some misfiles anyway. Topics shown faded with "gap" have nothing indexed yet, which is useful to know in itself.</p>
-  <h2>Coverage</h2>
+  <h2>Agenda coverage grid</h2>
+  <p>The <button class="chip" data-go="coverage" type="button">Coverage</button> page crosses Shallow Review's agenda profiles with davidad's list of 13 core alignment problems, using the problem tags Shallow Review's editors assigned. Commons adds no tags of its own there.</p>
+  <h2>Time coverage</h2>
   <p>Strongest for 2025 (Shallow Review), mid-2025 to now (Alignment Forum) and pre-2023 arXiv (AI Safety Graph). Thinnest for 2023 to 2024 and for 2026 arXiv papers.</p></div>`;
 }
 
@@ -522,14 +583,16 @@ document.addEventListener("click", e => {
 document.addEventListener("change", e => {
   const m = {fType:"type", fFrom:"from", fSrc:"src", fSort:"sort"}[e.target.id];
   if(m){ state[m] = e.target.value; state.shown = 50; render(); }
-  if(e.target.id==="scopeAll"){ state.all = e.target.checked; state.shown=50; if(state.node==="about"||state.node==="tested") state.node=null; render(); }
+  if(e.target.id==="scopeAll"){ state.all = e.target.checked; state.shown=50; if(["about","tested","coverage"].includes(state.node)) state.node=null; render(); }
 });
-let tmr; $("#q").addEventListener("input", e => { clearTimeout(tmr); tmr = setTimeout(()=>{ state.q = e.target.value; state.shown=50; if(state.node==="about"||state.node==="tested") state.node=null; render(); }, 140); });
+let tmr; $("#q").addEventListener("input", e => { clearTimeout(tmr); tmr = setTimeout(()=>{ state.q = e.target.value; state.shown=50; if(["about","tested","coverage"].includes(state.node)) state.node=null; render(); }, 140); });
 $("#home").addEventListener("click", ()=>go(null));
 $("#aboutBtn").addEventListener("click", ()=>go("about"));
+$("#coverageBtn").hidden = !C;
+$("#coverageBtn").addEventListener("click", ()=>go("coverage"));
 $("#testedBtn").hidden = !NTESTED;
 $("#testedBtn").addEventListener("click", ()=>go("tested"));
-const fromHash = () => { const h0 = (location.hash||"").slice(1); return (node[h0] || h0==="about" || (h0==="tested" && NTESTED)) ? h0 : null; };
+const fromHash = () => { const h0 = (location.hash||"").slice(1); return (node[h0] || h0==="about" || (h0==="tested" && NTESTED) || (h0==="coverage" && C)) ? h0 : null; };
 window.addEventListener("popstate", () => { state.node = fromHash(); state.shown = 50; render(); });
 state.node = fromHash();
 render();
