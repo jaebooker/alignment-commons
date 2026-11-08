@@ -8,7 +8,13 @@ const catalogue=JSON.parse(bytes);
 const matrix=JSON.parse(await readFile('site/test-matrix.json','utf8'));
 test('every research idea has two distinct unrun designs and historical records stay tied to source',async()=>{
  assert.equal(matrix.catalogue_sha256,createHash('sha256').update(bytes).digest('hex'));
- assert.deepEqual(await readFile('site/research/test-matrix-2026-10-31/catalogue-snapshot.json'),bytes);
+ assert.equal(matrix.catalogue_snapshot,'/research/catalogue-v3-2026-11-08/catalogue-snapshot.json');
+ assert.deepEqual(await readFile('site'+matrix.catalogue_snapshot),bytes);
+ // The v2 planning snapshot stays as history, and every row it published is unchanged in v3.
+ const v2=JSON.parse(await readFile('site/research/test-matrix-2026-10-31/catalogue-snapshot.json','utf8'));
+ assert.equal(catalogue.additions[0].previous_catalogue_sha256,createHash('sha256').update(await readFile('site/research/test-matrix-2026-10-31/catalogue-snapshot.json')).digest('hex'));
+ for(const row of v2.ideas)assert.deepEqual(catalogue.ideas.find(x=>x.id===row.id),row);
+ assert.deepEqual(catalogue.testbeds.slice(0,v2.testbeds.length),v2.testbeds);
  const ids=matrix.tests.map(t=>t.id);assert.equal(new Set(ids).size,ids.length);
  for(const idea of catalogue.ideas.filter(i=>!i.control)){
   const rows=matrix.tests.filter(t=>t.idea_ids.includes(idea.id));
@@ -32,7 +38,7 @@ test('negative original results, later success and component failures coexist wi
  assert.ok(mona.includes('Succeeded under criterion'));
  const rr=matrix.tests.find(t=>t.id==='vase-blind-spot-8b');assert.equal(rr.result,'not_met');assert.equal(rr.components.find(c=>c.name==='Vase reduction').result,'met');
  const kl=matrix.tests.find(t=>t.id==='kl-exp3-confirm-v1');assert.equal(kl.result,'mixed');assert.equal(kl.components[2].result,'not_met');
- const summary=renderMatrixOverview(matrix,catalogue.ideas);assert.ok(summary.includes('not pooled as independent replications'));assert.ok(summary.includes('64 unregistered draft follow-ups'));
+ const summary=renderMatrixOverview(matrix,catalogue.ideas);assert.ok(summary.includes('not pooled as independent replications'));assert.ok(summary.includes('92 unregistered draft follow-ups'));
  assert.equal(matrix.tests.filter(t=>t.id==='myopia-decoupling-v1').length,1);
 });
 test('filtering proposed and succeeded rows never presents proposals as successful runs',()=>{
@@ -56,4 +62,14 @@ test('registered designs point to real studies and started records never acquire
  const row=matrix.tests.find(t=>t.id==='rr-coverage-v1');assert.equal(row.result,'not_met');assert.ok(row.detail.includes('every vase'));
  const changed=matrix.tests.find(t=>t.id==='changing-mask-factorial-v1');assert.equal(changed.result,'mixed');assert.equal(changed.components[0].result,'not_met');assert.equal(changed.components[2].result,'met');
  assert.equal(matrix.tests.filter(t=>t.kind==='proposal'&&t.run_status==='registered').length,4);
+});
+
+test('catalogue v3 adds 14 swarm ideas, each with a catalogue row and two unregistered designs',()=>{
+ const added=catalogue.ideas.filter(i=>catalogue.additions[0].ideas.includes(i.id));
+ assert.equal(added.length,14);assert.equal(catalogue.catalogue_version,3);
+ const designs=matrix.tests.filter(t=>t.kind==='proposal'&&added.some(i=>t.idea_ids.includes(i.id)));
+ assert.equal(designs.length,28);
+ for(const d of designs){assert.equal(d.run_status,'proposed');assert.equal(d.origin,'new_design');assert.ok(!d.evidence.length);}
+ for(const i of added.filter(i=>i.safety)){const row=matrix.tests.find(t=>t.id==='catalog-'+i.id);assert.ok(row.detail.includes('hindsight'));assert.ok(row.components.some(c=>c.name==='Hindsight-best baseline comparison'));}
+ const fg=matrix.tests.find(t=>t.id==='catalog-swarm-formal-gate');assert.equal(fg.result,'not_met');assert.equal(fg.components[0].result,'met');
 });
