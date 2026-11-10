@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "generated": "2026-11-10",
+  "about": "Fidelity of alignment and interpretability techniques across architectures. Each cell carries two numbers, not one: the naive port, and a best-effort adaptation by someone who understands the target. The gap between them separates a technique that is architecture-bound in principle from one that is merely architecture-bound in practice. A single number conflates a real limit with an unsolved engineering problem.",
+  "method": {
+    "two_numbers": "naive is the technique applied as written to the new architecture. adapted is the technique after someone reworked it for the target's mechanism. A naive score of zero with a high adapted score means the technique was portable and nobody had ported it yet.",
+    "capability_matching": "Cells are only comparable when the models are matched on held-out benchmark performance, not parameter count. Matching on parameters measures architecture and competence at once. Cells below inherit whatever matching their source paper used; the match column records it.",
+    "ladder_is_partial_order": "Architectures are ordered by which interface each removes, not by a distance scalar. Diffusion language models keep the language interface and break causal ordering; a non-linguistic agent keeps causal ordering and has no language interface. Neither is further than the other. Do not fit a curve to this.",
+    "degradation_is_not_always_monotone": "Some architectures remove affordances and add others. State steering exists on recurrent models and has no transformer analogue, so an adapted score above 1.0 relative to the transformer baseline is possible and has been observed.",
+    "same_architecture_floor": "Read every cross-architecture number against the within-architecture floor in baselines below. A frozen monitor already loses measurable accuracy to a LoRA finetune of the same model. A cross-architecture port that scores closer to native than that floor is evidence of a selection effect, not of portability."
+  },
+  "interfaces": [
+    {"id": "output_distribution", "name": "Output distribution over discrete choices", "note": "Nearly universal. Breaks only for systems that do not sample."},
+    {"id": "residual_accumulator", "name": "Linear read-write accumulator", "note": "Transformers, SSM-family and most residual architectures have one."},
+    {"id": "token_indexed_attribution", "name": "Token-indexed causal attribution", "note": "First to break, and it breaks quietly rather than loudly."},
+    {"id": "serialized_reasoning", "name": "Visible serialized reasoning", "note": "Binary. Present or absent."},
+    {"id": "language_interface", "name": "Natural language interface", "note": "Absent for non-linguistic agents."}
+  ],
+  "architectures": [
+    {"id": "transformer", "name": "Dense transformer", "baseline": true, "after": [], "removes": null},
+    {"id": "attention_variant", "name": "Transformer with altered attention or positions", "after": ["transformer"], "removes": null},
+    {"id": "moe_transformer", "name": "Mixture-of-experts transformer", "after": ["attention_variant"], "removes": null, "note": "Sparsity changes which units are active per token; attention is unchanged."},
+    {"id": "hybrid_attention_ssm", "name": "Hybrid attention-SSM", "after": ["moe_transformer"], "removes": null, "note": "Partial token indexing: some layers keep attention."},
+    {"id": "pure_ssm", "name": "Pure state-space or recurrent model", "after": ["hybrid_attention_ssm"], "removes": ["token_indexed_attribution"], "note": "Mamba, Mamba-2, RWKV. Keeps a residual accumulator and adds a compressed state."},
+    {"id": "recurrent_depth", "name": "Recurrent-depth or continuous-thought model", "after": ["transformer"], "removes": ["serialized_reasoning"], "note": "Coconut, CODI, Huginn, and recurrent-depth production systems. Not downstream of pure_ssm; it removes a different interface."},
+    {"id": "diffusion_lm", "name": "Diffusion language model", "after": ["transformer"], "removes": ["token_indexed_attribution"], "note": "Keeps the language interface, breaks left-to-right causal order."},
+    {"id": "nonlinguistic_agent", "name": "Non-linguistic policy with search", "after": ["transformer"], "removes": ["language_interface", "serialized_reasoning"], "note": "AlphaZero-family. Keeps an output distribution and a residual accumulator."}
+  ],
+  "techniques": [
+    {"id": "kl_anchoring", "name": "KL anchoring to a reference policy", "tier": "output_distribution", "requires": ["output_distribution"]},
+    {"id": "best_of_n", "name": "Best-of-n and rejection sampling", "tier": "output_distribution", "requires": ["output_distribution"]},
+    {"id": "linear_probing", "name": "Linear probing for concepts", "tier": "residual_accumulator", "requires": ["residual_accumulator"]},
+    {"id": "activation_steering", "name": "Activation steering", "tier": "residual_accumulator", "requires": ["residual_accumulator"]},
+    {"id": "tuned_lens", "name": "Tuned lens", "tier": "residual_accumulator", "requires": ["residual_accumulator"]},
+    {"id": "sae_features", "name": "Sparse dictionary features", "tier": "residual_accumulator", "requires": ["residual_accumulator"]},
+    {"id": "cross_model_monitor", "name": "Monitor ported through an activation adapter", "tier": "residual_accumulator", "requires": ["residual_accumulator"]},
+    {"id": "attention_attribution", "name": "Attention-edge attribution", "tier": "token_indexed_attribution", "requires": ["token_indexed_attribution"]},
+    {"id": "causal_localization", "name": "Probe-derived causal localization", "tier": "token_indexed_attribution", "requires": ["token_indexed_attribution", "residual_accumulator"]},
+    {"id": "cot_monitoring", "name": "Chain-of-thought monitoring", "tier": "serialized_reasoning", "requires": ["serialized_reasoning"]},
+    {"id": "constitutional_ai", "name": "Constitutional AI and RLAIF", "tier": "language_interface", "requires": ["language_interface"]},
+    {"id": "debate", "name": "Debate", "tier": "language_interface", "requires": ["language_interface"]}
+  ],
+  "cells": [
+    {
+      "technique": "linear_probing",
+      "architecture": "pure_ssm",
+      "status": "measured",
+      "naive": {"metric": "elk_probe_auroc", "value": 0.76, "transformer_baseline": 0.69},
+      "adapted": null,
+      "match": "parameter-matched sizes 130m to 2.8b against BTLM-3b and Llama-2; not performance-matched",
+      "evidence": ["paulo2024"],
+      "note": "Transfers unchanged and scored above the transformer baseline. No adaptation was needed, so no adapted number exists."
+    },
+    {
+      "technique": "tuned_lens",
+      "architecture": "pure_ssm",
+      "status": "measured",
+      "naive": {"metric": "qualitative", "value": null, "finding": "perplexity decreases monotonically with depth, similar but not identical to transformers"},
+      "adapted": null,
+      "match": "as above",
+      "evidence": ["paulo2024"],
+      "note": "Reported as working without a scalar fidelity number. A quantitative version of this cell is still open."
+    },
+    {
+      "technique": "activation_steering",
+      "architecture": "pure_ssm",
+      "status": "measured",
+      "naive": {"metric": "qualitative", "value": null, "finding": "effective but a somewhat smaller steering response than transformers"},
+      "adapted": {"metric": "qualitative", "value": null, "finding": "state steering, computed from differences in the compressed state, works and has no transformer analogue; its effect is not additive with activation steering, suggesting the state already encodes the activation information"},
+      "evidence": ["paulo2024"],
+      "note": "The cell that justifies the two-number design. The naive port loses function and the adaptation recovers it through a mechanism the source architecture does not have.",
+      "match": "as above; the smaller naive response is uninterpretable without performance matching"
+    },
+    {
+      "technique": "attention_attribution",
+      "architecture": "pure_ssm",
+      "status": "trivially_zero",
+      "naive": {"metric": "defined", "value": 0.0, "finding": "no attention edges exist to attribute over"},
+      "adapted": null,
+      "evidence": [],
+      "note": "The canonical example of a naive zero that says nothing. Whether an adaptation over SSM state transitions recovers the function is untested."
+    },
+    {
+      "technique": "causal_localization",
+      "architecture": "pure_ssm",
+      "status": "measured",
+      "naive": {"metric": "intervention_surface_dissociation", "value": null, "finding": "perturbing the gate signal the probe reads moved loss by at most 0.16 nats; suppressing the same heads' outputs moved it 1.5 to 7.3 nats"},
+      "adapted": null,
+      "evidence": ["jiang2026"],
+      "note": "Degrades quietly rather than loudly: it returns a plausible answer that is wrong about what carries the causal effect. Localisation is also non-unique, with two head sets sharing 13 of 254 heads (Jaccard 0.03) producing comparable ablation effects. Specific to Mamba-2's coarse gating over fine computation and absent at Mamba-1's channel granularity, so this is a design-choice boundary inside one family, not a distance effect.",
+      "match": "single-model study; no cross-architecture match"
+    },
+    {
+      "technique": "cot_monitoring",
+      "architecture": "recurrent_depth",
+      "status": "measured",
+      "naive": {"metric": "defined", "value": 0.0, "finding": "no readable chain exists; the monitoring window closes rather than degrading"},
+      "adapted": {"metric": "probe_auroc_first_latent_step", "value": 0.951, "transfer_accuracy_by_step": {"z1": 0.894, "z2": 0.847, "z6": 0.583}},
+      "evidence": ["ramjee2026"],
+      "note": "Partial recovery, and the only genuine fidelity decay curve in this matrix. It is indexed on latent reasoning depth, not on architectural distance. Misalignment concentrates at reasoning's inception, so a monitor should target the first latent steps.",
+      "match": "within-model comparison against its own explicit-CoT condition"
+    },
+    {
+      "technique": "cross_model_monitor",
+      "architecture": "attention_variant",
+      "status": "partial",
+      "naive": null,
+      "adapted": {"metric": "macro_auroc", "value": 0.959, "native_reference": 0.963},
+      "evidence": ["kim2026", "arditi2025"],
+      "note": "Load-bearing caveat: models were admitted only if they reached above 50% retrieval under ridge mapping to Llama-3.2-3B, and that pass rate is unreported. No shuffled-pair null and no ridge-map baseline are given, so the screen may be doing the alignment work. Scope is explicitly linearly compatible transformers, 1.24B to 14.8B. One onboarded model scored 6% recall on a sentiment axis, below chance.",
+      "match": "performance range reported, not matched pairwise"
+    },
+    {
+      "technique": "sae_features",
+      "architecture": "attention_variant",
+      "status": "partial",
+      "naive": null,
+      "adapted": {"metric": "fraction_of_native_utility", "value_range": [0.938, 0.988], "cross_model_feature_jaccard": 0.59},
+      "evidence": ["kim2026"],
+      "note": "Same screen caveat as the cell above. Separately, the basis itself is contested: trained SAEs barely beat randomized-direction baselines on interpretability (0.90 vs 0.87), sparse probing (0.72 vs 0.69) and causal editing (0.72 vs 0.73, where random wins), and recover 9% of true features on synthetic data with known ground truth at 71% explained variance. A portability number over an unreliable basis is hard to interpret.",
+      "match": "as above"
+    },
+    {
+      "technique": "kl_anchoring",
+      "architecture": "nonlinguistic_agent",
+      "status": "measured",
+      "naive": {"metric": "qualitative", "value": null, "finding": "transfers once a reference policy exists; the anchor must be built by imitation because no human prior comes for free"},
+      "adapted": {"metric": "qualitative", "value": null, "finding": "applying the penalty inside search rather than only to the policy network converges to a KL-regularised equilibrium"},
+      "evidence": ["jacob2022"],
+      "note": "Demonstrates that the portable tier really is portable. The cost moved from the technique to anchor construction."
+    }
+  ],
+  "baselines": {
+    "within_architecture_monitor_staleness": {
+      "about": "How much a frozen activation monitor loses to an update of the same model. The floor any cross-architecture claim must be read against.",
+      "quantization": {"median_delta_auc": [-0.0021, -0.0062], "big_drop_rate": [0.0083, 0.0333], "operational_failures": 0.0},
+      "lora": {"median_delta_auc": [-0.0374, -0.0381], "big_drop_rate": 0.43, "operational_failures": 0.1375},
+      "qlora": {"median_delta_auc": -0.0571, "big_drop_rate": 0.538},
+      "monitor_fragility_spread": {"privacy_pii_degraded_fraction": 0.571, "refusal_compliance_degraded_fraction": 0.079, "ratio": 7.2},
+      "degradation_predictable": {"spearman_leave_update_out": 0.72, "spearman_unseen_update_family": 0.717},
+      "repair": {"method": "label-free activation realignment", "cells_repaired": "111 of 111 repair-relevant", "recovery_fraction": ">0.90 for most monitors"},
+      "evidence": ["activationstaleness2026"],
+      "implication": "A LoRA finetune of the same model costs about 0.037 AUC. A cross-architecture port scoring within 0.004 of native is therefore better than staying on the same model through a light finetune, which is backwards. The most likely explanation is the compatibility screen, not portability. This inference is the matrix's first product and it needs direct testing."
+    }
+  },
+  "open_cells": {
+    "about": "Deliberately empty. Of roughly 96 technique-architecture pairs, 9 carry published evidence. The emptiness is the finding, and it is what drives testbed construction in Synthcore.",
+    "highest_value_untested": [
+      {"cell": "causal_localization x pure_ssm, adapted", "why": "The naive number is known to be misleading. Nobody has tried to build an SSM-appropriate localisation method and measured whether it recovers."},
+      {"cell": "cross_model_monitor under adversarial pressure, any architecture", "why": "The adapter is low-rank and learned, so moving information into its null space is cheaper than fooling the monitor. No paper runs this test. Steps-to-evade for a ported monitor versus a native one is the number that decides deployability."},
+      {"cell": "every technique x diffusion_lm", "why": "No cell in this column has published evidence in either number."},
+      {"cell": "every technique x recurrent_depth except cot_monitoring", "why": "The architecture is in production systems and only the monitoring cell has been studied."}
+    ]
+  },
+  "sources": {
+    "paulo2024": {"title": "Does Transformer Interpretability Transfer to RNNs?", "authors": "Paulo, Marshall, Belrose", "year": 2024, "url": "https://arxiv.org/abs/2404.05971"},
+    "jiang2026": {"title": "A Circuit, Not The Circuit: Non-Unique Causal Localisation of the Mamba-2 State Sink", "authors": "Jiang, Zhang", "year": 2026, "url": "https://arxiv.org/abs/2606.00930"},
+    "ramjee2026": {"title": "Ulterior Motives: Detecting Misaligned Reasoning in Continuous Thought Models", "authors": "Ramjee", "year": 2026, "url": "https://arxiv.org/abs/2604.23460"},
+    "kim2026": {"title": "One Adapter Pair per Model: A Universal Activation Interface for Language Models", "authors": "Kim, Mun, Han", "year": 2026, "url": "https://arxiv.org/abs/2608.09521"},
+    "arditi2025": {"title": "Activation Space Interventions Can Be Transferred Between Large Language Models", "year": 2025, "url": "https://arxiv.org/abs/2503.04429"},
+    "activationstaleness2026": {"title": "Do Activation Monitors Survive Model Updates? Benchmarking, Predicting, and Repairing Activation-Monitor Staleness", "year": 2026, "url": "https://arxiv.org/abs/2606.15980"},
+    "saesanity2026": {"title": "Sanity Checks for Sparse Autoencoders: Do SAEs Beat Random Baselines?", "year": 2026, "url": "https://arxiv.org/abs/2602.14111"},
+    "jacob2022": {"title": "Modeling Strong and Human-Like Gameplay with KL-Regularized Search", "authors": "Jacob, Wu, Farina, Lerer, Hu, Bakhtin, Andreas, Brown", "year": 2022, "url": "https://arxiv.org/abs/2112.07544"}
+  }
+}
