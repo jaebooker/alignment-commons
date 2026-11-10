@@ -1,6 +1,6 @@
 {
-  "version": 3,
-  "reviewed": "2026-11-08",
+  "version": 4,
+  "reviewed": "2026-11-10",
   "catalogue_date": "2026-11-08",
   "catalogue_sha256": "e38d0c493ade1a12cb16d5f385c595eaeacc9468c3beeecccdc6b110e18aee27",
   "scope": "Versioned per-idea planning registry with registered studies, current execution status and bounded results. Historical catalogue unchanged.",
@@ -15,7 +15,8 @@
     "Later source-reported results retain author attribution and reproduction limits. Fixed/cached monitor outputs remain screening data.",
     "The wider programmes are separate from the original 29 tested research adaptations. Their rows do not change historical catalogue verdicts or direction signals.",
     "The four selected studies are separately registered. Fixed bounded sample sizes and compute budgets do not guarantee high power; failed minimum-effect gates do not establish zero effect. Original planning snapshot remains unchanged.",
-    "Catalogue v3 (2026-11-08) adds the 14 Swarm Collusion adaptations as an additive import; v2 rows are unchanged. Their catalogue rows report both the original harness-tuned baseline and an exploratory hindsight-best baseline, because a tuning tie made the harness baseline weak. The 28 swarm follow-ups are unregistered draft designs."
+    "Catalogue v3 (2026-11-08) adds the 14 Swarm Collusion adaptations as an additive import; v2 rows are unchanged. Their catalogue rows report both the original harness-tuned baseline and an exploratory hindsight-best baseline, because a tuning tie made the harness baseline weak. The 28 swarm follow-ups are unregistered draft designs.",
+    "Matrix v4 (2026-11-10) adds five completed CPU-only follow-ups for draft designs on Just Train Twice, OMP dictionary learning, spherical k-means and the Matryoshka SAE. Their pre-registration was written locally before the confirmation runs and was not externally timestamped; predictions followed one calibration seed. They ran at default hyperparameters with one runner and change no catalogue verdict or direction signal."
   ],
   "programmes": [
     {
@@ -2262,18 +2263,21 @@
         "just-train-twice"
       ],
       "title": "Error upweighting or simply longer training?",
-      "run_status": "proposed",
+      "run_status": "registered",
       "result": "not_assessed",
       "success_rule": "JTT improves intended-goal success lower bound by at least 5 points over uniform second-stage training and preserves IID completion within 5 points.",
-      "detail": "Compare JTT, a fresh second model trained uniformly, random-example upweighting and oracle worst-group upweighting with equal total optimizer steps. Reserve new cue-goal correlations.",
-      "evidence": [],
+      "detail": "Compare JTT, a fresh second model trained uniformly, random-example upweighting and oracle worst-group upweighting with equal total optimizer steps. Reserve new cue-goal correlations. Registered study: jtt-upweighting-controls-v1. The actual protocol and its scope take precedence over this original draft.",
+      "evidence": [
+        "/research/draft-proposals-cpu-2026-11-10/protocol.json"
+      ],
       "kind": "proposal",
-      "stage": "Draft design \u2014 not registered",
+      "stage": "Original draft elaborated in a registered study; see actual record",
       "prerequisites": "Feasibility/power pilot on calibration data, then prospective registration.",
       "comparison": "Tuning, data access and compute matched as stated; calibration, development and confirmation streams disjoint.",
       "analysis": "Prespecify seed/model/shard as the unit; freeze sample size, minimum effect, margins, exclusions and multiplicity before confirmation. Candidate thresholds below are planning choices, not powered or preregistered claims.",
       "origin": "new_design",
-      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget."
+      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget.",
+      "study_id": "jtt-upweighting-controls-v1"
     },
     {
       "id": "proposal-just-train-twice-2",
@@ -2281,18 +2285,21 @@
         "just-train-twice"
       ],
       "title": "Do first-stage errors identify the right group?",
-      "run_status": "proposed",
+      "run_status": "registered",
       "result": "not_assessed",
       "success_rule": "Error-selected examples show at least 10-point enrichment of proxy-conflict cases and a completion gain lower bound at least 5 points over random upweighting. Both must hold.",
-      "detail": "Fix cue-goal correlation while independently varying random label noise; measure whether first-stage errors enrich true proxy-conflict examples or merely noisy labels.",
-      "evidence": [],
+      "detail": "Fix cue-goal correlation while independently varying random label noise; measure whether first-stage errors enrich true proxy-conflict examples or merely noisy labels. Registered study: jtt-error-set-composition-v1. The actual protocol and its scope take precedence over this original draft.",
+      "evidence": [
+        "/research/draft-proposals-cpu-2026-11-10/protocol.json"
+      ],
       "kind": "proposal",
-      "stage": "Draft design \u2014 not registered",
+      "stage": "Original draft elaborated in a registered study; see actual record",
       "prerequisites": "Feasibility/power pilot on calibration data, then prospective registration.",
       "comparison": "Tuning, data access and compute matched as stated; calibration, development and confirmation streams disjoint.",
       "analysis": "Prespecify seed/model/shard as the unit; freeze sample size, minimum effect, margins, exclusions and multiplicity before confirmation. Candidate thresholds below are planning choices, not powered or preregistered claims.",
       "origin": "new_design",
-      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget."
+      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget.",
+      "study_id": "jtt-error-set-composition-v1"
     },
     {
       "id": "proposal-matryoshka-sae-1",
@@ -2300,18 +2307,21 @@
         "matryoshka-sae"
       ],
       "title": "Does nesting recover parent-child features?",
-      "run_status": "proposed",
+      "run_status": "registered",
       "result": "not_assessed",
       "success_rule": "Child recovery improves at least 0.02 at the lower bound over random nesting, with parent recovery non-inferior within 0.01.",
-      "detail": "Hold decoder width and total sparse activity fixed; compare nested losses with randomly assigned nesting and ordinary TopK on parent-child absorption generators.",
-      "evidence": [],
+      "detail": "Hold decoder width and total sparse activity fixed; compare nested losses with randomly assigned nesting and ordinary TopK on parent-child absorption generators. Registered study: matryoshka-random-nesting-v1. The actual protocol and its scope take precedence over this original draft.",
+      "evidence": [
+        "/research/draft-proposals-cpu-2026-11-10/protocol.json"
+      ],
       "kind": "proposal",
-      "stage": "Draft design \u2014 not registered",
+      "stage": "Original draft elaborated in a registered study; see actual record",
       "prerequisites": "Feasibility/power pilot on calibration data, then prospective registration.",
       "comparison": "Tuning, data access and compute matched as stated; calibration, development and confirmation streams disjoint.",
       "analysis": "Prespecify seed/model/shard as the unit; freeze sample size, minimum effect, margins, exclusions and multiplicity before confirmation. Candidate thresholds below are planning choices, not powered or preregistered claims.",
       "origin": "new_design",
-      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget."
+      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget.",
+      "study_id": "matryoshka-random-nesting-v1"
     },
     {
       "id": "proposal-matryoshka-sae-2",
@@ -2493,18 +2503,21 @@
         "omp-dictionary-learning"
       ],
       "title": "Exact inference on a fixed dictionary",
-      "run_status": "proposed",
+      "run_status": "registered",
       "result": "not_assessed",
       "success_rule": "OMP support recovery improves by at least 5 points at the lower bound in the registered high-coherence stratum, with the same code budget. Do not attribute dictionary-learning changes to inference.",
-      "detail": "Give OMP and an amortized encoder the identical frozen dictionary; cross feature coherence and sparsity to separate solver quality from learning quality.",
-      "evidence": [],
+      "detail": "Give OMP and an amortized encoder the identical frozen dictionary; cross feature coherence and sparsity to separate solver quality from learning quality. Registered study: omp-fixed-dictionary-v1. The actual protocol and its scope take precedence over this original draft.",
+      "evidence": [
+        "/research/draft-proposals-cpu-2026-11-10/protocol.json"
+      ],
       "kind": "proposal",
-      "stage": "Draft design \u2014 not registered",
+      "stage": "Original draft elaborated in a registered study; see actual record",
       "prerequisites": "Feasibility/power pilot on calibration data, then prospective registration.",
       "comparison": "Tuning, data access and compute matched as stated; calibration, development and confirmation streams disjoint.",
       "analysis": "Prespecify seed/model/shard as the unit; freeze sample size, minimum effect, margins, exclusions and multiplicity before confirmation. Candidate thresholds below are planning choices, not powered or preregistered claims.",
       "origin": "new_design",
-      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget."
+      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget.",
+      "study_id": "omp-fixed-dictionary-v1"
     },
     {
       "id": "proposal-omp-dictionary-learning-2",
@@ -2686,18 +2699,21 @@
         "spherical-kmeans-features"
       ],
       "title": "Direction versus activation magnitude",
-      "run_status": "proposed",
+      "run_status": "registered",
       "result": "not_assessed",
       "success_rule": "Spherical clustering loses at least 0.02 less recovery under amplitude shift than Euclidean clustering at the lower bound, with non-inferior unshifted recovery within 0.01.",
-      "detail": "Change planted feature amplitudes while holding directions fixed; compare spherical k-means, Euclidean k-means and TopK with matched dictionary size.",
-      "evidence": [],
+      "detail": "Change planted feature amplitudes while holding directions fixed; compare spherical k-means, Euclidean k-means and TopK with matched dictionary size. Registered study: kmeans-amplitude-shift-v1. The actual protocol and its scope take precedence over this original draft.",
+      "evidence": [
+        "/research/draft-proposals-cpu-2026-11-10/protocol.json"
+      ],
       "kind": "proposal",
-      "stage": "Draft design \u2014 not registered",
+      "stage": "Original draft elaborated in a registered study; see actual record",
       "prerequisites": "Feasibility/power pilot on calibration data, then prospective registration.",
       "comparison": "Tuning, data access and compute matched as stated; calibration, development and confirmation streams disjoint.",
       "analysis": "Prespecify seed/model/shard as the unit; freeze sample size, minimum effect, margins, exclusions and multiplicity before confirmation. Candidate thresholds below are planning choices, not powered or preregistered claims.",
       "origin": "new_design",
-      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget."
+      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget.",
+      "study_id": "kmeans-amplitude-shift-v1"
     },
     {
       "id": "proposal-spherical-kmeans-features-2",
@@ -4103,6 +4119,201 @@
       ],
       "kind": "follow_up",
       "stage": "Completed feasibility pilot \u2014 gate failed; blind scoring withheld"
+    },
+    {
+      "id": "jtt-upweighting-controls-v1",
+      "idea_ids": [
+        "just-train-twice"
+      ],
+      "title": "JTT versus uniform, random and oracle upweighting",
+      "run_status": "completed",
+      "result": "not_met",
+      "success_rule": "JTT minus uniform second-stage training: decorrelated-level success lower bound >= +0.05 and IID success difference lower bound >= -0.05, random-tie condition.",
+      "detail": "Decorrelated-level success: uniform 0.321, uniform with 5 extra epochs 0.321, JTT 0.136, random set x20 0.242, oracle decorrelated levels x20 0.259. Every x20 reweighting arm is below uniform training, including the oracle, so this testbed at 4% decorrelated levels cannot reward a reweighting method. Same architecture, learning rate, second-stage seed and epochs; default hyperparameters only.",
+      "evidence": [
+        "/research/draft-proposals-cpu-2026-11-10/REPORT.md",
+        "/research/draft-proposals-cpu-2026-11-10/protocol.json",
+        "/research/draft-proposals-cpu-2026-11-10/summary.json",
+        "/research/draft-proposals-cpu-2026-11-10/prereg.md"
+      ],
+      "kind": "follow_up",
+      "stage": "Locally pre-registered bounded confirmation \u2014 12 fresh seeds; registration not externally timestamped",
+      "components": [
+        {
+          "name": "Five-point safety gain over uniform",
+          "result": "not_met",
+          "detail": "JTT minus uniform -0.184 [-0.215, -0.153]; sign reversed."
+        },
+        {
+          "name": "IID completion within 5 points",
+          "result": "not_met",
+          "detail": "IID success 0.408 vs 0.738: -0.330 [-0.367, -0.293]."
+        },
+        {
+          "name": "Oracle worst-group upweighting helps",
+          "result": "not_met",
+          "detail": "Oracle minus uniform -0.061 [-0.093, -0.030]. Secondary; predicted not positive."
+        }
+      ],
+      "design_id": "proposal-just-train-twice-1"
+    },
+    {
+      "id": "jtt-error-set-composition-v1",
+      "idea_ids": [
+        "just-train-twice"
+      ],
+      "title": "What JTT's error set selects: proxy conflict, tie-break noise or label noise",
+      "run_status": "completed",
+      "result": "not_met",
+      "success_rule": "Decorrelated-level steps enriched in the first-stage error set by >= 10 points (lower bound) and JTT minus random upweighting lower bound >= +0.05. Open-issue components: tied steps over-represented in the error set; (JTT - uniform, deterministic ties) - (JTT - uniform, random ties) lower bound > 0.",
+      "detail": "Random-tie condition: decorrelated-level steps are 7.3% of the error set against a 3.8% base; steps with more than one optimal expert move are 70.5% against 38.1%. With deterministic ties JTT is still 0.165 below uniform. With 10% label noise 36% of the error set is flipped labels and JTT's IID success falls to 0.16. Tie noise fills the error set but is not the main cause of the harm. Answers the results-log open issue on the noise hypothesis.",
+      "evidence": [
+        "/research/draft-proposals-cpu-2026-11-10/REPORT.md",
+        "/research/draft-proposals-cpu-2026-11-10/protocol.json",
+        "/research/draft-proposals-cpu-2026-11-10/summary.json",
+        "/research/draft-proposals-cpu-2026-11-10/prereg.md"
+      ],
+      "kind": "follow_up",
+      "stage": "Locally pre-registered bounded confirmation \u2014 12 fresh seeds; registration not externally timestamped",
+      "components": [
+        {
+          "name": "Ten-point proxy-conflict enrichment",
+          "result": "not_met",
+          "detail": "Decorrelated-level share, error set minus base: +3.5 points [+3.0, +4.1]. By a step-level definition (expert move does not approach the cue) enrichment is +12.8 points, still a minority of the set."
+        },
+        {
+          "name": "Five-point gain over random upweighting",
+          "result": "not_met",
+          "detail": "JTT minus random set -0.106 [-0.143, -0.068]; sign reversed."
+        },
+        {
+          "name": "Tie-break steps over-represented in the error set",
+          "result": "met",
+          "detail": "+32.3 points [+30.6, +34.0]."
+        },
+        {
+          "name": "Removing tie noise shrinks the harm",
+          "result": "not_met",
+          "detail": "Difference in differences +0.019 [-0.013, +0.051], p = 0.23. Inconclusive; bounds the tie-noise share of the harm at about 0.05 of 0.18."
+        }
+      ],
+      "design_id": "proposal-just-train-twice-2"
+    },
+    {
+      "id": "omp-fixed-dictionary-v1",
+      "idea_ids": [
+        "omp-dictionary-learning"
+      ],
+      "title": "OMP versus an amortized encoder on the frozen planted dictionary",
+      "run_status": "completed",
+      "result": "not_met",
+      "success_rule": "Support F1 of OMP minus an amortized TopK encoder on the frozen planted dictionary: lower bound >= +0.05 at d = 10 (n = 64), equal code budget.",
+      "detail": "At d = 10: support F1 OMP 0.528, nonnegative OMP 0.611, trained encoder 0.568, untrained projection 0.619; variance explained OMP 0.967 vs encoder 0.898. Signed OMP reconstructs best and identifies active features worst. Inference quality does not explain the MOD/OMP dictionary-learning result; no dictionary-learning claim is made here.",
+      "evidence": [
+        "/research/draft-proposals-cpu-2026-11-10/REPORT.md",
+        "/research/draft-proposals-cpu-2026-11-10/protocol.json",
+        "/research/draft-proposals-cpu-2026-11-10/summary.json",
+        "/research/draft-proposals-cpu-2026-11-10/prereg.md"
+      ],
+      "kind": "follow_up",
+      "stage": "Locally pre-registered bounded confirmation \u2014 12 fresh seeds; registration not externally timestamped",
+      "components": [
+        {
+          "name": "Five-point support-recovery gain at d = 10",
+          "result": "not_met",
+          "detail": "OMP minus encoder -0.040 [-0.044, -0.037]; sign reversed."
+        },
+        {
+          "name": "Sign constraint helps OMP in every stratum",
+          "result": "met",
+          "detail": "Nonnegative minus signed OMP: d=32 +0.271, d=16 +0.062, d=10 +0.084. At d=32 the toy model stores antipodal pairs. Secondary."
+        },
+        {
+          "name": "Nonnegative OMP beats the encoder at d = 10",
+          "result": "met",
+          "detail": "+0.043 [+0.038, +0.048]; positive but under the 5-point bar. Secondary."
+        }
+      ],
+      "design_id": "proposal-omp-dictionary-learning-1"
+    },
+    {
+      "id": "kmeans-amplitude-shift-v1",
+      "idea_ids": [
+        "spherical-kmeans-features"
+      ],
+      "title": "Spherical versus Euclidean k-means and TopK under amplitude shift",
+      "run_status": "completed",
+      "result": "met",
+      "success_rule": "MMCS loss under amplitude shift, Euclidean minus spherical k-means: lower bound >= 0.02; unshifted spherical minus Euclidean lower bound >= -0.01.",
+      "detail": "MMCS plain / shifted: spherical 0.921 / 0.895, Euclidean 0.913 / 0.650, TopK SAE 0.912 / 0.767. Shift: a third of features at x0.25, a third x1, a third x4, directions unchanged. Mechanism test only. All arms at default hyperparameters; the TopK SAE received raw activations, so a tuned or input-normalised TopK may close the gap. Not a catalogue verdict.",
+      "evidence": [
+        "/research/draft-proposals-cpu-2026-11-10/REPORT.md",
+        "/research/draft-proposals-cpu-2026-11-10/protocol.json",
+        "/research/draft-proposals-cpu-2026-11-10/summary.json",
+        "/research/draft-proposals-cpu-2026-11-10/prereg.md"
+      ],
+      "kind": "follow_up",
+      "stage": "Locally pre-registered bounded confirmation \u2014 12 fresh seeds; registration not externally timestamped",
+      "components": [
+        {
+          "name": "Smaller loss under shift than Euclidean",
+          "result": "met",
+          "detail": "Loss difference +0.237 [+0.228, +0.246]."
+        },
+        {
+          "name": "Non-inferior unshifted",
+          "result": "met",
+          "detail": "Spherical minus Euclidean +0.008 [+0.005, +0.011]."
+        },
+        {
+          "name": "Beats default TopK SAE under shift",
+          "result": "met",
+          "detail": "+0.128 [+0.122, +0.135], in all four configurations. Secondary; untuned comparison."
+        }
+      ],
+      "design_id": "proposal-spherical-kmeans-features-1"
+    },
+    {
+      "id": "matryoshka-random-nesting-v1",
+      "idea_ids": [
+        "matryoshka-sae"
+      ],
+      "title": "Fixed Matryoshka prefixes versus random nesting",
+      "run_status": "completed",
+      "result": "not_met",
+      "success_rule": "Child MMCS, nested minus random nesting: lower bound >= +0.02; parent MMCS difference lower bound >= -0.01.",
+      "detail": "MMCS all / child / parent: nested 0.873 / 0.751 / 0.892, random nesting 0.936 / 0.867 / 0.953, TopK 0.912 / 0.823 / 0.926. The nested loss does place parents in the small dictionary, and that costs recovery. Random nesting redraws sub-dictionary membership every step at equal width, k and loss scales. Its edge over TopK is at default hyperparameters and is a candidate for a normal two-stage test, not a verdict.",
+      "evidence": [
+        "/research/draft-proposals-cpu-2026-11-10/REPORT.md",
+        "/research/draft-proposals-cpu-2026-11-10/protocol.json",
+        "/research/draft-proposals-cpu-2026-11-10/summary.json",
+        "/research/draft-proposals-cpu-2026-11-10/prereg.md"
+      ],
+      "kind": "follow_up",
+      "stage": "Locally pre-registered bounded confirmation \u2014 12 fresh seeds; registration not externally timestamped",
+      "components": [
+        {
+          "name": "Child recovery gain over random nesting",
+          "result": "not_met",
+          "detail": "Nested minus random -0.116 [-0.126, -0.106]; sign reversed."
+        },
+        {
+          "name": "Parent recovery non-inferior",
+          "result": "not_met",
+          "detail": "-0.061 [-0.063, -0.058]."
+        },
+        {
+          "name": "Random nesting beats default TopK",
+          "result": "met",
+          "detail": "MMCS +0.024 [+0.019, +0.028], 12 of 12 seeds. Secondary; untuned comparison."
+        },
+        {
+          "name": "Parents concentrate in the first quarter",
+          "result": "met",
+          "detail": "First-quarter match rate, parents minus children: +20.2 points [+17.1, +23.3]. Descriptive."
+        }
+      ],
+      "design_id": "proposal-matryoshka-sae-1"
     }
   ],
   "sources": [
