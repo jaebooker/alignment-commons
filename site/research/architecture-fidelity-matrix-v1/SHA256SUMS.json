@@ -1,0 +1,9 @@
+{
+  "generated": "2026-11-10",
+  "algorithm": "sha256",
+  "files": {
+    "OVERVIEW.md": "567de64d84ced2d7e80a7cd50da031e73cedc7cc4866bf751851b2be755fe38f",
+    "REPORT.md": "e13e1673845139979a93428cbbefa68da6387ae37bb6f4653573319484d4eb7f",
+    "matrix.json": "bcac9c2198616068e174c8e827190a9c87436c0f2b5adc18513e943371e9977f"
+  }
+}
