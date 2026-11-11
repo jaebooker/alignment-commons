@@ -1,0 +1,367 @@
+{
+ "catalogue_version": 4,
+ "min_ideas": 5,
+ "ideas": [
+  "accel-levels",
+  "activation-clustering",
+  "attainable-utility-preservation",
+  "aux-confidence-loss",
+  "batchtopk-sae",
+  "batchtopk-sae-lm",
+  "binary-sparse-coding",
+  "binary-sparse-coding-lm",
+  "causal-confusion-interventions",
+  "debate-helps-w2s",
+  "decoupled-approval",
+  "exploit-hunting-monitor",
+  "exploit-hunting-monitor-open",
+  "future-task-side-effects",
+  "generalized-cross-entropy",
+  "itda-dictionary",
+  "itda-dictionary-lm",
+  "just-train-twice",
+  "matryoshka-sae",
+  "matryoshka-sae-lm",
+  "meta-neural-trojan-detection",
+  "minimax-regret-levels",
+  "mona",
+  "null-baseline-backdoor",
+  "omp-dictionary-learning",
+  "random-edits-no-regret",
+  "relative-reachability",
+  "resampled-monitor",
+  "resampled-monitor-open",
+  "semi-nmf-dictionary",
+  "spectral-decoupling",
+  "spherical-kmeans-features",
+  "swarm-channel-dependence",
+  "swarm-channel-dependence-para",
+  "swarm-dissent-escalation",
+  "swarm-dissent-escalation-para",
+  "swarm-exploit-hunting",
+  "swarm-exploit-hunting-para",
+  "swarm-formal-gate",
+  "swarm-formal-gate-para",
+  "swarm-reviewer-reputation",
+  "swarm-reviewer-reputation-para",
+  "swarm-semantic-channel",
+  "swarm-semantic-channel-para",
+  "swarm-transcript-monitor",
+  "swarm-transcript-monitor-para",
+  "universal-perturbation-anomaly",
+  "w2s-bootstrapping",
+  "weight-spectrum-outlier"
+ ],
+ "testbeds": [
+  "backdoor",
+  "confounded_imitation",
+  "control",
+  "control_open",
+  "goal_misgen",
+  "interactive_gridworld",
+  "planted_interp",
+  "planted_lm",
+  "reward_hacking",
+  "swarm_collusion",
+  "swarm_collusion_para",
+  "ued_gridworld",
+  "weak_to_strong"
+ ],
+ "topics": [
+  "aar",
+  "actsteer",
+  "advdefense",
+  "advex",
+  "agendas",
+  "agentinfra",
+  "agentsafety",
+  "alignfake",
+  "anomaly",
+  "assistance",
+  "asymptotic",
+  "autointerp",
+  "autonomy",
+  "backdoors",
+  "behavtheory",
+  "benchmarks",
+  "brainlike",
+  "careers",
+  "cbrn",
+  "certified",
+  "circuits",
+  "cogsoftware",
+  "compute",
+  "concepts",
+  "consultancy",
+  "cooperation",
+  "corrigibility",
+  "cotmonitor",
+  "cyber",
+  "dataattr",
+  "debatet",
+  "deceptprobe",
+  "decision",
+  "diffing",
+  "dynamics",
+  "easyhard",
+  "editing",
+  "elk",
+  "embedded",
+  "emis",
+  "epistemics",
+  "ethics",
+  "evalmethod",
+  "faithful",
+  "featattr",
+  "fieldstrategy",
+  "generalization",
+  "geometry",
+  "goalmisgen",
+  "goodhart",
+  "gsai",
+  "hai",
+  "heuristic",
+  "hyperstition",
+  "ida",
+  "imitation",
+  "industry",
+  "infrabayes",
+  "injection",
+  "instruct",
+  "international",
+  "interpcrit",
+  "interpeval",
+  "interpmodels",
+  "introspect",
+  "irl",
+  "jailbreaks",
+  "lat",
+  "llmjudge",
+  "logind",
+  "lying",
+  "marisk",
+  "mesa",
+  "mildopt",
+  "modelvalues",
+  "natabs",
+  "nnverify",
+  "ontid",
+  "ood",
+  "othercomment",
+  "patching",
+  "persona",
+  "persuasion",
+  "pluralistic",
+  "poisoning",
+  "powerseek",
+  "prefopt",
+  "pretrainalign",
+  "privacy",
+  "probes",
+  "procsup",
+  "protocols",
+  "psychopath",
+  "redteam",
+  "regulation",
+  "repeng",
+  "reviews",
+  "rewardhack",
+  "rewardmodel",
+  "rlaif",
+  "rlhfcore",
+  "roundups",
+  "rsp",
+  "sabotage",
+  "sae",
+  "saeval",
+  "safeexplore",
+  "safeguards",
+  "safetycases",
+  "sandbag",
+  "scaling",
+  "scheme",
+  "schemeevals",
+  "scientistai",
+  "selfrep",
+  "situational",
+  "sleeper",
+  "slt",
+  "socialtech",
+  "societal",
+  "specs",
+  "stego",
+  "superposition",
+  "sycophancy",
+  "synthdata",
+  "systemcards",
+  "tampering",
+  "tamperresist",
+  "threatmodels",
+  "tiling",
+  "timelines",
+  "toyalgo",
+  "uncertainty",
+  "unlearning",
+  "w2st",
+  "weights",
+  "welfare",
+  "worldmodels",
+  "xrisk"
+ ],
+ "signals": [
+  {
+   "topic": "backdoors",
+   "testbed": "backdoor",
+   "tested": 3,
+   "mechanism_rate": {
+    "k": 1
+   },
+   "win_rate": {
+    "k": 0
+   }
+  },
+  {
+   "topic": "goalmisgen",
+   "testbed": "confounded_imitation",
+   "tested": 1,
+   "mechanism_rate": {
+    "k": 1
+   },
+   "win_rate": {
+    "k": 1
+   }
+  },
+  {
+   "topic": "goalmisgen",
+   "testbed": "goal_misgen",
+   "tested": 2,
+   "mechanism_rate": {
+    "k": 1
+   },
+   "win_rate": {
+    "k": 0
+   }
+  },
+  {
+   "topic": "goalmisgen",
+   "testbed": "ued_gridworld",
+   "tested": 2,
+   "mechanism_rate": {
+    "k": 2
+   },
+   "win_rate": {
+    "k": 0
+   }
+  },
+  {
+   "topic": "mildopt",
+   "testbed": "reward_hacking",
+   "tested": 3,
+   "mechanism_rate": {
+    "k": 2
+   },
+   "win_rate": {
+    "k": 1
+   }
+  },
+  {
+   "topic": "protocols",
+   "testbed": "control",
+   "tested": 2,
+   "mechanism_rate": {
+    "k": 2
+   },
+   "win_rate": {
+    "k": 1
+   }
+  },
+  {
+   "topic": "rewardhack",
+   "testbed": "interactive_gridworld",
+   "tested": 1,
+   "mechanism_rate": {
+    "k": 1
+   },
+   "win_rate": {
+    "k": 0
+   }
+  },
+  {
+   "topic": "sae",
+   "testbed": "planted_interp",
+   "tested": 7,
+   "mechanism_rate": {
+    "k": 2
+   },
+   "win_rate": {
+    "k": 0
+   }
+  },
+  {
+   "topic": "sae",
+   "testbed": "planted_lm",
+   "tested": 3,
+   "mechanism_rate": {
+    "k": 0
+   },
+   "win_rate": {
+    "k": 0
+   }
+  },
+  {
+   "topic": "tampering",
+   "testbed": "interactive_gridworld",
+   "tested": 1,
+   "mechanism_rate": {
+    "k": 1
+   },
+   "win_rate": {
+    "k": 1
+   }
+  },
+  {
+   "topic": "w2st",
+   "testbed": "weak_to_strong",
+   "tested": 3,
+   "mechanism_rate": {
+    "k": 0
+   },
+   "win_rate": {
+    "k": 0
+   }
+  },
+  {
+   "topic": "protocols",
+   "testbed": "swarm_collusion",
+   "tested": 7,
+   "mechanism_rate": {
+    "k": 5
+   },
+   "win_rate": {
+    "k": 4
+   }
+  },
+  {
+   "topic": "protocols",
+   "testbed": "swarm_collusion_para",
+   "tested": 7,
+   "mechanism_rate": {
+    "k": 4
+   },
+   "win_rate": {
+    "k": 3
+   }
+  },
+  {
+   "topic": "protocols",
+   "testbed": "control_open",
+   "tested": 2,
+   "mechanism_rate": {
+    "k": 1
+   },
+   "win_rate": {
+    "k": 1
+   }
+  }
+ ]
+}

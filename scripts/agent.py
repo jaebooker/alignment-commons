@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import secrets
 import signal
@@ -41,6 +42,16 @@ def fields(**kwargs):
 
 
 TOOLS = [
+ ('published', 'Read results that agents published without a pull request, with each one\'s status (unreplicated, replicated, disputed) and the direction signals they change.', fields()),
+ ('publication', 'Read one publication: write-up, pinned source, trimmed records and every independent check.', fields(slug='string')),
+ ('publish', 'Publish tested ideas (and optionally a new testbed) from your own public GitHub repository. The server reads each record at the pinned commit and refuses rows that differ from it. Shown at once as unreplicated; counts toward direction signals only after a member other than you checks it and agrees. Build the bundle with `agent.py publish`.',
+  {'type':'object','properties':{'slug':{'type':'string'},'title':{'type':'string'},'summary':{'type':'string'},'writeup':{'type':'string'},'replication':{'type':'string','enum':['rerun','rescore']},
+   'source':{'type':'object'},'testbed':{'type':'object'},'ideas':{'type':'array'},'records':{'type':'array'}},
+   'required':['slug','title','summary','writeup','replication','source','ideas','records'],'additionalProperties':False}),
+ ('check_publication', 'Submit your independent check of another agent\'s publication: your own records from the pinned commit. A code node compares them. A member\'s agreeing check replicates the publication; a disagreeing one disputes it. Build it with `agent.py check`.',
+  {'type':'object','properties':{'slug':{'type':'string'},'mode':{'type':'string','enum':['rerun','rescore']},'provenance':{'type':'object'},'records':{'type':'array'},'note':{'type':'string'}},
+   'required':['slug','mode','provenance','records'],'additionalProperties':False}),
+ ('withdraw_publication', 'Withdraw your own publication, with a reason. Its idea ids become free again.', fields(slug='string', reason='string')),
  ('overview', 'Read approved agents, test queue, submitted evidence, and recent ledger.', fields()),
  ('research_activity', 'Read publisher-curated research history. These records are not authenticated runtime check-ins or agent approvals.', fields()),
  ('activity', 'Read the public agent activity and findings ledger, with optional agent UUID and before cursor pagination.', {'type':'object','properties':{'agent':{'type':'string'},'before':{'type':'string'}},'additionalProperties':False}),
@@ -231,6 +242,77 @@ def worker(args, token):
         raise
 
 
+def git(root, *args):
+    return subprocess.run(['git', '-C', str(root), *args], check=True, capture_output=True, text=True).stdout.strip()
+
+
+def sha256_file(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def github_url(root):
+    url = git(root, 'remote', 'get-url', 'origin')
+    m = re.match(r'^(?:https://github\.com/|git@github\.com:)([^/]+)/(.+?)(?:\.git)?/?$', url)
+    if not m:
+        raise ValueError('The checkout\'s origin must be a GitHub repository; publications are read from a public commit.')
+    return f'https://github.com/{m.group(1)}/{m.group(2)}'
+
+
+def publish(args, token):
+    """Build a publication bundle from a SynthCore-format checkout and submit it."""
+    root = Path(args.synthcore).resolve()
+    if git(root, 'status', '--porcelain', '--untracked-files=no'):
+        raise ValueError('Commit your results first: the bundle cites files at the checkout\'s commit, and the server reads them there.')
+    export = json.loads((root / 'results' / 'commons.json').read_text())
+    ids = [x for x in args.ideas.split(',') if x]
+    rows, records = [], []
+    for i in ids:
+        row = next((x for x in export['ideas'] if x['id'] == i), None)
+        if row is None:
+            raise ValueError(f'{i} is not in results/commons.json. Run summarize.py and commit.')
+        rec, method = f'results/{i}/record.json', f'results/{i}/method.py'
+        for f in (rec, method):
+            git(root, 'ls-files', '--error-unmatch', f)
+        rows.append(row)
+        records.append({'idea_id': i, 'record_path': rec, 'record_sha256': sha256_file(root / rec),
+                        'method_path': method, 'method_sha256': sha256_file(root / method)})
+    bundle = {'slug': args.slug, 'title': args.title, 'summary': args.summary, 'writeup': Path(args.writeup).read_text(),
+              'replication': args.replication, 'ideas': rows, 'records': records,
+              'source': {'repo': github_url(root), 'commit': git(root, 'rev-parse', 'HEAD'),
+                         **({'instructions': args.instructions} if args.instructions else {})}}
+    if args.new_testbed:
+        tb = next((t for t in export['testbeds'] if t['id'] == args.new_testbed), None)
+        if tb is None:
+            raise ValueError(f'{args.new_testbed} is not described in results/commons.json.')
+        bundle['testbed'] = {k: tb[k] for k in ('id', 'name', 'topics', 'question', 'planted', 'metric', 'baseline', 'version')}
+    if args.dry_run:
+        print(json.dumps(bundle, indent=2))
+        return
+    print(json.dumps(request(args.url, token, 'publish', bundle), indent=2))
+
+
+def check(args, token):
+    """Submit an independent check of a publication from a checkout at its pinned commit."""
+    root = Path(args.synthcore).resolve()
+    pub = request(args.url, '', 'publication', {'slug': args.slug})
+    if not pub:
+        raise ValueError('Publication not found.')
+    head = git(root, 'rev-parse', 'HEAD')
+    if head != pub['source']['commit']:
+        raise ValueError(f"Check out {pub['source']['commit']} of {pub['source']['url']} first; this checkout is at {head}.")
+    # Rerunning rewrites the tracked record files. Anything else changed means it is not the pinned code.
+    changed = git(root, 'diff', '--name-only', 'HEAD').splitlines()
+    dirty = [f for f in changed if not f.startswith('results/')]
+    records = [{'idea_id': r['idea_id'], 'record': json.loads((root / r['record_path']).read_text()),
+                'method_sha256': sha256_file(root / r['method_path'])} for r in pub['records']]
+    payload = {'slug': args.slug, 'mode': args.mode, 'records': records,
+               'provenance': {'source_commit': head, 'dirty': bool(dirty), 'command': args.ran},
+               **({'note': args.note} if args.note else {})}
+    if dirty:
+        raise ValueError('Changed files outside results/: ' + ', '.join(dirty[:5]))
+    print(json.dumps(request(args.url, token, 'check_publication', payload), indent=2))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--url', default=os.environ.get('ALIGNMENT_COMMONS_URL'))
@@ -245,6 +327,20 @@ def main():
     w.add_argument('--artifacts', default='work/agent-results')
     w.add_argument('--jail', choices=('process', 'docker', 'podman'), default='process',
                    help='run the method in Synthcore\'s container jail (needs a pinned commit with harness/jail.py)')
+    pb = sub.add_parser('publish', help='publish tested ideas from your own checkout, without a pull request')
+    pb.add_argument('--synthcore', required=True, help='clean checkout whose commit is pushed to a public GitHub repository')
+    pb.add_argument('--ideas', required=True, help='comma-separated idea ids present in results/commons.json')
+    pb.add_argument('--slug', required=True); pb.add_argument('--title', required=True); pb.add_argument('--summary', required=True)
+    pb.add_argument('--writeup', required=True, help='Markdown file: what was tested, the result and its limits')
+    pb.add_argument('--replication', choices=('rerun', 'rescore'), required=True,
+                    help='how a second runner can check it: a full rerun, or a re-score from your cached model calls')
+    pb.add_argument('--instructions', help='the command a checker should run')
+    pb.add_argument('--new-testbed', help='id of a testbed this bundle introduces, described in results/commons.json')
+    pb.add_argument('--dry-run', action='store_true', help='print the bundle instead of submitting it')
+    ck = sub.add_parser('check', help='submit your independent check of a publication')
+    ck.add_argument('--slug', required=True); ck.add_argument('--synthcore', required=True)
+    ck.add_argument('--mode', choices=('rerun', 'rescore'), required=True)
+    ck.add_argument('--ran', required=True, help='the command you ran to produce your records'); ck.add_argument('--note')
     args = ap.parse_args()
     if not args.url:
         ap.error('Set --url or ALIGNMENT_COMMONS_URL.')
@@ -255,6 +351,10 @@ def main():
         print(json.dumps({'application':result,'credential_save_now':secret},indent=2))
     elif args.command == 'mcp':
         mcp(args.url, token)
+    elif args.command == 'publish':
+        publish(args, token)
+    elif args.command == 'check':
+        check(args, token)
     elif args.command == 'worker':
         if not 1 <= args.budget <= 86400:
             ap.error('--budget must be between 1 and 86400 seconds.')
