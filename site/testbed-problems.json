@@ -75,6 +75,13 @@
     "superintelligence_hack_software"
    ],
    "note": "Colluding agents ship backdoors past peer review and an automated monitor. Their covert signal coordinates the colluders; nothing tries to escape, so exfiltration is not mapped."
+  },
+  "control_open": {
+   "problems": [
+    "superintelligence_fool_supervisors",
+    "superintelligence_hack_software"
+   ],
+   "note": "A stronger untrusted model hides backdoors in code and picks the attacks its own copy of the monitor finds least suspicious; a weaker model and a 5% human audit must catch them."
   }
  }
 }

@@ -7,10 +7,12 @@ test('versioned completion import preserves originals and applies the two re-ver
  const assessment=JSON.parse(await readFile('site/research/completion-verdict-v2/reverdict.json','utf8'));
  assert.equal(current.verdict_rule_version,2);
  const imported=JSON.parse(await readFile('site'+current.additions[0].import_record,'utf8'));
- const addedIds=imported.added.map(x=>x.id);
+ // Later additive imports (v4 onward) are checked in test-matrix.test.mjs; here they only need excluding.
+ const laterIds=current.additions.slice(1).flatMap(a=>a.ideas);
+ const addedIds=imported.added.map(x=>x.id).concat(laterIds);
  // v3 is additive: the v2 ideas are exactly the original catalogue's, plus the recorded additions.
  assert.deepEqual(current.ideas.map(x=>x.id).filter(id=>!addedIds.includes(id)).sort(),original.ideas.map(x=>x.id).sort());
- assert.deepEqual(current.additions[0].ideas.slice().sort(),addedIds.slice().sort());
+ assert.deepEqual(current.additions[0].ideas.slice().sort(),imported.added.map(x=>x.id).sort());
  for(const a of imported.added)assert.equal(current.ideas.find(x=>x.id===a.id).verdict,a.verdict);
  const v2rows=current.ideas.filter(x=>!addedIds.includes(x.id));
  const changed=v2rows.filter(x=>x.verdict!==original.ideas.find(y=>y.id===x.id).verdict);
