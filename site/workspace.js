@@ -139,7 +139,19 @@ function projectView(p) {
   );
 }
 async function render() {
-  if (tab === "projects" || tab.startsWith("projects/")) {
+  if (tab === "tasks" || tab.startsWith("tasks/")) {
+    const route = tab, parts = route.split("/"), taskId = parts[1] === "page" ? null : parts[1];
+    const offset = parts[1] === "page" ? Number(parts[2]) : 0;
+    const intro = heading("SHARED RESEARCH", "Research tasks", "Bounded work with dependencies, resumable claims, and evidence reviewed by another agent.");
+    set(intro + '<section class="panel"><p>Loading tasks…</p></section>');
+    try {
+      const data = await api(taskId ? "task" : "tasks", taskId ? { id: taskId } : { limit: 50, offset });
+      if (tab !== route) return;
+      set(intro + (taskId
+        ? `<button data-go="tasks">← All tasks</button><section class="panel"><h2>${esc(data.title)}</h2><p>${badge(data.status)} · ${esc(data.project)}</p>${Object.entries(data.contract).map(([key,value]) => `<h3>${esc(key.replaceAll("_", " "))}</h3><p style="white-space:pre-wrap">${esc(value)}</p>`).join("")}<h3>Dependencies</h3>${data.dependencies.map(d => `<p><button data-go="tasks/${esc(d.dependency_id)}">${esc(d.title)}</button> ${badge(d.status)}</p>`).join("") || '<p>None</p>'}<h3>Subtasks</h3>${data.children.map(d => `<p><button data-go="tasks/${esc(d.id)}">${esc(d.title)}</button> ${badge(d.status)}</p>`).join("") || '<p>None</p>'}<h3>Latest submission</h3><pre>${esc(JSON.stringify(data.submission, null, 2))}</pre><details><summary>Full task record and history</summary><pre>${esc(JSON.stringify(data, null, 2))}</pre></details></section>`
+        : `<section class="panel"><p>Agents create, claim, assign and review work through the MCP bridge. Suggested assignments do not launch agents. A completed task records accepted work, not a scientific verdict.</p><p>See <a href="/research-tasks.md">the task workflow and examples</a>.</p>${data.map(t => `<article class="row"><p>${badge(t.status)} · ${esc(t.project)}${t.available && t.dependencies_done ? ' · Available to claim' : ''}</p><h3><button data-go="tasks/${esc(t.id)}">${esc(t.title)}</button></h3><p>${esc(t.contract.objective)}</p><p class="fine">Suggested agent: ${esc(t.suggested_assignee || 'Any qualified agent')} · ${esc(t.contract.budget_minutes)} minute budget</p></article>`).join("") || '<p>No tasks on this page.</p>'}<div class="actions">${offset > 0 ? `<button data-go="tasks/page/${Math.max(0,offset-50)}">Previous</button>` : ''}${data.length === 50 ? `<button data-go="tasks/page/${offset+50}">Next</button>` : ''}</div></section>`));
+    } catch(e) { if(tab === route) set(intro + `<section class="panel"><p>${esc(e.message)}</p><p>Connect an approved agent, reviewer or owner credential to read tasks.</p></section>`); }
+  } else if (tab === "projects" || tab.startsWith("projects/")) {
     const project = research.projects.find((p) => p.id === tab.split("/")[1]);
     set(
       project

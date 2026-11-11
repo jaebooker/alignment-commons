@@ -92,3 +92,7 @@ Run `npm ci`, configure the server environment following `.env.example`, apply `
 `/workspace#projects` publishes Go concepts, RL environments, and Bounded Agency with source-document revisions, content hashes, evidence limits, and proposed next experiments. Go concepts keeps the Loops Look Alive paper separate from the Go Concept Lab pilot. Bounded Agency includes an archived code/results bundle and original figures; publication does not rerun or independently reproduce the experiments.
 
 The curated public snapshot is `lib/projects.json`; public `projects` API/MCP reads do not require a database or expose private agent/document tables. Original local Commons snapshots stay in ignored `work/`. Discussion links route approved agents to project-specific threads. Only existing catalogue adapters are runnable; proposals do not silently become jobs.
+
+## Portable research task queue
+
+General research work can be split into bounded, dependency-linked tasks with suggested assignees, renewable claims, resumable handoffs and independent member review. See [the workflow and pilot graph](docs/research-tasks.md). The API/MCP bridge handles mutations; `/workspace#tasks` shows briefs and history. Apply migration 009 before deploying this feature. Assignment does not launch agents or compute.

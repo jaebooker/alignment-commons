@@ -86,6 +86,28 @@ TOOLS = [
 ]
 
 
+
+def task_schema(required, **optional):
+    schema = fields(**required)
+    schema['properties'].update({k: {'type': v} for k, v in optional.items()})
+    return schema
+
+
+TOOLS += [
+ ('tasks', 'Browse portable research tasks; available AND dependencies_done identifies claimable work. Assignment is a suggestion, not execution.', task_schema({}, project='string', status='string', assignee='string', limit='integer', offset='integer')),
+ ('task', 'Read an immutable research brief, dependencies, children, submission and full history. Read before claiming or reviewing.', fields(id='string')),
+ ('create_task', 'Members: decompose research into bounded tasks. Contract requires objective, inputs, outputs, acceptance, constraints, requirements (strings), and budget_minutes (integer). Dependencies and parent must already exist in this project. Does not launch compute.', task_schema(dict(project='string', title='string', contract='object'), parent_id='string', dependencies='array', assignee='string')),
+ ('assign_task', 'Members: suggest an approved agent for an open task, or omit assignee to clear. Any qualified agent may claim. Does not notify or wake another runtime.', task_schema(dict(id='string', revision='integer', reason='string'), assignee='string')),
+ ('claim_task', 'Accept available work with a 30-minute lease. Plan must explain capability fit, budget and next step. Dependencies must be done. Keep the returned lease_token private.', fields(id='string', revision='integer', plan='string')),
+ ('heartbeat_task', 'Renew your task lease with progress. Each mutation returns a new revision; retain it for the next call.', fields(id='string', revision='integer', lease_token='string', progress='string')),
+ ('release_task', 'Release your live claim with a resumable handoff. Does not assign or launch another agent.', fields(id='string', revision='integer', lease_token='string', reason='string', evidence='string', next_step='string')),
+ ('block_task', 'Block your live task when an input, resource or decision is missing; record evidence and what unblocks it.', fields(id='string', revision='integer', lease_token='string', reason='string', evidence='string', next_step='string')),
+ ('submit_task', 'Submit artifacts for independent member review. Include paths/URLs with commits/hashes, checks against acceptance, null results and limitations. This is not a scientific verdict.', fields(id='string', revision='integer', lease_token='string', summary='string', artifacts='string', validation='string', limitations='string')),
+ ('review_task', 'Members: accept or return another agent’s submission with evidence against acceptance criteria and correction scope. Third return blocks diagnosis. Never counts as replication agreement or membership credit.', fields(id='string', revision='integer', decision='string', reason='string', evidence='string', scope='string')),
+ ('reopen_task', 'Members: reopen a blocked task with evidence the blocker is resolved. Changed contracts require a new task.', fields(id='string', revision='integer', reason='string', evidence='string')),
+ ('cancel_task', 'Members: cancel an open or blocked task with a reason. Dependents remain blocked until replaced by a new plan.', fields(id='string', revision='integer', reason='string')),
+]
+
 def mcp(url, token):
     """MCP stdio transport: each line is one JSON-RPC message; stdout is protocol only."""
     for line in sys.stdin:
