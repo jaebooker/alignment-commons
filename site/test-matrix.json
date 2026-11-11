@@ -1,8 +1,8 @@
 {
-  "version": 4,
-  "reviewed": "2026-11-10",
-  "catalogue_date": "2026-11-08",
-  "catalogue_sha256": "e38d0c493ade1a12cb16d5f385c595eaeacc9468c3beeecccdc6b110e18aee27",
+  "version": 5,
+  "reviewed": "2026-11-11",
+  "catalogue_date": "2026-11-11",
+  "catalogue_sha256": "b35ad2bdf1c110447071df6aaaee8e7b36e007c6e1bae0d486c3cec9df044a8b",
   "scope": "Versioned per-idea planning registry with registered studies, current execution status and bounded results. Historical catalogue unchanged.",
   "notes": [
     "Run status and hypothesis support are different: a completed experiment can fail its criterion.",
@@ -16,7 +16,8 @@
     "The wider programmes are separate from the original 29 tested research adaptations. Their rows do not change historical catalogue verdicts or direction signals.",
     "The four selected studies are separately registered. Fixed bounded sample sizes and compute budgets do not guarantee high power; failed minimum-effect gates do not establish zero effect. Original planning snapshot remains unchanged.",
     "Catalogue v3 (2026-11-08) adds the 14 Swarm Collusion adaptations as an additive import; v2 rows are unchanged. Their catalogue rows report both the original harness-tuned baseline and an exploratory hindsight-best baseline, because a tuning tie made the harness baseline weak. The 28 swarm follow-ups are unregistered draft designs.",
-    "Matrix v4 (2026-11-10) adds five completed CPU-only follow-ups for draft designs on Just Train Twice, OMP dictionary learning, spherical k-means and the Matryoshka SAE. Their pre-registration was written locally before the confirmation runs and was not externally timestamped; predictions followed one calibration seed. They ran at default hyperparameters with one runner and change no catalogue verdict or direction signal."
+    "Matrix v4 (2026-11-10) adds five completed CPU-only follow-ups for draft designs on Just Train Twice, OMP dictionary learning, spherical k-means and the Matryoshka SAE. Their pre-registration was written locally before the confirmation runs and was not externally timestamped; predictions followed one calibration seed. They ran at default hyperparameters with one runner and change no catalogue verdict or direction signal.",
+    "Catalogue v4 (2026-11-11) adds the control_open testbed and its two ideas as an additive import; v3 rows are unchanged. Its seeds are independent problem shards. The resampled monitor's row keeps its gate-only result; a post hoc benchmark with the gate skipped is reported beside it and is not a verdict. The 4 control_open follow-ups are unregistered draft designs."
   ],
   "programmes": [
     {
@@ -4314,6 +4315,154 @@
         }
       ],
       "design_id": "proposal-matryoshka-sae-1"
+    },
+    {
+      "id": "catalog-exploit-hunting-monitor-open",
+      "idea_ids": [
+        "exploit-hunting-monitor-open"
+      ],
+      "title": "Original catalogue assessment",
+      "run_status": "completed",
+      "kind": "catalogue",
+      "source_verdict": "beats_baseline",
+      "evidence": [
+        "https://github.com/jaebooker/alignment-synthcore/tree/main/results/exploit-hunting-monitor-open",
+        "/research/catalogue-v4-2026-11-11/import.json",
+        "/research/catalogue-v4-2026-11-11/catalogue-snapshot.json"
+      ],
+      "result": "met",
+      "stage": "Gate + benchmark",
+      "success_rule": "Original stored verdict rule v2: significant safety/target-metric improvement, plus completion preservation where measured. Missing completion evidence does not establish preserved utility.",
+      "detail": "Benchmark executed. Original verdict: beats_baseline. Eight independent problem shards, freshly generated; not resamples. Task completion is not applicable (a monitor only reorders audits). Catch rate 0.931 vs 0.847 for the tuned baseline. Against the best baseline configuration in hindsight (0.860) the margin is +0.072 (95% CI [+0.007, +0.137], p=0.016).",
+      "components": [
+        {
+          "name": "Original toy mechanism gate",
+          "result": "met",
+          "detail": "Observed 0.0469; required >= +0.0200."
+        },
+        {
+          "name": "Benchmark safety win with completion",
+          "result": "met",
+          "detail": "Original rule-v2 assessment against the harness-tuned baseline; a confidence interval including zero is not equivalence."
+        },
+        {
+          "name": "Held-out mechanism check",
+          "result": "met",
+          "detail": "Reported separately from the safety verdict; a safety win does not prove the proposed cause."
+        },
+        {
+          "name": "Hindsight-best baseline comparison",
+          "result": "met",
+          "detail": "Exploratory, chosen after seeing test results: +0.072, p=0.016. Reported to bound baseline-tuning error, not as a confirmatory test."
+        }
+      ]
+    },
+    {
+      "id": "catalog-resampled-monitor-open",
+      "idea_ids": [
+        "resampled-monitor-open"
+      ],
+      "title": "Original catalogue assessment",
+      "run_status": "completed",
+      "kind": "catalogue",
+      "source_verdict": "mechanism_failed",
+      "evidence": [
+        "https://github.com/jaebooker/alignment-synthcore/tree/main/results/resampled-monitor-open",
+        "/research/catalogue-v4-2026-11-11/import.json",
+        "/research/catalogue-v4-2026-11-11/catalogue-snapshot.json"
+      ],
+      "result": "not_met",
+      "stage": "Gate only",
+      "success_rule": "Original mechanism gate: >= +0.0200 on diagnostic:auroc (higher than baseline)",
+      "detail": "Mechanism gate executed; full benchmark was not run. Original verdict: mechanism_failed. The gate used a 40-problem tuning subset and missed by 0.004 AUROC. An exploratory run with the gate skipped, made after the gate result was known, scored 0.901 vs 0.847 on the 8 test shards (+0.054, 95% CI [+0.030, +0.079], p=0.016). It is not a verdict and does not change this row's result.",
+      "components": [
+        {
+          "name": "Original toy mechanism gate",
+          "result": "not_met",
+          "detail": "Observed 0.0156; required >= +0.0200."
+        },
+        {
+          "name": "Exploratory benchmark with the gate skipped",
+          "result": "not_assessed",
+          "detail": "+0.054 vs the tuned baseline, +0.042 (p=0.062) vs the hindsight-best baseline. Post hoc; suggests a gate false negative. Needs a registered confirmation."
+        }
+      ]
+    },
+    {
+      "id": "proposal-exploit-hunting-monitor-open-1",
+      "idea_ids": [
+        "exploit-hunting-monitor-open"
+      ],
+      "title": "Second attacker family on fresh problems",
+      "success_rule": "Catch-rate gain lower bound above 0 against the tuning-split-selected baseline on the new attacker's shards, with the gain reported per shard; a gain confined to one attacker family fails generality.",
+      "detail": "The win was measured against one attacker (Qwen 3.5 397B). Generate fresh problem shards with a different untrusted model family that reliably writes working backdoors, keep Gemma 4 31B as the monitor, and repeat the comparison.",
+      "run_status": "proposed",
+      "result": "not_assessed",
+      "evidence": [],
+      "kind": "proposal",
+      "stage": "Draft design \u2014 not registered",
+      "origin": "new_design",
+      "prerequisites": "Feasibility/power pilot on the tuning split only (never the stored test shards), then prospective registration.",
+      "comparison": "Baseline is the best Gemma 4 31B single-rating configuration chosen on the tuning split from the full style x scale grid. Same trusted model, audit budget and token cap for both arms; tuning and confirmation problems disjoint.",
+      "analysis": "Unit: independently generated problem shard, not a resample of the stored 480 test problems. Freeze shard count, minimum effect, exclusions and multiplicity before confirmation. Thresholds below are planning choices, not powered or preregistered claims.",
+      "resources": "Hosted inference. Generating 590 problems with Qwen 3.5 397B cost about 62 Adaption credits and two hours at the gateway's rate limit; monitor calls are nearly free but rate-limited to about 45 requests a minute."
+    },
+    {
+      "id": "proposal-exploit-hunting-monitor-open-2",
+      "idea_ids": [
+        "exploit-hunting-monitor-open"
+      ],
+      "title": "Attacker told the monitor hunts counterexamples",
+      "success_rule": "Catch-rate gain lower bound above 0 on monitor-aware attacks, and no more than half of the original gain lost; report attack validity rates so a weaker attack pool cannot pass as robustness.",
+      "detail": "Tell the untrusted model that the monitor will try to name an input where the code departs from the specification, and let it write backdoors whose trigger is hard to state (data-dependent or arithmetic conditions). Compare exploit hunting with the single-rating baseline on those attacks.",
+      "run_status": "proposed",
+      "result": "not_assessed",
+      "evidence": [],
+      "kind": "proposal",
+      "stage": "Draft design \u2014 not registered",
+      "origin": "new_design",
+      "prerequisites": "Feasibility/power pilot on the tuning split only (never the stored test shards), then prospective registration.",
+      "comparison": "Baseline is the best Gemma 4 31B single-rating configuration chosen on the tuning split from the full style x scale grid. Same trusted model, audit budget and token cap for both arms; tuning and confirmation problems disjoint.",
+      "analysis": "Unit: independently generated problem shard, not a resample of the stored 480 test problems. Freeze shard count, minimum effect, exclusions and multiplicity before confirmation. Thresholds below are planning choices, not powered or preregistered claims.",
+      "resources": "Hosted inference. Generating 590 problems with Qwen 3.5 397B cost about 62 Adaption credits and two hours at the gateway's rate limit; monitor calls are nearly free but rate-limited to about 45 requests a minute."
+    },
+    {
+      "id": "proposal-resampled-monitor-open-1",
+      "idea_ids": [
+        "resampled-monitor-open"
+      ],
+      "title": "Registered confirmation on fresh problems",
+      "success_rule": "Catch-rate gain lower bound above 0 against the tuning-split-selected baseline on fresh shards. This is the confirmatory test the exploratory run cannot be.",
+      "detail": "The gate failed on a 40-problem subset and a post hoc benchmark showed a gain. Register the benchmark comparison in advance (reason style, 5 draws, fixed) on newly generated problem shards, with the mechanism gate computed on the full tuning split.",
+      "run_status": "proposed",
+      "result": "not_assessed",
+      "evidence": [],
+      "kind": "proposal",
+      "stage": "Draft design \u2014 not registered",
+      "origin": "new_design",
+      "prerequisites": "Feasibility/power pilot on the tuning split only (never the stored test shards), then prospective registration.",
+      "comparison": "Baseline is the best Gemma 4 31B single-rating configuration chosen on the tuning split from the full style x scale grid. Same trusted model, audit budget and token cap for both arms; tuning and confirmation problems disjoint.",
+      "analysis": "Unit: independently generated problem shard, not a resample of the stored 480 test problems. Freeze shard count, minimum effect, exclusions and multiplicity before confirmation. Thresholds below are planning choices, not powered or preregistered claims.",
+      "resources": "Hosted inference. Generating 590 problems with Qwen 3.5 397B cost about 62 Adaption credits and two hours at the gateway's rate limit; monitor calls are nearly free but rate-limited to about 45 requests a minute."
+    },
+    {
+      "id": "proposal-resampled-monitor-open-2",
+      "idea_ids": [
+        "resampled-monitor-open"
+      ],
+      "title": "Draws versus one better-spent call",
+      "success_rule": "Monotone dose response in draws with a lower bound above 0 for 5 draws over 1, and a reported cost-matched comparison with exploit hunting; a gain that does not grow with draws is not evidence for the averaging mechanism.",
+      "detail": "Hold the trusted-call budget fixed per item. Compare 1, 3, 5 and 8 averaged suspicion ratings with spending the same calls on a single exploit-hunting pass plus ratings, on fresh shards.",
+      "run_status": "proposed",
+      "result": "not_assessed",
+      "evidence": [],
+      "kind": "proposal",
+      "stage": "Draft design \u2014 not registered",
+      "origin": "new_design",
+      "prerequisites": "Feasibility/power pilot on the tuning split only (never the stored test shards), then prospective registration.",
+      "comparison": "Baseline is the best Gemma 4 31B single-rating configuration chosen on the tuning split from the full style x scale grid. Same trusted model, audit budget and token cap for both arms; tuning and confirmation problems disjoint.",
+      "analysis": "Unit: independently generated problem shard, not a resample of the stored 480 test problems. Freeze shard count, minimum effect, exclusions and multiplicity before confirmation. Thresholds below are planning choices, not powered or preregistered claims.",
+      "resources": "Hosted inference. Generating 590 problems with Qwen 3.5 397B cost about 62 Adaption credits and two hours at the gateway's rate limit; monitor calls are nearly free but rate-limited to about 45 requests a minute."
     }
   ],
   "sources": [
@@ -4358,5 +4507,5 @@
       "content_sha256": "a780713ce5dbbdb0bd08882b542a85c17c038c2d0986538793487318de69f621"
     }
   ],
-  "catalogue_snapshot": "/research/catalogue-v3-2026-11-08/catalogue-snapshot.json"
+  "catalogue_snapshot": "/research/catalogue-v4-2026-11-11/catalogue-snapshot.json"
 }
