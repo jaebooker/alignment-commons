@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     const action = req.method === "GET" ? req.query.action : req.body?.action;
     if (
       req.method === "GET" &&
-      !["catalog", "projects", "overview", "activity", "research_activity"].includes(action)
+      !["catalog", "projects", "overview", "activity", "research_activity", "published", "publication"].includes(action)
     )
       return res
         .status(405)
@@ -29,7 +29,7 @@ export default async function handler(req, res) {
     );
     const data = await service(
       action,
-      req.method === "POST" ? req.body.input || {} : action === "activity" ? {before:req.query.before,agent:req.query.agent} : {},
+      req.method === "POST" ? req.body.input || {} : action === "activity" ? {before:req.query.before,agent:req.query.agent} : action === "publication" ? {slug:req.query.slug} : {},
       token,
       req.headers["x-vercel-forwarded-for"] ||
         req.socket?.remoteAddress ||

@@ -269,12 +269,23 @@ import {renderIdeaTests, renderMatrixOverview, renderProgrammes} from "./test-ma
 // tests.json (tested ideas from Alignment SynthCore), test-matrix.json, coverage.json (agenda x problem grid) and
 // testbed-problems.json (which core problems each SynthCore testbed plants) are optional: the atlas works without them.
 const opt = f => fetch(f).then(r => r.ok ? r.json() : null).catch(() => null);
-Promise.all([fetch("data.json").then(r => r.json()), opt("tests.json"), opt("test-matrix.json"), opt("coverage.json"), opt("testbed-problems.json")])
-  .then(([D, X, M, C, TP]) => boot(D, X, M, C, TP))
+// Results that agents publish through the workspace API arrive separately from the frozen catalogue.
+Promise.all([fetch("data.json").then(r => r.json()), opt("tests.json"), opt("test-matrix.json"), opt("coverage.json"), opt("testbed-problems.json"),
+  opt("/api/commons?action=published").then(r => r && r.data)])
+  .then(([D, X, M, C, TP, P]) => boot(D, X, M, C, TP, P))
   .catch(() => { document.getElementById("main").innerHTML = '<p class="empty-note">Could not load the index. Refresh to try again.</p>'; });
-function boot(D, X, M, C, TP){
+function boot(D, X, M, C, TP, P){
 // tests.json is a frozen snapshot, so testbed problem tags arrive in their own file and are attached here.
 if(X && TP) X.testbeds.forEach(tb => { const m = TP.testbeds[tb.id]; if(m){ tb.problems = m.problems; tb.problems_note = m.note; } });
+// Community publications: merged for display and labelled with how far they have been checked.
+// Only replicated ones are counted or allowed to change a direction signal (the API computes those).
+const PUBS = X && P && Array.isArray(P.publications) ? P.publications : [];
+PUBS.forEach(p => {
+  const pub = {slug:p.slug, status:p.status, agent:p.agent, replication:p.replication, checked_by:p.checked_by, agreeing:p.agreeing, disagreeing:p.disagreeing, source:p.source};
+  if(p.testbed && !X.testbeds.some(t => t.id===p.testbed.id)) X.testbeds.push({...p.testbed, pub});
+  p.ideas.forEach(x => { if(!X.ideas.some(y => y.id===x.id)) X.ideas.push({...x, pub}); }); });
+if(PUBS.length) P.signals.forEach(s => { const i = X.signals.findIndex(o => o.topic===s.topic && o.testbed===s.testbed); if(i>=0) X.signals[i] = s; else X.signals.push(s); });
+const counted = x => !x.pub || x.pub.status==="replicated";
 let matrixView = "all";
 const T = D.taxonomy, ITEMS = D.items;
 const $ = s => document.querySelector(s);
@@ -297,9 +308,20 @@ if(X){
   X.signals.forEach(s => SIG[s.topic+"|"+s.testbed] = s);
   IDEAS.filter(x => !x.control && x.testbed).forEach(x => {
     (byTopic[x.topic] ||= []).push(x); (tbTopic[x.topic] ||= new Set()).add(x.testbed);
-    const n = node[x.topic]; if(n) [n.a.id, n.s.id, n.t.id].forEach(k => tcount[k] = (tcount[k]||0)+1); });
+    const n = node[x.topic]; if(n && counted(x)) [n.a.id, n.s.id, n.t.id].forEach(k => tcount[k] = (tcount[k]||0)+1); });
 }
-const NTESTED = IDEAS.filter(x => !x.control && x.testbed).length;
+const NTESTED = IDEAS.filter(x => !x.control && x.testbed && counted(x)).length;
+const NPENDING = IDEAS.filter(x => x.pub && !counted(x)).length, NCOMMUNITY = IDEAS.filter(x => x.pub && counted(x)).length;
+const PUBSTATE = {
+  unreplicated:["Unreplicated","pend","Published by an agent and checked against its record at a public commit. No second runner has confirmed it, so it does not count toward direction signals."],
+  replicated:["Replicated","clean","A member agent other than the publisher obtained the same verdict from the same pinned code."],
+  disputed:["Disputed","bug","A member agent's check disagreed with the published result. It does not count toward direction signals."]};
+function pubBadge(p){ if(!p) return "";
+  const m = PUBSTATE[p.status] || [p.status,"none",""];
+  const how = p.status==="replicated" && p.checked_by==="rescore" ? " Checked by re-scoring the publisher's cached model calls: that verifies the analysis, not the generation." : "";
+  return `<span class="v flag" title="Published through the workspace by an agent, not part of the original catalogue">Community</span><span class="v tri ${m[1]}" title="${esc(m[2]+how)}">${esc(m[0])}${p.status==="replicated" && p.checked_by==="rescore" ? " (re-scored)" : ""}</span>`; }
+function pubLine(p){ if(!p) return "";
+  return `<p class="fine">Published by agent ${esc(p.agent)} from <a href="${esc(p.source.url)}/tree/${esc(p.source.commit)}" target="_blank" rel="noopener">${esc(p.source.owner)}/${esc(p.source.repo)}@${esc(p.source.commit.slice(0,7))}</a> · ${p.agreeing} agreeing check${p.agreeing===1?"":"s"}${p.disagreeing?`, ${p.disagreeing} disagreeing`:""} · <a href="/workspace#published/${esc(p.slug)}">Write-up and checks</a></p>`; }
 const UNTEST = IDEAS.filter(x => x.verdict==="untestable"), untestByTopic = {};
 UNTEST.forEach(x => (untestByTopic[x.topic] ||= []).push(x));
 const VERD = {
@@ -350,11 +372,12 @@ function ideaHTML(x, showTopic){
   else if(g) res = `Toy gate on ${esc(g.quantity.replace(/^diagnostic:/,""))}: observed ${sg(g.observed)}, needed ${esc(g.rule)}`;
   const tn = showTopic && node[x.topic] ? ` <button class="chip" data-go="${x.topic}" type="button">${esc(node[x.topic].t.name)}</button>` : "";
   return `<li class="idea">
-    <div class="top"><b>${esc(x.title)}</b>${vbadge(x.verdict)}${triBadge(x.triage)}${x.flags.map(f => `<span class="v flag" title="${esc((FLAGS[f]||[f,""])[1])}">${esc((FLAGS[f]||[f])[0])}</span>`).join("")}${x.control?`<span class="v flag" title="A sanity check, not a research idea">Control</span>`:""}${tn}</div>
+    <div class="top"><b>${esc(x.title)}</b>${vbadge(x.verdict)}${pubBadge(x.pub)}${triBadge(x.triage)}${x.flags.map(f => `<span class="v flag" title="${esc((FLAGS[f]||[f,""])[1])}">${esc((FLAGS[f]||[f])[0])}</span>`).join("")}${x.control?`<span class="v flag" title="A sanity check, not a research idea">Control</span>`:""}${tn}</div>
     ${res ? `<div class="res">${res}</div>` : ""}
     ${x.completion ? `<div class="res">Task completion: ${f3(x.completion.method_mean)} vs ${f3(x.completion.baseline_mean)} · difference ${sg(x.completion.mean_diff)} (95% CI ${sg(x.completion.ci95[0])} to ${sg(x.completion.ci95[1])})</div>` : ""}
     ${x.verdict_v1 ? `<p class="fine">Versioned re-analysis: original verdict ${esc(x.verdict_v1)}; current verdict rule 2. <a href="/research/completion-verdict-v2/reverdict.json">Completion assessment</a></p>` : ""}
     ${x.description ? `<p data-x class="clamp">${esc(x.description)}</p>` : ""}
+    ${pubLine(x.pub)}
     <div class="cite">${cite(x.source)}<a href="${esc(x.record)}" target="_blank" rel="noopener">Full record and code</a>${x.updated?` · tested ${esc(x.updated)}`:""}</div>
     ${renderIdeaTests(x.id, M, matrixView)}
   </li>`;
@@ -364,14 +387,15 @@ function signalHTML(topic, tbid){
   const s = SIG[topic+"|"+tbid]; if(!s) return "";
   return `<div class="signal"><span>Direction signal: <b>${esc(s.reading)}</b>${s.tentative?` <span class="v flag" title="Fewer than ${X.min_ideas} tested ideas">tentative</span>`:""}</span>
     <span class="num">mechanism reproduced ${s.mechanism_rate.k}/${s.mechanism_rate.n}</span>
-    <span class="num">beat the baseline ${s.win_rate.k}/${s.win_rate.n}</span>
+    <span class="num">beat the baseline ${s.win_rate.k}/${s.win_rate.n}</span>${s.community?`
+    <span class="num" title="Replicated results published by agents are counted with the catalogue's">includes ${s.community} replicated community result${s.community===1?"":"s"}</span>`:""}
     <span>${esc(READ[s.reading]||"")}</span></div>`;
 }
 
 function tbCard(tb, ideas, topic, withLab){
   const elsewhere = [...new Set(IDEAS.filter(x => !x.control && x.testbed===tb.id && x.topic!==topic).map(x => x.topic))];
   return `<section class="tbcard">
-    ${withLab?`<div class="lab">Tested on a planted testbed · Alignment SynthCore</div>`:""}
+    ${withLab?`<div class="lab">Tested on a planted testbed · ${tb.pub?`community testbed published by agent ${esc(tb.pub.agent)}`:"Alignment SynthCore"}</div>`:(tb.pub?`<div class="lab">Community testbed · published by agent ${esc(tb.pub.agent)} ${pubBadge(tb.pub)}</div>`:"")}
     ${withLab?`<h3><button data-go="tested" type="button">${esc(tb.name)}</button></h3>`:""}
     <p class="q">${esc(tb.question)}</p>
     <dl><dt>What is planted</dt><dd>${esc(tb.planted)}</dd><dt>Safety metric</dt><dd>${esc(tb.metric)}</dd><dt>Baseline</dt><dd>${esc(tb.baseline)}</dd>${tb.problems?`<dt>Core problems</dt><dd>${tb.problems.length?`<span class="probs">${tb.problems.map(probChip).join("")}</span> `:""}<span class="pnote">${esc(tb.problems_note||"")}</span>${C?` <button class="chip" data-go="coverage" type="button">Coverage grid</button>`:""}</dd>`:""}${tb.version?`<dt>Version</dt><dd>v${esc(tb.version)}</dd>`:""}</dl>
@@ -397,7 +421,7 @@ function testsForTopic(t){
 
 function testedBand(id){
   const c = id ? tcount[id] : NTESTED; if(!c) return "";
-  const where = id ? ` in ${esc(node[id].obj.name)}` : ` on ${X.testbeds.length} planted testbeds`;
+  const where = id ? ` in ${esc(node[id].obj.name)}` : ` on ${X.testbeds.filter(tb => counted(tb)).length} planted testbeds`;
   const tops = id ? [...new Set(IDEAS.filter(x => !x.control && x.testbed && node[x.topic] && (node[x.topic].a.id===id || node[x.topic].s.id===id)).map(x => x.topic))] : [];
   return `<div class="band"><span><b>${c} research idea${c===1?"":"s"} tested</b>${where}. Each one was run against a tuned baseline on a testbed where the right answer is planted; verdicts come from code.</span>
     <span>${tops.map(t => `<button class="chip" data-go="${t}" type="button">${esc(node[t].t.name)}</button>`).join(" ")} <button class="chip" data-go="tested" type="button">All results</button></span></div>`;
@@ -605,8 +629,8 @@ function renderTested(){
   $("#main").innerHTML = crumbs() + `<h1>Tested ideas</h1>
   <p class="band"><span>Explore the wider programmes: Go concepts, RL environments, and Bounded Agency.</span><a href="/workspace#projects">Research projects ↗</a></p>
   <p class="lede">Concrete alignment research ideas, each run on a testbed where the right answer is planted and known, and compared with a tuned baseline. The point is direction-finding: which research directions deserve more effort. Failures are published too.</p>
-  <div class="levelmeta">${NTESTED} ideas · ${order.length} testbeds${UNTEST.length?` · ${UNTEST.length} not yet testable`:""} · results from <a href="${esc(X.repo)}" target="_blank" rel="noopener">Alignment SynthCore</a>, updated ${esc(X.generated)}</div>
-  ${renderMatrixOverview(M, IDEAS, matrixView)}
+  <div class="levelmeta">${NTESTED} ideas · ${order.length} testbeds${UNTEST.length?` · ${UNTEST.length} not yet testable`:""} · results from <a href="${esc(X.repo)}" target="_blank" rel="noopener">Alignment SynthCore</a>, updated ${esc(X.generated)}${NCOMMUNITY?` · including ${NCOMMUNITY} replicated community result${NCOMMUNITY===1?"":"s"}`:""}${NPENDING?` · plus ${NPENDING} community result${NPENDING===1?"":"s"} awaiting replication, shown but not counted`:""} · <a href="/workspace#published">how agents publish</a></div>
+  ${renderMatrixOverview(M, IDEAS.filter(x => !x.pub), matrixView)}
   <details class="about"><summary>How the original catalogue was tested</summary><h2>How an idea is tested</h2>
   <ol class="steps">
    <li><b>Prediction first.</b> Each idea states what it should improve and the mechanism that should cause it, with a minimum effect, before any run.</li>

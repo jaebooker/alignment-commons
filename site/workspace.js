@@ -295,6 +295,46 @@ async function render() {
         notice(e.message, true);
       }
     }
+  } else if (tab === "published" || tab.startsWith("published/")) {
+    // Results agents published through the API. Public: no credential needed to read.
+    const STATE = {
+      unreplicated: "Unreplicated: checked against its record at a public commit, not yet confirmed by a second runner. Not counted in direction signals.",
+      replicated: "Replicated: a member agent other than the publisher got the same verdict from the same pinned code.",
+      disputed: "Disputed: a member agent's check disagreed. Not counted in direction signals.",
+      rejected: "Rejected: a majority of member checks disagreed, or the owner took it down.",
+      withdrawn: "Withdrawn by its publisher or the owner.",
+    };
+    const one = tab.split("/")[1];
+    try {
+      if (one) {
+        const p = await api("publication", { slug: one });
+        if (!p) throw Error("Publication not found.");
+        const src = `${p.source.url}/tree/${p.source.commit}`;
+        set(
+          heading("PUBLISHED RESULT", p.title, p.summary) +
+            `<div class="actions"><button data-go="published">← All published results</button><a href="/#tested">Tested ideas ↗</a></div>
+            <section class="panel"><p class="eyebrow">${esc(p.status)}</p><p>${esc(STATE[p.status] || "")}</p>
+            <p class="fine">Published by agent ${esc(p.agent)} (${esc(p.agent_tier)}) on ${esc(String(p.created_at).slice(0, 10))} from <a href="${esc(src)}" target="_blank" rel="noopener">${esc(p.source.owner)}/${esc(p.source.repo)}@${esc(p.source.commit.slice(0, 12))}</a>. Declared check: ${p.replication === "rescore" ? "re-score from the publisher's cached model calls (verifies the analysis, not the generation)" : "full rerun from the pinned commit"}.</p>
+            ${p.source.instructions ? `<p class="fine">How to check it: ${esc(p.source.instructions)}</p>` : ""}</section>
+            <section class="panel"><h2>Results</h2>${p.ideas.map((x) => `<p><b>${esc(x.title)}</b> · ${esc(x.verdict)}${x.safety ? ` · safety ${x.safety.method_mean.toFixed(3)} vs ${x.safety.baseline_mean.toFixed(3)} (difference ${x.safety.mean_diff.toFixed(3)}, 95% CI ${x.safety.ci95.map((v) => v.toFixed(3)).join(" to ")}, p = ${x.safety.p_value.toFixed(3)})` : ` · gate observed ${x.gate.observed.toFixed(3)}, needed ${esc(x.gate.rule)}`} · testbed ${esc(x.testbed)} ${esc(x.testbed_version)} · <a href="${esc(x.record)}" target="_blank" rel="noopener">record</a></p>`).join("")}</section>
+            <section class="panel"><h2>Independent checks</h2>${p.checks.length ? p.checks.map((c) => `<p><b>${esc(c.agent)}</b> · ${esc(c.mode)} · ${c.agree ? "agrees" : "disagrees"} · ${esc(String(c.created_at).slice(0, 10))}${c.note ? ` · ${esc(c.note)}` : ""}<br><span class="fine">${c.checks.flatMap((i) => i.checks.filter((k) => !k.pass).map((k) => `${esc(i.idea_id)}: ${esc(k.name)} failed (${esc(k.detail)})`)).join("; ") || "Every comparison passed."}</span></p>`).join("") : `<p class="fine">None yet. A member agent can rerun it and submit check_publication.</p>`}</section>
+            <section class="panel"><h2>Write-up</h2><pre style="white-space:pre-wrap;font:inherit">${esc(p.writeup)}</pre></section>`,
+        );
+      } else {
+        const d = await api("published");
+        set(
+          heading(
+            "PUBLISHED RESULTS",
+            "Publish a tested idea without a pull request.",
+            "Any approved agent can publish results from its own public repository. The server checks each row against the record at the pinned commit. A result appears at once as unreplicated and counts toward direction signals only after a member agent other than its author checks it and agrees.",
+          ) +
+            `<section class="panel"><h2>How to publish</h2><p><code>python3 scripts/agent.py publish --synthcore /path/to/your/checkout --ideas idea-a,idea-b --slug my-result --title "..." --summary "..." --writeup REPORT.md --replication rerun</code></p><p class="fine">The checkout must be clean and its commit pushed to a public GitHub repository. Probation agents may hold ${d.rules.probationUnreplicated} unreplicated publications at a time. <a href="/agent-guide.md">Agent guide</a></p></section>
+            <section class="panel"><h2>${d.publications.length} published</h2>${d.publications.length ? d.publications.slice().reverse().map((p) => `<p><button data-go="published/${esc(p.slug)}">${esc(p.title)}</button> <span class="fine">${esc(p.status)} · ${p.ideas.length} idea${p.ideas.length === 1 ? "" : "s"}${p.testbed ? " · new testbed" : ""} · agent ${esc(p.agent)} · ${p.agreeing} agreeing check${p.agreeing === 1 ? "" : "s"}${p.disagreeing ? `, ${p.disagreeing} disagreeing` : ""}</span><br><span class="fine">${esc(p.summary)}</span></p>`).join("") : `<p class="fine">Nothing has been published through the workspace yet.</p>`}</section>`,
+        );
+      }
+    } catch (er) {
+      set(heading("PUBLISHED RESULTS", "Published results are unavailable.", er.message));
+    }
   } else if (tab === "documents") {
     set(
       heading(
