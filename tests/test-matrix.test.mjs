@@ -38,7 +38,7 @@ test('negative original results, later success and component failures coexist wi
  assert.ok(mona.includes('Succeeded under criterion'));
  const rr=matrix.tests.find(t=>t.id==='vase-blind-spot-8b');assert.equal(rr.result,'not_met');assert.equal(rr.components.find(c=>c.name==='Vase reduction').result,'met');
  const kl=matrix.tests.find(t=>t.id==='kl-exp3-confirm-v1');assert.equal(kl.result,'mixed');assert.equal(kl.components[2].result,'not_met');
- const summary=renderMatrixOverview(matrix,catalogue.ideas);assert.ok(summary.includes('not pooled as independent replications'));assert.ok(summary.includes('92 unregistered draft follow-ups'));
+ const summary=renderMatrixOverview(matrix,catalogue.ideas);assert.ok(summary.includes('not pooled as independent replications'));assert.ok(summary.includes('87 unregistered draft follow-ups'));
  assert.equal(matrix.tests.filter(t=>t.id==='myopia-decoupling-v1').length,1);
 });
 test('filtering proposed and succeeded rows never presents proposals as successful runs',()=>{
@@ -61,7 +61,7 @@ test('registered designs point to real studies and started records never acquire
  assert.ok(!started.includes('class="v win"'));
  const row=matrix.tests.find(t=>t.id==='rr-coverage-v1');assert.equal(row.result,'not_met');assert.ok(row.detail.includes('every vase'));
  const changed=matrix.tests.find(t=>t.id==='changing-mask-factorial-v1');assert.equal(changed.result,'mixed');assert.equal(changed.components[0].result,'not_met');assert.equal(changed.components[2].result,'met');
- assert.equal(matrix.tests.filter(t=>t.kind==='proposal'&&t.run_status==='registered').length,4);
+ assert.equal(matrix.tests.filter(t=>t.kind==='proposal'&&t.run_status==='registered').length,9);
 });
 
 test('catalogue v3 adds 14 swarm ideas, each with a catalogue row and two unregistered designs',()=>{
@@ -72,4 +72,22 @@ test('catalogue v3 adds 14 swarm ideas, each with a catalogue row and two unregi
  for(const d of designs){assert.equal(d.run_status,'proposed');assert.equal(d.origin,'new_design');assert.ok(!d.evidence.length);}
  for(const i of added.filter(i=>i.safety)){const row=matrix.tests.find(t=>t.id==='catalog-'+i.id);assert.ok(row.detail.includes('hindsight'));assert.ok(row.components.some(c=>c.name==='Hindsight-best baseline comparison'));}
  const fg=matrix.tests.find(t=>t.id==='catalog-swarm-formal-gate');assert.equal(fg.result,'not_met');assert.equal(fg.components[0].result,'met');
+});
+
+test('matrix v4 records five CPU follow-ups with their limits, one criterion met and four not met',async()=>{
+ assert.equal(matrix.version,4);
+ const ids=['jtt-upweighting-controls-v1','jtt-error-set-composition-v1','omp-fixed-dictionary-v1','kmeans-amplitude-shift-v1','matryoshka-random-nesting-v1'];
+ const rows=ids.map(id=>matrix.tests.find(t=>t.id===id));
+ for(const r of rows){
+  assert.equal(r.kind,'follow_up');assert.equal(r.run_status,'completed');assert.ok(r.stage.includes('not externally timestamped'));
+  const design=matrix.tests.find(t=>t.id===r.design_id);assert.equal(design.study_id,r.id);assert.equal(design.run_status,'registered');assert.equal(design.result,'not_assessed');
+  assert.ok(r.evidence.includes('/research/draft-proposals-cpu-2026-11-10/protocol.json'));assert.ok(r.components.length>=3);
+ }
+ assert.deepEqual(rows.map(r=>r.result),['not_met','not_met','not_met','met','not_met']);
+ assert.ok(rows[3].detail.includes('Not a catalogue verdict'));
+ const sums=JSON.parse(await readFile('site/research/draft-proposals-cpu-2026-11-10/SHA256SUMS.json','utf8'));
+ for(const [f,h] of Object.entries(sums))assert.equal(createHash('sha256').update(await readFile('site/research/draft-proposals-cpu-2026-11-10/'+f)).digest('hex'),h);
+ const protocol=JSON.parse(await readFile('site/research/draft-proposals-cpu-2026-11-10/protocol.json','utf8'));
+ assert.equal(protocol.registration.externally_timestamped,false);assert.deepEqual(Object.keys(protocol.studies),ids);
+ const jtt=renderIdeaTests('just-train-twice',matrix);assert.ok(jtt.includes('Original verdict: hurts'));assert.ok(jtt.includes('Criterion not met'));
 });

@@ -1,0 +1,60 @@
+{
+  "id": "draft-proposals-cpu-2026-11-10",
+  "date": "2026-11-10",
+  "question": "Do five CPU-answerable draft designs from test matrix v3, and the open JTT tie-noise issue, meet their stated rules on fresh seeds?",
+  "registration": {
+    "document": "/research/draft-proposals-cpu-2026-11-10/prereg.md",
+    "written": "2026-11-10, after one calibration seed per study and before any confirmation seed",
+    "externally_timestamped": false,
+    "note": "The pre-registration was not in a pushed commit before the runs. Frozen-file hashes below were recorded before the confirmation runs and re-checked at analysis time.",
+    "frozen_sha256": {
+      "experiments/draft_proposals_2026_11/jtt_groups.py": "f1bb33e169dde2e0fbc90f4e8e0fd4dc879a2df740a34dab596530481fa2ca8c",
+      "experiments/draft_proposals_2026_11/dict_studies.py": "943900ee12dde4819a93943c5098d12e0581eb2e2abcf1cd227d54b2e4e574d8",
+      "prereg/2026-11-10_draft_proposals_cpu.md": "dd56a91657314c398a94bfb271ab81dcaed444f236106d7c32ae4b552feff201"
+    }
+  },
+  "source": {
+    "repo": "https://github.com/jaebooker/alignment-synthcore",
+    "commit": "ee7b9e3b0f9c8bd923901b3c213d94c149ce5ee3",
+    "branch": "claude/draft-proposals-cpu-2026-11",
+    "path": "experiments/draft_proposals_2026_11"
+  },
+  "unit": "seed",
+  "confirmation_seeds_per_study": 12,
+  "calibration_seeds_per_study": 1,
+  "seed_bases": {
+    "goal_misgen": {
+      "calibration": 500000,
+      "confirmation": 600000
+    },
+    "planted_interp": {
+      "calibration": 50000,
+      "confirmation": 60000
+    }
+  },
+  "statistics": "Paired differences over seeds; two-sided 95% t interval; exact sign-flip permutation p (harness.stats.paired_test). Lower bound = lower end of that interval. No exclusions.",
+  "studies": {
+    "jtt-upweighting-controls-v1": {
+      "design": "proposal-just-train-twice-1",
+      "rule": "JTT minus uniform second-stage training: decorrelated-level success lower bound >= +0.05 and IID success difference lower bound >= -0.05, random-tie condition."
+    },
+    "jtt-error-set-composition-v1": {
+      "design": "proposal-just-train-twice-2",
+      "rule": "Decorrelated-level steps enriched in the first-stage error set by >= 10 points (lower bound) and JTT minus random upweighting lower bound >= +0.05. Open-issue components: tied steps over-represented in the error set; (JTT - uniform, deterministic ties) - (JTT - uniform, random ties) lower bound > 0."
+    },
+    "omp-fixed-dictionary-v1": {
+      "design": "proposal-omp-dictionary-learning-1",
+      "rule": "Support F1 of OMP minus an amortized TopK encoder on the frozen planted dictionary: lower bound >= +0.05 at d = 10 (n = 64), equal code budget."
+    },
+    "kmeans-amplitude-shift-v1": {
+      "design": "proposal-spherical-kmeans-features-1",
+      "rule": "MMCS loss under amplitude shift, Euclidean minus spherical k-means: lower bound >= 0.02; unshifted spherical minus Euclidean lower bound >= -0.01."
+    },
+    "matryoshka-random-nesting-v1": {
+      "design": "proposal-matryoshka-sae-1",
+      "rule": "Child MMCS, nested minus random nesting: lower bound >= +0.02; parent MMCS difference lower bound >= -0.01."
+    }
+  },
+  "limits": "Toy scale, default hyperparameters, one agent, no second runner. Predictions were written after one calibration seed. No catalogue verdict or direction signal changes.",
+  "spend": "None. CPU only, no model calls."
+}
