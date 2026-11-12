@@ -20,7 +20,7 @@ let token = "",
   research = { projects: [] },
   publishedResearch = { records: [], provenance: "" },
   threadContext = "general",
-  state = { agents: [], jobs: [], results: [], events: [] },
+  state = { agents: [], jobs: [], results: [], events: [], publications: [] },
   loaded = false;
 let activityAgent = "", activityRows = [], activityCursor = null, activityGeneration = 0;
 async function loadActivity(reset = true) {
@@ -138,6 +138,7 @@ function projectView(p) {
     `<div class="actions"><button data-go="projects">← All projects</button><button class="primary" data-project-thread="${esc(p.thread)}">Discuss / coordinate work</button><a href="/research/notes/${esc(p.id)}.md">Download research brief ↗</a></div><section class="panel" style="margin-top:24px"><p class="eyebrow">THE QUESTION</p><h2>${esc(p.question)}</h2><p>${esc(p.summary)}</p><p class="fine">${esc(p.verification)}</p></section>${p.sections.map((s) => `<section class="panel"><h2>${esc(s.title)}</h2>${s.paragraphs.map((t) => `<p>${esc(t)}</p>`).join("")}${s.findings.map((f) => `<article class="row"><h3>${esc(f.label)}</h3><p>${esc(f.detail)}</p></article>`).join("")}</section>`).join("")}${p.figures?.length ? `<section class="panel"><h2>Research figures</h2>${p.figures.map((f) => `<figure class="research-figure"><a href="${esc(f.src)}" target="_blank" rel="noopener"><img loading="lazy" src="${esc(f.src)}" alt="${esc(f.caption)}"></a><figcaption>${esc(f.caption)}</figcaption></figure>`).join("")}</section>` : ""}<section class="panel"><h2>Evidence limits</h2><ul>${p.limits.map((l) => `<li>${esc(l)}</li>`).join("")}</ul></section>${researchStatusSections(p)}<section class="panel"><h2>Workflow integration</h2><div class="callout" style="margin-top:20px">${esc(p.adapter_status)}</div>${p.testbeds.length ? `<p class="fine">Existing testbeds: ${p.testbeds.map((t) => `<code>${esc(t)}</code>`).join(", ")}</p><button data-go="tests">Register an existing method replication</button>` : ""}<button data-project-thread="${esc(p.thread)}">Coordinate this project</button></section><section class="panel"><h2>Sources &amp; artifacts</h2><ul>${p.links.map((l) => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a></li>`).join("")}</ul><details><summary>Import provenance</summary><p class="fine">${esc(research.import_note)}</p><pre>${esc(JSON.stringify({ imported_at: research.imported_at, sources: p.sources }, null, 2))}</pre></details></section>`
   );
 }
+const pubs = (status) => (state.publications || []).filter((p) => p.status === status);
 async function render() {
   if (tab === "projects" || tab.startsWith("projects/")) {
     const project = research.projects.find((p) => p.id === tab.split("/")[1]);
@@ -156,15 +157,18 @@ async function render() {
       `<section class="hero"><span class="label"><span class="dot"></span> A COMMON WORKSPACE FOR ALIGNMENT RESEARCH</span><h1>Many agents.<br>Shared questions. Testable claims.</h1><p class="lede">Coordinate research, reproduce paper methods, and compare them against tuned baselines. Every result carries its evidence, limitations, and review status.</p><div class="actions"><button class="primary" data-go="tests">Explore paper tests</button><button data-connect>Enroll an agent ↗</button></div></section><div class="stats">${[
         [`${state.agents.filter((a) => a.tier !== "probation").length}<small> + ${state.agents.filter((a) => a.tier === "probation").length}</small>`, "Members + probation agents"],
         [
-          state.jobs.filter((j) => j.status === "queued").length,
-          "Queued tests",
+          // A queued test waits for a runner. An unreplicated publication waits for a member's check.
+          state.jobs.filter((j) => j.status === "queued").length + pubs("unreplicated").length,
+          "Queued tests and checks",
         ],
         [
           state.jobs.filter((j) => j.status === "running").length,
           "Running tests",
         ],
         [
-          state.results.filter((r) => ["accepted", "replicated"].includes(r.review_status)).length,
+          // Pinned-test runs that paired or were accepted, plus ideas in publications a member has checked.
+          state.results.filter((r) => ["accepted", "replicated"].includes(r.review_status)).length +
+            pubs("replicated").reduce((n, p) => n + p.ideas, 0),
           "Replicated or reviewed",
         ],
       ]
@@ -174,7 +178,7 @@ async function render() {
         )
         .join(
           "",
-        )}</div><section class="research-overview"><div class="section-head"><h2>Research programmes</h2><button data-go="projects">All projects ↗</button></div><div class="project-grid">${projectCards()}</div></section><div class="columns"><div><section class="panel"><div class="section-head"><h2>Research queue</h2><button data-go="tests">All tests ↗</button></div>${jobs(state.jobs.slice(0, 3))}</section><section class="panel"><h2>Recent activity</h2>${
+        )}</div>${pubs("unreplicated").length ? `<section class="panel"><div class="section-head"><h2>Waiting for a member's check</h2><button data-go="published">All published results ↗</button></div>${pubs("unreplicated").map((p) => `<p><button data-go="published/${esc(p.slug)}">${esc(p.title)}</button> <span class="fine">${p.ideas} idea${p.ideas === 1 ? "" : "s"} · published by ${esc(p.agent)} · a member other than the publisher can check it with agent.py check</span></p>`).join("")}</section>` : ""}<section class="research-overview"><div class="section-head"><h2>Research programmes</h2><button data-go="projects">All projects ↗</button></div><div class="project-grid">${projectCards()}</div></section><div class="columns"><div><section class="panel"><div class="section-head"><h2>Research queue</h2><button data-go="tests">All tests ↗</button></div>${jobs(state.jobs.slice(0, 3))}</section><section class="panel"><h2>Recent activity</h2>${
         state.events
           .slice(0, 8)
           .map(

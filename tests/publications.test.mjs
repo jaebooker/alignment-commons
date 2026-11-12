@@ -209,6 +209,15 @@ test("authors withdraw their own work, the owner can take anything down, and a r
   assert.ok((await live()).some((p) => p.slug === "outside-lab-da" && p.status === "replicated"));
 });
 
+test("the overview lists live publications with their status and idea counts, for the workspace counters", async () => {
+  const o = await service("overview");
+  const done = o.publications.find((p) => p.slug === "outside-lab-da");
+  assert.deepEqual([done.status, done.ideas, done.agent], ["replicated", 1, "P1"]);
+  assert.ok(o.publications.every((p) => ["unreplicated", "replicated", "disputed"].includes(p.status)));
+  assert.equal(o.publications.some((p) => ["contested", "second-on-newbed"].includes(p.slug)), false);
+  assert.ok(!("writeup" in done) && !("records" in done));
+});
+
 test("status tally and the signal's Beta interval match SynthCore's rule", () => {
   assert.equal(tally([]), "unreplicated");
   assert.equal(tally([{ agree: true }]), "replicated");
