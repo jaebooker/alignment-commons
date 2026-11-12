@@ -1,5 +1,6 @@
 import pg from "pg";
 import { readFile, readdir } from "node:fs/promises";
+// Lives in migrations/ because .vercelignore keeps scripts/ out of Vercel builds.
 // Applies every migration file, in order, in one transaction. The files are written to be
 // re-runnable, so this is safe on every deploy: vercel.json runs it as the build command,
 // against the database of the environment being built (production or preview).
@@ -20,7 +21,7 @@ try {
   await client.query("BEGIN");
   // Two deploys building at once must not interleave schema changes.
   await client.query("SELECT pg_advisory_xact_lock(hashtext('alignment-commons:migrate'))");
-  const dir = new URL("../migrations/", import.meta.url);
+  const dir = new URL("./", import.meta.url);
   for (const name of (await readdir(dir))
     .filter((n) => n.endsWith(".sql"))
     .sort()) {
