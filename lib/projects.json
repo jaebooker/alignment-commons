@@ -2015,8 +2015,156 @@
       ],
       "partial_steps": [],
       "available_steps": []
+    },
+    {
+      "id": "forecast-audit",
+      "title": "Forecast Audit",
+      "subtitle": "Can language models predict which alignment ideas survive a ground-truth test?",
+      "status": "Hackathon study: five frozen hypotheses and one amendment scored; draft report",
+      "summary": "Six open models forecast the outcomes of 45 alignment methods that Alignment SynthCore had already run on planted-ground-truth testbeds, with verdicts that postdate the models' training. Every model overpredicts: the true win rate is 29% and the pooled forecast averages 0.64. Models rank methods better than chance but none reliably beats a forecaster that states the base rate. A second set of 74 registered claims, 65% of which were met, shows the cause: forecasts average about 0.7 on both sets. The apparent optimism is a fixed prior that does not respond to the question.",
+      "question": "If models are to triage alignment research, do they know how likely an idea is to work, or only which ideas sound better than others?",
+      "sources": [
+        {
+          "system": "Alignment SynthCore",
+          "slug": "forecast-audit",
+          "revision": 1,
+          "source_commit": "9436674b869f47efc4bc692cdbef9e72473dbb03",
+          "source_branch": "main",
+          "content_sha256": "072dd03132afd2ef7f16f9340b22c85914c3c004d69d6c0be0184b3c4955e78e",
+          "independent_review": "Not independently reproduced"
+        }
+      ],
+      "verification": "AI-written by Claude for Jaeson Booker, 13 to 15 November 2026, at the Apart Research AI x Epistemics Sprint. Five hypotheses and the 114-item catalogue set were frozen with file hashes before the main run; the 74-item sub-claim set and four further claims were frozen by a dated amendment before any forecast on it. A 10-item pilot preceded the first freeze and is disclosed. The freezes rest on local hashes followed by a public commit, not a third-party timestamp. Departures from the registration are logged. Every model call is cached and all scores recompute from the cache. Draft report; references not yet re-checked. Not independently reproduced.",
+      "sections": [
+        {
+          "title": "Setup",
+          "paragraphs": [
+            "Catalogue set: 45 tested ideas in 11 testbed families give 114 binary questions. Gate: did the method pass its registered mechanism gate (53% yes). Win: did it then beat the tuned baseline on held-out seeds (29% yes; the primary question). Sign: given the full comparison ran, was the safety effect positive (79% yes). Prompts carry the testbed, metric, baseline, method, citation and gate rule, with no verdict and no observed number.",
+            "Sub-claim set: 74 claims that SynthCore's confirmatory studies registered before their confirmation runs, from 19 reports in 7 families; 65% were met. Forecasters: GLM 5.3 Flash, Qwen 3.5 397B, Qwen 3.8 27B, DeepSeek V4 Flash, Gemma 4 31B and Gemma 4 26B through Adaption, without tools, three samples per cell. Conditions: blind, base rate given, citation removed. Intervals are 95% and resample testbed families."
+          ],
+          "findings": []
+        },
+        {
+          "title": "Results",
+          "paragraphs": [],
+          "findings": [
+            {
+              "label": "Every model overpredicts wins",
+              "detail": "True win rate 0.29; pooled mean forecast 0.64; bias +0.35 (95% interval +0.21 to +0.52). Per-model bias runs from +0.22 to +0.51. The null control (a baseline against itself) drew win forecasts of 0.00 to 0.03 from every model."
+            },
+            {
+              "label": "Ranking without pricing",
+              "detail": "Pooled AUROC is 0.66 (0.57 to 0.89) and four of six models rank better than chance. Brier skill against the base rate is negative for five of six models and significantly so for both Gemma models; the pooled interval (-1.59 to +0.18) does not establish the registered claim of no skill."
+            },
+            {
+              "label": "The forecast is close to a constant",
+              "detail": "The three models with complete data average 0.70 on the win question (29% true) and 0.69 on the sub-claims (65% true). Across testbed families whose true rates run from 0% to 100%, mean forecasts stay between 0.41 and 0.81. The optimism on one set and the apparent calibration on the other are the same fixed prior."
+            },
+            {
+              "label": "A reference class moves the level, not the ranking",
+              "detail": "Given the yes-rate from other testbed families, mean win forecasts fall to 0.33 to 0.46 and the pooled Brier score improves by 0.08 (0.00 to 0.17). AUROC falls to 0.37 to 0.58. Part of that fall is a design flaw: a leave-one-family-out rate is anti-correlated with each family's own rate."
+            },
+            {
+              "label": "A citation alone adds confidence",
+              "detail": "Removing the source line lowers the pooled win forecast by 0.05 (0.03 to 0.07), in five of six models. The method name stays in the prompt, so this understates the effect of reputation."
+            }
+          ]
+        }
+      ],
+      "figures": [
+        {
+          "src": "/research/forecast-audit/figures/fig1_forecast_vs_truth.png",
+          "caption": "Mean forecast against the true rate, one point per testbed family, for both item sets (mean of the three models with complete data on both). Forecasts sit in a band around 0.7 while true rates span the whole range."
+        },
+        {
+          "src": "/research/forecast-audit/figures/fig2_conditions.png",
+          "caption": "Mean win forecast per model when blind, with the citation removed, and with the base rate given. The actual win rate is 0.29."
+        }
+      ],
+      "limits": [
+        "About 34 independent ideas in 11 testbed families, and 7 sub-claim families. Intervals are wide.",
+        "One research programme, mostly toy scale; many methods are simplified implementations. The 29% win rate is specific to this catalogue.",
+        "The sub-claim descriptions were written by an AI assistant with the outcomes in view; only 13 of 74 outcomes were checked against a machine-readable summary.",
+        "On the sub-claim set three of six models exceeded the 10% failed-call cutoff and were dropped, so its claims rest on three models.",
+        "The base-rate condition is confounded by its leave-one-family-out construction.",
+        "Mid-sized open models only; nothing here shows frontier models behave the same way.",
+        "The repository is public, so leakage can be probed but not ruled out. The first hypothesis was written before a 10-item pilot that agreed with it."
+      ],
+      "next_steps": [
+        {
+          "title": "Reference class from outside the item pool",
+          "detail": "Repeat the base-rate condition with rates taken from an independent set of resolved ideas, which removes the leave-one-family-out confound.",
+          "status": "Proposed"
+        },
+        {
+          "title": "Frontier models and a larger item pool",
+          "detail": "Run the frozen prompts on frontier models and on the testbeds added since the freeze (control_open, debate_code), keeping a held-out split.",
+          "status": "Proposed"
+        },
+        {
+          "title": "Pushback on verified results",
+          "detail": "After a model runs a test and sees the result, apply escalating rebuttals and measure how often it abandons a claim it verified itself, split by whether it was right.",
+          "status": "Proposed"
+        },
+        {
+          "title": "Forecast-gated triage in SynthCore",
+          "detail": "Test whether ranking candidate ideas by model forecast, with the level set from the catalogue's track record, finds winners sooner than reading order.",
+          "status": "Proposed"
+        }
+      ],
+      "links": [
+        {
+          "label": "Project brief and results summary",
+          "url": "/research/forecast-audit/README.md"
+        },
+        {
+          "label": "Draft report",
+          "url": "/research/forecast-audit/REPORT_DRAFT.md"
+        },
+        {
+          "label": "Pre-registration: five hypotheses on the catalogue set",
+          "url": "/research/forecast-audit/prereg/2026-11-14_forecast_audit.md"
+        },
+        {
+          "label": "Amendment 1: the sub-claim set",
+          "url": "/research/forecast-audit/prereg/2026-11-14_forecast_audit_amendment1.md"
+        },
+        {
+          "label": "Deviations log",
+          "url": "/research/forecast-audit/DEVIATIONS.md"
+        },
+        {
+          "label": "Code, items and cached model outputs (SynthCore)",
+          "url": "https://github.com/jaebooker/alignment-synthcore/tree/main/experiments/epistemics_sprint"
+        }
+      ],
+      "testbeds": [],
+      "adapter_status": "Code, items, cached model outputs and analysis live in Alignment SynthCore (experiments/epistemics_sprint). The study reads catalogue verdicts and adds no executable adapter or catalogue verdict.",
+      "thread": "project-forecast-audit",
+      "completed_steps": [
+        {
+          "title": "Catalogue forecasts under a frozen pre-registration",
+          "status": "Completed: 4 of 5 hypotheses supported for the pooled forecast",
+          "detail": "Optimism, discrimination, reference class and citation effects supported; the no-skill claim was not established. Six models, 6,156 calls. Unchanged with the 10 pilot items removed.",
+          "evidence_url": "/research/forecast-audit/prereg/2026-11-14_forecast_audit.md"
+        },
+        {
+          "title": "Leakage probe",
+          "status": "Completed: no model recognised the repository",
+          "detail": "Of 315 context-free recall questions, 16 drew a named verdict and 6 were correct (38%), below the 47% that always naming the commonest verdict would score.",
+          "evidence_url": "/research/forecast-audit/README.md"
+        },
+        {
+          "title": "Sub-claim forecasts (Amendment 1)",
+          "status": "Completed: 1 of 4 claims supported, on three models",
+          "detail": "Set-insensitivity held for all three kept models (shift of -0.06 to +0.04 against a 36-point change in the true rate). Discrimination, no-skill and reference-class claims were not supported on this set.",
+          "evidence_url": "/research/forecast-audit/prereg/2026-11-14_forecast_audit_amendment1.md"
+        }
+      ],
+      "partial_steps": [],
+      "available_steps": []
     }
   ],
-  "updated_at": "2026-11-08",
+  "updated_at": "2026-11-15",
   "reviewed_at": "2026-10-30"
 }
