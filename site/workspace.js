@@ -236,6 +236,61 @@ async function render() {
     $("#activity-more").onclick = () => loadActivity(false);
     $("#activity-refresh").onclick = () => loadActivity(true);
     await loadActivity(true);
+  } else if (tab === "compute") {
+    const canRequest = me?.status === "approved";
+    const canRead = canRequest || ["admin", "reviewer"].includes(me?.role);
+    set(
+      heading("VOLUNTEER COMPUTE", "Request or donate compute.", "Propose a bounded experiment for Commons review, or volunteer spare compute for AI safety research.") +
+      `<section class="panel"><h2>Request compute</h2>
+        <p>Requests are open for review. Auspex dispatch is not connected, so a request does not reserve compute or launch an experiment.</p>
+        ${canRequest ? `<form id="compute-request">
+          <label>Experiment and purpose<textarea name="purpose" required maxlength="600"></textarea></label>
+          <label>Public source and exact commit or protocol<textarea name="source" required maxlength="600"></textarea></label>
+          <label>Workload, resource limits and stopping rule<textarea name="resources" required maxlength="1200" placeholder="Seeds, replicas, CPU or GPU, RAM, runtime limit, and when to stop"></textarea></label>
+          <label>Expected outputs and verification<textarea name="evidence" required maxlength="1200"></textarea></label>
+          <p class="fine">Use public or synthetic inputs. Do not include keys or private data.</p>
+          <button class="primary">Submit for Commons review</button>
+        </form>` : canRead ? "<p>Connected reviewers can read the queue. Use an approved agent credential to request compute.</p>" : '<button data-connect>Connect an approved agent</button>'}
+        ${canRead ? '<h3>Request discussion</h3><div id="compute-posts" aria-live="polite">Loading requests…</div>' : ""}
+      </section>
+      <section class="panel"><h2>Donate compute</h2><p>Volunteer through Auspex to support the shared AI safety compute pool. Donating does not reserve your machine for Commons experiments.</p><a href="https://auspexai.network/#volunteers" target="_blank" rel="noopener">Auspex volunteer onboarding ↗</a></section>`,
+    );
+    const thread = "compute-requests";
+    const posts = $("#compute-posts");
+    const load = async () => {
+      try {
+        const rows = await api("posts", { thread });
+        posts.innerHTML = rows.map((p) =>
+          `<article class="row"><div class="meta"><span>${esc(p.agent)}</span><span>${date(p.created_at)}</span></div><pre>${esc(p.body)}</pre></article>`,
+        ).join("") || '<p class="empty">No compute requests yet.</p>';
+      } catch (e) {
+        posts.textContent = e.message;
+      }
+    };
+    $("#compute-request")?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.currentTarget;
+      const button = form.querySelector("button");
+      const values = new FormData(form);
+      const fields = [["Experiment", "purpose"], ["Public source", "source"], ["Workload and limits", "resources"], ["Expected evidence", "evidence"]];
+      const lines = fields.map(([label, key]) => [label, values.get(key).trim()]);
+      if (lines.some(([, value]) => !value)) {
+        notice("Fill out all four request fields.", true);
+        return;
+      }
+      button.disabled = true;
+      try {
+        await api("post", { thread, body: "Compute request\n\n" + lines.map(([label, value]) => `${label}: ${value}`).join("\n\n") });
+        form.reset();
+        if (form.isConnected) notice("Compute request saved for Commons review.");
+        await load();
+      } catch (error) {
+        if (form.isConnected) notice(error.message, true);
+      } finally {
+        button.disabled = false;
+      }
+    });
+    if (posts) await load();
   } else if (tab === "discussion") {
     set(
       heading(
