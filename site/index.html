@@ -5,36 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="A navigable atlas of AI alignment and safety research: drill from area to subfield to topic.">
 <title>Alignment Commons</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/theme.css">
 <style>
 /* Layout: library atlas. Sticky header with search; left index tree (desktop); main pane drills Area > Subfield > Topic with child tiles above a filterable reading list. */
 :root{
-  --bg:#f3f5f6; --surface:#ffffff; --sunk:#e8ecee; --fg:#17222b; --muted:#5a6873; --faint:#8a96a0;
-  --line:#d5dce1; --accent:#1d5a7e; --accent-soft:#dbe8f0; --pick:#8a5a12; --pick-soft:#f6ead2;
-  --win:#1f6b45; --win-soft:#d9eee2; --hurt:#a3332a; --hurt-soft:#f6dfdc;
-  --display:"Newsreader", Georgia, "Times New Roman", serif;
-  --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
-  --r:6px;
+  /* Mapped onto the shared paper palette in theme.css. */
+  --bg:var(--paper); --surface:var(--card); --sunk:var(--well); --fg:var(--ink); --muted:#6b665b; --faint:#9a9486;
+  --line:#e4e0d6; --accent:#2d5e8a; --accent-soft:#e3eaf1; --pick:#8a5a12; --pick-soft:#f3e8d4;
+  --win:#3f7d57; --win-soft:#e2ece4; --hurt:#ad4a2c; --hurt-soft:#f4e1da;
+  --display:var(--serif); --body:var(--sans);
+  --r:12px;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0f1519; --surface:#162027; --sunk:#1c2830; --fg:#e3e9ed; --muted:#9aa8b2; --faint:#6c7b86;
-  --line:#2a3842; --accent:#7fb7d9; --accent-soft:#1d3444; --pick:#e2b66a; --pick-soft:#3a2e18;
-  --win:#7fd1a2; --win-soft:#17352a; --hurt:#f09a8f; --hurt-soft:#3d1f1c; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#0f1519; --surface:#162027; --sunk:#1c2830; --fg:#e3e9ed; --muted:#9aa8b2; --faint:#6c7b86;
-  --line:#2a3842; --accent:#7fb7d9; --accent-soft:#1d3444; --pick:#e2b66a; --pick-soft:#3a2e18;
-  --win:#7fd1a2; --win-soft:#17352a; --hurt:#f09a8f; --hurt-soft:#3d1f1c; color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--body);margin:0}
+body{background:var(--bg);color:var(--fg);font:15.5px/1.55 var(--body);margin:0}
 a{color:var(--accent)}
 button,select,input{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.wrap{max-width:1280px;margin:0 auto;padding-inline:20px}
-header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:24px}
+.atlasbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(6px);border-block:1px solid var(--line);scroll-margin-top:0}
+.atlasbar .eyebrow{margin:0;white-space:nowrap}
 .topbar{display:flex;gap:16px;align-items:center;padding-block:12px;flex-wrap:wrap}
 .brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--fg);cursor:pointer;background:none;border:0;padding:0}
 .brand b{font:600 22px/1 var(--display);letter-spacing:-.01em}
@@ -61,16 +51,16 @@ header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;backgroun
 .crumbs{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font:500 12.5px var(--mono);color:var(--faint);margin-bottom:10px}
 .crumbs button{all:unset;cursor:pointer;color:var(--muted)}
 .crumbs button:hover{color:var(--accent);text-decoration:underline}
-h1{font:500 clamp(28px,4vw,40px)/1.1 var(--display);letter-spacing:-.015em;margin:0 0 8px;text-wrap:balance}
+h1,.maph{font:400 clamp(34px,4.4vw,48px)/1.06 var(--display);letter-spacing:-.02em;margin:0 0 10px;text-wrap:balance}
 .lede{color:var(--muted);max-width:68ch;margin:0 0 6px;font-size:16px}
 .levelmeta{font:12.5px var(--mono);color:var(--faint);margin-bottom:22px;font-variant-numeric:tabular-nums}
 /* tiles */
 .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-bottom:30px}
-.tile{all:unset;box-sizing:border-box;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px 13px;display:flex;flex-direction:column;gap:6px;min-width:0;position:relative}
-.tile:hover{border-color:var(--accent)}
+.tile{all:unset;box-sizing:border-box;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px 15px;box-shadow:0 1px 2px rgba(40,30,10,.04);display:flex;flex-direction:column;gap:6px;min-width:0;position:relative}
+.tile:hover{border-color:var(--line-2);box-shadow:0 4px 14px rgba(40,30,10,.07)}
 .tile:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .tile .h{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
-.tile .h b{font:600 17px/1.25 var(--display);letter-spacing:-.005em}
+.tile .h b{font:500 19px/1.2 var(--display);letter-spacing:-.005em}
 .tile .h .n{font:500 13px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .tile p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.45}
 .tile .bar{height:3px;border-radius:2px;background:var(--sunk);overflow:hidden;margin-top:auto}
@@ -173,11 +163,11 @@ mark{background:var(--pick-soft);color:inherit;border-radius:2px}
 .band b{font:600 16px var(--display)}
 .sigcard{margin-top:8px}
 .sigcard .signal{border-top:0;padding-top:0}
-.donation{margin-block:24px 32px;padding:24px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
-.donation h2{margin:0 0 8px;font-size:21px}
+.donation{margin-block:24px 32px;padding:28px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.donation h2{margin:0 0 8px;font:400 32px/1.1 var(--serif)}
 .donation p{color:var(--muted);max-width:66ch;margin:0 0 18px}
 .donation-links{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-.donate-button{display:inline-block;padding:10px 16px;border-radius:8px;background:var(--fg);color:var(--bg);font-weight:600;text-decoration:none}
+.donate-button{display:inline-block;padding:10px 16px;border-radius:9px;background:var(--fg);color:var(--bg);font-weight:600;text-decoration:none}
 .donate-button:hover{opacity:.85}
 /* coverage grid (agenda x orthodox problem, from Shallow Review tags) */
 .covwrap{overflow:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);margin:14px 0 8px;max-height:75vh}
@@ -212,7 +202,7 @@ table.cov{border-collapse:separate;border-spacing:0;font-size:13px;min-width:100
 .untagged{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .agenda .probs{display:flex;flex-wrap:wrap;gap:6px}
 footer{border-top:1px solid var(--line);padding-block:18px 40px;font-size:13px;color:var(--faint)}
-@media (max-width:600px){header.top{position:static}.brand span{display:none}.brand{flex:1}.topbar{gap:10px}}
+@media (max-width:600px){.atlasbar{position:static}.atlasbar .eyebrow{display:none}}
 @media (prefers-reduced-motion:no-preference){.tile{transition:border-color .12s}}
 
 /* Per-idea evidence and draft test registry */
@@ -231,21 +221,32 @@ footer{border-top:1px solid var(--line);padding-block:18px 40px;font-size:13px;c
 
 </head>
 <body>
-<header class="top">
+<a class="skip" href="#main">Skip to the content</a>
+<header class="site-head"><div class="container">
+  <button class="wordmark" id="home" type="button" aria-label="Alignment Commons home">Alignment Commons</button>
+  <nav class="site-nav" aria-label="Main">
+    <button id="mapBtn" type="button">Map</button>
+    <button id="testedBtn" type="button">Tested ideas</button>
+    <button id="coverageBtn" type="button" hidden>Coverage</button>
+    <a href="/workspace#projects">Projects</a>
+    <a class="live-link" href="/live">Live</a>
+    <a href="/workspace">Workspace</a>
+    <button id="aboutBtn" type="button">Sources</button>
+  </nav>
+  <a class="pill-btn" href="https://www.paypal.com/donate/?hosted_button_id=HBL3KAAMDNGTW" target="_blank" rel="noopener noreferrer">Donate</a>
+</div></header>
+<div class="justin" id="justin" hidden></div>
+<section class="container hero" id="hero" hidden></section>
+<div class="atlasbar" id="map">
   <div class="wrap topbar">
-    <button class="brand" id="home" type="button" aria-label="Alignment Commons home"><b>Alignment Commons</b><span>atlas of AI safety research</span></button>
+    <p class="eyebrow">The map</p>
     <label class="search" for="q">
-      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       <input id="q" type="search" placeholder="Search titles, authors, summaries" autocomplete="off">
       <span class="scope"><input type="checkbox" id="scopeAll"><label for="scopeAll">everywhere</label></span>
     </label>
-    <a class="navbtn" href="/workspace#projects" style="text-decoration:none">Research projects</a>
-    <a class="navbtn" href="/workspace" style="text-decoration:none">Agent workspace</a>
-    <button class="navbtn" id="coverageBtn" type="button" hidden>Coverage</button>
-    <button class="navbtn" id="testedBtn" type="button">Tested ideas</button>
-    <button class="navbtn" id="aboutBtn" type="button">Sources &amp; method</button>
   </div>
-</header>
+</div>
 
 <div class="wrap layout">
   <nav class="tree" id="tree" aria-label="Research areas"></nav>
@@ -266,6 +267,7 @@ footer{border-top:1px solid var(--line);padding-block:18px 40px;font-size:13px;c
 
 <script type="module">
 import {renderIdeaTests, renderMatrixOverview, renderProgrammes} from "./test-matrix.js";
+import {mountHero} from "./home-hero.js";
 // tests.json (tested ideas from Alignment SynthCore), test-matrix.json, coverage.json (agenda x problem grid) and
 // testbed-problems.json (which core problems each SynthCore testbed plants) are optional: the atlas works without them.
 const opt = f => fetch(f).then(r => r.ok ? r.json() : null).catch(() => null);
@@ -575,12 +577,13 @@ function renderTree(){
 }
 
 function render(){
+  $("#hero").hidden = !!(state.node || state.q);
   if(state.node==="about"){ renderAbout(); renderTree(); return; }
   if(state.node==="tested"){ renderTested(); renderTree(); return; }
   if(state.node==="coverage"){ renderCoverage(); renderTree(); return; }
   const n = node[state.node]; let h = "";
   if(!n){
-    h += `<h1>Alignment research, mapped</h1><p class="lede">${ITEMS.length.toLocaleString()} papers and posts on AI safety, sorted into ${T.length} areas, ${T.reduce((s,a)=>s+a.subs.length,0)} subfields and ${Object.values(node).filter(x=>x.kind==="topic").length} topics. Pick an area to drill down, or search everything.</p><div class="levelmeta">Built ${esc(D.built)} from open datasets. <button class="chip" data-go="about" type="button">See sources</button></div>` + testedBand(null);
+    h += `<h2 class="maph">Alignment research, mapped</h2><p class="lede">${ITEMS.length.toLocaleString()} papers and posts on AI safety, sorted into ${T.length} areas, ${T.reduce((s,a)=>s+a.subs.length,0)} subfields and ${Object.values(node).filter(x=>x.kind==="topic").length} topics. Pick an area to drill down, or search everything.</p><div class="levelmeta">Built ${esc(D.built)} from open datasets. <button class="chip" data-go="about" type="button">See sources</button></div>` + testedBand(null);
     h += `<div class="tiles home-tiles">${T.map(a=>tile(a,a.color,a.subs)).join("")}</div>`;
   } else if(n.kind==="area"){
     h += crumbs() + `<h1>${esc(n.a.name)}</h1><p class="lede">${esc(n.a.desc)}</p><div class="levelmeta">${n.a.subs.length} subfields · ${(cnt[n.a.id]||0).toLocaleString()} items</div>` + testedBand(n.a.id);
@@ -674,6 +677,11 @@ document.addEventListener("change", e => {
 });
 let tmr; $("#q").addEventListener("input", e => { clearTimeout(tmr); tmr = setTimeout(()=>{ state.q = e.target.value; state.shown=50; if(["about","tested","coverage"].includes(state.node)) state.node=null; render(); }, 140); });
 $("#home").addEventListener("click", ()=>go(null));
+$("#mapBtn").addEventListener("click", ()=>{ go(null); requestAnimationFrame(()=>$("#map").scrollIntoView({behavior:"smooth"})); });
+{ const tested = IDEAS.filter(x => !x.control && x.testbed && x.verdict!=="untestable" && counted(x));
+  mountHero($("#hero"), {items: ITEMS.length, areas: T.length, subs: T.reduce((s,a)=>s+a.subs.length,0),
+    topics: Object.values(node).filter(x=>x.kind==="topic").length, tested: tested.length,
+    wins: tested.filter(x => x.verdict==="beats_baseline").length}); }
 $("#aboutBtn").addEventListener("click", ()=>go("about"));
 $("#coverageBtn").hidden = !C;
 $("#coverageBtn").addEventListener("click", ()=>go("coverage"));

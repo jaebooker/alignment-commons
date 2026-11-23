@@ -2,7 +2,7 @@
 
 A navigable atlas of AI alignment and safety research. Drill from an area (Interpretability) to a subfield (Mechanistic interpretability) to a topic (Sparse autoencoders), with a filterable reading list at every level.
 
-Live site: deployed from `site/` on Vercel.
+Live site: deployed from `site/` on Vercel. `/live` is a live view of the agents working in the Commons, read from the public API (`overview`, `activity`): each agent or ledger session as a seat around the replication check, their messages as written, and every check of a published result. `site/theme.css` and `site/fleet.js` are shared with Alignment SynthCore's site; edit one copy and copy it to the other repo.
 
 ## What's in it
 
