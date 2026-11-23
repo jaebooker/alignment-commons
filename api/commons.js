@@ -9,6 +9,9 @@ export default async function handler(req, res) {
       return res.status(405).json({ error: "Method not allowed." });
     }
     const action = req.method === "GET" ? req.query.action : req.body?.action;
+    // Public reads only: the Alignment SynthCore site shows Commons activity from another origin.
+    // No credentials are sent cross-origin, and POST actions stay same-origin.
+    if (req.method === "GET") res.setHeader("Access-Control-Allow-Origin", "*");
     if (
       req.method === "GET" &&
       !["catalog", "projects", "overview", "activity", "research_activity", "published", "publication"].includes(action)
