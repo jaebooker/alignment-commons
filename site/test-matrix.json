@@ -1,6 +1,6 @@
 {
-  "version": 5,
-  "reviewed": "2026-11-11",
+  "version": 6,
+  "reviewed": "2026-11-23",
   "catalogue_date": "2026-11-11",
   "catalogue_sha256": "b35ad2bdf1c110447071df6aaaee8e7b36e007c6e1bae0d486c3cec9df044a8b",
   "scope": "Versioned per-idea planning registry with registered studies, current execution status and bounded results. Historical catalogue unchanged.",
@@ -1843,18 +1843,21 @@
         "batchtopk-sae"
       ],
       "title": "Batch-composition intervention",
-      "run_status": "proposed",
+      "run_status": "registered",
       "result": "not_assessed",
       "success_rule": "At matched reconstruction and sparsity, rare-child recovery improves by at least 0.02 cosine at the lower bound without losing more than 0.01 on frequent parents.",
-      "detail": "Hold planted activations and total active-code budget fixed while varying batch size and rare/parent feature composition. Compare BatchTopK with per-example TopK and random batch partitions.",
-      "evidence": [],
+      "detail": "Hold planted activations and total active-code budget fixed while varying batch size and rare/parent feature composition. Compare BatchTopK with per-example TopK and random batch partitions. Registered study: batchtopk-batch-composition-v1. The actual protocol and its scope take precedence over this original draft.",
+      "evidence": [
+        "/research/batch-composition-2026-11-23/protocol.json"
+      ],
       "kind": "proposal",
-      "stage": "Draft design \u2014 not registered",
+      "stage": "Original draft elaborated in a registered study; see actual record",
       "prerequisites": "Feasibility/power pilot on calibration data, then prospective registration.",
       "comparison": "Tuning, data access and compute matched as stated; calibration, development and confirmation streams disjoint.",
       "analysis": "Prespecify seed/model/shard as the unit; freeze sample size, minimum effect, margins, exclusions and multiplicity before confirmation. Candidate thresholds below are planning choices, not powered or preregistered claims.",
       "origin": "new_design",
-      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget."
+      "resources": "Small CPU/GPU experiment; LM and fresh-monitor studies need a separately agreed compute budget.",
+      "study_id": "batchtopk-batch-composition-v1"
     },
     {
       "id": "proposal-batchtopk-sae-2",
@@ -4315,6 +4318,53 @@
         }
       ],
       "design_id": "proposal-matryoshka-sae-1"
+    },
+    {
+      "id": "batchtopk-batch-composition-v1",
+      "idea_ids": [
+        "batchtopk-sae"
+      ],
+      "title": "BatchTopK versus per-example TopK across partition size and batch composition",
+      "run_status": "completed",
+      "result": "not_met",
+      "success_rule": "Random composition, BatchTopK minus TopK: child MMCS lower bound >= +0.02, parent MMCS lower bound >= -0.01, FVE lower bound >= -0.01 at equal L0.",
+      "detail": "Child / parent MMCS and FVE, random batches: TopK 0.819 / 0.922 / 0.843, BatchTopK 0.722 / 0.901 / 0.898. Moving the active-code budget between examples buys reconstruction and costs rare child features; 0 of 12 seeds favour BatchTopK on children. Untuned defaults for every arm on the toy testbed. Not a catalogue verdict and not a claim about language models.",
+      "evidence": [
+        "/research/batch-composition-2026-11-23/REPORT.md",
+        "/research/batch-composition-2026-11-23/protocol.json",
+        "/research/batch-composition-2026-11-23/summary.json",
+        "/research/batch-composition-2026-11-23/prereg.md"
+      ],
+      "kind": "follow_up",
+      "stage": "Pre-registered bounded confirmation \u2014 12 fresh seeds; registration pushed before confirmation (16e341b)",
+      "components": [
+        {
+          "name": "Rare-child recovery gain",
+          "result": "not_met",
+          "detail": "BatchTopK minus TopK -0.097 [-0.107, -0.088]; sign reversed."
+        },
+        {
+          "name": "Frequent parents non-inferior",
+          "result": "not_met",
+          "detail": "-0.021 [-0.028, -0.013]."
+        },
+        {
+          "name": "Reconstruction non-inferior at equal L0",
+          "result": "met",
+          "detail": "FVE +0.055 [+0.052, +0.057]; BatchTopK reconstructs better."
+        },
+        {
+          "name": "Benefit larger in mixed batches (paper's mechanism)",
+          "result": "not_met",
+          "detail": "Interaction -0.028 [-0.038, -0.018]: the harm is larger in mixed batches."
+        },
+        {
+          "name": "Harm already at partitions of 8",
+          "result": "met",
+          "detail": "b = 8 minus b = 1 child -0.083 [-0.092, -0.074]. Descriptive of the dose; registered prediction."
+        }
+      ],
+      "design_id": "proposal-batchtopk-sae-1"
     },
     {
       "id": "catalog-exploit-hunting-monitor-open",

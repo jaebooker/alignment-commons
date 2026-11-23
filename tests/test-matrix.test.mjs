@@ -38,7 +38,7 @@ test('negative original results, later success and component failures coexist wi
  assert.ok(mona.includes('Succeeded under criterion'));
  const rr=matrix.tests.find(t=>t.id==='vase-blind-spot-8b');assert.equal(rr.result,'not_met');assert.equal(rr.components.find(c=>c.name==='Vase reduction').result,'met');
  const kl=matrix.tests.find(t=>t.id==='kl-exp3-confirm-v1');assert.equal(kl.result,'mixed');assert.equal(kl.components[2].result,'not_met');
- const summary=renderMatrixOverview(matrix,catalogue.ideas);assert.ok(summary.includes('not pooled as independent replications'));assert.ok(summary.includes('91 unregistered draft follow-ups'));
+ const summary=renderMatrixOverview(matrix,catalogue.ideas);assert.ok(summary.includes('not pooled as independent replications'));assert.ok(summary.includes('90 unregistered draft follow-ups'));
  assert.equal(matrix.tests.filter(t=>t.id==='myopia-decoupling-v1').length,1);
 });
 test('filtering proposed and succeeded rows never presents proposals as successful runs',()=>{
@@ -61,7 +61,7 @@ test('registered designs point to real studies and started records never acquire
  assert.ok(!started.includes('class="v win"'));
  const row=matrix.tests.find(t=>t.id==='rr-coverage-v1');assert.equal(row.result,'not_met');assert.ok(row.detail.includes('every vase'));
  const changed=matrix.tests.find(t=>t.id==='changing-mask-factorial-v1');assert.equal(changed.result,'mixed');assert.equal(changed.components[0].result,'not_met');assert.equal(changed.components[2].result,'met');
- assert.equal(matrix.tests.filter(t=>t.kind==='proposal'&&t.run_status==='registered').length,9);
+ assert.equal(matrix.tests.filter(t=>t.kind==='proposal'&&t.run_status==='registered').length,10);
 });
 
 test('catalogue v3 adds 14 swarm ideas, each with a catalogue row and two unregistered designs',()=>{
@@ -93,7 +93,7 @@ test('matrix v4 records five CPU follow-ups with their limits, one criterion met
 });
 
 test('catalogue v4 adds control_open additively, keeps v3 byte-identical rows, and labels the post hoc run',async()=>{
- assert.equal(catalogue.catalogue_version,4);assert.equal(matrix.version,5);
+ assert.equal(catalogue.catalogue_version,4);assert.ok(matrix.version>=5);
  const add=catalogue.additions[1];assert.equal(add.catalogue_version,4);assert.deepEqual(add.testbeds,['control_open']);
  const v3bytes=await readFile('site'+add.previous_snapshot);assert.equal(add.previous_catalogue_sha256,createHash('sha256').update(v3bytes).digest('hex'));
  const v3=JSON.parse(v3bytes);
@@ -110,4 +110,23 @@ test('catalogue v4 adds control_open additively, keeps v3 byte-identical rows, a
  const designs=matrix.tests.filter(t=>t.kind==='proposal'&&add.ideas.some(i=>t.idea_ids.includes(i)));assert.equal(designs.length,4);
  for(const d of designs){assert.equal(d.run_status,'proposed');assert.ok(!d.evidence.length);}
  const problems=JSON.parse(await readFile('site/testbed-problems.json','utf8'));assert.ok(problems.testbeds.control_open.problems.length);
+});
+
+test('matrix v6 records the batch-composition study, registered in a pushed commit before confirmation',async()=>{
+ assert.ok(matrix.version>=6);
+ const row=matrix.tests.find(t=>t.id==='batchtopk-batch-composition-v1');
+ assert.equal(row.kind,'follow_up');assert.equal(row.run_status,'completed');assert.equal(row.result,'not_met');
+ const design=matrix.tests.find(t=>t.id===row.design_id);
+ assert.equal(design.id,'proposal-batchtopk-sae-1');assert.equal(design.study_id,row.id);assert.equal(design.run_status,'registered');assert.equal(design.result,'not_assessed');
+ assert.equal(row.components.find(c=>c.name==='Rare-child recovery gain').result,'not_met');
+ assert.ok(row.detail.includes('Not a catalogue verdict'));
+ const dir='site/research/batch-composition-2026-11-23/';
+ const sums=JSON.parse(await readFile(dir+'SHA256SUMS.json','utf8'));
+ for(const [f,h] of Object.entries(sums))assert.equal(createHash('sha256').update(await readFile(dir+f)).digest('hex'),h);
+ const protocol=JSON.parse(await readFile(dir+'protocol.json','utf8'));
+ assert.equal(protocol.registration.externally_timestamped,true);
+ assert.ok(protocol.registration.commit_time<protocol.registration.confirmation_started);
+ assert.equal(protocol.registration.frozen_sha256['prereg/2026-11-23_batch_composition.md'],createHash('sha256').update(await readFile(dir+'prereg.md')).digest('hex'));
+ assert.deepEqual(Object.keys(protocol.studies),[row.id]);
+ const html=renderIdeaTests('batchtopk-sae',matrix);assert.ok(html.includes('Criterion not met'));assert.ok(!html.includes('class="v win"'));
 });

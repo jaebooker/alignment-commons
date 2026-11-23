@@ -1,0 +1,107 @@
+{
+  "id": "batch-composition-2026-11-23",
+  "date": "2026-11-23",
+  "question": "Does BatchTopK's batch-level top-k help recover rare child features by moving the active-code budget across examples, as the draft design proposal-batchtopk-sae-1 asks?",
+  "registration": {
+    "document": "/research/batch-composition-2026-11-23/prereg.md",
+    "written": "2026-11-23 about 04:20 UTC, after one calibration seed and before any confirmation seed",
+    "externally_timestamped": true,
+    "commit": "16e341be22f68f65939ada52c67fb4e189f34c98",
+    "commit_time": "2026-11-23T04:19:48Z",
+    "correction": "Commit 3c9f8ab (04:20:04Z) changes only the prereg's written-at line from 04:45 to 04:20; rules, code and analysis unchanged.",
+    "confirmation_started": "2026-11-23T04:21Z",
+    "frozen_sha256": {
+      "experiments/batch_composition_2026_11/study.py": "4304a67887b7e34dd978e8b8ac77f200a60a6a6bba31154f9f6228b8b53f29de",
+      "experiments/batch_composition_2026_11/analyze.py": "c5b862fd4e37cb92c7c0016d0ae22b83c5d95747bb59ee9dbd513258cf4998fb",
+      "prereg/2026-11-23_batch_composition.md": "854a86699b38321f9c84868947538b63a8d16b33ca2309f2a7cf4599aa81a73a",
+      "testbeds/planted_interp/generate.py": "5646ac35e0f79a70965272831916ae7d796b1845b6eb4487078d554c4f64641b",
+      "harness/stats.py": "7ccce97f5f4f72b380b646a084a05d261c527ef7267ff3c97311ef9c8642e05f",
+      "experiments/batch_composition_2026_11/results/calib.json": "c08aa61350f5a1b57c9e2189ef7e284b4019af7cd4ef4d0bb073af84ca36fbfe"
+    }
+  },
+  "source": {
+    "repo": "https://github.com/jaebooker/alignment-synthcore",
+    "commit": "69308fb495161733324123a47f1b975e1b09efb4",
+    "branch": "claude/batch-composition-study",
+    "path": "experiments/batch_composition_2026_11"
+  },
+  "testbed": "planted_interp (four full configurations)",
+  "unit": "seed (mean over the four configurations)",
+  "confirmation_seeds": 12,
+  "calibration_seeds": 1,
+  "seed_bases": {
+    "calibration": 70000,
+    "confirmation": 170000
+  },
+  "factors": {
+    "partition_size": [
+      1,
+      8,
+      64,
+      512
+    ],
+    "composition": [
+      "random",
+      "concentrated"
+    ]
+  },
+  "held_fixed": [
+    "planted model and activations",
+    "dictionary width",
+    "k = 2 active codes per example on average",
+    "lr 3e-3, 3000 steps, minibatch 512",
+    "initialisation",
+    "minibatch sequence within a composition"
+  ],
+  "statistics": "Paired differences over seeds; two-sided 95% t interval and exact sign-flip p (harness.stats.paired_test); Holm over C2-C5.",
+  "studies": {
+    "batchtopk-batch-composition-v1": {
+      "design_id": "proposal-batchtopk-sae-1",
+      "result": "not_met",
+      "claims": {
+        "C2_harm_to_children": {
+          "estimate": "-0.097 [-0.107, -0.088]",
+          "prediction_held": true
+        },
+        "C3_composition_interaction": {
+          "estimate": "-0.028 [-0.038, -0.018]",
+          "prediction_held": true
+        },
+        "C4_dose_b8": {
+          "estimate": "-0.083 [-0.092, -0.074]",
+          "prediction_held": true
+        },
+        "C5_reconstruction_gain": {
+          "estimate": "+0.055 [+0.052, +0.057]",
+          "prediction_held": true
+        },
+        "S1_b512_minus_b8_child": {
+          "estimate": "-0.014 [-0.021, -0.008]",
+          "prediction_held": null
+        },
+        "S2_concentrated_child": {
+          "estimate": "-0.069 [-0.079, -0.059]",
+          "prediction_held": null
+        },
+        "S3_random_parent": {
+          "estimate": "-0.021 [-0.028, -0.013]",
+          "prediction_held": null
+        }
+      },
+      "matrix_rule": {
+        "child": "-0.097 [-0.107, -0.088]",
+        "parent": "-0.021 [-0.028, -0.013]",
+        "fve": "+0.055 [+0.052, +0.057]",
+        "met": false
+      }
+    }
+  },
+  "limits": [
+    "Untuned defaults for every arm",
+    "Matched reconstruction as non-inferiority: BatchTopK reconstructs better at equal L0",
+    "Partitioned top-k at inference, not a fixed threshold",
+    "Concentrated batches change gradient noise for every arm; C3 controls only for effects common to both",
+    "Toy scale, one architecture, CPU only"
+  ],
+  "spend": "none (CPU, no model calls)"
+}
